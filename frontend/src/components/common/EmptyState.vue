@@ -5,7 +5,12 @@
       class="mb-5 flex h-20 w-20 items-center justify-center rounded-2xl bg-gray-100 dark:bg-dark-800"
     >
       <slot name="icon">
-        <component :is="icon" v-if="icon" class="empty-state-icon h-10 w-10" aria-hidden="true" />
+        <component
+          :is="icon"
+          v-if="icon"
+          class="empty-state-icon h-10 w-10"
+          aria-hidden="true"
+        />
         <svg
           v-else
           class="empty-state-icon h-10 w-10"
@@ -52,25 +57,25 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { Component } from 'vue'
+import { computed } from "vue";
+import type { Component } from "vue";
 
 interface Props {
-  icon?: Component | string
-  title?: string
-  description?: string
-  actionText?: string
-  actionTo?: string | object
-  actionIcon?: boolean
-  message?: string
+  icon?: Component | string;
+  title?: string;
+  description?: string;
+  actionText?: string;
+  actionTo?: string | object;
+  actionIcon?: boolean;
+  message?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  description: '',
-  actionIcon: true
-})
+  description: "",
+  actionIcon: true,
+});
 
-const displayTitle = computed(() => props.title || '暂无数据')
+const displayTitle = computed(() => props.title || "暂无数据");
 
-defineEmits(['action'])
+defineEmits(["action"]);
 </script>

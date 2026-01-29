@@ -10,6 +10,12 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ show: boolean, progress: number, current: number, total: number, estimatedTime: string }>()
-defineEmits(['cancel'])
+defineProps<{
+  show: boolean;
+  progress: number;
+  current: number;
+  total: number;
+  estimatedTime: string;
+}>();
+defineEmits(["cancel"]);
 </script>

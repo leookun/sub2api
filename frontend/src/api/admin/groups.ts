@@ -3,14 +3,14 @@
  * Handles API key group management for administrators
  */
 
-import { apiClient } from '../client'
+import { apiClient } from "../client";
 import type {
   AdminGroup,
   GroupPlatform,
   CreateGroupRequest,
   UpdateGroupRequest,
-  PaginatedResponse
-} from '@/types'
+  PaginatedResponse,
+} from "@/types";
 
 /**
  * List all groups with pagination
@@ -23,24 +23,27 @@ export async function list(
   page: number = 1,
   pageSize: number = 20,
   filters?: {
-    platform?: GroupPlatform
-    status?: 'active' | 'inactive'
-    is_exclusive?: boolean
-    search?: string
+    platform?: GroupPlatform;
+    status?: "active" | "inactive";
+    is_exclusive?: boolean;
+    search?: string;
   },
   options?: {
-    signal?: AbortSignal
-  }
+    signal?: AbortSignal;
+  },
 ): Promise<PaginatedResponse<AdminGroup>> {
-  const { data } = await apiClient.get<PaginatedResponse<AdminGroup>>('/admin/groups', {
-    params: {
-      page,
-      page_size: pageSize,
-      ...filters
+  const { data } = await apiClient.get<PaginatedResponse<AdminGroup>>(
+    "/admin/groups",
+    {
+      params: {
+        page,
+        page_size: pageSize,
+        ...filters,
+      },
+      signal: options?.signal,
     },
-    signal: options?.signal
-  })
-  return data
+  );
+  return data;
 }
 
 /**
@@ -49,10 +52,10 @@ export async function list(
  * @returns List of all active groups
  */
 export async function getAll(platform?: GroupPlatform): Promise<AdminGroup[]> {
-  const { data } = await apiClient.get<AdminGroup[]>('/admin/groups/all', {
-    params: platform ? { platform } : undefined
-  })
-  return data
+  const { data } = await apiClient.get<AdminGroup[]>("/admin/groups/all", {
+    params: platform ? { platform } : undefined,
+  });
+  return data;
 }
 
 /**
@@ -60,8 +63,10 @@ export async function getAll(platform?: GroupPlatform): Promise<AdminGroup[]> {
  * @param platform - Platform to filter by
  * @returns List of groups for the specified platform
  */
-export async function getByPlatform(platform: GroupPlatform): Promise<AdminGroup[]> {
-  return getAll(platform)
+export async function getByPlatform(
+  platform: GroupPlatform,
+): Promise<AdminGroup[]> {
+  return getAll(platform);
 }
 
 /**
@@ -70,8 +75,8 @@ export async function getByPlatform(platform: GroupPlatform): Promise<AdminGroup
  * @returns Group details
  */
 export async function getById(id: number): Promise<AdminGroup> {
-  const { data } = await apiClient.get<AdminGroup>(`/admin/groups/${id}`)
-  return data
+  const { data } = await apiClient.get<AdminGroup>(`/admin/groups/${id}`);
+  return data;
 }
 
 /**
@@ -79,9 +84,11 @@ export async function getById(id: number): Promise<AdminGroup> {
  * @param groupData - Group data
  * @returns Created group
  */
-export async function create(groupData: CreateGroupRequest): Promise<AdminGroup> {
-  const { data } = await apiClient.post<AdminGroup>('/admin/groups', groupData)
-  return data
+export async function create(
+  groupData: CreateGroupRequest,
+): Promise<AdminGroup> {
+  const { data } = await apiClient.post<AdminGroup>("/admin/groups", groupData);
+  return data;
 }
 
 /**
@@ -90,9 +97,15 @@ export async function create(groupData: CreateGroupRequest): Promise<AdminGroup>
  * @param updates - Fields to update
  * @returns Updated group
  */
-export async function update(id: number, updates: UpdateGroupRequest): Promise<AdminGroup> {
-  const { data } = await apiClient.put<AdminGroup>(`/admin/groups/${id}`, updates)
-  return data
+export async function update(
+  id: number,
+  updates: UpdateGroupRequest,
+): Promise<AdminGroup> {
+  const { data } = await apiClient.put<AdminGroup>(
+    `/admin/groups/${id}`,
+    updates,
+  );
+  return data;
 }
 
 /**
@@ -101,8 +114,10 @@ export async function update(id: number, updates: UpdateGroupRequest): Promise<A
  * @returns Success confirmation
  */
 export async function deleteGroup(id: number): Promise<{ message: string }> {
-  const { data } = await apiClient.delete<{ message: string }>(`/admin/groups/${id}`)
-  return data
+  const { data } = await apiClient.delete<{ message: string }>(
+    `/admin/groups/${id}`,
+  );
+  return data;
 }
 
 /**
@@ -111,8 +126,11 @@ export async function deleteGroup(id: number): Promise<{ message: string }> {
  * @param status - New status
  * @returns Updated group
  */
-export async function toggleStatus(id: number, status: 'active' | 'inactive'): Promise<AdminGroup> {
-  return update(id, { status })
+export async function toggleStatus(
+  id: number,
+  status: "active" | "inactive",
+): Promise<AdminGroup> {
+  return update(id, { status });
 }
 
 /**
@@ -121,18 +139,18 @@ export async function toggleStatus(id: number, status: 'active' | 'inactive'): P
  * @returns Group usage statistics
  */
 export async function getStats(id: number): Promise<{
-  total_api_keys: number
-  active_api_keys: number
-  total_requests: number
-  total_cost: number
+  total_api_keys: number;
+  active_api_keys: number;
+  total_requests: number;
+  total_cost: number;
 }> {
   const { data } = await apiClient.get<{
-    total_api_keys: number
-    active_api_keys: number
-    total_requests: number
-    total_cost: number
-  }>(`/admin/groups/${id}/stats`)
-  return data
+    total_api_keys: number;
+    active_api_keys: number;
+    total_requests: number;
+    total_cost: number;
+  }>(`/admin/groups/${id}/stats`);
+  return data;
 }
 
 /**
@@ -145,12 +163,15 @@ export async function getStats(id: number): Promise<{
 export async function getGroupApiKeys(
   id: number,
   page: number = 1,
-  pageSize: number = 20
+  pageSize: number = 20,
 ): Promise<PaginatedResponse<any>> {
-  const { data } = await apiClient.get<PaginatedResponse<any>>(`/admin/groups/${id}/api-keys`, {
-    params: { page, page_size: pageSize }
-  })
-  return data
+  const { data } = await apiClient.get<PaginatedResponse<any>>(
+    `/admin/groups/${id}/api-keys`,
+    {
+      params: { page, page_size: pageSize },
+    },
+  );
+  return data;
 }
 
 export const groupsAPI = {
@@ -163,7 +184,7 @@ export const groupsAPI = {
   delete: deleteGroup,
   toggleStatus,
   getStats,
-  getGroupApiKeys
-}
+  getGroupApiKeys,
+};
 
-export default groupsAPI
+export default groupsAPI;

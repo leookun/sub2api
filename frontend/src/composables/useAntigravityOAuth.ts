@@ -1,91 +1,102 @@
-import { ref } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { adminAPI } from '@/api/admin'
-import type { AntigravityTokenInfo } from '@/api/admin/antigravity'
+import { ref } from "vue";
+import { useAppStore } from "@/stores/app";
+import { adminAPI } from "@/api/admin";
+import type { AntigravityTokenInfo } from "@/api/admin/antigravity";
 
 export function useAntigravityOAuth() {
-  const appStore = useAppStore()
-  const authUrl = ref('')
-  const sessionId = ref('')
-  const state = ref('')
-  const loading = ref(false)
-  const error = ref('')
+  const appStore = useAppStore();
+  const authUrl = ref("");
+  const sessionId = ref("");
+  const state = ref("");
+  const loading = ref(false);
+  const error = ref("");
 
   const resetState = () => {
-    authUrl.value = ''
-    sessionId.value = ''
-    state.value = ''
-    loading.value = false
-    error.value = ''
-  }
+    authUrl.value = "";
+    sessionId.value = "";
+    state.value = "";
+    loading.value = false;
+    error.value = "";
+  };
 
-  const generateAuthUrl = async (proxyId: number | null | undefined): Promise<boolean> => {
-    loading.value = true
-    authUrl.value = ''
-    sessionId.value = ''
-    state.value = ''
-    error.value = ''
+  const generateAuthUrl = async (
+    proxyId: number | null | undefined,
+  ): Promise<boolean> => {
+    loading.value = true;
+    authUrl.value = "";
+    sessionId.value = "";
+    state.value = "";
+    error.value = "";
 
     try {
-      const payload: Record<string, unknown> = {}
-      if (proxyId) payload.proxy_id = proxyId
+      const payload: Record<string, unknown> = {};
+      if (proxyId) payload.proxy_id = proxyId;
 
-      const response = await adminAPI.antigravity.generateAuthUrl(payload as any)
-      authUrl.value = response.auth_url
-      sessionId.value = response.session_id
-      state.value = response.state
-      return true
+      const response = await adminAPI.antigravity.generateAuthUrl(
+        payload as any,
+      );
+      authUrl.value = response.auth_url;
+      sessionId.value = response.session_id;
+      state.value = response.state;
+      return true;
     } catch (err: any) {
       error.value =
-        err.response?.data?.detail || '生成 Antigravity 授权链接失败'
-      appStore.showError(error.value)
-      return false
+        err.response?.data?.detail || "生成 Antigravity 授权链接失败";
+      appStore.showError(error.value);
+      return false;
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   const exchangeAuthCode = async (params: {
-    code: string
-    sessionId: string
-    state: string
-    proxyId?: number | null
+    code: string;
+    sessionId: string;
+    state: string;
+    proxyId?: number | null;
   }): Promise<AntigravityTokenInfo | null> => {
-    const code = params.code?.trim()
+    const code = params.code?.trim();
     if (!code || !params.sessionId || !params.state) {
-      error.value = '缺少 code / session_id / state'
-      return null
+      error.value = "缺少 code / session_id / state";
+      return null;
     }
 
-    loading.value = true
-    error.value = ''
+    loading.value = true;
+    error.value = "";
 
     try {
       const payload: Record<string, unknown> = {
         session_id: params.sessionId,
         state: params.state,
-        code
-      }
-      if (params.proxyId) payload.proxy_id = params.proxyId
+        code,
+      };
+      if (params.proxyId) payload.proxy_id = params.proxyId;
 
-      const tokenInfo = await adminAPI.antigravity.exchangeCode(payload as any)
-      return tokenInfo as AntigravityTokenInfo
+      const tokenInfo = await adminAPI.antigravity.exchangeCode(payload as any);
+      return tokenInfo as AntigravityTokenInfo;
     } catch (err: any) {
-      error.value =
-        err.response?.data?.detail || 'Antigravity 授权码兑换失败'
-      appStore.showError(error.value)
-      return null
+      error.value = err.response?.data?.detail || "Antigravity 授权码兑换失败";
+      appStore.showError(error.value);
+      return null;
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
-  const buildCredentials = (tokenInfo: AntigravityTokenInfo): Record<string, unknown> => {
-    let expiresAt: string | undefined
-    if (typeof tokenInfo.expires_at === 'number' && Number.isFinite(tokenInfo.expires_at)) {
-      expiresAt = Math.floor(tokenInfo.expires_at).toString()
-    } else if (typeof tokenInfo.expires_at === 'string' && tokenInfo.expires_at.trim()) {
-      expiresAt = tokenInfo.expires_at.trim()
+  const buildCredentials = (
+    tokenInfo: AntigravityTokenInfo,
+  ): Record<string, unknown> => {
+    let expiresAt: string | undefined;
+    if (
+      typeof tokenInfo.expires_at === "number" &&
+      Number.isFinite(tokenInfo.expires_at)
+    ) {
+      expiresAt = Math.floor(tokenInfo.expires_at).toString();
+    } else if (
+      typeof tokenInfo.expires_at === "string" &&
+      tokenInfo.expires_at.trim()
+    ) {
+      expiresAt = tokenInfo.expires_at.trim();
     }
 
     return {
@@ -94,9 +105,9 @@ export function useAntigravityOAuth() {
       token_type: tokenInfo.token_type,
       expires_at: expiresAt,
       project_id: tokenInfo.project_id,
-      email: tokenInfo.email
-    }
-  }
+      email: tokenInfo.email,
+    };
+  };
 
   return {
     authUrl,
@@ -107,6 +118,6 @@ export function useAntigravityOAuth() {
     resetState,
     generateAuthUrl,
     exchangeAuthCode,
-    buildCredentials
-  }
+    buildCredentials,
+  };
 }

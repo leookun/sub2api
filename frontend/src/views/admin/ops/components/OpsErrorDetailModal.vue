@@ -1,13 +1,26 @@
 <template>
-  <BaseDialog :show="show" :title="title" width="full" :close-on-click-outside="true" @close="close">
+  <BaseDialog
+    :show="show"
+    :title="title"
+    width="full"
+    :close-on-click-outside="true"
+    @close="close"
+  >
     <div v-if="loading" class="flex items-center justify-center py-16">
       <div class="flex flex-col items-center gap-3">
-        <div class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary-600"></div>
-        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ '加载中…' }}</div>
+        <div
+          class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary-600"
+        ></div>
+        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
+          {{ "加载中…" }}
+        </div>
       </div>
     </div>
 
-    <div v-else-if="!detail" class="py-10 text-center text-sm text-gray-500 dark:text-gray-400">
+    <div
+      v-else-if="!detail"
+      class="py-10 text-center text-sm text-gray-500 dark:text-gray-400"
+    >
       {{ emptyText }}
     </div>
 
@@ -15,14 +28,20 @@
       <!-- Summary -->
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '请求 ID' }}</div>
-          <div class="mt-1 break-all font-mono text-sm font-medium text-gray-900 dark:text-white">
-            {{ requestId || '—' }}
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
+            {{ "请求 ID" }}
+          </div>
+          <div
+            class="mt-1 break-all font-mono text-sm font-medium text-gray-900 dark:text-white"
+          >
+            {{ requestId || "—" }}
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '时间' }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
+            {{ "时间" }}
+          </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{ formatDateTime(detail.created_at) }}
           </div>
@@ -30,71 +49,119 @@
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ isUpstreamError(detail) ? '账号' : '用户' }}
+            {{ isUpstreamError(detail) ? "账号" : "用户" }}
           </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             <template v-if="isUpstreamError(detail)">
-              {{ detail.account_name || (detail.account_id != null ? String(detail.account_id) : '—') }}
+              {{
+                detail.account_name ||
+                (detail.account_id != null ? String(detail.account_id) : "—")
+              }}
             </template>
             <template v-else>
-              {{ detail.user_email || (detail.user_id != null ? String(detail.user_id) : '—') }}
+              {{
+                detail.user_email ||
+                (detail.user_id != null ? String(detail.user_id) : "—")
+              }}
             </template>
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '平台' }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
+            {{ "平台" }}
+          </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-            {{ detail.platform || '—' }}
+            {{ detail.platform || "—" }}
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '分组' }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
+            {{ "分组" }}
+          </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-            {{ detail.group_name || (detail.group_id != null ? String(detail.group_id) : '—') }}
+            {{
+              detail.group_name ||
+              (detail.group_id != null ? String(detail.group_id) : "—")
+            }}
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '模型' }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
+            {{ "模型" }}
+          </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-            {{ detail.model || '—' }}
+            {{ detail.model || "—" }}
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '状态码' }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
+            {{ "状态码" }}
+          </div>
           <div class="mt-1">
-            <span :class="['inline-flex items-center rounded-lg px-2 py-1 text-xs font-black ring-1 ring-inset shadow-sm', statusClass]">
+            <span
+              :class="[
+                'inline-flex items-center rounded-lg px-2 py-1 text-xs font-black ring-1 ring-inset shadow-sm',
+                statusClass,
+              ]"
+            >
               {{ detail.status_code }}
             </span>
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '消息' }}</div>
-          <div class="mt-1 truncate text-sm font-medium text-gray-900 dark:text-white" :title="detail.message">
-            {{ detail.message || '—' }}
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
+            {{ "消息" }}
+          </div>
+          <div
+            class="mt-1 truncate text-sm font-medium text-gray-900 dark:text-white"
+            :title="detail.message"
+          >
+            {{ detail.message || "—" }}
           </div>
         </div>
       </div>
 
       <!-- Response content (client request -> error_body; upstream -> upstream_error_detail/message) -->
       <div class="rounded-xl bg-gray-50 p-6 dark:bg-dark-900">
-        <h3 class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white">{{ '响应详情' }}</h3>
-        <pre class="mt-4 max-h-[520px] overflow-auto rounded-xl border border-gray-200 bg-white p-4 text-xs text-gray-800 dark:border-dark-700 dark:bg-dark-800 dark:text-gray-100"><code>{{ prettyJSON(primaryResponseBody || '') }}</code></pre>
+        <h3
+          class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white"
+        >
+          {{ "响应详情" }}
+        </h3>
+        <pre
+          class="mt-4 max-h-[520px] overflow-auto rounded-xl border border-gray-200 bg-white p-4 text-xs text-gray-800 dark:border-dark-700 dark:bg-dark-800 dark:text-gray-100"
+        ><code>{{ prettyJSON(primaryResponseBody || '') }}</code></pre>
       </div>
 
       <!-- Upstream errors list (only for request errors) -->
-      <div v-if="showUpstreamList" class="rounded-xl bg-gray-50 p-6 dark:bg-dark-900">
+      <div
+        v-if="showUpstreamList"
+        class="rounded-xl bg-gray-50 p-6 dark:bg-dark-900"
+      >
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <h3 class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white">{{ '上游错误' }}</h3>
-          <div v-if="correlatedUpstreamLoading" class="text-xs text-gray-500 dark:text-gray-400">{{ '加载中...' }}</div>
+          <h3
+            class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white"
+          >
+            {{ "上游错误" }}
+          </h3>
+          <div
+            v-if="correlatedUpstreamLoading"
+            class="text-xs text-gray-500 dark:text-gray-400"
+          >
+            {{ "加载中..." }}
+          </div>
         </div>
 
-        <div v-if="!correlatedUpstreamLoading && !correlatedUpstreamErrors.length" class="mt-3 text-sm text-gray-500 dark:text-gray-400">
-          {{ '暂无数据' }}
+        <div
+          v-if="!correlatedUpstreamLoading && !correlatedUpstreamErrors.length"
+          class="mt-3 text-sm text-gray-500 dark:text-gray-400"
+        >
+          {{ "暂无数据" }}
         </div>
 
         <div v-else class="mt-4 space-y-3">
@@ -106,11 +173,15 @@
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div class="text-xs font-black text-gray-900 dark:text-white">
                 #{{ idx + 1 }}
-                <span v-if="ev.type" class="ml-2 rounded-md bg-gray-100 px-2 py-0.5 font-mono text-[10px] font-bold text-gray-700 dark:bg-dark-700 dark:text-gray-200">{{ ev.type }}</span>
+                <span
+                  v-if="ev.type"
+                  class="ml-2 rounded-md bg-gray-100 px-2 py-0.5 font-mono text-[10px] font-bold text-gray-700 dark:bg-dark-700 dark:text-gray-200"
+                  >{{ ev.type }}</span
+                >
               </div>
               <div class="flex items-center gap-2">
                 <div class="font-mono text-xs text-gray-500 dark:text-gray-400">
-                  {{ ev.status_code ?? '—' }}
+                  {{ ev.status_code ?? "—" }}
                 </div>
                 <button
                   type="button"
@@ -120,33 +191,46 @@
                   @click="toggleUpstreamDetail(ev.id)"
                 >
                   <Icon
-                    :name="expandedUpstreamDetailIds.has(ev.id) ? 'chevronDown' : 'chevronRight'"
+                    :name="
+                      expandedUpstreamDetailIds.has(ev.id)
+                        ? 'chevronDown'
+                        : 'chevronRight'
+                    "
                     size="xs"
                     :stroke-width="2"
                   />
                   <span>
                     {{
                       expandedUpstreamDetailIds.has(ev.id)
-                        ? '响应内容（点击收起）'
-                        : '响应内容（点击展开）'
+                        ? "响应内容（点击收起）"
+                        : "响应内容（点击展开）"
                     }}
                   </span>
                 </button>
               </div>
             </div>
 
-            <div class="mt-3 grid grid-cols-1 gap-2 text-xs text-gray-600 dark:text-gray-300 sm:grid-cols-2">
+            <div
+              class="mt-3 grid grid-cols-1 gap-2 text-xs text-gray-600 dark:text-gray-300 sm:grid-cols-2"
+            >
               <div>
-                <span class="text-gray-400">{{ '状态码' }}:</span>
-                <span class="ml-1 font-mono">{{ ev.status_code ?? '—' }}</span>
+                <span class="text-gray-400">{{ "状态码" }}:</span>
+                <span class="ml-1 font-mono">{{ ev.status_code ?? "—" }}</span>
               </div>
               <div>
-                <span class="text-gray-400">{{ '请求ID' }}:</span>
-                <span class="ml-1 font-mono">{{ ev.request_id || ev.client_request_id || '—' }}</span>
+                <span class="text-gray-400">{{ "请求ID" }}:</span>
+                <span class="ml-1 font-mono">{{
+                  ev.request_id || ev.client_request_id || "—"
+                }}</span>
               </div>
             </div>
 
-            <div v-if="ev.message" class="mt-3 break-words text-sm font-medium text-gray-900 dark:text-white">{{ ev.message }}</div>
+            <div
+              v-if="ev.message"
+              class="mt-3 break-words text-sm font-medium text-gray-900 dark:text-white"
+            >
+              {{ ev.message }}
+            </div>
 
             <pre
               v-if="expandedUpstreamDetailIds.has(ev.id)"
@@ -160,116 +244,136 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useAppStore } from '@/stores'
-import { opsAPI, type OpsErrorDetail } from '@/api/admin/ops'
+import { computed, ref, watch } from "vue";
+import { useAppStore } from "@/stores";
+import { opsAPI, type OpsErrorDetail } from "@/api/admin/ops";
 
 interface Props {
-  show: boolean
-  errorId: number | null
-  errorType?: 'request' | 'upstream'
+  show: boolean;
+  errorId: number | null;
+  errorType?: "request" | "upstream";
 }
 
 interface Emits {
-  (e: 'update:show', value: boolean): void
+  (e: "update:show", value: boolean): void;
 }
 
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
+const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
-const loading = ref(false)
-const detail = ref<OpsErrorDetail | null>(null)
+const loading = ref(false);
+const detail = ref<OpsErrorDetail | null>(null);
 
-const showUpstreamList = computed(() => props.errorType === 'request')
+const showUpstreamList = computed(() => props.errorType === "request");
 
-const requestId = computed(() => detail.value?.request_id || detail.value?.client_request_id || '')
+const requestId = computed(
+  () => detail.value?.request_id || detail.value?.client_request_id || "",
+);
 
 const primaryResponseBody = computed(() => {
-  if (!detail.value) return ''
-  if (props.errorType === 'upstream') {
-    return detail.value.upstream_error_detail || detail.value.upstream_errors || detail.value.upstream_error_message || detail.value.error_body || ''
+  if (!detail.value) return "";
+  if (props.errorType === "upstream") {
+    return (
+      detail.value.upstream_error_detail ||
+      detail.value.upstream_errors ||
+      detail.value.upstream_error_message ||
+      detail.value.error_body ||
+      ""
+    );
   }
-  return detail.value.error_body || ''
-})
-
-
-
+  return detail.value.error_body || "";
+});
 
 const title = computed(() => {
-  if (!props.errorId) return '错误详情'
-  return `错误 #${String(props.errorId)}`
-})
+  if (!props.errorId) return "错误详情";
+  return `错误 #${String(props.errorId)}`;
+});
 
-const emptyText = computed(() => '未选择错误。')
+const emptyText = computed(() => "未选择错误。");
 
 function isUpstreamError(d: OpsErrorDetail | null): boolean {
-  if (!d) return false
-  const phase = String(d.phase || '').toLowerCase()
-  const owner = String(d.error_owner || '').toLowerCase()
-  return phase === 'upstream' && owner === 'provider'
+  if (!d) return false;
+  const phase = String(d.phase || "").toLowerCase();
+  const owner = String(d.error_owner || "").toLowerCase();
+  return phase === "upstream" && owner === "provider";
 }
 
-const correlatedUpstream = ref<OpsErrorDetail[]>([])
-const correlatedUpstreamLoading = ref(false)
+const correlatedUpstream = ref<OpsErrorDetail[]>([]);
+const correlatedUpstreamLoading = ref(false);
 
-const correlatedUpstreamErrors = computed<OpsErrorDetail[]>(() => correlatedUpstream.value)
+const correlatedUpstreamErrors = computed<OpsErrorDetail[]>(
+  () => correlatedUpstream.value,
+);
 
-const expandedUpstreamDetailIds = ref(new Set<number>())
+const expandedUpstreamDetailIds = ref(new Set<number>());
 
 function getUpstreamResponsePreview(ev: OpsErrorDetail): string {
-  return String(ev.upstream_error_detail || ev.error_body || ev.upstream_error_message || '').trim()
+  return String(
+    ev.upstream_error_detail ||
+      ev.error_body ||
+      ev.upstream_error_message ||
+      "",
+  ).trim();
 }
 
 function toggleUpstreamDetail(id: number) {
-  const next = new Set(expandedUpstreamDetailIds.value)
-  if (next.has(id)) next.delete(id)
-  else next.add(id)
-  expandedUpstreamDetailIds.value = next
+  const next = new Set(expandedUpstreamDetailIds.value);
+  if (next.has(id)) next.delete(id);
+  else next.add(id);
+  expandedUpstreamDetailIds.value = next;
 }
 
 async function fetchCorrelatedUpstreamErrors(requestErrorId: number) {
-  correlatedUpstreamLoading.value = true
+  correlatedUpstreamLoading.value = true;
   try {
     const res = await opsAPI.listRequestErrorUpstreamErrors(
       requestErrorId,
-      { page: 1, page_size: 100, view: 'all' },
-      { include_detail: true }
-    )
-    correlatedUpstream.value = res.items || []
+      { page: 1, page_size: 100, view: "all" },
+      { include_detail: true },
+    );
+    correlatedUpstream.value = res.items || [];
   } catch (err) {
-    console.error('[OpsErrorDetailModal] Failed to load correlated upstream errors', err)
-    correlatedUpstream.value = []
+    console.error(
+      "[OpsErrorDetailModal] Failed to load correlated upstream errors",
+      err,
+    );
+    correlatedUpstream.value = [];
   } finally {
-    correlatedUpstreamLoading.value = false
+    correlatedUpstreamLoading.value = false;
   }
 }
 
 function close() {
-  emit('update:show', false)
+  emit("update:show", false);
 }
 
 function prettyJSON(raw?: string): string {
-  if (!raw) return 'N/A'
+  if (!raw) return "N/A";
   try {
-    return JSON.stringify(JSON.parse(raw), null, 2)
+    return JSON.stringify(JSON.parse(raw), null, 2);
   } catch {
-    return raw
+    return raw;
   }
 }
 
 async function fetchDetail(id: number) {
-  loading.value = true
+  loading.value = true;
   try {
-    const kind = props.errorType || (detail.value?.phase === 'upstream' ? 'upstream' : 'request')
-    const d = kind === 'upstream' ? await opsAPI.getUpstreamErrorDetail(id) : await opsAPI.getRequestErrorDetail(id)
-    detail.value = d
+    const kind =
+      props.errorType ||
+      (detail.value?.phase === "upstream" ? "upstream" : "request");
+    const d =
+      kind === "upstream"
+        ? await opsAPI.getUpstreamErrorDetail(id)
+        : await opsAPI.getRequestErrorDetail(id);
+    detail.value = d;
   } catch (err: any) {
-    detail.value = null
-    appStore.showError(err?.message || '加载错误详情失败')
+    detail.value = null;
+    appStore.showError(err?.message || "加载错误详情失败");
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
@@ -277,28 +381,30 @@ watch(
   () => [props.show, props.errorId] as const,
   ([show, id]) => {
     if (!show) {
-      detail.value = null
-      return
+      detail.value = null;
+      return;
     }
-    if (typeof id === 'number' && id > 0) {
-      expandedUpstreamDetailIds.value = new Set()
-      fetchDetail(id)
-      if (props.errorType === 'request') {
-        fetchCorrelatedUpstreamErrors(id)
+    if (typeof id === "number" && id > 0) {
+      expandedUpstreamDetailIds.value = new Set();
+      fetchDetail(id);
+      if (props.errorType === "request") {
+        fetchCorrelatedUpstreamErrors(id);
       } else {
-        correlatedUpstream.value = []
+        correlatedUpstream.value = [];
       }
     }
   },
-  { immediate: true }
-)
+  { immediate: true },
+);
 
 const statusClass = computed(() => {
-  const code = detail.value?.status_code ?? 0
-  if (code >= 500) return 'bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-500/30'
-  if (code === 429) return 'bg-purple-50 text-purple-700 ring-purple-600/20 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-500/30'
-  if (code >= 400) return 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-500/30'
-  return 'bg-gray-50 text-gray-700 ring-gray-600/20 dark:bg-gray-900/30 dark:text-gray-400 dark:ring-gray-500/30'
-})
-
+  const code = detail.value?.status_code ?? 0;
+  if (code >= 500)
+    return "bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-500/30";
+  if (code === 429)
+    return "bg-purple-50 text-purple-700 ring-purple-600/20 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-500/30";
+  if (code >= 400)
+    return "bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-500/30";
+  return "bg-gray-50 text-gray-700 ring-gray-600/20 dark:bg-gray-900/30 dark:text-gray-400 dark:ring-gray-500/30";
+});
 </script>

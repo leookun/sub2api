@@ -4,10 +4,10 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ '欢迎回来' }}
+          {{ "欢迎回来" }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ '登录您的账户以继续' }}
+          {{ "登录您的账户以继续" }}
         </p>
       </div>
 
@@ -19,11 +19,17 @@
         <!-- Email Input -->
         <div>
           <label for="email" class="input-label">
-            {{ '邮箱' }}
+            {{ "邮箱" }}
           </label>
           <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-              <Icon name="mail" size="md" class="text-gray-400 dark:text-dark-500" />
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
+            >
+              <Icon
+                name="mail"
+                size="md"
+                class="text-gray-400 dark:text-dark-500"
+              />
             </div>
             <input
               id="email"
@@ -46,11 +52,17 @@
         <!-- Password Input -->
         <div>
           <label for="password" class="input-label">
-            {{ '密码' }}
+            {{ "密码" }}
           </label>
           <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-              <Icon name="lock" size="md" class="text-gray-400 dark:text-dark-500" />
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
+            >
+              <Icon
+                name="lock"
+                size="md"
+                class="text-gray-400 dark:text-dark-500"
+              />
             </div>
             <input
               id="password"
@@ -82,7 +94,7 @@
               to="/forgot-password"
               class="text-sm font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
             >
-              {{ '忘记密码？' }}
+              {{ "忘记密码？" }}
             </router-link>
           </div>
         </div>
@@ -145,7 +157,7 @@
             ></path>
           </svg>
           <Icon v-else name="login" size="md" class="mr-2" />
-          {{ isLoading ? '登录中...' : '登录' }}
+          {{ isLoading ? "登录中..." : "登录" }}
         </button>
       </form>
     </div>
@@ -153,12 +165,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ '还没有账户？' }}
+        {{ "还没有账户？" }}
         <router-link
           to="/register"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ '注册' }}
+          {{ "注册" }}
         </router-link>
       </p>
     </template>
@@ -176,188 +188,194 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import type TotpLoginModal from '@/components/auth/TotpLoginModal.vue'
-import type TurnstileWidget from '@/components/TurnstileWidget.vue'
-import { useAuthStore, useAppStore } from '@/stores'
-import { getPublicSettings, isTotp2FARequired } from '@/api/auth'
-import type { TotpLoginResponse } from '@/types'
+import { ref, reactive, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import type TotpLoginModal from "@/components/auth/TotpLoginModal.vue";
+import type TurnstileWidget from "@/components/TurnstileWidget.vue";
+import { useAuthStore, useAppStore } from "@/stores";
+import { getPublicSettings, isTotp2FARequired } from "@/api/auth";
+import type { TotpLoginResponse } from "@/types";
 
 // ==================== Router & Stores ====================
 
-const router = useRouter()
-const authStore = useAuthStore()
-const appStore = useAppStore()
+const router = useRouter();
+const authStore = useAuthStore();
+const appStore = useAppStore();
 
 // ==================== State ====================
 
-const isLoading = ref<boolean>(false)
-const errorMessage = ref<string>('')
-const showPassword = ref<boolean>(false)
+const isLoading = ref<boolean>(false);
+const errorMessage = ref<string>("");
+const showPassword = ref<boolean>(false);
 
 // Public settings
-const turnstileEnabled = ref<boolean>(false)
-const turnstileSiteKey = ref<string>('')
-const linuxdoOAuthEnabled = ref<boolean>(false)
-const passwordResetEnabled = ref<boolean>(false)
+const turnstileEnabled = ref<boolean>(false);
+const turnstileSiteKey = ref<string>("");
+const linuxdoOAuthEnabled = ref<boolean>(false);
+const passwordResetEnabled = ref<boolean>(false);
 
 // Turnstile
-const turnstileRef = ref<InstanceType<typeof TurnstileWidget> | null>(null)
-const turnstileToken = ref<string>('')
+const turnstileRef = ref<InstanceType<typeof TurnstileWidget> | null>(null);
+const turnstileToken = ref<string>("");
 
 // 2FA state
-const show2FAModal = ref<boolean>(false)
-const totpTempToken = ref<string>('')
-const totpUserEmailMasked = ref<string>('')
-const totpModalRef = ref<InstanceType<typeof TotpLoginModal> | null>(null)
+const show2FAModal = ref<boolean>(false);
+const totpTempToken = ref<string>("");
+const totpUserEmailMasked = ref<string>("");
+const totpModalRef = ref<InstanceType<typeof TotpLoginModal> | null>(null);
 
 const formData = reactive({
-  email: '',
-  password: ''
-})
+  email: "",
+  password: "",
+});
 
 const errors = reactive({
-  email: '',
-  password: '',
-  turnstile: ''
-})
+  email: "",
+  password: "",
+  turnstile: "",
+});
 
 // ==================== Lifecycle ====================
 
 onMounted(async () => {
-  const expiredFlag = sessionStorage.getItem('auth_expired')
+  const expiredFlag = sessionStorage.getItem("auth_expired");
   if (expiredFlag) {
-    sessionStorage.removeItem('auth_expired')
-    const message = '会话已过期，请重新登录。'
-    errorMessage.value = message
-    appStore.showWarning(message)
+    sessionStorage.removeItem("auth_expired");
+    const message = "会话已过期，请重新登录。";
+    errorMessage.value = message;
+    appStore.showWarning(message);
   }
 
   try {
-    const settings = await getPublicSettings()
-    turnstileEnabled.value = settings.turnstile_enabled
-    turnstileSiteKey.value = settings.turnstile_site_key || ''
-    linuxdoOAuthEnabled.value = settings.linuxdo_oauth_enabled
-    passwordResetEnabled.value = settings.password_reset_enabled
+    const settings = await getPublicSettings();
+    turnstileEnabled.value = settings.turnstile_enabled;
+    turnstileSiteKey.value = settings.turnstile_site_key || "";
+    linuxdoOAuthEnabled.value = settings.linuxdo_oauth_enabled;
+    passwordResetEnabled.value = settings.password_reset_enabled;
   } catch (error) {
-    console.error('Failed to load public settings:', error)
+    console.error("Failed to load public settings:", error);
   }
-})
+});
 
 // ==================== Turnstile Handlers ====================
 
 function onTurnstileVerify(token: string): void {
-  turnstileToken.value = token
-  errors.turnstile = ''
+  turnstileToken.value = token;
+  errors.turnstile = "";
 }
 
 function onTurnstileExpire(): void {
-  turnstileToken.value = ''
-  errors.turnstile = '验证已过期，请重试'
+  turnstileToken.value = "";
+  errors.turnstile = "验证已过期，请重试";
 }
 
 function onTurnstileError(): void {
-  turnstileToken.value = ''
-  errors.turnstile = '验证失败，请重试'
+  turnstileToken.value = "";
+  errors.turnstile = "验证失败，请重试";
 }
 
 // ==================== Validation ====================
 
 function validateForm(): boolean {
   // Reset errors
-  errors.email = ''
-  errors.password = ''
-  errors.turnstile = ''
+  errors.email = "";
+  errors.password = "";
+  errors.turnstile = "";
 
-  let isValid = true
+  let isValid = true;
 
   // Email validation
   if (!formData.email.trim()) {
-    errors.email = '请输入邮箱'
-    isValid = false
+    errors.email = "请输入邮箱";
+    isValid = false;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-    errors.email = '请输入有效的邮箱地址'
-    isValid = false
+    errors.email = "请输入有效的邮箱地址";
+    isValid = false;
   }
 
   // Password validation
   if (!formData.password) {
-    errors.password = '请输入密码'
-    isValid = false
+    errors.password = "请输入密码";
+    isValid = false;
   } else if (formData.password.length < 6) {
-    errors.password = '密码至少需要 6 个字符'
-    isValid = false
+    errors.password = "密码至少需要 6 个字符";
+    isValid = false;
   }
 
   // Turnstile validation
   if (turnstileEnabled.value && !turnstileToken.value) {
-    errors.turnstile = '请完成验证'
-    isValid = false
+    errors.turnstile = "请完成验证";
+    isValid = false;
   }
 
-  return isValid
+  return isValid;
 }
 
 // ==================== Form Handlers ====================
 
 async function handleLogin(): Promise<void> {
   // Clear previous error
-  errorMessage.value = ''
+  errorMessage.value = "";
 
   // Validate form
   if (!validateForm()) {
-    return
+    return;
   }
 
-  isLoading.value = true
+  isLoading.value = true;
 
   try {
     // Call auth store login
     const response = await authStore.login({
       email: formData.email,
       password: formData.password,
-      turnstile_token: turnstileEnabled.value ? turnstileToken.value : undefined
-    })
+      turnstile_token: turnstileEnabled.value
+        ? turnstileToken.value
+        : undefined,
+    });
 
     // Check if 2FA is required
     if (isTotp2FARequired(response)) {
-      const totpResponse = response as TotpLoginResponse
-      totpTempToken.value = totpResponse.temp_token || ''
-      totpUserEmailMasked.value = totpResponse.user_email_masked || ''
-      show2FAModal.value = true
-      isLoading.value = false
-      return
+      const totpResponse = response as TotpLoginResponse;
+      totpTempToken.value = totpResponse.temp_token || "";
+      totpUserEmailMasked.value = totpResponse.user_email_masked || "";
+      show2FAModal.value = true;
+      isLoading.value = false;
+      return;
     }
 
     // Show success toast
-    appStore.showSuccess('登录成功！欢迎回来。')
+    appStore.showSuccess("登录成功！欢迎回来。");
 
     // Redirect to dashboard or intended route
-    const redirectTo = (router.currentRoute.value.query.redirect as string) || '/dashboard'
-    await router.push(redirectTo)
+    const redirectTo =
+      (router.currentRoute.value.query.redirect as string) || "/dashboard";
+    await router.push(redirectTo);
   } catch (error: unknown) {
     // Reset Turnstile on error
     if (turnstileRef.value) {
-      turnstileRef.value.reset()
-      turnstileToken.value = ''
+      turnstileRef.value.reset();
+      turnstileToken.value = "";
     }
 
     // Handle login error
-    const err = error as { message?: string; response?: { data?: { detail?: string } } }
+    const err = error as {
+      message?: string;
+      response?: { data?: { detail?: string } };
+    };
 
     if (err.response?.data?.detail) {
-      errorMessage.value = err.response.data.detail
+      errorMessage.value = err.response.data.detail;
     } else if (err.message) {
-      errorMessage.value = err.message
+      errorMessage.value = err.message;
     } else {
-      errorMessage.value = '登录失败，请检查您的凭据后重试。'
+      errorMessage.value = "登录失败，请检查您的凭据后重试。";
     }
 
     // Also show error toast
-    appStore.showError(errorMessage.value)
+    appStore.showError(errorMessage.value);
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 }
 
@@ -365,34 +383,39 @@ async function handleLogin(): Promise<void> {
 
 async function handle2FAVerify(code: string): Promise<void> {
   if (totpModalRef.value) {
-    totpModalRef.value.setVerifying(true)
+    totpModalRef.value.setVerifying(true);
   }
 
   try {
-    await authStore.login2FA(totpTempToken.value, code)
+    await authStore.login2FA(totpTempToken.value, code);
 
     // Close modal and show success
-    show2FAModal.value = false
-    appStore.showSuccess('登录成功！欢迎回来。')
+    show2FAModal.value = false;
+    appStore.showSuccess("登录成功！欢迎回来。");
 
     // Redirect to dashboard or intended route
-    const redirectTo = (router.currentRoute.value.query.redirect as string) || '/dashboard'
-    await router.push(redirectTo)
+    const redirectTo =
+      (router.currentRoute.value.query.redirect as string) || "/dashboard";
+    await router.push(redirectTo);
   } catch (error: unknown) {
-    const err = error as { message?: string; response?: { data?: { message?: string } } }
-    const message = err.response?.data?.message || err.message || '验证失败，请重试'
+    const err = error as {
+      message?: string;
+      response?: { data?: { message?: string } };
+    };
+    const message =
+      err.response?.data?.message || err.message || "验证失败，请重试";
 
     if (totpModalRef.value) {
-      totpModalRef.value.setError(message)
-      totpModalRef.value.setVerifying(false)
+      totpModalRef.value.setError(message);
+      totpModalRef.value.setVerifying(false);
     }
   }
 }
 
 function handle2FACancel(): void {
-  show2FAModal.value = false
-  totpTempToken.value = ''
-  totpUserEmailMasked.value = ''
+  show2FAModal.value = false;
+  totpTempToken.value = "";
+  totpUserEmailMasked.value = "";
 }
 </script>
 

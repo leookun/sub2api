@@ -1,33 +1,54 @@
 <template>
   <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="$emit('close')">
     <div class="flex min-h-full items-center justify-center p-4">
-      <div class="fixed inset-0 bg-black/50 transition-opacity" @click="$emit('close')"></div>
+      <div
+        class="fixed inset-0 bg-black/50 transition-opacity"
+        @click="$emit('close')"
+      ></div>
 
-      <div class="relative w-full max-w-md transform rounded-xl bg-white p-6 shadow-xl transition-all dark:bg-dark-800">
+      <div
+        class="relative w-full max-w-md transform rounded-xl bg-white p-6 shadow-xl transition-all dark:bg-dark-800"
+      >
         <!-- Header -->
         <div class="mb-6">
-          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
-            <svg class="h-6 w-6 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+          <div
+            class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30"
+          >
+            <svg
+              class="h-6 w-6 text-red-600 dark:text-red-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+              />
             </svg>
           </div>
-          <h3 class="mt-4 text-center text-xl font-semibold text-gray-900 dark:text-white">
-            {{ '禁用双因素认证' }}
+          <h3
+            class="mt-4 text-center text-xl font-semibold text-gray-900 dark:text-white"
+          >
+            {{ "禁用双因素认证" }}
           </h3>
           <p class="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
-            {{ '禁用后，登录时将不再需要验证码。这可能会降低您的账户安全性。' }}
+            {{ "禁用后，登录时将不再需要验证码。这可能会降低您的账户安全性。" }}
           </p>
         </div>
 
         <!-- Loading verification method -->
         <div v-if="methodLoading" class="flex items-center justify-center py-8">
-          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+          <div
+            class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"
+          ></div>
         </div>
 
         <form v-else class="space-y-4" @submit.prevent="handleDisable">
           <!-- Email verification -->
           <div v-if="verificationMethod === 'email'">
-            <label class="input-label">{{ '邮箱验证码' }}</label>
+            <label class="input-label">{{ "邮箱验证码" }}</label>
             <div class="flex gap-2">
               <input
                 v-model="form.emailCode"
@@ -43,7 +64,13 @@
                 :disabled="sendingCode || codeCooldown > 0"
                 @click="handleSendCode"
               >
-                {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? 'common.sending' : '发送验证码') }}
+                {{
+                  codeCooldown > 0
+                    ? `${codeCooldown}s`
+                    : sendingCode
+                      ? "common.sending"
+                      : "发送验证码"
+                }}
               </button>
             </div>
           </div>
@@ -51,7 +78,7 @@
           <!-- Password verification -->
           <div v-else>
             <label for="password" class="input-label">
-              {{ '当前密码' }}
+              {{ "当前密码" }}
             </label>
             <input
               id="password"
@@ -64,21 +91,28 @@
           </div>
 
           <!-- Error -->
-          <div v-if="error" class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/30 dark:text-red-400">
+          <div
+            v-if="error"
+            class="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/30 dark:text-red-400"
+          >
             {{ error }}
           </div>
 
           <!-- Actions -->
           <div class="flex justify-end gap-3 pt-4">
-            <button type="button" class="btn btn-secondary" @click="$emit('close')">
-              {{ '取消' }}
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="$emit('close')"
+            >
+              {{ "取消" }}
             </button>
             <button
               type="submit"
               class="btn btn-danger"
               :disabled="loading || !canSubmit"
             >
-              {{ loading ? '处理中...' : '确认禁用' }}
+              {{ loading ? "处理中..." : "确认禁用" }}
             </button>
           </div>
         </form>
@@ -88,90 +122,91 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { totpAPI } from '@/api'
+import { ref, onMounted, computed } from "vue";
+import { useAppStore } from "@/stores/app";
+import { totpAPI } from "@/api";
 
 const emit = defineEmits<{
-  close: []
-  success: []
-}>()
+  close: [];
+  success: [];
+}>();
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
-const methodLoading = ref(true)
-const verificationMethod = ref<'email' | 'password'>('password')
-const loading = ref(false)
-const error = ref('')
-const sendingCode = ref(false)
-const codeCooldown = ref(0)
+const methodLoading = ref(true);
+const verificationMethod = ref<"email" | "password">("password");
+const loading = ref(false);
+const error = ref("");
+const sendingCode = ref(false);
+const codeCooldown = ref(0);
 const form = ref({
-  emailCode: '',
-  password: ''
-})
+  emailCode: "",
+  password: "",
+});
 
 const canSubmit = computed(() => {
-  if (verificationMethod.value === 'email') {
-    return form.value.emailCode.length === 6
+  if (verificationMethod.value === "email") {
+    return form.value.emailCode.length === 6;
   }
-  return form.value.password.length > 0
-})
+  return form.value.password.length > 0;
+});
 
 const loadVerificationMethod = async () => {
-  methodLoading.value = true
+  methodLoading.value = true;
   try {
-    const method = await totpAPI.getVerificationMethod()
-    verificationMethod.value = method.method
+    const method = await totpAPI.getVerificationMethod();
+    verificationMethod.value = method.method;
   } catch (err: any) {
-    appStore.showError(err.response?.data?.message || '错误')
-    emit('close')
+    appStore.showError(err.response?.data?.message || "错误");
+    emit("close");
   } finally {
-    methodLoading.value = false
+    methodLoading.value = false;
   }
-}
+};
 
 const handleSendCode = async () => {
-  sendingCode.value = true
+  sendingCode.value = true;
   try {
-    await totpAPI.sendVerifyCode()
-    appStore.showSuccess('验证码已发送到您的邮箱')
+    await totpAPI.sendVerifyCode();
+    appStore.showSuccess("验证码已发送到您的邮箱");
     // Start cooldown
-    codeCooldown.value = 60
+    codeCooldown.value = 60;
     const timer = setInterval(() => {
-      codeCooldown.value--
+      codeCooldown.value--;
       if (codeCooldown.value <= 0) {
-        clearInterval(timer)
+        clearInterval(timer);
       }
-    }, 1000)
+    }, 1000);
   } catch (err: any) {
-    appStore.showError(err.response?.data?.message || '发送验证码失败')
+    appStore.showError(err.response?.data?.message || "发送验证码失败");
   } finally {
-    sendingCode.value = false
+    sendingCode.value = false;
   }
-}
+};
 
 const handleDisable = async () => {
-  if (!canSubmit.value) return
+  if (!canSubmit.value) return;
 
-  loading.value = true
-  error.value = ''
+  loading.value = true;
+  error.value = "";
 
   try {
-    const request = verificationMethod.value === 'email'
-      ? { email_code: form.value.emailCode }
-      : { password: form.value.password }
+    const request =
+      verificationMethod.value === "email"
+        ? { email_code: form.value.emailCode }
+        : { password: form.value.password };
 
-    await totpAPI.disable(request)
-    appStore.showSuccess('双因素认证已禁用')
-    emit('success')
+    await totpAPI.disable(request);
+    appStore.showSuccess("双因素认证已禁用");
+    emit("success");
   } catch (err: any) {
-    error.value = err.response?.data?.message || '禁用失败，请检查密码是否正确'
+    error.value = err.response?.data?.message || "禁用失败，请检查密码是否正确";
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 onMounted(() => {
-  loadVerificationMethod()
-})
+  loadVerificationMethod();
+});
 </script>

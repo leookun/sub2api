@@ -4,46 +4,52 @@
       <template #actions>
         <div class="flex justify-end gap-3">
           <button
-          :disabled="loading"
-          class="btn btn-secondary"
-          :title="'刷新'"
-          @click="loadCodes"
-        >
-          <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
-        </button>
-        <button class="btn btn-primary" @click="showGenerateDialog = true">
-          {{ '生成兑换码' }}
-        </button>
+            :disabled="loading"
+            class="btn btn-secondary"
+            :title="'刷新'"
+            @click="loadCodes"
+          >
+            <Icon
+              name="refresh"
+              size="md"
+              :class="loading ? 'animate-spin' : ''"
+            />
+          </button>
+          <button class="btn btn-primary" @click="showGenerateDialog = true">
+            {{ "生成兑换码" }}
+          </button>
         </div>
       </template>
 
       <template #filters>
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
           <div class="max-w-md flex-1">
-          <input
-            v-model="searchQuery"
-            type="text"
-            :placeholder="'搜索兑换码...'"
-            class="input"
-            @input="handleSearch"
-          />
+            <input
+              v-model="searchQuery"
+              type="text"
+              :placeholder="'搜索兑换码...'"
+              class="input"
+              @input="handleSearch"
+            />
           </div>
           <div class="flex gap-2">
-          <Select
-            v-model="filters.type"
-            :options="filterTypeOptions"
-            class="w-36"
-            @change="loadCodes"
-          />
-          <Select
-            v-model="filters.status"
-            :options="filterStatusOptions"
-            class="w-36"
-            @change="loadCodes"
-          />
-          <button class="btn btn-secondary" @click="handleExportCodes">
-            {{ '导出 CSV' }}
-          </button>
+            <Select
+              v-model="filters.type"
+              :options="filterTypeOptions"
+              class="w-36"
+              @change="loadCodes"
+            />
+            <Select
+              v-model="filters.status"
+              :options="filterStatusOptions"
+              class="w-36"
+              @change="loadCodes"
+            />
+            <button class="btn btn-secondary" @click="handleExportCodes">
+              {{ "导出 CSV" }}
+            </button>
           </div>
         </div>
       </template>
@@ -52,19 +58,33 @@
         <DataTable :columns="columns" :data="codes" :loading="loading">
           <template #cell-code="{ value }">
             <div class="flex items-center space-x-2">
-              <code class="font-mono text-sm text-gray-900 dark:text-gray-100">{{ value }}</code>
+              <code
+                class="font-mono text-sm text-gray-900 dark:text-gray-100"
+                >{{ value }}</code
+              >
               <button
                 :class="[
                   'flex items-center transition-colors',
                   copiedCode === value
                     ? 'text-green-500'
-                    : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                    : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300',
                 ]"
                 :title="copiedCode === value ? '已复制！' : '复制到剪贴板'"
                 @click="copyToClipboard(value)"
               >
-                <Icon v-if="copiedCode !== value" name="copy" size="sm" :stroke-width="2" />
-                <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <Icon
+                  v-if="copiedCode !== value"
+                  name="copy"
+                  size="sm"
+                  :stroke-width="2"
+                />
+                <svg
+                  v-else
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -84,19 +104,29 @@
                   ? 'badge-success'
                   : value === 'subscription'
                     ? 'badge-warning'
-                    : 'badge-primary'
+                    : 'badge-primary',
               ]"
             >
-              {{ value === 'balance' ? '余额' : value === 'subscription' ? '订阅' : value }}
+              {{
+                value === "balance"
+                  ? "余额"
+                  : value === "subscription"
+                    ? "订阅"
+                    : value
+              }}
             </span>
           </template>
 
           <template #cell-value="{ value, row }">
             <span class="text-sm font-medium text-gray-900 dark:text-white">
-              <template v-if="row.type === 'balance'">${{ value.toFixed(2) }}</template>
+              <template v-if="row.type === 'balance'"
+                >${{ value.toFixed(2) }}</template
+              >
               <template v-else-if="row.type === 'subscription'">
-                {{ row.validity_days || 30 }} {{ '天' }}
-                <span v-if="row.group" class="ml-1 text-xs text-gray-500 dark:text-gray-400"
+                {{ row.validity_days || 30 }} {{ "天" }}
+                <span
+                  v-if="row.group"
+                  class="ml-1 text-xs text-gray-500 dark:text-gray-400"
                   >({{ row.group.name }})</span
                 >
               </template>
@@ -112,22 +142,28 @@
                   ? 'badge-success'
                   : value === 'used'
                     ? 'badge-gray'
-                    : 'badge-danger'
+                    : 'badge-danger',
               ]"
             >
-              {{ value === 'unused' ? '未使用' : value === 'used' ? '已使用' : '已过期' }}
+              {{
+                value === "unused"
+                  ? "未使用"
+                  : value === "used"
+                    ? "已使用"
+                    : "已过期"
+              }}
             </span>
           </template>
 
           <template #cell-used_by="{ value }">
             <span class="text-sm text-gray-500 dark:text-dark-400">
-              {{ value ? `用户 #${value}` : '-' }}
+              {{ value ? `用户 #${value}` : "-" }}
             </span>
           </template>
 
           <template #cell-used_at="{ value }">
             <span class="text-sm text-gray-500 dark:text-dark-400">{{
-              value ? formatDateTime(value) : '-'
+              value ? formatDateTime(value) : "-"
             }}</span>
           </template>
 
@@ -138,7 +174,12 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
                 @click="handleDelete(row)"
               >
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -146,7 +187,7 @@
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                   />
                 </svg>
-                <span class="text-xs">{{ '删除' }}</span>
+                <span class="text-xs">{{ "删除" }}</span>
               </button>
               <span v-else class="text-gray-400 dark:text-dark-500">-</span>
             </div>
@@ -167,7 +208,7 @@
         <!-- Batch Actions -->
         <div v-if="filters.status === 'unused'" class="flex justify-end">
           <button class="btn btn-danger" @click="showDeleteUnusedDialog = true">
-            {{ '删除全部未使用' }}
+            {{ "删除全部未使用" }}
           </button>
         </div>
       </template>
@@ -199,27 +240,29 @@
 
     <!-- Generate Codes Dialog -->
     <Teleport to="body">
-      <div v-if="showGenerateDialog" class="fixed inset-0 z-50 flex items-center justify-center">
-        <div class="fixed inset-0 bg-black/50" @click="showGenerateDialog = false"></div>
+      <div
+        v-if="showGenerateDialog"
+        class="fixed inset-0 z-50 flex items-center justify-center"
+      >
+        <div
+          class="fixed inset-0 bg-black/50"
+          @click="showGenerateDialog = false"
+        ></div>
         <div
           class="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-dark-800"
         >
           <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-            {{ '生成兑换码' }}
+            {{ "生成兑换码" }}
           </h2>
           <form class="space-y-4" @submit.prevent="handleGenerateCodes">
             <div>
-              <label class="input-label">{{ '类型' }}</label>
+              <label class="input-label">{{ "类型" }}</label>
               <Select v-model="generateForm.type" :options="typeOptions" />
             </div>
             <!-- 余额/并发类型：显示数值输入 -->
             <div v-if="generateForm.type !== 'subscription'">
               <label class="input-label">
-                {{
-                  generateForm.type === 'balance'
-                    ? '金额 ($)'
-                    : '面值'
-                }}
+                {{ generateForm.type === "balance" ? "金额 ($)" : "面值" }}
               </label>
               <input
                 v-model.number="generateForm.value"
@@ -233,7 +276,7 @@
             <!-- 订阅类型：显示分组选择和有效天数 -->
             <template v-if="generateForm.type === 'subscription'">
               <div>
-                <label class="input-label">{{ '选择分组' }}</label>
+                <label class="input-label">{{ "选择分组" }}</label>
                 <Select
                   v-model="generateForm.group_id"
                   :options="subscriptionGroupOptions"
@@ -244,27 +287,33 @@
                       v-if="option"
                       :name="(option as unknown as GroupOption).label"
                       :platform="(option as unknown as GroupOption).platform"
-                      :subscription-type="(option as unknown as GroupOption).subscriptionType"
+                      :subscription-type="
+                        (option as unknown as GroupOption).subscriptionType
+                      "
                       :rate-multiplier="(option as unknown as GroupOption).rate"
                     />
                     <span v-else class="text-gray-400">{{
-                      '选择订阅分组'
+                      "选择订阅分组"
                     }}</span>
                   </template>
                   <template #option="{ option, selected }">
                     <GroupOptionItem
                       :name="(option as unknown as GroupOption).label"
                       :platform="(option as unknown as GroupOption).platform"
-                      :subscription-type="(option as unknown as GroupOption).subscriptionType"
+                      :subscription-type="
+                        (option as unknown as GroupOption).subscriptionType
+                      "
                       :rate-multiplier="(option as unknown as GroupOption).rate"
-                      :description="(option as unknown as GroupOption).description"
+                      :description="
+                        (option as unknown as GroupOption).description
+                      "
                       :selected="selected"
                     />
                   </template>
                 </Select>
               </div>
               <div>
-                <label class="input-label">{{ '有效天数' }}</label>
+                <label class="input-label">{{ "有效天数" }}</label>
                 <input
                   v-model.number="generateForm.validity_days"
                   type="number"
@@ -276,7 +325,7 @@
               </div>
             </template>
             <div>
-              <label class="input-label">{{ '数量' }}</label>
+              <label class="input-label">{{ "数量" }}</label>
               <input
                 v-model.number="generateForm.count"
                 type="number"
@@ -287,11 +336,19 @@
               />
             </div>
             <div class="flex justify-end gap-3 pt-2">
-              <button type="button" class="btn btn-secondary" @click="showGenerateDialog = false">
-                {{ '取消' }}
+              <button
+                type="button"
+                class="btn btn-secondary"
+                @click="showGenerateDialog = false"
+              >
+                {{ "取消" }}
               </button>
-              <button type="submit" :disabled="generating" class="btn btn-primary">
-                {{ generating ? '生成中...' : '生成' }}
+              <button
+                type="submit"
+                :disabled="generating"
+                class="btn btn-primary"
+              >
+                {{ generating ? "生成中..." : "生成" }}
               </button>
             </div>
           </form>
@@ -301,9 +358,14 @@
 
     <!-- Generated Codes Result Dialog -->
     <Teleport to="body">
-      <div v-if="showResultDialog" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div
+        v-if="showResultDialog"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4"
+      >
         <div class="fixed inset-0 bg-black/50" @click="closeResultDialog"></div>
-        <div class="relative z-10 w-full max-w-lg rounded-xl bg-white shadow-xl dark:bg-dark-800">
+        <div
+          class="relative z-10 w-full max-w-lg rounded-xl bg-white shadow-xl dark:bg-dark-800"
+        >
           <!-- Header -->
           <div
             class="flex items-center justify-between border-b border-gray-200 px-5 py-4 dark:border-dark-600"
@@ -327,8 +389,10 @@
                 </svg>
               </div>
               <div>
-                <h2 class="text-base font-semibold text-gray-900 dark:text-white">
-                  {{ '生成成功' }}
+                <h2
+                  class="text-base font-semibold text-gray-900 dark:text-white"
+                >
+                  {{ "生成成功" }}
                 </h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
                   {{ `已创建 ${generatedCodes.length} 个兑换码` }}
@@ -360,12 +424,18 @@
             <button
               :class="[
                 'btn flex items-center gap-2 transition-all',
-                copiedAll ? 'btn-success' : 'btn-secondary'
+                copiedAll ? 'btn-success' : 'btn-secondary',
               ]"
               @click="copyGeneratedCodes"
             >
               <Icon v-if="!copiedAll" name="copy" size="sm" :stroke-width="2" />
-              <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                v-else
+                class="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -373,11 +443,14 @@
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              {{ copiedAll ? '已复制！' : '全部复制' }}
+              {{ copiedAll ? "已复制！" : "全部复制" }}
             </button>
-            <button class="btn btn-primary flex items-center gap-2" @click="downloadGeneratedCodes">
+            <button
+              class="btn btn-primary flex items-center gap-2"
+              @click="downloadGeneratedCodes"
+            >
               <Icon name="download" size="sm" :stroke-width="2" />
-              {{ '下载' }}
+              {{ "下载" }}
             </button>
           </div>
         </div>
@@ -387,160 +460,166 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { useClipboard } from '@/composables/useClipboard'
-import { adminAPI } from '@/api/admin'
-import type { RedeemCode, RedeemCodeType, Group, GroupPlatform, SubscriptionType } from '@/types'
-import type { Column } from '@/components/common/types'
+import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
+import { useAppStore } from "@/stores/app";
+import { useClipboard } from "@/composables/useClipboard";
+import { adminAPI } from "@/api/admin";
+import type {
+  RedeemCode,
+  RedeemCodeType,
+  Group,
+  GroupPlatform,
+  SubscriptionType,
+} from "@/types";
+import type { Column } from "@/components/common/types";
 
-const appStore = useAppStore()
-const { copyToClipboard: clipboardCopy } = useClipboard()
+const appStore = useAppStore();
+const { copyToClipboard: clipboardCopy } = useClipboard();
 
 interface GroupOption {
-  value: number
-  label: string
-  description: string | null
-  platform: GroupPlatform
-  subscriptionType: SubscriptionType
-  rate: number
+  value: number;
+  label: string;
+  description: string | null;
+  platform: GroupPlatform;
+  subscriptionType: SubscriptionType;
+  rate: number;
 }
 
-const showGenerateDialog = ref(false)
-const showResultDialog = ref(false)
-const generatedCodes = ref<RedeemCode[]>([])
-const subscriptionGroups = ref<Group[]>([])
+const showGenerateDialog = ref(false);
+const showResultDialog = ref(false);
+const generatedCodes = ref<RedeemCode[]>([]);
+const subscriptionGroups = ref<Group[]>([]);
 
 // 订阅类型分组选项
 const subscriptionGroupOptions = computed(() => {
   return subscriptionGroups.value
-    .filter((g) => g.subscription_type === 'subscription')
+    .filter((g) => g.subscription_type === "subscription")
     .map((g) => ({
       value: g.id,
       label: g.name,
       description: g.description,
       platform: g.platform,
       subscriptionType: g.subscription_type,
-      rate: g.rate_multiplier
-    }))
-})
+      rate: g.rate_multiplier,
+    }));
+});
 
 const generatedCodesText = computed(() => {
-  return generatedCodes.value.map((code) => code.code).join('\n')
-})
+  return generatedCodes.value.map((code) => code.code).join("\n");
+});
 
 const textareaHeight = computed(() => {
-  const lineCount = generatedCodes.value.length
-  const lineHeight = 24 // approximate line height in px
-  const padding = 24 // top + bottom padding
-  const minHeight = 60
-  const maxHeight = 240
+  const lineCount = generatedCodes.value.length;
+  const lineHeight = 24; // approximate line height in px
+  const padding = 24; // top + bottom padding
+  const minHeight = 60;
+  const maxHeight = 240;
   const calculatedHeight = Math.min(
     Math.max(lineCount * lineHeight + padding, minHeight),
-    maxHeight
-  )
-  return `${calculatedHeight}px`
-})
+    maxHeight,
+  );
+  return `${calculatedHeight}px`;
+});
 
-const copiedAll = ref(false)
+const copiedAll = ref(false);
 
 const closeResultDialog = () => {
-  showResultDialog.value = false
-  generatedCodes.value = []
-  copiedAll.value = false
-}
+  showResultDialog.value = false;
+  generatedCodes.value = [];
+  copiedAll.value = false;
+};
 
 const copyGeneratedCodes = async () => {
   try {
-    await navigator.clipboard.writeText(generatedCodesText.value)
-    copiedAll.value = true
+    await navigator.clipboard.writeText(generatedCodesText.value);
+    copiedAll.value = true;
     setTimeout(() => {
-      copiedAll.value = false
-    }, 2000)
+      copiedAll.value = false;
+    }, 2000);
   } catch {
-    appStore.showError('复制失败')
+    appStore.showError("复制失败");
   }
-}
+};
 
 const downloadGeneratedCodes = () => {
-  const blob = new Blob([generatedCodesText.value], { type: 'text/plain' })
-  const url = window.URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = `redeem-codes-${new Date().toISOString().split('T')[0]}.txt`
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-  window.URL.revokeObjectURL(url)
-}
+  const blob = new Blob([generatedCodesText.value], { type: "text/plain" });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `redeem-codes-${new Date().toISOString().split("T")[0]}.txt`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+};
 
 const columns = computed<Column[]>(() => [
-  { key: 'code', label: '兑换码' },
-  { key: 'type', label: '类型', sortable: true },
-  { key: 'value', label: '面值', sortable: true },
-  { key: 'status', label: '状态', sortable: true },
-  { key: 'used_by', label: '使用者' },
-  { key: 'used_at', label: '使用时间', sortable: true },
-  { key: 'actions', label: '操作' }
-])
+  { key: "code", label: "兑换码" },
+  { key: "type", label: "类型", sortable: true },
+  { key: "value", label: "面值", sortable: true },
+  { key: "status", label: "状态", sortable: true },
+  { key: "used_by", label: "使用者" },
+  { key: "used_at", label: "使用时间", sortable: true },
+  { key: "actions", label: "操作" },
+]);
 
 const typeOptions = computed(() => [
-  { value: 'balance', label: '余额' },
-  { value: 'concurrency', label: '并发数' },
-  { value: 'subscription', label: '订阅' }
-])
+  { value: "balance", label: "余额" },
+  { value: "concurrency", label: "并发数" },
+  { value: "subscription", label: "订阅" },
+]);
 
 const filterTypeOptions = computed(() => [
-  { value: '', label: '全部类型' },
-  { value: 'balance', label: '余额' },
-  { value: 'concurrency', label: '并发数' },
-  { value: 'subscription', label: '订阅' }
-])
+  { value: "", label: "全部类型" },
+  { value: "balance", label: "余额" },
+  { value: "concurrency", label: "并发数" },
+  { value: "subscription", label: "订阅" },
+]);
 
 const filterStatusOptions = computed(() => [
-  { value: '', label: '全部状态' },
-  { value: 'unused', label: '未使用' },
-  { value: 'used', label: '已使用' },
-  { value: 'expired', label: '已过期' }
-])
+  { value: "", label: "全部状态" },
+  { value: "unused", label: "未使用" },
+  { value: "used", label: "已使用" },
+  { value: "expired", label: "已过期" },
+]);
 
-const codes = ref<RedeemCode[]>([])
-const loading = ref(false)
-const generating = ref(false)
-const searchQuery = ref('')
+const codes = ref<RedeemCode[]>([]);
+const loading = ref(false);
+const generating = ref(false);
+const searchQuery = ref("");
 const filters = reactive({
-  type: '',
-  status: ''
-})
+  type: "",
+  status: "",
+});
 const pagination = reactive({
   page: 1,
   page_size: 20,
   total: 0,
-  pages: 0
-})
+  pages: 0,
+});
 
-let abortController: AbortController | null = null
+let abortController: AbortController | null = null;
 
-const showDeleteDialog = ref(false)
-const showDeleteUnusedDialog = ref(false)
-const deletingCode = ref<RedeemCode | null>(null)
-const copiedCode = ref<string | null>(null)
+const showDeleteDialog = ref(false);
+const showDeleteUnusedDialog = ref(false);
+const deletingCode = ref<RedeemCode | null>(null);
+const copiedCode = ref<string | null>(null);
 
 const generateForm = reactive({
-  type: 'balance' as RedeemCodeType,
+  type: "balance" as RedeemCodeType,
   value: 10,
   count: 1,
   group_id: null as number | null,
-  validity_days: 30
-})
+  validity_days: 30,
+});
 
 const loadCodes = async () => {
   if (abortController) {
-    abortController.abort()
+    abortController.abort();
   }
-  const currentController = new AbortController()
-  abortController = currentController
-  loading.value = true
+  const currentController = new AbortController();
+  abortController = currentController;
+  loading.value = true;
   try {
     const response = await adminAPI.redeem.list(
       pagination.page,
@@ -548,180 +627,189 @@ const loadCodes = async () => {
       {
         type: filters.type as RedeemCodeType,
         status: filters.status as any,
-        search: searchQuery.value || undefined
+        search: searchQuery.value || undefined,
       },
       {
-        signal: currentController.signal
-      }
-    )
+        signal: currentController.signal,
+      },
+    );
     if (currentController.signal.aborted) {
-      return
+      return;
     }
-    codes.value = response.items
-    pagination.total = response.total
-    pagination.pages = response.pages
+    codes.value = response.items;
+    pagination.total = response.total;
+    pagination.pages = response.pages;
   } catch (error: any) {
     if (
       currentController.signal.aborted ||
-      error?.name === 'AbortError' ||
-      error?.code === 'ERR_CANCELED'
+      error?.name === "AbortError" ||
+      error?.code === "ERR_CANCELED"
     ) {
-      return
+      return;
     }
-    appStore.showError('加载兑换码列表失败')
-    console.error('Error loading redeem codes:', error)
+    appStore.showError("加载兑换码列表失败");
+    console.error("Error loading redeem codes:", error);
   } finally {
-    if (abortController === currentController && !currentController.signal.aborted) {
-      loading.value = false
-      abortController = null
+    if (
+      abortController === currentController &&
+      !currentController.signal.aborted
+    ) {
+      loading.value = false;
+      abortController = null;
     }
   }
-}
+};
 
-let searchTimeout: ReturnType<typeof setTimeout>
+let searchTimeout: ReturnType<typeof setTimeout>;
 const handleSearch = () => {
-  clearTimeout(searchTimeout)
+  clearTimeout(searchTimeout);
   searchTimeout = setTimeout(() => {
-    pagination.page = 1
-    loadCodes()
-  }, 300)
-}
+    pagination.page = 1;
+    loadCodes();
+  }, 300);
+};
 
 const handlePageChange = (page: number) => {
-  pagination.page = page
-  loadCodes()
-}
+  pagination.page = page;
+  loadCodes();
+};
 
 const handlePageSizeChange = (pageSize: number) => {
-  pagination.page_size = pageSize
-  pagination.page = 1
-  loadCodes()
-}
+  pagination.page_size = pageSize;
+  pagination.page = 1;
+  loadCodes();
+};
 
 const handleGenerateCodes = async () => {
   // 订阅类型必须选择分组
-  if (generateForm.type === 'subscription' && !generateForm.group_id) {
-    appStore.showError('请选择订阅分组')
-    return
+  if (generateForm.type === "subscription" && !generateForm.group_id) {
+    appStore.showError("请选择订阅分组");
+    return;
   }
 
-  generating.value = true
+  generating.value = true;
   try {
     const result = await adminAPI.redeem.generate(
       generateForm.count,
       generateForm.type,
       generateForm.value,
-      generateForm.type === 'subscription' ? generateForm.group_id : undefined,
-      generateForm.type === 'subscription' ? generateForm.validity_days : undefined
-    )
-    showGenerateDialog.value = false
-    generatedCodes.value = result
-    showResultDialog.value = true
+      generateForm.type === "subscription" ? generateForm.group_id : undefined,
+      generateForm.type === "subscription"
+        ? generateForm.validity_days
+        : undefined,
+    );
+    showGenerateDialog.value = false;
+    generatedCodes.value = result;
+    showResultDialog.value = true;
     // 重置表单
-    generateForm.group_id = null
-    generateForm.validity_days = 30
-    loadCodes()
+    generateForm.group_id = null;
+    generateForm.validity_days = 30;
+    loadCodes();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '生成兑换码失败')
-    console.error('Error generating codes:', error)
+    appStore.showError(error.response?.data?.detail || "生成兑换码失败");
+    console.error("Error generating codes:", error);
   } finally {
-    generating.value = false
+    generating.value = false;
   }
-}
+};
 
 const copyToClipboard = async (text: string) => {
-  const success = await clipboardCopy(text, '已复制！')
+  const success = await clipboardCopy(text, "已复制！");
   if (success) {
-    copiedCode.value = text
+    copiedCode.value = text;
     setTimeout(() => {
-      copiedCode.value = null
-    }, 2000)
+      copiedCode.value = null;
+    }, 2000);
   }
-}
+};
 
 const handleExportCodes = async () => {
   try {
     const blob = await adminAPI.redeem.exportCodes({
       type: filters.type as RedeemCodeType,
-      status: filters.status as any
-    })
+      status: filters.status as any,
+    });
 
     // Create download link
-    const url = window.URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `redeem-codes-${new Date().toISOString().split('T')[0]}.csv`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    window.URL.revokeObjectURL(url)
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `redeem-codes-${new Date().toISOString().split("T")[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
 
-    appStore.showSuccess('兑换码导出成功')
+    appStore.showSuccess("兑换码导出成功");
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '导出兑换码失败')
-    console.error('Error exporting codes:', error)
+    appStore.showError(error.response?.data?.detail || "导出兑换码失败");
+    console.error("Error exporting codes:", error);
   }
-}
+};
 
 const handleDelete = (code: RedeemCode) => {
-  deletingCode.value = code
-  showDeleteDialog.value = true
-}
+  deletingCode.value = code;
+  showDeleteDialog.value = true;
+};
 
 const confirmDelete = async () => {
-  if (!deletingCode.value) return
+  if (!deletingCode.value) return;
 
   try {
-    await adminAPI.redeem.delete(deletingCode.value.id)
-    appStore.showSuccess('兑换码删除成功')
-    showDeleteDialog.value = false
-    deletingCode.value = null
-    loadCodes()
+    await adminAPI.redeem.delete(deletingCode.value.id);
+    appStore.showSuccess("兑换码删除成功");
+    showDeleteDialog.value = false;
+    deletingCode.value = null;
+    loadCodes();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '删除兑换码失败')
-    console.error('Error deleting code:', error)
+    appStore.showError(error.response?.data?.detail || "删除兑换码失败");
+    console.error("Error deleting code:", error);
   }
-}
+};
 
 const confirmDeleteUnused = async () => {
   try {
     // Get all unused codes and delete them
-    const unusedCodesResponse = await adminAPI.redeem.list(1, 1000, { status: 'unused' })
-    const unusedCodeIds = unusedCodesResponse.items.map((code) => code.id)
+    const unusedCodesResponse = await adminAPI.redeem.list(1, 1000, {
+      status: "unused",
+    });
+    const unusedCodeIds = unusedCodesResponse.items.map((code) => code.id);
 
     if (unusedCodeIds.length === 0) {
-      appStore.showInfo('没有未使用的兑换码可删除')
-      showDeleteUnusedDialog.value = false
-      return
+      appStore.showInfo("没有未使用的兑换码可删除");
+      showDeleteUnusedDialog.value = false;
+      return;
     }
 
-    const result = await adminAPI.redeem.batchDelete(unusedCodeIds)
-    appStore.showSuccess(`成功删除 ${result.deleted} 个未使用的兑换码`)
-    showDeleteUnusedDialog.value = false
-    loadCodes()
+    const result = await adminAPI.redeem.batchDelete(unusedCodeIds);
+    appStore.showSuccess(`成功删除 ${result.deleted} 个未使用的兑换码`);
+    showDeleteUnusedDialog.value = false;
+    loadCodes();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '删除未使用的兑换码失败')
-    console.error('Error deleting unused codes:', error)
+    appStore.showError(
+      error.response?.data?.detail || "删除未使用的兑换码失败",
+    );
+    console.error("Error deleting unused codes:", error);
   }
-}
+};
 
 // 加载订阅类型分组
 const loadSubscriptionGroups = async () => {
   try {
-    const groups = await adminAPI.groups.getAll()
-    subscriptionGroups.value = groups
+    const groups = await adminAPI.groups.getAll();
+    subscriptionGroups.value = groups;
   } catch (error) {
-    console.error('Error loading subscription groups:', error)
+    console.error("Error loading subscription groups:", error);
   }
-}
+};
 
 onMounted(() => {
-  loadCodes()
-  loadSubscriptionGroups()
-})
+  loadCodes();
+  loadSubscriptionGroups();
+});
 
 onUnmounted(() => {
-  clearTimeout(searchTimeout)
-  abortController?.abort()
-})
+  clearTimeout(searchTimeout);
+  abortController?.abort();
+});
 </script>

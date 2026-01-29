@@ -4,26 +4,34 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ '设置新密码' }}
+          {{ "设置新密码" }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ '请在下方输入您的新密码。' }}
+          {{ "请在下方输入您的新密码。" }}
         </p>
       </div>
 
       <!-- Invalid Link State -->
       <div v-if="isInvalidLink" class="space-y-6">
-        <div class="rounded-xl border border-red-200 bg-red-50 p-6 dark:border-red-800/50 dark:bg-red-900/20">
+        <div
+          class="rounded-xl border border-red-200 bg-red-50 p-6 dark:border-red-800/50 dark:bg-red-900/20"
+        >
           <div class="flex flex-col items-center gap-4 text-center">
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-800/50">
-              <Icon name="exclamationCircle" size="lg" class="text-red-600 dark:text-red-400" />
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-800/50"
+            >
+              <Icon
+                name="exclamationCircle"
+                size="lg"
+                class="text-red-600 dark:text-red-400"
+              />
             </div>
             <div>
               <h3 class="text-lg font-semibold text-red-800 dark:text-red-200">
-                {{ '无效的重置链接' }}
+                {{ "无效的重置链接" }}
               </h3>
               <p class="mt-2 text-sm text-red-700 dark:text-red-300">
-                {{ '此密码重置链接无效或已过期。请重新请求一个新链接。' }}
+                {{ "此密码重置链接无效或已过期。请重新请求一个新链接。" }}
               </p>
             </div>
           </div>
@@ -34,24 +42,34 @@
             to="/forgot-password"
             class="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
-            {{ '请求新的重置链接' }}
+            {{ "请求新的重置链接" }}
           </router-link>
         </div>
       </div>
 
       <!-- Success State -->
       <div v-else-if="isSuccess" class="space-y-6">
-        <div class="rounded-xl border border-green-200 bg-green-50 p-6 dark:border-green-800/50 dark:bg-green-900/20">
+        <div
+          class="rounded-xl border border-green-200 bg-green-50 p-6 dark:border-green-800/50 dark:bg-green-900/20"
+        >
           <div class="flex flex-col items-center gap-4 text-center">
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-800/50">
-              <Icon name="checkCircle" size="lg" class="text-green-600 dark:text-green-400" />
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-800/50"
+            >
+              <Icon
+                name="checkCircle"
+                size="lg"
+                class="text-green-600 dark:text-green-400"
+              />
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-green-800 dark:text-green-200">
-                {{ '密码重置成功' }}
+              <h3
+                class="text-lg font-semibold text-green-800 dark:text-green-200"
+              >
+                {{ "密码重置成功" }}
               </h3>
               <p class="mt-2 text-sm text-green-700 dark:text-green-300">
-                {{ '您的密码已重置。现在可以使用新密码登录。' }}
+                {{ "您的密码已重置。现在可以使用新密码登录。" }}
               </p>
             </div>
           </div>
@@ -63,7 +81,7 @@
             class="btn btn-primary inline-flex items-center gap-2"
           >
             <Icon name="login" size="md" />
-            {{ '登录' }}
+            {{ "登录" }}
           </router-link>
         </div>
       </div>
@@ -73,11 +91,17 @@
         <!-- Email (readonly) -->
         <div>
           <label for="email" class="input-label">
-            {{ '邮箱' }}
+            {{ "邮箱" }}
           </label>
           <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-              <Icon name="mail" size="md" class="text-gray-400 dark:text-dark-500" />
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
+            >
+              <Icon
+                name="mail"
+                size="md"
+                class="text-gray-400 dark:text-dark-500"
+              />
             </div>
             <input
               id="email"
@@ -93,11 +117,17 @@
         <!-- New Password Input -->
         <div>
           <label for="password" class="input-label">
-            {{ '新密码' }}
+            {{ "新密码" }}
           </label>
           <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-              <Icon name="lock" size="md" class="text-gray-400 dark:text-dark-500" />
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
+            >
+              <Icon
+                name="lock"
+                size="md"
+                class="text-gray-400 dark:text-dark-500"
+              />
             </div>
             <input
               id="password"
@@ -127,11 +157,17 @@
         <!-- Confirm Password Input -->
         <div>
           <label for="confirmPassword" class="input-label">
-            {{ '确认密码' }}
+            {{ "确认密码" }}
           </label>
           <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-              <Icon name="lock" size="md" class="text-gray-400 dark:text-dark-500" />
+            <div
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
+            >
+              <Icon
+                name="lock"
+                size="md"
+                class="text-gray-400 dark:text-dark-500"
+              />
             </div>
             <input
               id="confirmPassword"
@@ -202,7 +238,7 @@
             ></path>
           </svg>
           <Icon v-else name="checkCircle" size="md" class="mr-2" />
-          {{ isLoading ? '重置中...' : '重置密码' }}
+          {{ isLoading ? "重置中..." : "重置密码" }}
         </button>
       </form>
     </div>
@@ -210,12 +246,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ '想起密码了？' }}
+        {{ "想起密码了？" }}
         <router-link
           to="/login"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ '登录' }}
+          {{ "登录" }}
         </router-link>
       </p>
     </template>
@@ -223,115 +259,118 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import { useAppStore } from '@/stores'
-import { resetPassword } from '@/api/auth'
+import { ref, reactive, computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { useAppStore } from "@/stores";
+import { resetPassword } from "@/api/auth";
 
 // ==================== Router & Stores ====================
 
-const route = useRoute()
-const appStore = useAppStore()
+const route = useRoute();
+const appStore = useAppStore();
 
 // ==================== State ====================
 
-const isLoading = ref<boolean>(false)
-const isSuccess = ref<boolean>(false)
-const errorMessage = ref<string>('')
-const showPassword = ref<boolean>(false)
-const showConfirmPassword = ref<boolean>(false)
+const isLoading = ref<boolean>(false);
+const isSuccess = ref<boolean>(false);
+const errorMessage = ref<string>("");
+const showPassword = ref<boolean>(false);
+const showConfirmPassword = ref<boolean>(false);
 
 // URL parameters
-const email = ref<string>('')
-const token = ref<string>('')
+const email = ref<string>("");
+const token = ref<string>("");
 
 const formData = reactive({
-  password: '',
-  confirmPassword: ''
-})
+  password: "",
+  confirmPassword: "",
+});
 
 const errors = reactive({
-  password: '',
-  confirmPassword: ''
-})
+  password: "",
+  confirmPassword: "",
+});
 
 // Check if the reset link is valid (has email and token)
-const isInvalidLink = computed(() => !email.value || !token.value)
+const isInvalidLink = computed(() => !email.value || !token.value);
 
 // ==================== Lifecycle ====================
 
 onMounted(() => {
   // Get email and token from URL query parameters
-  email.value = (route.query.email as string) || ''
-  token.value = (route.query.token as string) || ''
-})
+  email.value = (route.query.email as string) || "";
+  token.value = (route.query.token as string) || "";
+});
 
 // ==================== Validation ====================
 
 function validateForm(): boolean {
-  errors.password = ''
-  errors.confirmPassword = ''
+  errors.password = "";
+  errors.confirmPassword = "";
 
-  let isValid = true
+  let isValid = true;
 
   // Password validation
   if (!formData.password) {
-    errors.password = '请输入密码'
-    isValid = false
+    errors.password = "请输入密码";
+    isValid = false;
   } else if (formData.password.length < 6) {
-    errors.password = '密码至少需要 6 个字符'
-    isValid = false
+    errors.password = "密码至少需要 6 个字符";
+    isValid = false;
   }
 
   // Confirm password validation
   if (!formData.confirmPassword) {
-    errors.confirmPassword = '请确认您的密码'
-    isValid = false
+    errors.confirmPassword = "请确认您的密码";
+    isValid = false;
   } else if (formData.password !== formData.confirmPassword) {
-    errors.confirmPassword = '两次输入的密码不一致'
-    isValid = false
+    errors.confirmPassword = "两次输入的密码不一致";
+    isValid = false;
   }
 
-  return isValid
+  return isValid;
 }
 
 // ==================== Form Handlers ====================
 
 async function handleSubmit(): Promise<void> {
-  errorMessage.value = ''
+  errorMessage.value = "";
 
   if (!validateForm()) {
-    return
+    return;
   }
 
-  isLoading.value = true
+  isLoading.value = true;
 
   try {
     await resetPassword({
       email: email.value,
       token: token.value,
-      new_password: formData.password
-    })
+      new_password: formData.password,
+    });
 
-    isSuccess.value = true
-    appStore.showSuccess('密码重置成功')
+    isSuccess.value = true;
+    appStore.showSuccess("密码重置成功");
   } catch (error: unknown) {
-    const err = error as { message?: string; response?: { data?: { detail?: string; code?: string } } }
+    const err = error as {
+      message?: string;
+      response?: { data?: { detail?: string; code?: string } };
+    };
 
     // Check for invalid/expired token error
-    if (err.response?.data?.code === 'INVALID_RESET_TOKEN') {
-      errorMessage.value = '密码重置链接无效或已过期。请重新请求一个新链接。'
+    if (err.response?.data?.code === "INVALID_RESET_TOKEN") {
+      errorMessage.value = "密码重置链接无效或已过期。请重新请求一个新链接。";
     } else if (err.response?.data?.detail) {
-      errorMessage.value = err.response.data.detail
+      errorMessage.value = err.response.data.detail;
     } else if (err.message) {
-      errorMessage.value = err.message
+      errorMessage.value = err.message;
     } else {
-      errorMessage.value = '重置密码失败，请重试。'
+      errorMessage.value = "重置密码失败，请重试。";
     }
 
-    appStore.showError(errorMessage.value)
+    appStore.showError(errorMessage.value);
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 }
 </script>

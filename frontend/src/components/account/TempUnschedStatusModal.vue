@@ -7,7 +7,11 @@
   >
     <div class="space-y-4">
       <div v-if="loading" class="flex items-center justify-center py-8">
-        <svg class="h-6 w-6 animate-spin text-gray-400" fill="none" viewBox="0 0 24 24">
+        <svg
+          class="h-6 w-6 animate-spin text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
           <circle
             class="opacity-25"
             cx="12"
@@ -24,66 +28,93 @@
         </svg>
       </div>
 
-      <div v-else-if="!isActive" class="rounded-lg border border-gray-200 p-4 text-sm text-gray-500 dark:border-dark-600 dark:text-gray-400">
-        {{ '当前账号未处于临时不可调度状态。' }}
+      <div
+        v-else-if="!isActive"
+        class="rounded-lg border border-gray-200 p-4 text-sm text-gray-500 dark:border-dark-600 dark:text-gray-400"
+      >
+        {{ "当前账号未处于临时不可调度状态。" }}
       </div>
 
       <div v-else class="space-y-4">
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ '账号' }}
+            {{ "账号" }}
           </p>
           <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
-            {{ account?.name || '-' }}
+            {{ account?.name || "-" }}
           </p>
         </div>
 
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
+          <div
+            class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
+          >
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ '触发时间' }}
+              {{ "触发时间" }}
             </p>
-            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
+            <p
+              class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
               {{ triggeredAtText }}
             </p>
           </div>
-          <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
+          <div
+            class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
+          >
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ '解除时间' }}
+              {{ "解除时间" }}
             </p>
-            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
+            <p
+              class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
               {{ untilText }}
             </p>
           </div>
-          <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
+          <div
+            class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
+          >
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ '剩余时间' }}
+              {{ "剩余时间" }}
             </p>
-            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
+            <p
+              class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
               {{ remainingText }}
             </p>
           </div>
-          <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
+          <div
+            class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
+          >
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ '错误码' }}
+              {{ "错误码" }}
             </p>
-            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
-              {{ state?.status_code || '-' }}
+            <p
+              class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              {{ state?.status_code || "-" }}
             </p>
           </div>
-          <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
+          <div
+            class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
+          >
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ '匹配关键词' }}
+              {{ "匹配关键词" }}
             </p>
-            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
-              {{ state?.matched_keyword || '-' }}
+            <p
+              class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              {{ state?.matched_keyword || "-" }}
             </p>
           </div>
-          <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
+          <div
+            class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
+          >
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ '规则序号' }}
+              {{ "规则序号" }}
             </p>
-            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
+            <p
+              class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
               {{ ruleIndexDisplay }}
             </p>
           </div>
@@ -91,10 +122,12 @@
 
         <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ '错误详情' }}
+            {{ "错误详情" }}
           </p>
-          <div class="mt-2 rounded bg-gray-50 p-2 text-xs text-gray-700 dark:bg-dark-700 dark:text-gray-300">
-            {{ state?.error_message || '-' }}
+          <div
+            class="mt-2 rounded bg-gray-50 p-2 text-xs text-gray-700 dark:bg-dark-700 dark:text-gray-300"
+          >
+            {{ state?.error_message || "-" }}
           </div>
         </div>
       </div>
@@ -103,7 +136,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ '关闭' }}
+          {{ "关闭" }}
         </button>
         <button
           type="button"
@@ -131,7 +164,7 @@
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          {{ '重置状态' }}
+          {{ "重置状态" }}
         </button>
       </div>
     </template>
@@ -139,108 +172,110 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { adminAPI } from '@/api/admin'
-import type { Account, TempUnschedulableStatus } from '@/types'
-import { formatDateTime } from '@/utils/format'
+import { computed, ref, watch } from "vue";
+import { useAppStore } from "@/stores/app";
+import { adminAPI } from "@/api/admin";
+import type { Account, TempUnschedulableStatus } from "@/types";
+import { formatDateTime } from "@/utils/format";
 
 const props = defineProps<{
-  show: boolean
-  account: Account | null
-}>()
+  show: boolean;
+  account: Account | null;
+}>();
 
 const emit = defineEmits<{
-  close: []
-  reset: []
-}>()
+  close: [];
+  reset: [];
+}>();
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
-const loading = ref(false)
-const resetting = ref(false)
-const status = ref<TempUnschedulableStatus | null>(null)
+const loading = ref(false);
+const resetting = ref(false);
+const status = ref<TempUnschedulableStatus | null>(null);
 
-const state = computed(() => status.value?.state || null)
+const state = computed(() => status.value?.state || null);
 
 const isActive = computed(() => {
-  if (!status.value?.active || !state.value) return false
-  return state.value.until_unix * 1000 > Date.now()
-})
+  if (!status.value?.active || !state.value) return false;
+  return state.value.until_unix * 1000 > Date.now();
+});
 
 const ruleIndexDisplay = computed(() => {
-  if (!state.value) return '-'
-  return state.value.rule_index + 1
-})
+  if (!state.value) return "-";
+  return state.value.rule_index + 1;
+});
 
 const triggeredAtText = computed(() => {
-  if (!state.value?.triggered_at_unix) return '-'
-  return formatDateTime(new Date(state.value.triggered_at_unix * 1000))
-})
+  if (!state.value?.triggered_at_unix) return "-";
+  return formatDateTime(new Date(state.value.triggered_at_unix * 1000));
+});
 
 const untilText = computed(() => {
-  if (!state.value?.until_unix) return '-'
-  return formatDateTime(new Date(state.value.until_unix * 1000))
-})
+  if (!state.value?.until_unix) return "-";
+  return formatDateTime(new Date(state.value.until_unix * 1000));
+});
 
 const remainingText = computed(() => {
-  if (!state.value) return '-'
-  const remainingMs = state.value.until_unix * 1000 - Date.now()
+  if (!state.value) return "-";
+  const remainingMs = state.value.until_unix * 1000 - Date.now();
   if (remainingMs <= 0) {
-    return '已到期'
+    return "已到期";
   }
-  const minutes = Math.ceil(remainingMs / 60000)
+  const minutes = Math.ceil(remainingMs / 60000);
   if (minutes < 60) {
-    return `约 ${minutes} 分钟`
+    return `约 ${minutes} 分钟`;
   }
-  const hours = Math.floor(minutes / 60)
-  const rest = minutes % 60
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
   if (rest === 0) {
-    return `约 ${hours} 小时`
+    return `约 ${hours} 小时`;
   }
-  return `约 ${hours} 小时 ${rest} 分钟`
-})
+  return `约 ${hours} 小时 ${rest} 分钟`;
+});
 
 const loadStatus = async () => {
-  if (!props.account) return
-  loading.value = true
+  if (!props.account) return;
+  loading.value = true;
   try {
-    status.value = await adminAPI.accounts.getTempUnschedulableStatus(props.account.id)
+    status.value = await adminAPI.accounts.getTempUnschedulableStatus(
+      props.account.id,
+    );
   } catch (error: any) {
-    appStore.showError(error?.message || '加载临时不可调度状态失败')
-    status.value = null
+    appStore.showError(error?.message || "加载临时不可调度状态失败");
+    status.value = null;
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 const handleClose = () => {
-  emit('close')
-}
+  emit("close");
+};
 
 const handleReset = async () => {
-  if (!props.account) return
-  resetting.value = true
+  if (!props.account) return;
+  resetting.value = true;
   try {
-    await adminAPI.accounts.resetTempUnschedulable(props.account.id)
-    appStore.showSuccess('临时不可调度已重置')
-    emit('reset')
-    handleClose()
+    await adminAPI.accounts.resetTempUnschedulable(props.account.id);
+    appStore.showSuccess("临时不可调度已重置");
+    emit("reset");
+    handleClose();
   } catch (error: any) {
-    appStore.showError(error?.message || '重置临时不可调度失败')
+    appStore.showError(error?.message || "重置临时不可调度失败");
   } finally {
-    resetting.value = false
+    resetting.value = false;
   }
-}
+};
 
 watch(
   () => [props.show, props.account?.id],
   ([visible]) => {
     if (visible && props.account) {
-      loadStatus()
-      return
+      loadStatus();
+      return;
     }
-    status.value = null
-  }
-)
+    status.value = null;
+  },
+);
 </script>

@@ -9,17 +9,23 @@
             :title="'刷新'"
             @click="loadCodes"
           >
-            <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
+            <Icon
+              name="refresh"
+              size="md"
+              :class="loading ? 'animate-spin' : ''"
+            />
           </button>
           <button class="btn btn-primary" @click="showCreateDialog = true">
             <Icon name="plus" size="md" class="mr-1" />
-            {{ '创建优惠码' }}
+            {{ "创建优惠码" }}
           </button>
         </div>
       </template>
 
       <template #filters>
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
           <div class="max-w-md flex-1">
             <input
               v-model="searchQuery"
@@ -44,19 +50,33 @@
         <DataTable :columns="columns" :data="codes" :loading="loading">
           <template #cell-code="{ value }">
             <div class="flex items-center space-x-2">
-              <code class="font-mono text-sm text-gray-900 dark:text-gray-100">{{ value }}</code>
+              <code
+                class="font-mono text-sm text-gray-900 dark:text-gray-100"
+                >{{ value }}</code
+              >
               <button
                 :class="[
                   'flex items-center transition-colors',
                   copiedCode === value
                     ? 'text-green-500'
-                    : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+                    : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300',
                 ]"
                 :title="copiedCode === value ? '已复制！' : '复制到剪贴板'"
                 @click="copyToClipboard(value)"
               >
-                <Icon v-if="copiedCode !== value" name="copy" size="sm" :stroke-width="2" />
-                <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <Icon
+                  v-if="copiedCode !== value"
+                  name="copy"
+                  size="sm"
+                  :stroke-width="2"
+                />
+                <svg
+                  v-else
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -76,24 +96,20 @@
 
           <template #cell-usage="{ row }">
             <span class="text-sm text-gray-600 dark:text-gray-300">
-              {{ row.used_count }} / {{ row.max_uses === 0 ? '∞' : row.max_uses }}
+              {{ row.used_count }} /
+              {{ row.max_uses === 0 ? "∞" : row.max_uses }}
             </span>
           </template>
 
           <template #cell-status="{ value, row }">
-            <span
-              :class="[
-                'badge',
-                getStatusClass(value, row)
-              ]"
-            >
+            <span :class="['badge', getStatusClass(value, row)]">
               {{ getStatusLabel(value, row) }}
             </span>
           </template>
 
           <template #cell-expires_at="{ value }">
             <span class="text-sm text-gray-500 dark:text-dark-400">
-              {{ value ? formatDateTime(value) : '永不过期' }}
+              {{ value ? formatDateTime(value) : "永不过期" }}
             </span>
           </template>
 
@@ -157,11 +173,17 @@
       width="normal"
       @close="showCreateDialog = false"
     >
-      <form id="create-promo-form" class="space-y-4" @submit.prevent="handleCreate">
+      <form
+        id="create-promo-form"
+        class="space-y-4"
+        @submit.prevent="handleCreate"
+      >
         <div>
           <label class="input-label">
-            {{ '优惠码' }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ '留空自动生成' }})</span>
+            {{ "优惠码" }}
+            <span class="ml-1 text-xs font-normal text-gray-400"
+              >({{ "留空自动生成" }})</span
+            >
           </label>
           <input
             v-model="createForm.code"
@@ -171,7 +193,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ '赠送金额 ($)' }}</label>
+          <label class="input-label">{{ "赠送金额 ($)" }}</label>
           <input
             v-model.number="createForm.bonus_amount"
             type="number"
@@ -183,8 +205,10 @@
         </div>
         <div>
           <label class="input-label">
-            {{ '最大使用次数' }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ '0 = 无限制' }})</span>
+            {{ "最大使用次数" }}
+            <span class="ml-1 text-xs font-normal text-gray-400"
+              >({{ "0 = 无限制" }})</span
+            >
           </label>
           <input
             v-model.number="createForm.max_uses"
@@ -195,8 +219,10 @@
         </div>
         <div>
           <label class="input-label">
-            {{ '过期时间' }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ '可选' }})</span>
+            {{ "过期时间" }}
+            <span class="ml-1 text-xs font-normal text-gray-400"
+              >({{ "可选" }})</span
+            >
           </label>
           <input
             v-model="createForm.expires_at_str"
@@ -206,8 +232,10 @@
         </div>
         <div>
           <label class="input-label">
-            {{ '备注' }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ '可选' }})</span>
+            {{ "备注" }}
+            <span class="ml-1 text-xs font-normal text-gray-400"
+              >({{ "可选" }})</span
+            >
           </label>
           <textarea
             v-model="createForm.notes"
@@ -219,11 +247,20 @@
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button type="button" class="btn btn-secondary" @click="showCreateDialog = false">
-            {{ '取消' }}
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="showCreateDialog = false"
+          >
+            {{ "取消" }}
           </button>
-          <button type="submit" form="create-promo-form" :disabled="creating" class="btn btn-primary">
-            {{ creating ? 'common.creating' : '创建' }}
+          <button
+            type="submit"
+            form="create-promo-form"
+            :disabled="creating"
+            class="btn btn-primary"
+          >
+            {{ creating ? "common.creating" : "创建" }}
           </button>
         </div>
       </template>
@@ -236,9 +273,13 @@
       width="normal"
       @close="closeEditDialog"
     >
-      <form id="edit-promo-form" class="space-y-4" @submit.prevent="handleUpdate">
+      <form
+        id="edit-promo-form"
+        class="space-y-4"
+        @submit.prevent="handleUpdate"
+      >
         <div>
-          <label class="input-label">{{ '优惠码' }}</label>
+          <label class="input-label">{{ "优惠码" }}</label>
           <input
             v-model="editForm.code"
             type="text"
@@ -246,7 +287,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ '赠送金额 ($)' }}</label>
+          <label class="input-label">{{ "赠送金额 ($)" }}</label>
           <input
             v-model.number="editForm.bonus_amount"
             type="number"
@@ -258,8 +299,10 @@
         </div>
         <div>
           <label class="input-label">
-            {{ '最大使用次数' }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ '0 = 无限制' }})</span>
+            {{ "最大使用次数" }}
+            <span class="ml-1 text-xs font-normal text-gray-400"
+              >({{ "0 = 无限制" }})</span
+            >
           </label>
           <input
             v-model.number="editForm.max_uses"
@@ -269,13 +312,15 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ '状态' }}</label>
+          <label class="input-label">{{ "状态" }}</label>
           <Select v-model="editForm.status" :options="statusOptions" />
         </div>
         <div>
           <label class="input-label">
-            {{ '过期时间' }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ '可选' }})</span>
+            {{ "过期时间" }}
+            <span class="ml-1 text-xs font-normal text-gray-400"
+              >({{ "可选" }})</span
+            >
           </label>
           <input
             v-model="editForm.expires_at_str"
@@ -285,23 +330,30 @@
         </div>
         <div>
           <label class="input-label">
-            {{ '备注' }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ '可选' }})</span>
+            {{ "备注" }}
+            <span class="ml-1 text-xs font-normal text-gray-400"
+              >({{ "可选" }})</span
+            >
           </label>
-          <textarea
-            v-model="editForm.notes"
-            rows="2"
-            class="input"
-          ></textarea>
+          <textarea v-model="editForm.notes" rows="2" class="input"></textarea>
         </div>
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button type="button" class="btn btn-secondary" @click="closeEditDialog">
-            {{ '取消' }}
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="closeEditDialog"
+          >
+            {{ "取消" }}
           </button>
-          <button type="submit" form="edit-promo-form" :disabled="updating" class="btn btn-primary">
-            {{ updating ? '保存中...' : '保存' }}
+          <button
+            type="submit"
+            form="edit-promo-form"
+            :disabled="updating"
+            class="btn btn-primary"
+          >
+            {{ updating ? "保存中..." : "保存" }}
           </button>
         </div>
       </template>
@@ -317,8 +369,11 @@
       <div v-if="usagesLoading" class="flex items-center justify-center py-8">
         <Icon name="refresh" size="lg" class="animate-spin text-gray-400" />
       </div>
-      <div v-else-if="usages.length === 0" class="py-8 text-center text-gray-500 dark:text-gray-400">
-        {{ '暂无使用记录' }}
+      <div
+        v-else-if="usages.length === 0"
+        class="py-8 text-center text-gray-500 dark:text-gray-400"
+      >
+        {{ "暂无使用记录" }}
       </div>
       <div v-else class="space-y-3">
         <div
@@ -327,8 +382,14 @@
           class="flex items-center justify-between rounded-lg border border-gray-200 p-3 dark:border-dark-600"
         >
           <div class="flex items-center gap-3">
-            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
-              <Icon name="user" size="sm" class="text-green-600 dark:text-green-400" />
+            <div
+              class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30"
+            >
+              <Icon
+                name="user"
+                size="sm"
+                class="text-green-600 dark:text-green-400"
+              />
             </div>
             <div>
               <p class="text-sm font-medium text-gray-900 dark:text-white">
@@ -340,7 +401,9 @@
             </div>
           </div>
           <div class="text-right">
-            <span class="text-sm font-medium text-green-600 dark:text-green-400">
+            <span
+              class="text-sm font-medium text-green-600 dark:text-green-400"
+            >
               +${{ usage.bonus_amount.toFixed(2) }}
             </span>
           </div>
@@ -353,14 +416,24 @@
             :page-size="usagesPageSize"
             :page-size-options="[10, 20, 50]"
             @update:page="handleUsagesPageChange"
-            @update:page-size="(size: number) => { usagesPageSize = size; usagesPage = 1; loadUsages() }"
+            @update:page-size="
+              (size: number) => {
+                usagesPageSize = size;
+                usagesPage = 1;
+                loadUsages();
+              }
+            "
           />
         </div>
       </div>
       <template #footer>
         <div class="flex justify-end">
-          <button type="button" class="btn btn-secondary" @click="showUsagesDialog = false">
-            {{ '关闭' }}
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="showUsagesDialog = false"
+          >
+            {{ "关闭" }}
           </button>
         </div>
       </template>
@@ -381,122 +454,122 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { useClipboard } from '@/composables/useClipboard'
-import { adminAPI } from '@/api/admin'
-import type { PromoCode, PromoCodeUsage } from '@/types'
-import type { Column } from '@/components/common/types'
+import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
+import { useAppStore } from "@/stores/app";
+import { useClipboard } from "@/composables/useClipboard";
+import { adminAPI } from "@/api/admin";
+import type { PromoCode, PromoCodeUsage } from "@/types";
+import type { Column } from "@/components/common/types";
 
-const appStore = useAppStore()
-const { copyToClipboard: clipboardCopy } = useClipboard()
+const appStore = useAppStore();
+const { copyToClipboard: clipboardCopy } = useClipboard();
 
 // State
-const codes = ref<PromoCode[]>([])
-const loading = ref(false)
-const creating = ref(false)
-const updating = ref(false)
-const searchQuery = ref('')
-const copiedCode = ref<string | null>(null)
+const codes = ref<PromoCode[]>([]);
+const loading = ref(false);
+const creating = ref(false);
+const updating = ref(false);
+const searchQuery = ref("");
+const copiedCode = ref<string | null>(null);
 
 const filters = reactive({
-  status: ''
-})
+  status: "",
+});
 
 const pagination = reactive({
   page: 1,
   page_size: 20,
-  total: 0
-})
+  total: 0,
+});
 
 // Dialogs
-const showCreateDialog = ref(false)
-const showEditDialog = ref(false)
-const showDeleteDialog = ref(false)
-const showUsagesDialog = ref(false)
+const showCreateDialog = ref(false);
+const showEditDialog = ref(false);
+const showDeleteDialog = ref(false);
+const showUsagesDialog = ref(false);
 
-const editingCode = ref<PromoCode | null>(null)
-const deletingCode = ref<PromoCode | null>(null)
+const editingCode = ref<PromoCode | null>(null);
+const deletingCode = ref<PromoCode | null>(null);
 
 // Usages
-const usages = ref<PromoCodeUsage[]>([])
-const usagesLoading = ref(false)
-const currentViewingCode = ref<PromoCode | null>(null)
-const usagesPage = ref(1)
-const usagesPageSize = ref(20)
-const usagesTotal = ref(0)
+const usages = ref<PromoCodeUsage[]>([]);
+const usagesLoading = ref(false);
+const currentViewingCode = ref<PromoCode | null>(null);
+const usagesPage = ref(1);
+const usagesPageSize = ref(20);
+const usagesTotal = ref(0);
 
 // Forms
 const createForm = reactive({
-  code: '',
+  code: "",
   bonus_amount: 1,
   max_uses: 0,
-  expires_at_str: '',
-  notes: ''
-})
+  expires_at_str: "",
+  notes: "",
+});
 
 const editForm = reactive({
-  code: '',
+  code: "",
   bonus_amount: 0,
   max_uses: 0,
-  status: 'active' as 'active' | 'disabled',
-  expires_at_str: '',
-  notes: ''
-})
+  status: "active" as "active" | "disabled",
+  expires_at_str: "",
+  notes: "",
+});
 
 // Options
 const filterStatusOptions = computed(() => [
-  { value: '', label: '全部状态' },
-  { value: 'active', label: '启用' },
-  { value: 'disabled', label: '禁用' }
-])
+  { value: "", label: "全部状态" },
+  { value: "active", label: "启用" },
+  { value: "disabled", label: "禁用" },
+]);
 
 const statusOptions = computed(() => [
-  { value: 'active', label: '启用' },
-  { value: 'disabled', label: '禁用' }
-])
+  { value: "active", label: "启用" },
+  { value: "disabled", label: "禁用" },
+]);
 
 const columns = computed<Column[]>(() => [
-  { key: 'code', label: '优惠码' },
-  { key: 'bonus_amount', label: '赠送金额', sortable: true },
-  { key: 'usage', label: '使用量' },
-  { key: 'status', label: '状态', sortable: true },
-  { key: 'expires_at', label: '过期时间', sortable: true },
-  { key: 'created_at', label: '创建时间', sortable: true },
-  { key: 'actions', label: '操作' }
-])
+  { key: "code", label: "优惠码" },
+  { key: "bonus_amount", label: "赠送金额", sortable: true },
+  { key: "usage", label: "使用量" },
+  { key: "status", label: "状态", sortable: true },
+  { key: "expires_at", label: "过期时间", sortable: true },
+  { key: "created_at", label: "创建时间", sortable: true },
+  { key: "actions", label: "操作" },
+]);
 
 // Helpers
 const getStatusClass = (status: string, row: PromoCode) => {
   if (row.expires_at && new Date(row.expires_at) < new Date()) {
-    return 'badge-danger'
+    return "badge-danger";
   }
   if (row.max_uses > 0 && row.used_count >= row.max_uses) {
-    return 'badge-gray'
+    return "badge-gray";
   }
-  return status === 'active' ? 'badge-success' : 'badge-gray'
-}
+  return status === "active" ? "badge-success" : "badge-gray";
+};
 
 const getStatusLabel = (status: string, row: PromoCode) => {
   if (row.expires_at && new Date(row.expires_at) < new Date()) {
-    return '已过期'
+    return "已过期";
   }
   if (row.max_uses > 0 && row.used_count >= row.max_uses) {
-    return '已用完'
+    return "已用完";
   }
-  return status === 'active' ? '启用' : '禁用'
-}
+  return status === "active" ? "启用" : "禁用";
+};
 
 // API calls
-let abortController: AbortController | null = null
+let abortController: AbortController | null = null;
 
 const loadCodes = async () => {
   if (abortController) {
-    abortController.abort()
+    abortController.abort();
   }
-  const currentController = new AbortController()
-  abortController = currentController
-  loading.value = true
+  const currentController = new AbortController();
+  abortController = currentController;
+  loading.value = true;
 
   try {
     const response = await adminAPI.promo.list(
@@ -504,204 +577,214 @@ const loadCodes = async () => {
       pagination.page_size,
       {
         status: filters.status || undefined,
-        search: searchQuery.value || undefined
-      }
-    )
-    if (currentController.signal.aborted) return
+        search: searchQuery.value || undefined,
+      },
+    );
+    if (currentController.signal.aborted) return;
 
-    codes.value = response.items
-    pagination.total = response.total
+    codes.value = response.items;
+    pagination.total = response.total;
   } catch (error: any) {
-    if (currentController.signal.aborted || error?.name === 'AbortError') return
-    appStore.showError('加载优惠码失败')
-    console.error('Error loading promo codes:', error)
+    if (currentController.signal.aborted || error?.name === "AbortError")
+      return;
+    appStore.showError("加载优惠码失败");
+    console.error("Error loading promo codes:", error);
   } finally {
-    if (abortController === currentController && !currentController.signal.aborted) {
-      loading.value = false
-      abortController = null
+    if (
+      abortController === currentController &&
+      !currentController.signal.aborted
+    ) {
+      loading.value = false;
+      abortController = null;
     }
   }
-}
+};
 
-let searchTimeout: ReturnType<typeof setTimeout>
+let searchTimeout: ReturnType<typeof setTimeout>;
 const handleSearch = () => {
-  clearTimeout(searchTimeout)
+  clearTimeout(searchTimeout);
   searchTimeout = setTimeout(() => {
-    pagination.page = 1
-    loadCodes()
-  }, 300)
-}
+    pagination.page = 1;
+    loadCodes();
+  }, 300);
+};
 
 const handlePageChange = (page: number) => {
-  pagination.page = page
-  loadCodes()
-}
+  pagination.page = page;
+  loadCodes();
+};
 
 const handlePageSizeChange = (pageSize: number) => {
-  pagination.page_size = pageSize
-  pagination.page = 1
-  loadCodes()
-}
+  pagination.page_size = pageSize;
+  pagination.page = 1;
+  loadCodes();
+};
 
 const copyToClipboard = async (text: string) => {
-  const success = await clipboardCopy(text, '已复制！')
+  const success = await clipboardCopy(text, "已复制！");
   if (success) {
-    copiedCode.value = text
+    copiedCode.value = text;
     setTimeout(() => {
-      copiedCode.value = null
-    }, 2000)
+      copiedCode.value = null;
+    }, 2000);
   }
-}
+};
 
 // Create
 const handleCreate = async () => {
-  creating.value = true
+  creating.value = true;
   try {
     await adminAPI.promo.create({
       code: createForm.code || undefined,
       bonus_amount: createForm.bonus_amount,
       max_uses: createForm.max_uses,
-      expires_at: createForm.expires_at_str ? Math.floor(new Date(createForm.expires_at_str).getTime() / 1000) : undefined,
-      notes: createForm.notes || undefined
-    })
-    appStore.showSuccess('优惠码创建成功')
-    showCreateDialog.value = false
-    resetCreateForm()
-    loadCodes()
+      expires_at: createForm.expires_at_str
+        ? Math.floor(new Date(createForm.expires_at_str).getTime() / 1000)
+        : undefined,
+      notes: createForm.notes || undefined,
+    });
+    appStore.showSuccess("优惠码创建成功");
+    showCreateDialog.value = false;
+    resetCreateForm();
+    loadCodes();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '创建优惠码失败')
+    appStore.showError(error.response?.data?.detail || "创建优惠码失败");
   } finally {
-    creating.value = false
+    creating.value = false;
   }
-}
+};
 
 const resetCreateForm = () => {
-  createForm.code = ''
-  createForm.bonus_amount = 1
-  createForm.max_uses = 0
-  createForm.expires_at_str = ''
-  createForm.notes = ''
-}
+  createForm.code = "";
+  createForm.bonus_amount = 1;
+  createForm.max_uses = 0;
+  createForm.expires_at_str = "";
+  createForm.notes = "";
+};
 
 // Edit
 const handleEdit = (code: PromoCode) => {
-  editingCode.value = code
-  editForm.code = code.code
-  editForm.bonus_amount = code.bonus_amount
-  editForm.max_uses = code.max_uses
-  editForm.status = code.status
-  editForm.expires_at_str = code.expires_at ? new Date(code.expires_at).toISOString().slice(0, 16) : ''
-  editForm.notes = code.notes || ''
-  showEditDialog.value = true
-}
+  editingCode.value = code;
+  editForm.code = code.code;
+  editForm.bonus_amount = code.bonus_amount;
+  editForm.max_uses = code.max_uses;
+  editForm.status = code.status;
+  editForm.expires_at_str = code.expires_at
+    ? new Date(code.expires_at).toISOString().slice(0, 16)
+    : "";
+  editForm.notes = code.notes || "";
+  showEditDialog.value = true;
+};
 
 const closeEditDialog = () => {
-  showEditDialog.value = false
-  editingCode.value = null
-}
+  showEditDialog.value = false;
+  editingCode.value = null;
+};
 
 const handleUpdate = async () => {
-  if (!editingCode.value) return
+  if (!editingCode.value) return;
 
-  updating.value = true
+  updating.value = true;
   try {
     await adminAPI.promo.update(editingCode.value.id, {
       code: editForm.code,
       bonus_amount: editForm.bonus_amount,
       max_uses: editForm.max_uses,
       status: editForm.status,
-      expires_at: editForm.expires_at_str ? Math.floor(new Date(editForm.expires_at_str).getTime() / 1000) : 0,
-      notes: editForm.notes
-    })
-    appStore.showSuccess('优惠码更新成功')
-    closeEditDialog()
-    loadCodes()
+      expires_at: editForm.expires_at_str
+        ? Math.floor(new Date(editForm.expires_at_str).getTime() / 1000)
+        : 0,
+      notes: editForm.notes,
+    });
+    appStore.showSuccess("优惠码更新成功");
+    closeEditDialog();
+    loadCodes();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '更新优惠码失败')
+    appStore.showError(error.response?.data?.detail || "更新优惠码失败");
   } finally {
-    updating.value = false
+    updating.value = false;
   }
-}
+};
 
 // Copy Register Link
 const copyRegisterLink = async (code: PromoCode) => {
-  const baseUrl = window.location.origin
-  const registerLink = `${baseUrl}/register?promo=${encodeURIComponent(code.code)}`
+  const baseUrl = window.location.origin;
+  const registerLink = `${baseUrl}/register?promo=${encodeURIComponent(code.code)}`;
 
   try {
-    await navigator.clipboard.writeText(registerLink)
-    appStore.showSuccess('注册链接已复制到剪贴板')
+    await navigator.clipboard.writeText(registerLink);
+    appStore.showSuccess("注册链接已复制到剪贴板");
   } catch {
     // Fallback for older browsers
-    const textArea = document.createElement('textarea')
-    textArea.value = registerLink
-    document.body.appendChild(textArea)
-    textArea.select()
-    document.execCommand('copy')
-    document.body.removeChild(textArea)
-    appStore.showSuccess('注册链接已复制到剪贴板')
+    const textArea = document.createElement("textarea");
+    textArea.value = registerLink;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    appStore.showSuccess("注册链接已复制到剪贴板");
   }
-}
+};
 
 // Delete
 const handleDelete = (code: PromoCode) => {
-  deletingCode.value = code
-  showDeleteDialog.value = true
-}
+  deletingCode.value = code;
+  showDeleteDialog.value = true;
+};
 
 const confirmDelete = async () => {
-  if (!deletingCode.value) return
+  if (!deletingCode.value) return;
 
   try {
-    await adminAPI.promo.delete(deletingCode.value.id)
-    appStore.showSuccess('优惠码删除成功')
-    showDeleteDialog.value = false
-    deletingCode.value = null
-    loadCodes()
+    await adminAPI.promo.delete(deletingCode.value.id);
+    appStore.showSuccess("优惠码删除成功");
+    showDeleteDialog.value = false;
+    deletingCode.value = null;
+    loadCodes();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '删除优惠码失败')
+    appStore.showError(error.response?.data?.detail || "删除优惠码失败");
   }
-}
+};
 
 // View Usages
 const handleViewUsages = async (code: PromoCode) => {
-  currentViewingCode.value = code
-  showUsagesDialog.value = true
-  usagesPage.value = 1
-  await loadUsages()
-}
+  currentViewingCode.value = code;
+  showUsagesDialog.value = true;
+  usagesPage.value = 1;
+  await loadUsages();
+};
 
 const loadUsages = async () => {
-  if (!currentViewingCode.value) return
-  usagesLoading.value = true
-  usages.value = []
+  if (!currentViewingCode.value) return;
+  usagesLoading.value = true;
+  usages.value = [];
 
   try {
     const response = await adminAPI.promo.getUsages(
       currentViewingCode.value.id,
       usagesPage.value,
-      usagesPageSize.value
-    )
-    usages.value = response.items
-    usagesTotal.value = response.total
+      usagesPageSize.value,
+    );
+    usages.value = response.items;
+    usagesTotal.value = response.total;
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '加载使用记录失败')
+    appStore.showError(error.response?.data?.detail || "加载使用记录失败");
   } finally {
-    usagesLoading.value = false
+    usagesLoading.value = false;
   }
-}
+};
 
 const handleUsagesPageChange = (page: number) => {
-  usagesPage.value = page
-  loadUsages()
-}
+  usagesPage.value = page;
+  loadUsages();
+};
 
 onMounted(() => {
-  loadCodes()
-})
+  loadCodes();
+});
 
 onUnmounted(() => {
-  clearTimeout(searchTimeout)
-  abortController?.abort()
-})
+  clearTimeout(searchTimeout);
+  abortController?.abort();
+});
 </script>

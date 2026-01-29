@@ -18,14 +18,18 @@
             <Icon name="play" size="md" class="text-white" :stroke-width="2" />
           </div>
           <div>
-            <div class="font-semibold text-gray-900 dark:text-gray-100">{{ account.name }}</div>
-            <div class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+            <div class="font-semibold text-gray-900 dark:text-gray-100">
+              {{ account.name }}
+            </div>
+            <div
+              class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400"
+            >
               <span
                 class="rounded bg-gray-200 px-1.5 py-0.5 text-[10px] font-medium uppercase dark:bg-dark-500"
               >
                 {{ account.type }}
               </span>
-              <span>{{ '账号' }}</span>
+              <span>{{ "账号" }}</span>
             </div>
           </div>
         </div>
@@ -34,7 +38,7 @@
             'rounded-full px-2.5 py-1 text-xs font-semibold',
             account.status === 'active'
               ? 'bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400'
-              : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+              : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400',
           ]"
         >
           {{ account.status }}
@@ -43,7 +47,7 @@
 
       <div class="space-y-1.5">
         <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {{ '选择测试模型' }}
+          {{ "选择测试模型" }}
         </label>
         <Select
           v-model="selectedModelId"
@@ -62,17 +66,32 @@
           class="max-h-[240px] min-h-[120px] overflow-y-auto rounded-xl border border-gray-700 bg-gray-900 p-4 font-mono text-sm dark:border-gray-800 dark:bg-black"
         >
           <!-- Status Line -->
-          <div v-if="status === 'idle'" class="flex items-center gap-2 text-gray-500">
+          <div
+            v-if="status === 'idle'"
+            class="flex items-center gap-2 text-gray-500"
+          >
             <Icon name="play" size="sm" :stroke-width="2" />
             <span>{{ '准备测试。点击"开始测试"按钮开始...' }}</span>
           </div>
-          <div v-else-if="status === 'connecting'" class="flex items-center gap-2 text-yellow-400">
-            <Icon name="refresh" size="sm" class="animate-spin" :stroke-width="2" />
-            <span>{{ '连接 API 中...' }}</span>
+          <div
+            v-else-if="status === 'connecting'"
+            class="flex items-center gap-2 text-yellow-400"
+          >
+            <Icon
+              name="refresh"
+              size="sm"
+              class="animate-spin"
+              :stroke-width="2"
+            />
+            <span>{{ "连接 API 中..." }}</span>
           </div>
 
           <!-- Output Lines -->
-          <div v-for="(line, index) in outputLines" :key="index" :class="line.class">
+          <div
+            v-for="(line, index) in outputLines"
+            :key="index"
+            :class="line.class"
+          >
             {{ line.text }}
           </div>
 
@@ -87,7 +106,7 @@
             class="mt-3 flex items-center gap-2 border-t border-gray-700 pt-3 text-green-400"
           >
             <Icon name="check" size="sm" :stroke-width="2" />
-            <span>{{ '测试完成！' }}</span>
+            <span>{{ "测试完成！" }}</span>
           </div>
           <div
             v-else-if="status === 'error'"
@@ -110,11 +129,13 @@
       </div>
 
       <!-- Test Info -->
-      <div class="flex items-center justify-between px-1 text-xs text-gray-500 dark:text-gray-400">
+      <div
+        class="flex items-center justify-between px-1 text-xs text-gray-500 dark:text-gray-400"
+      >
         <div class="flex items-center gap-3">
           <span class="flex items-center gap-1">
             <Icon name="grid" size="sm" :stroke-width="2" />
-            {{ '测试模型' }}
+            {{ "测试模型" }}
           </span>
         </div>
         <span class="flex items-center gap-1">
@@ -131,7 +152,7 @@
           :disabled="status === 'connecting'"
           @click="handleClose"
         >
-          {{ '关闭' }}
+          {{ "关闭" }}
         </button>
         <button
           :disabled="status === 'connecting' || !selectedModelId"
@@ -143,7 +164,7 @@
                 ? 'bg-green-500 text-white hover:bg-green-600'
                 : status === 'error'
                   ? 'bg-orange-500 text-white hover:bg-orange-600'
-                  : 'bg-primary-500 text-white hover:bg-primary-600'
+                  : 'bg-primary-500 text-white hover:bg-primary-600',
           ]"
           @click="startTest"
         >
@@ -154,15 +175,20 @@
             class="animate-spin"
             :stroke-width="2"
           />
-          <Icon v-else-if="status === 'idle'" name="play" size="sm" :stroke-width="2" />
+          <Icon
+            v-else-if="status === 'idle'"
+            name="play"
+            size="sm"
+            :stroke-width="2"
+          />
           <Icon v-else name="refresh" size="sm" :stroke-width="2" />
           <span>
             {{
-              status === 'connecting'
-                ? '测试中...'
-                : status === 'idle'
-                  ? '开始测试'
-                  : '重试'
+              status === "connecting"
+                ? "测试中..."
+                : status === "idle"
+                  ? "开始测试"
+                  : "重试"
             }}
           </span>
         </button>
@@ -172,236 +198,242 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from 'vue'
-import { useClipboard } from '@/composables/useClipboard'
-import { adminAPI } from '@/api/admin'
-import type { Account, ClaudeModel } from '@/types'
+import { ref, watch, nextTick } from "vue";
+import { useClipboard } from "@/composables/useClipboard";
+import { adminAPI } from "@/api/admin";
+import type { Account, ClaudeModel } from "@/types";
 
-const { copyToClipboard } = useClipboard()
+const { copyToClipboard } = useClipboard();
 
 interface OutputLine {
-  text: string
-  class: string
+  text: string;
+  class: string;
 }
 
 const props = defineProps<{
-  show: boolean
-  account: Account | null
-}>()
+  show: boolean;
+  account: Account | null;
+}>();
 
 const emit = defineEmits<{
-  (e: 'close'): void
-}>()
+  (e: "close"): void;
+}>();
 
-const terminalRef = ref<HTMLElement | null>(null)
-const status = ref<'idle' | 'connecting' | 'success' | 'error'>('idle')
-const outputLines = ref<OutputLine[]>([])
-const streamingContent = ref('')
-const errorMessage = ref('')
-const availableModels = ref<ClaudeModel[]>([])
-const selectedModelId = ref('')
-const loadingModels = ref(false)
-let eventSource: EventSource | null = null
+const terminalRef = ref<HTMLElement | null>(null);
+const status = ref<"idle" | "connecting" | "success" | "error">("idle");
+const outputLines = ref<OutputLine[]>([]);
+const streamingContent = ref("");
+const errorMessage = ref("");
+const availableModels = ref<ClaudeModel[]>([]);
+const selectedModelId = ref("");
+const loadingModels = ref(false);
+let eventSource: EventSource | null = null;
 
 // Load available models when modal opens
 watch(
   () => props.show,
   async (newVal) => {
     if (newVal && props.account) {
-      resetState()
-      await loadAvailableModels()
+      resetState();
+      await loadAvailableModels();
     } else {
-      closeEventSource()
+      closeEventSource();
     }
-  }
-)
+  },
+);
 
 const loadAvailableModels = async () => {
-  if (!props.account) return
+  if (!props.account) return;
 
-  loadingModels.value = true
-  selectedModelId.value = '' // Reset selection before loading
+  loadingModels.value = true;
+  selectedModelId.value = ""; // Reset selection before loading
   try {
-    availableModels.value = await adminAPI.accounts.getAvailableModels(props.account.id)
+    availableModels.value = await adminAPI.accounts.getAvailableModels(
+      props.account.id,
+    );
     // Default selection by platform
     if (availableModels.value.length > 0) {
-      if (props.account.platform === 'gemini') {
+      if (props.account.platform === "gemini") {
         const preferred =
-          availableModels.value.find((m) => m.id === 'gemini-2.0-flash') ||
-          availableModels.value.find((m) => m.id === 'gemini-2.5-flash') ||
-          availableModels.value.find((m) => m.id === 'gemini-2.5-pro') ||
-          availableModels.value.find((m) => m.id === 'gemini-3-flash-preview') ||
-          availableModels.value.find((m) => m.id === 'gemini-3-pro-preview')
-        selectedModelId.value = preferred?.id || availableModels.value[0].id
+          availableModels.value.find((m) => m.id === "gemini-2.0-flash") ||
+          availableModels.value.find((m) => m.id === "gemini-2.5-flash") ||
+          availableModels.value.find((m) => m.id === "gemini-2.5-pro") ||
+          availableModels.value.find(
+            (m) => m.id === "gemini-3-flash-preview",
+          ) ||
+          availableModels.value.find((m) => m.id === "gemini-3-pro-preview");
+        selectedModelId.value = preferred?.id || availableModels.value[0].id;
       } else {
         // Try to select Sonnet as default, otherwise use first model
-        const sonnetModel = availableModels.value.find((m) => m.id.includes('sonnet'))
-        selectedModelId.value = sonnetModel?.id || availableModels.value[0].id
+        const sonnetModel = availableModels.value.find((m) =>
+          m.id.includes("sonnet"),
+        );
+        selectedModelId.value = sonnetModel?.id || availableModels.value[0].id;
       }
     }
   } catch (error) {
-    console.error('Failed to load available models:', error)
+    console.error("Failed to load available models:", error);
     // Fallback to empty list
-    availableModels.value = []
-    selectedModelId.value = ''
+    availableModels.value = [];
+    selectedModelId.value = "";
   } finally {
-    loadingModels.value = false
+    loadingModels.value = false;
   }
-}
+};
 
 const resetState = () => {
-  status.value = 'idle'
-  outputLines.value = []
-  streamingContent.value = ''
-  errorMessage.value = ''
-}
+  status.value = "idle";
+  outputLines.value = [];
+  streamingContent.value = "";
+  errorMessage.value = "";
+};
 
 const handleClose = () => {
   // 防止在连接测试进行中关闭对话框
-  if (status.value === 'connecting') {
-    return
+  if (status.value === "connecting") {
+    return;
   }
-  closeEventSource()
-  emit('close')
-}
+  closeEventSource();
+  emit("close");
+};
 
 const closeEventSource = () => {
   if (eventSource) {
-    eventSource.close()
-    eventSource = null
+    eventSource.close();
+    eventSource = null;
   }
-}
+};
 
-const addLine = (text: string, className: string = 'text-gray-300') => {
-  outputLines.value.push({ text, class: className })
-  scrollToBottom()
-}
+const addLine = (text: string, className: string = "text-gray-300") => {
+  outputLines.value.push({ text, class: className });
+  scrollToBottom();
+};
 
 const scrollToBottom = async () => {
-  await nextTick()
+  await nextTick();
   if (terminalRef.value) {
-    terminalRef.value.scrollTop = terminalRef.value.scrollHeight
+    terminalRef.value.scrollTop = terminalRef.value.scrollHeight;
   }
-}
+};
 
 const startTest = async () => {
-  if (!props.account || !selectedModelId.value) return
+  if (!props.account || !selectedModelId.value) return;
 
-  resetState()
-  status.value = 'connecting'
-  addLine(`开始测试账号：${props.account.name}`, 'text-blue-400')
-  addLine(`账号类型：${props.account.type}`, 'text-gray-400')
-  addLine('', 'text-gray-300')
+  resetState();
+  status.value = "connecting";
+  addLine(`开始测试账号：${props.account.name}`, "text-blue-400");
+  addLine(`账号类型：${props.account.type}`, "text-gray-400");
+  addLine("", "text-gray-300");
 
-  closeEventSource()
+  closeEventSource();
 
   try {
     // Create EventSource for SSE
-    const url = `/api/v1/admin/accounts/${props.account.id}/test`
+    const url = `/api/v1/admin/accounts/${props.account.id}/test`;
 
     // Use fetch with streaming for SSE since EventSource doesn't support POST
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ model_id: selectedModelId.value })
-    })
+      body: JSON.stringify({ model_id: selectedModelId.value }),
+    });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const reader = response.body?.getReader()
+    const reader = response.body?.getReader();
     if (!reader) {
-      throw new Error('No response body')
+      throw new Error("No response body");
     }
 
-    const decoder = new TextDecoder()
-    let buffer = ''
+    const decoder = new TextDecoder();
+    let buffer = "";
 
     while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
+      const { done, value } = await reader.read();
+      if (done) break;
 
-      buffer += decoder.decode(value, { stream: true })
-      const lines = buffer.split('\n')
-      buffer = lines.pop() || ''
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
 
       for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          const jsonStr = line.slice(6).trim()
+        if (line.startsWith("data: ")) {
+          const jsonStr = line.slice(6).trim();
           if (jsonStr) {
             try {
-              const event = JSON.parse(jsonStr)
-              handleEvent(event)
+              const event = JSON.parse(jsonStr);
+              handleEvent(event);
             } catch (e) {
-              console.error('Failed to parse SSE event:', e)
+              console.error("Failed to parse SSE event:", e);
             }
           }
         }
       }
     }
   } catch (error: any) {
-    status.value = 'error'
-    errorMessage.value = error.message || 'Unknown error'
-    addLine(`Error: ${errorMessage.value}`, 'text-red-400')
+    status.value = "error";
+    errorMessage.value = error.message || "Unknown error";
+    addLine(`Error: ${errorMessage.value}`, "text-red-400");
   }
-}
+};
 
 const handleEvent = (event: {
-  type: string
-  text?: string
-  model?: string
-  success?: boolean
-  error?: string
+  type: string;
+  text?: string;
+  model?: string;
+  success?: boolean;
+  error?: string;
 }) => {
   switch (event.type) {
-    case 'test_start':
-      addLine('已连接到 API', 'text-green-400')
+    case "test_start":
+      addLine("已连接到 API", "text-green-400");
       if (event.model) {
-        addLine(`使用模型：${event.model}`, 'text-cyan-400')
+        addLine(`使用模型：${event.model}`, "text-cyan-400");
       }
-      addLine('发送测试消息："hi"', 'text-gray-400')
-      addLine('', 'text-gray-300')
-      addLine('响应：', 'text-yellow-400')
-      break
+      addLine('发送测试消息："hi"', "text-gray-400");
+      addLine("", "text-gray-300");
+      addLine("响应：", "text-yellow-400");
+      break;
 
-    case 'content':
+    case "content":
       if (event.text) {
-        streamingContent.value += event.text
-        scrollToBottom()
+        streamingContent.value += event.text;
+        scrollToBottom();
       }
-      break
+      break;
 
-    case 'test_complete':
+    case "test_complete":
       // Move streaming content to output lines
       if (streamingContent.value) {
-        addLine(streamingContent.value, 'text-green-300')
-        streamingContent.value = ''
+        addLine(streamingContent.value, "text-green-300");
+        streamingContent.value = "";
       }
       if (event.success) {
-        status.value = 'success'
+        status.value = "success";
       } else {
-        status.value = 'error'
-        errorMessage.value = event.error || 'Test failed'
+        status.value = "error";
+        errorMessage.value = event.error || "Test failed";
       }
-      break
+      break;
 
-    case 'error':
-      status.value = 'error'
-      errorMessage.value = event.error || 'Unknown error'
+    case "error":
+      status.value = "error";
+      errorMessage.value = event.error || "Unknown error";
       if (streamingContent.value) {
-        addLine(streamingContent.value, 'text-green-300')
-        streamingContent.value = ''
+        addLine(streamingContent.value, "text-green-300");
+        streamingContent.value = "";
       }
-      break
+      break;
   }
-}
+};
 
 const copyOutput = () => {
-  const text = outputLines.value.map((l) => l.text).join('\n')
-  copyToClipboard(text, '输出已复制')
-}
+  const text = outputLines.value.map((l) => l.text).join("\n");
+  copyToClipboard(text, "输出已复制");
+};
 </script>

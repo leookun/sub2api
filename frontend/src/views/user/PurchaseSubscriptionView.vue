@@ -4,10 +4,10 @@
       <div class="flex items-start justify-between gap-4">
         <div>
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-            {{ '购买订阅' }}
+            {{ "购买订阅" }}
           </h2>
           <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-            {{ '通过内嵌页面完成订阅购买' }}
+            {{ "通过内嵌页面完成订阅购买" }}
           </p>
         </div>
 
@@ -19,14 +19,22 @@
             rel="noopener noreferrer"
             class="btn btn-secondary btn-sm"
           >
-            <Icon name="externalLink" size="sm" class="mr-1.5" :stroke-width="2" />
-            {{ '新窗口打开' }}
+            <Icon
+              name="externalLink"
+              size="sm"
+              class="mr-1.5"
+              :stroke-width="2"
+            />
+            {{ "新窗口打开" }}
           </a>
         </div>
       </div>
 
       <div class="card flex-1 min-h-0 overflow-hidden">
-        <div v-if="loading" class="flex h-full items-center justify-center py-12">
+        <div
+          v-if="loading"
+          class="flex h-full items-center justify-center py-12"
+        >
           <div
             class="h-8 w-8 animate-spin rounded-full border-2 border-primary-500 border-t-transparent"
           ></div>
@@ -43,10 +51,10 @@
               <Icon name="creditCard" size="lg" class="text-gray-400" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ '该功能未开启' }}
+              {{ "该功能未开启" }}
             </h3>
             <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-              {{ '管理员暂未开启购买订阅入口，请联系管理员。' }}
+              {{ "管理员暂未开启购买订阅入口，请联系管理员。" }}
             </p>
           </div>
         </div>
@@ -62,50 +70,57 @@
               <Icon name="link" size="lg" class="text-gray-400" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ '购买链接未配置' }}
+              {{ "购买链接未配置" }}
             </h3>
             <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-              {{ '管理员已开启入口，但尚未配置购买订阅链接，请联系管理员。' }}
+              {{ "管理员已开启入口，但尚未配置购买订阅链接，请联系管理员。" }}
             </p>
           </div>
         </div>
 
-        <iframe v-else :src="purchaseUrl" class="h-full w-full border-0" allowfullscreen></iframe>
+        <iframe
+          v-else
+          :src="purchaseUrl"
+          class="h-full w-full border-0"
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
   </AppLayout>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { useAppStore } from '@/stores'
+import { computed, onMounted, ref } from "vue";
+import { useAppStore } from "@/stores";
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
-const loading = ref(false)
+const loading = ref(false);
 
 const purchaseEnabled = computed(() => {
-  return appStore.cachedPublicSettings?.purchase_subscription_enabled ?? false
-})
+  return appStore.cachedPublicSettings?.purchase_subscription_enabled ?? false;
+});
 
 const purchaseUrl = computed(() => {
-  return (appStore.cachedPublicSettings?.purchase_subscription_url || '').trim()
-})
+  return (
+    appStore.cachedPublicSettings?.purchase_subscription_url || ""
+  ).trim();
+});
 
 const isValidUrl = computed(() => {
-  const url = purchaseUrl.value
-  return url.startsWith('http://') || url.startsWith('https://')
-})
+  const url = purchaseUrl.value;
+  return url.startsWith("http://") || url.startsWith("https://");
+});
 
 onMounted(async () => {
-  if (appStore.publicSettingsLoaded) return
-  loading.value = true
+  if (appStore.publicSettingsLoaded) return;
+  loading.value = true;
   try {
-    await appStore.fetchPublicSettings()
+    await appStore.fetchPublicSettings();
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-})
+});
 </script>
 
 <style scoped>
@@ -114,4 +129,3 @@ onMounted(async () => {
   height: calc(100vh - 64px - 4rem); /* 减去 header + lg:p-8 的上下padding */
 }
 </style>
-

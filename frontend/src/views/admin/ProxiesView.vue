@@ -49,7 +49,11 @@
               :title="'刷新'"
               @click="loadProxies"
             >
-              <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
+              <Icon
+                name="refresh"
+                size="md"
+                :class="loading ? 'animate-spin' : ''"
+              />
             </button>
             <button
               :disabled="batchTesting || loading"
@@ -58,7 +62,7 @@
               @click="handleBatchTest"
             >
               <Icon name="play" size="md" class="mr-2" />
-              {{ '测试连接' }}
+              {{ "测试连接" }}
             </button>
             <button
               :disabled="selectedCount === 0"
@@ -67,11 +71,11 @@
               @click="openBatchDelete"
             >
               <Icon name="trash" size="md" class="mr-2" />
-              {{ '删除' }}
+              {{ "删除" }}
             </button>
             <button class="btn btn-primary" @click="showCreateModal = true">
               <Icon name="plus" size="md" class="mr-2" />
-              {{ '添加代理' }}
+              {{ "添加代理" }}
             </button>
           </div>
         </div>
@@ -100,13 +104,18 @@
           </template>
 
           <template #cell-name="{ value }">
-            <span class="font-medium text-gray-900 dark:text-white">{{ value }}</span>
+            <span class="font-medium text-gray-900 dark:text-white">{{
+              value
+            }}</span>
           </template>
 
           <template #cell-protocol="{ value }">
             <span
               v-if="value"
-              :class="['badge', value.startsWith('socks5') ? 'badge-primary' : 'badge-gray']"
+              :class="[
+                'badge',
+                value.startsWith('socks5') ? 'badge-primary' : 'badge-gray',
+              ]"
             >
               {{ value.toUpperCase() }}
             </span>
@@ -125,7 +134,10 @@
                 :alt="row.country || row.country_code"
                 class="h-4 w-6 rounded-sm"
               />
-              <span v-if="formatLocation(row)" class="text-sm text-gray-700 dark:text-gray-200">
+              <span
+                v-if="formatLocation(row)"
+                class="text-sm text-gray-700 dark:text-gray-200"
+              >
                 {{ formatLocation(row) }}
               </span>
               <span v-else class="text-sm text-gray-400">-</span>
@@ -155,11 +167,14 @@
               class="badge badge-danger"
               :title="row.latency_message || undefined"
             >
-              {{ '链接失败' }}
+              {{ "链接失败" }}
             </span>
             <span
               v-else-if="typeof row.latency_ms === 'number'"
-              :class="['badge', row.latency_ms < 200 ? 'badge-success' : 'badge-warning']"
+              :class="[
+                'badge',
+                row.latency_ms < 200 ? 'badge-success' : 'badge-warning',
+              ]"
             >
               {{ row.latency_ms }}ms
             </span>
@@ -167,8 +182,13 @@
           </template>
 
           <template #cell-status="{ value }">
-            <span :class="['badge', value === 'active' ? 'badge-success' : 'badge-danger']">
-              {{ value === 'active' ? '正常' : '停用' }}
+            <span
+              :class="[
+                'badge',
+                value === 'active' ? 'badge-success' : 'badge-danger',
+              ]"
+            >
+              {{ value === "active" ? "正常" : "停用" }}
             </span>
           </template>
 
@@ -200,21 +220,21 @@
                   ></path>
                 </svg>
                 <Icon v-else name="checkCircle" size="sm" />
-                <span class="text-xs">{{ '测试连接' }}</span>
+                <span class="text-xs">{{ "测试连接" }}</span>
               </button>
               <button
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
                 @click="handleEdit(row)"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ '编辑' }}</span>
+                <span class="text-xs">{{ "编辑" }}</span>
               </button>
               <button
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
                 @click="handleDelete(row)"
               >
                 <Icon name="trash" size="sm" />
-                <span class="text-xs">{{ '删除' }}</span>
+                <span class="text-xs">{{ "删除" }}</span>
               </button>
             </div>
           </template>
@@ -257,12 +277,12 @@
             '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors',
             createMode === 'standard'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+              : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300',
           ]"
           @click="createMode = 'standard'"
         >
           <Icon name="plus" size="sm" class="mr-1.5 inline" />
-          {{ '标准添加' }}
+          {{ "标准添加" }}
         </button>
         <button
           type="button"
@@ -270,7 +290,7 @@
             '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors',
             createMode === 'batch'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-              : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+              : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300',
           ]"
           @click="createMode = 'batch'"
         >
@@ -287,7 +307,7 @@
               d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"
             />
           </svg>
-          {{ '快捷添加' }}
+          {{ "快捷添加" }}
         </button>
       </div>
 
@@ -299,7 +319,7 @@
         @submit.prevent="handleCreateProxy"
       >
         <div>
-          <label class="input-label">{{ '名称' }}</label>
+          <label class="input-label">{{ "名称" }}</label>
           <input
             v-model="createForm.name"
             type="text"
@@ -309,12 +329,15 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ '协议' }}</label>
-          <Select v-model="createForm.protocol" :options="protocolSelectOptions" />
+          <label class="input-label">{{ "协议" }}</label>
+          <Select
+            v-model="createForm.protocol"
+            :options="protocolSelectOptions"
+          />
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="input-label">{{ '主机' }}</label>
+            <label class="input-label">{{ "主机" }}</label>
             <input
               v-model="createForm.host"
               type="text"
@@ -324,7 +347,7 @@
             />
           </div>
           <div>
-            <label class="input-label">{{ '端口' }}</label>
+            <label class="input-label">{{ "端口" }}</label>
             <input
               v-model.number="createForm.port"
               type="number"
@@ -337,7 +360,7 @@
           </div>
         </div>
         <div>
-          <label class="input-label">{{ '用户名（可选）' }}</label>
+          <label class="input-label">{{ "用户名（可选）" }}</label>
           <input
             v-model="createForm.username"
             type="text"
@@ -346,7 +369,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ '密码（可选）' }}</label>
+          <label class="input-label">{{ "密码（可选）" }}</label>
           <input
             v-model="createForm.password"
             type="password"
@@ -354,12 +377,12 @@
             :placeholder="'可选认证信息'"
           />
         </div>
-</form>
+      </form>
 
       <!-- Batch Add Form -->
       <div v-else class="space-y-5">
         <div>
-          <label class="input-label">{{ '代理列表' }}</label>
+          <label class="input-label">{{ "代理列表" }}</label>
           <textarea
             v-model="batchInput"
             rows="10"
@@ -373,15 +396,26 @@
         </div>
 
         <!-- Parse Result -->
-        <div v-if="batchParseResult.total > 0" class="rounded-lg bg-gray-50 p-4 dark:bg-dark-700">
-            <div class="flex items-center gap-4 text-sm">
-              <div class="flex items-center gap-1.5">
-              <Icon name="checkCircle" size="sm" :stroke-width="2" class="text-primary-500" />
+        <div
+          v-if="batchParseResult.total > 0"
+          class="rounded-lg bg-gray-50 p-4 dark:bg-dark-700"
+        >
+          <div class="flex items-center gap-4 text-sm">
+            <div class="flex items-center gap-1.5">
+              <Icon
+                name="checkCircle"
+                size="sm"
+                :stroke-width="2"
+                class="text-primary-500"
+              />
               <span class="text-gray-700 dark:text-gray-300">
                 {{ `有效 ${batchParseResult.valid} 个` }}
               </span>
             </div>
-            <div v-if="batchParseResult.invalid > 0" class="flex items-center gap-1.5">
+            <div
+              v-if="batchParseResult.invalid > 0"
+              class="flex items-center gap-1.5"
+            >
               <Icon
                 name="exclamationCircle"
                 size="sm"
@@ -392,7 +426,10 @@
                 {{ `无效 ${batchParseResult.invalid} 个` }}
               </span>
             </div>
-            <div v-if="batchParseResult.duplicate > 0" class="flex items-center gap-1.5">
+            <div
+              v-if="batchParseResult.duplicate > 0"
+              class="flex items-center gap-1.5"
+            >
               <svg
                 class="h-4 w-4 text-gray-400"
                 fill="none"
@@ -412,12 +449,16 @@
             </div>
           </div>
         </div>
-</div>
+      </div>
 
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button type="button" class="btn btn-secondary" @click="closeCreateModal">
-            {{ '取消' }}
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="closeCreateModal"
+          >
+            {{ "取消" }}
           </button>
           <button
             v-if="createMode === 'standard'"
@@ -446,7 +487,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ submitting ? '创建中...' : '创建' }}
+            {{ submitting ? "创建中..." : "创建" }}
           </button>
           <button
             v-else
@@ -476,9 +517,7 @@
               ></path>
             </svg>
             {{
-              submitting
-                ? '导入中...'
-                : `导入 ${batchParseResult.valid} 个代理`
+              submitting ? "导入中..." : `导入 ${batchParseResult.valid} 个代理`
             }}
           </button>
         </div>
@@ -499,20 +538,23 @@
         @submit.prevent="handleUpdateProxy"
       >
         <div>
-          <label class="input-label">{{ '名称' }}</label>
+          <label class="input-label">{{ "名称" }}</label>
           <input v-model="editForm.name" type="text" required class="input" />
         </div>
         <div>
-          <label class="input-label">{{ '协议' }}</label>
-          <Select v-model="editForm.protocol" :options="protocolSelectOptions" />
+          <label class="input-label">{{ "协议" }}</label>
+          <Select
+            v-model="editForm.protocol"
+            :options="protocolSelectOptions"
+          />
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="input-label">{{ '主机' }}</label>
+            <label class="input-label">{{ "主机" }}</label>
             <input v-model="editForm.host" type="text" required class="input" />
           </div>
           <div>
-            <label class="input-label">{{ '端口' }}</label>
+            <label class="input-label">{{ "端口" }}</label>
             <input
               v-model.number="editForm.port"
               type="number"
@@ -524,11 +566,11 @@
           </div>
         </div>
         <div>
-          <label class="input-label">{{ '用户名（可选）' }}</label>
+          <label class="input-label">{{ "用户名（可选）" }}</label>
           <input v-model="editForm.username" type="text" class="input" />
         </div>
         <div>
-          <label class="input-label">{{ '密码（可选）' }}</label>
+          <label class="input-label">{{ "密码（可选）" }}</label>
           <input
             v-model="editForm.password"
             type="password"
@@ -537,15 +579,19 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ '状态' }}</label>
+          <label class="input-label">{{ "状态" }}</label>
           <Select v-model="editForm.status" :options="editStatusOptions" />
         </div>
-</form>
+      </form>
 
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button type="button" class="btn btn-secondary" @click="closeEditModal">
-            {{ '取消' }}
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="closeEditModal"
+          >
+            {{ "取消" }}
           </button>
           <button
             v-if="editingProxy"
@@ -574,7 +620,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ submitting ? '更新中...' : '更新' }}
+            {{ submitting ? "更新中..." : "更新" }}
           </button>
         </div>
       </template>
@@ -611,30 +657,47 @@
       width="normal"
       @close="closeAccountsModal"
     >
-      <div v-if="accountsLoading" class="flex items-center justify-center py-8 text-sm text-gray-500">
+      <div
+        v-if="accountsLoading"
+        class="flex items-center justify-center py-8 text-sm text-gray-500"
+      >
         <Icon name="refresh" size="md" class="mr-2 animate-spin" />
-        {{ '加载中...' }}
+        {{ "加载中..." }}
       </div>
-      <div v-else-if="proxyAccounts.length === 0" class="py-6 text-center text-sm text-gray-500">
-        {{ '暂无账号使用此代理' }}
+      <div
+        v-else-if="proxyAccounts.length === 0"
+        class="py-6 text-center text-sm text-gray-500"
+      >
+        {{ "暂无账号使用此代理" }}
       </div>
       <div v-else class="max-h-80 overflow-auto">
-        <table class="min-w-full divide-y divide-gray-200 text-sm dark:divide-dark-700">
-          <thead class="bg-gray-50 text-xs uppercase text-gray-500 dark:bg-dark-800 dark:text-dark-400">
+        <table
+          class="min-w-full divide-y divide-gray-200 text-sm dark:divide-dark-700"
+        >
+          <thead
+            class="bg-gray-50 text-xs uppercase text-gray-500 dark:bg-dark-800 dark:text-dark-400"
+          >
             <tr>
-              <th class="px-4 py-2 text-left">{{ '账号名称' }}</th>
-              <th class="px-4 py-2 text-left">{{ '平台/类型' }}</th>
-              <th class="px-4 py-2 text-left">{{ '备注' }}</th>
+              <th class="px-4 py-2 text-left">{{ "账号名称" }}</th>
+              <th class="px-4 py-2 text-left">{{ "平台/类型" }}</th>
+              <th class="px-4 py-2 text-left">{{ "备注" }}</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 bg-white dark:divide-dark-700 dark:bg-dark-900">
+          <tbody
+            class="divide-y divide-gray-200 bg-white dark:divide-dark-700 dark:bg-dark-900"
+          >
             <tr v-for="account in proxyAccounts" :key="account.id">
-              <td class="px-4 py-2 font-medium text-gray-900 dark:text-white">{{ account.name }}</td>
+              <td class="px-4 py-2 font-medium text-gray-900 dark:text-white">
+                {{ account.name }}
+              </td>
               <td class="px-4 py-2">
-                <PlatformTypeBadge :platform="account.platform" :type="account.type" />
+                <PlatformTypeBadge
+                  :platform="account.platform"
+                  :type="account.type"
+                />
               </td>
               <td class="px-4 py-2 text-gray-600 dark:text-gray-300">
-                {{ account.notes || '-' }}
+                {{ account.notes || "-" }}
               </td>
             </tr>
           </tbody>
@@ -643,7 +706,7 @@
       <template #footer>
         <div class="flex justify-end">
           <button class="btn btn-secondary" @click="closeAccountsModal">
-            {{ '关闭' }}
+            {{ "关闭" }}
           </button>
         </div>
       </template>
@@ -652,330 +715,340 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { adminAPI } from '@/api/admin'
-import type { Proxy, ProxyAccountSummary, ProxyProtocol } from '@/types'
-import type { Column } from '@/components/common/types'
+import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
+import { useAppStore } from "@/stores/app";
+import { adminAPI } from "@/api/admin";
+import type { Proxy, ProxyAccountSummary, ProxyProtocol } from "@/types";
+import type { Column } from "@/components/common/types";
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
 const columns = computed<Column[]>(() => [
-  { key: 'select', label: '', sortable: false },
-  { key: 'name', label: '名称', sortable: true },
-  { key: 'protocol', label: '协议', sortable: true },
-  { key: 'address', label: '地址', sortable: false },
-  { key: 'location', label: '地理位置', sortable: false },
-  { key: 'account_count', label: '账号数', sortable: true },
-  { key: 'latency', label: '延迟', sortable: false },
-  { key: 'status', label: '状态', sortable: true },
-  { key: 'actions', label: '操作', sortable: false }
-])
+  { key: "select", label: "", sortable: false },
+  { key: "name", label: "名称", sortable: true },
+  { key: "protocol", label: "协议", sortable: true },
+  { key: "address", label: "地址", sortable: false },
+  { key: "location", label: "地理位置", sortable: false },
+  { key: "account_count", label: "账号数", sortable: true },
+  { key: "latency", label: "延迟", sortable: false },
+  { key: "status", label: "状态", sortable: true },
+  { key: "actions", label: "操作", sortable: false },
+]);
 
 // Filter options
 const protocolOptions = computed(() => [
-  { value: '', label: '全部协议' },
-  { value: 'http', label: 'HTTP' },
-  { value: 'https', label: 'HTTPS' },
-  { value: 'socks5', label: 'SOCKS5' },
-  { value: 'socks5h', label: 'SOCKS5H' }
-])
+  { value: "", label: "全部协议" },
+  { value: "http", label: "HTTP" },
+  { value: "https", label: "HTTPS" },
+  { value: "socks5", label: "SOCKS5" },
+  { value: "socks5h", label: "SOCKS5H" },
+]);
 
 const statusOptions = computed(() => [
-  { value: '', label: '全部状态' },
-  { value: 'active', label: '正常' },
-  { value: 'inactive', label: '停用' }
-])
+  { value: "", label: "全部状态" },
+  { value: "active", label: "正常" },
+  { value: "inactive", label: "停用" },
+]);
 
 // Form options
 const protocolSelectOptions = computed(() => [
-  { value: 'http', label: 'admin.proxies.protocols.http' },
-  { value: 'https', label: 'admin.proxies.protocols.https' },
-  { value: 'socks5', label: 'admin.proxies.protocols.socks5' },
-  { value: 'socks5h', label: 'admin.proxies.protocols.socks5h' }
-])
+  { value: "http", label: "admin.proxies.protocols.http" },
+  { value: "https", label: "admin.proxies.protocols.https" },
+  { value: "socks5", label: "admin.proxies.protocols.socks5" },
+  { value: "socks5h", label: "admin.proxies.protocols.socks5h" },
+]);
 
 const editStatusOptions = computed(() => [
-  { value: 'active', label: '正常' },
-  { value: 'inactive', label: '停用' }
-])
+  { value: "active", label: "正常" },
+  { value: "inactive", label: "停用" },
+]);
 
-const proxies = ref<Proxy[]>([])
-const loading = ref(false)
-const searchQuery = ref('')
+const proxies = ref<Proxy[]>([]);
+const loading = ref(false);
+const searchQuery = ref("");
 const filters = reactive({
-  protocol: '',
-  status: ''
-})
+  protocol: "",
+  status: "",
+});
 const pagination = reactive({
   page: 1,
   page_size: 20,
   total: 0,
-  pages: 0
-})
+  pages: 0,
+});
 
-const showCreateModal = ref(false)
-const showEditModal = ref(false)
-const showDeleteDialog = ref(false)
-const showBatchDeleteDialog = ref(false)
-const showAccountsModal = ref(false)
-const submitting = ref(false)
-const testingProxyIds = ref<Set<number>>(new Set())
-const batchTesting = ref(false)
-const selectedProxyIds = ref<Set<number>>(new Set())
-const accountsProxy = ref<Proxy | null>(null)
-const proxyAccounts = ref<ProxyAccountSummary[]>([])
-const accountsLoading = ref(false)
-const editingProxy = ref<Proxy | null>(null)
-const deletingProxy = ref<Proxy | null>(null)
+const showCreateModal = ref(false);
+const showEditModal = ref(false);
+const showDeleteDialog = ref(false);
+const showBatchDeleteDialog = ref(false);
+const showAccountsModal = ref(false);
+const submitting = ref(false);
+const testingProxyIds = ref<Set<number>>(new Set());
+const batchTesting = ref(false);
+const selectedProxyIds = ref<Set<number>>(new Set());
+const accountsProxy = ref<Proxy | null>(null);
+const proxyAccounts = ref<ProxyAccountSummary[]>([]);
+const accountsLoading = ref(false);
+const editingProxy = ref<Proxy | null>(null);
+const deletingProxy = ref<Proxy | null>(null);
 
-const selectedCount = computed(() => selectedProxyIds.value.size)
+const selectedCount = computed(() => selectedProxyIds.value.size);
 const allVisibleSelected = computed(() => {
-  if (proxies.value.length === 0) return false
-  return proxies.value.every((proxy) => selectedProxyIds.value.has(proxy.id))
-})
+  if (proxies.value.length === 0) return false;
+  return proxies.value.every((proxy) => selectedProxyIds.value.has(proxy.id));
+});
 
 // Batch import state
-const createMode = ref<'standard' | 'batch'>('standard')
-const batchInput = ref('')
+const createMode = ref<"standard" | "batch">("standard");
+const batchInput = ref("");
 const batchParseResult = reactive({
   total: 0,
   valid: 0,
   invalid: 0,
   duplicate: 0,
   proxies: [] as Array<{
-    protocol: ProxyProtocol
-    host: string
-    port: number
-    username: string
-    password: string
-  }>
-})
+    protocol: ProxyProtocol;
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+  }>,
+});
 
 const createForm = reactive({
-  name: '',
-  protocol: 'http' as ProxyProtocol,
-  host: '',
+  name: "",
+  protocol: "http" as ProxyProtocol,
+  host: "",
   port: 8080,
-  username: '',
-  password: ''
-})
+  username: "",
+  password: "",
+});
 
 const editForm = reactive({
-  name: '',
-  protocol: 'http' as ProxyProtocol,
-  host: '',
+  name: "",
+  protocol: "http" as ProxyProtocol,
+  host: "",
   port: 8080,
-  username: '',
-  password: '',
-  status: 'active' as 'active' | 'inactive'
-})
+  username: "",
+  password: "",
+  status: "active" as "active" | "inactive",
+});
 
-let abortController: AbortController | null = null
+let abortController: AbortController | null = null;
 
 const isAbortError = (error: unknown) => {
-  if (!error || typeof error !== 'object') return false
-  const maybeError = error as { name?: string; code?: string }
-  return maybeError.name === 'AbortError' || maybeError.code === 'ERR_CANCELED'
-}
+  if (!error || typeof error !== "object") return false;
+  const maybeError = error as { name?: string; code?: string };
+  return maybeError.name === "AbortError" || maybeError.code === "ERR_CANCELED";
+};
 
 const toggleSelectRow = (id: number, event: Event) => {
-  const target = event.target as HTMLInputElement
-  const next = new Set(selectedProxyIds.value)
+  const target = event.target as HTMLInputElement;
+  const next = new Set(selectedProxyIds.value);
   if (target.checked) {
-    next.add(id)
+    next.add(id);
   } else {
-    next.delete(id)
+    next.delete(id);
   }
-  selectedProxyIds.value = next
-}
+  selectedProxyIds.value = next;
+};
 
 const toggleSelectAllVisible = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const next = new Set(selectedProxyIds.value)
+  const target = event.target as HTMLInputElement;
+  const next = new Set(selectedProxyIds.value);
   for (const proxy of proxies.value) {
     if (target.checked) {
-      next.add(proxy.id)
+      next.add(proxy.id);
     } else {
-      next.delete(proxy.id)
+      next.delete(proxy.id);
     }
   }
-  selectedProxyIds.value = next
-}
+  selectedProxyIds.value = next;
+};
 
 const loadProxies = async () => {
   if (abortController) {
-    abortController.abort()
+    abortController.abort();
   }
-  const currentAbortController = new AbortController()
-  abortController = currentAbortController
-  loading.value = true
+  const currentAbortController = new AbortController();
+  abortController = currentAbortController;
+  loading.value = true;
   try {
-    const response = await adminAPI.proxies.list(pagination.page, pagination.page_size, {
-      protocol: filters.protocol || undefined,
-      status: filters.status as any,
-      search: searchQuery.value || undefined
-    }, { signal: currentAbortController.signal })
-    if (currentAbortController.signal.aborted || abortController !== currentAbortController) {
-      return
+    const response = await adminAPI.proxies.list(
+      pagination.page,
+      pagination.page_size,
+      {
+        protocol: filters.protocol || undefined,
+        status: filters.status as any,
+        search: searchQuery.value || undefined,
+      },
+      { signal: currentAbortController.signal },
+    );
+    if (
+      currentAbortController.signal.aborted ||
+      abortController !== currentAbortController
+    ) {
+      return;
     }
-    proxies.value = response.items
-    pagination.total = response.total
-    pagination.pages = response.pages
+    proxies.value = response.items;
+    pagination.total = response.total;
+    pagination.pages = response.pages;
   } catch (error) {
     if (isAbortError(error)) {
-      return
+      return;
     }
-    appStore.showError('加载代理列表失败')
-    console.error('Error loading proxies:', error)
+    appStore.showError("加载代理列表失败");
+    console.error("Error loading proxies:", error);
   } finally {
     if (abortController === currentAbortController) {
-      loading.value = false
-      abortController = null
+      loading.value = false;
+      abortController = null;
     }
   }
-}
+};
 
-let searchTimeout: ReturnType<typeof setTimeout>
+let searchTimeout: ReturnType<typeof setTimeout>;
 const handleSearch = () => {
-  clearTimeout(searchTimeout)
+  clearTimeout(searchTimeout);
   searchTimeout = setTimeout(() => {
-    pagination.page = 1
-    loadProxies()
-  }, 300)
-}
+    pagination.page = 1;
+    loadProxies();
+  }, 300);
+};
 
 const handlePageChange = (page: number) => {
-  pagination.page = page
-  loadProxies()
-}
+  pagination.page = page;
+  loadProxies();
+};
 
 const handlePageSizeChange = (pageSize: number) => {
-  pagination.page_size = pageSize
-  pagination.page = 1
-  loadProxies()
-}
+  pagination.page_size = pageSize;
+  pagination.page = 1;
+  loadProxies();
+};
 
 const closeCreateModal = () => {
-  showCreateModal.value = false
-  createMode.value = 'standard'
-  createForm.name = ''
-  createForm.protocol = 'http'
-  createForm.host = ''
-  createForm.port = 8080
-  createForm.username = ''
-  createForm.password = ''
-  batchInput.value = ''
-  batchParseResult.total = 0
-  batchParseResult.valid = 0
-  batchParseResult.invalid = 0
-  batchParseResult.duplicate = 0
-  batchParseResult.proxies = []
-}
+  showCreateModal.value = false;
+  createMode.value = "standard";
+  createForm.name = "";
+  createForm.protocol = "http";
+  createForm.host = "";
+  createForm.port = 8080;
+  createForm.username = "";
+  createForm.password = "";
+  batchInput.value = "";
+  batchParseResult.total = 0;
+  batchParseResult.valid = 0;
+  batchParseResult.invalid = 0;
+  batchParseResult.duplicate = 0;
+  batchParseResult.proxies = [];
+};
 
 // Parse proxy URL: protocol://user:pass@host:port or protocol://host:port
 const parseProxyUrl = (
-  line: string
+  line: string,
 ): {
-  protocol: ProxyProtocol
-  host: string
-  port: number
-  username: string
-  password: string
+  protocol: ProxyProtocol;
+  host: string;
+  port: number;
+  username: string;
+  password: string;
 } | null => {
-  const trimmed = line.trim()
-  if (!trimmed) return null
+  const trimmed = line.trim();
+  if (!trimmed) return null;
 
   // Regex to parse proxy URL (supports http, https, socks5, socks5h)
-  const regex = /^(https?|socks5h?):\/\/(?:([^:@]+):([^@]+)@)?([^:]+):(\d+)$/i
-  const match = trimmed.match(regex)
+  const regex = /^(https?|socks5h?):\/\/(?:([^:@]+):([^@]+)@)?([^:]+):(\d+)$/i;
+  const match = trimmed.match(regex);
 
-  if (!match) return null
+  if (!match) return null;
 
-  const [, protocol, username, password, host, port] = match
-  const portNum = parseInt(port, 10)
+  const [, protocol, username, password, host, port] = match;
+  const portNum = parseInt(port, 10);
 
-  if (portNum < 1 || portNum > 65535) return null
+  if (portNum < 1 || portNum > 65535) return null;
 
   return {
     protocol: protocol.toLowerCase() as ProxyProtocol,
     host: host.trim(),
     port: portNum,
-    username: username?.trim() || '',
-    password: password?.trim() || ''
-  }
-}
+    username: username?.trim() || "",
+    password: password?.trim() || "",
+  };
+};
 
 const parseBatchInput = () => {
-  const lines = batchInput.value.split('\n').filter((l) => l.trim())
-  const seen = new Set<string>()
-  const proxies: typeof batchParseResult.proxies = []
-  let invalid = 0
-  let duplicate = 0
+  const lines = batchInput.value.split("\n").filter((l) => l.trim());
+  const seen = new Set<string>();
+  const proxies: typeof batchParseResult.proxies = [];
+  let invalid = 0;
+  let duplicate = 0;
 
   for (const line of lines) {
-    const parsed = parseProxyUrl(line)
+    const parsed = parseProxyUrl(line);
     if (!parsed) {
-      invalid++
-      continue
+      invalid++;
+      continue;
     }
 
     // Check for duplicates (same host:port:username:password)
-    const key = `${parsed.host}:${parsed.port}:${parsed.username}:${parsed.password}`
+    const key = `${parsed.host}:${parsed.port}:${parsed.username}:${parsed.password}`;
     if (seen.has(key)) {
-      duplicate++
-      continue
+      duplicate++;
+      continue;
     }
-    seen.add(key)
-    proxies.push(parsed)
+    seen.add(key);
+    proxies.push(parsed);
   }
 
-  batchParseResult.total = lines.length
-  batchParseResult.valid = proxies.length
-  batchParseResult.invalid = invalid
-  batchParseResult.duplicate = duplicate
-  batchParseResult.proxies = proxies
-}
+  batchParseResult.total = lines.length;
+  batchParseResult.valid = proxies.length;
+  batchParseResult.invalid = invalid;
+  batchParseResult.duplicate = duplicate;
+  batchParseResult.proxies = proxies;
+};
 
 const handleBatchCreate = async () => {
-  if (batchParseResult.valid === 0) return
+  if (batchParseResult.valid === 0) return;
 
-  submitting.value = true
+  submitting.value = true;
   try {
-    const result = await adminAPI.proxies.batchCreate(batchParseResult.proxies)
-    const created = result.created || 0
-    const skipped = result.skipped || 0
+    const result = await adminAPI.proxies.batchCreate(batchParseResult.proxies);
+    const created = result.created || 0;
+    const skipped = result.skipped || 0;
 
     if (created > 0) {
-      appStore.showSuccess(`成功导入 ${created} 个代理，跳过 ${skipped} 个重复`)
+      appStore.showSuccess(
+        `成功导入 ${created} 个代理，跳过 ${skipped} 个重复`,
+      );
     } else {
-      appStore.showInfo(`全部 ${skipped} 个代理已存在，跳过导入`)
+      appStore.showInfo(`全部 ${skipped} 个代理已存在，跳过导入`);
     }
 
-    closeCreateModal()
-    loadProxies()
+    closeCreateModal();
+    loadProxies();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '批量导入失败')
-    console.error('Error batch creating proxies:', error)
+    appStore.showError(error.response?.data?.detail || "批量导入失败");
+    console.error("Error batch creating proxies:", error);
   } finally {
-    submitting.value = false
+    submitting.value = false;
   }
-}
+};
 
 const handleCreateProxy = async () => {
   if (!createForm.name.trim()) {
-    appStore.showError('请输入代理名称')
-    return
+    appStore.showError("请输入代理名称");
+    return;
   }
   if (!createForm.host.trim()) {
-    appStore.showError('请输入主机地址')
-    return
+    appStore.showError("请输入主机地址");
+    return;
   }
   if (createForm.port < 1 || createForm.port > 65535) {
-    appStore.showError('端口必须在 1-65535 之间')
-    return
+    appStore.showError("端口必须在 1-65535 之间");
+    return;
   }
-  submitting.value = true
+  submitting.value = true;
   try {
     await adminAPI.proxies.create({
       name: createForm.name.trim(),
@@ -983,52 +1056,52 @@ const handleCreateProxy = async () => {
       host: createForm.host.trim(),
       port: createForm.port,
       username: createForm.username.trim() || null,
-      password: createForm.password.trim() || null
-    })
-    appStore.showSuccess('代理添加成功')
-    closeCreateModal()
-    loadProxies()
+      password: createForm.password.trim() || null,
+    });
+    appStore.showSuccess("代理添加成功");
+    closeCreateModal();
+    loadProxies();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '创建代理失败')
-    console.error('Error creating proxy:', error)
+    appStore.showError(error.response?.data?.detail || "创建代理失败");
+    console.error("Error creating proxy:", error);
   } finally {
-    submitting.value = false
+    submitting.value = false;
   }
-}
+};
 
 const handleEdit = (proxy: Proxy) => {
-  editingProxy.value = proxy
-  editForm.name = proxy.name
-  editForm.protocol = proxy.protocol
-  editForm.host = proxy.host
-  editForm.port = proxy.port
-  editForm.username = proxy.username || ''
-  editForm.password = ''
-  editForm.status = proxy.status
-  showEditModal.value = true
-}
+  editingProxy.value = proxy;
+  editForm.name = proxy.name;
+  editForm.protocol = proxy.protocol;
+  editForm.host = proxy.host;
+  editForm.port = proxy.port;
+  editForm.username = proxy.username || "";
+  editForm.password = "";
+  editForm.status = proxy.status;
+  showEditModal.value = true;
+};
 
 const closeEditModal = () => {
-  showEditModal.value = false
-  editingProxy.value = null
-}
+  showEditModal.value = false;
+  editingProxy.value = null;
+};
 
 const handleUpdateProxy = async () => {
-  if (!editingProxy.value) return
+  if (!editingProxy.value) return;
   if (!editForm.name.trim()) {
-    appStore.showError('请输入代理名称')
-    return
+    appStore.showError("请输入代理名称");
+    return;
   }
   if (!editForm.host.trim()) {
-    appStore.showError('请输入主机地址')
-    return
+    appStore.showError("请输入主机地址");
+    return;
   }
   if (editForm.port < 1 || editForm.port > 65535) {
-    appStore.showError('端口必须在 1-65535 之间')
-    return
+    appStore.showError("端口必须在 1-65535 之间");
+    return;
   }
 
-  submitting.value = true
+  submitting.value = true;
   try {
     const updateData: any = {
       name: editForm.name.trim(),
@@ -1036,274 +1109,273 @@ const handleUpdateProxy = async () => {
       host: editForm.host.trim(),
       port: editForm.port,
       username: editForm.username.trim() || null,
-      status: editForm.status
-    }
+      status: editForm.status,
+    };
 
     // Only include password if it was changed
-    const trimmedPassword = editForm.password.trim()
+    const trimmedPassword = editForm.password.trim();
     if (trimmedPassword) {
-      updateData.password = trimmedPassword
+      updateData.password = trimmedPassword;
     }
 
-    await adminAPI.proxies.update(editingProxy.value.id, updateData)
-    appStore.showSuccess('代理更新成功')
-    closeEditModal()
-    loadProxies()
+    await adminAPI.proxies.update(editingProxy.value.id, updateData);
+    appStore.showSuccess("代理更新成功");
+    closeEditModal();
+    loadProxies();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '更新代理失败')
-    console.error('Error updating proxy:', error)
+    appStore.showError(error.response?.data?.detail || "更新代理失败");
+    console.error("Error updating proxy:", error);
   } finally {
-    submitting.value = false
+    submitting.value = false;
   }
-}
+};
 
 const applyLatencyResult = (
   proxyId: number,
   result: {
-    success: boolean
-    latency_ms?: number
-    message?: string
-    ip_address?: string
-    country?: string
-    country_code?: string
-    region?: string
-    city?: string
-  }
+    success: boolean;
+    latency_ms?: number;
+    message?: string;
+    ip_address?: string;
+    country?: string;
+    country_code?: string;
+    region?: string;
+    city?: string;
+  },
 ) => {
-  const target = proxies.value.find((proxy) => proxy.id === proxyId)
-  if (!target) return
+  const target = proxies.value.find((proxy) => proxy.id === proxyId);
+  if (!target) return;
   if (result.success) {
-    target.latency_status = 'success'
-    target.latency_ms = result.latency_ms
-    target.ip_address = result.ip_address
-    target.country = result.country
-    target.country_code = result.country_code
-    target.region = result.region
-    target.city = result.city
+    target.latency_status = "success";
+    target.latency_ms = result.latency_ms;
+    target.ip_address = result.ip_address;
+    target.country = result.country;
+    target.country_code = result.country_code;
+    target.region = result.region;
+    target.city = result.city;
   } else {
-    target.latency_status = 'failed'
-    target.latency_ms = undefined
-    target.ip_address = undefined
-    target.country = undefined
-    target.country_code = undefined
-    target.region = undefined
-    target.city = undefined
+    target.latency_status = "failed";
+    target.latency_ms = undefined;
+    target.ip_address = undefined;
+    target.country = undefined;
+    target.country_code = undefined;
+    target.region = undefined;
+    target.city = undefined;
   }
-  target.latency_message = result.message
-}
+  target.latency_message = result.message;
+};
 
 const formatLocation = (proxy: Proxy) => {
-  const parts = [proxy.country, proxy.city].filter(Boolean) as string[]
-  return parts.join(' · ')
-}
+  const parts = [proxy.country, proxy.city].filter(Boolean) as string[];
+  return parts.join(" · ");
+};
 
 const flagUrl = (code: string) =>
-  `https://unpkg.com/flag-icons/flags/4x3/${code.toLowerCase()}.svg`
+  `https://unpkg.com/flag-icons/flags/4x3/${code.toLowerCase()}.svg`;
 
 const startTestingProxy = (proxyId: number) => {
-  testingProxyIds.value = new Set([...testingProxyIds.value, proxyId])
-}
+  testingProxyIds.value = new Set([...testingProxyIds.value, proxyId]);
+};
 
 const stopTestingProxy = (proxyId: number) => {
-  const next = new Set(testingProxyIds.value)
-  next.delete(proxyId)
-  testingProxyIds.value = next
-}
+  const next = new Set(testingProxyIds.value);
+  next.delete(proxyId);
+  testingProxyIds.value = next;
+};
 
 const runProxyTest = async (proxyId: number, notify: boolean) => {
-  startTestingProxy(proxyId)
+  startTestingProxy(proxyId);
   try {
-    const result = await adminAPI.proxies.testProxy(proxyId)
-    applyLatencyResult(proxyId, result)
+    const result = await adminAPI.proxies.testProxy(proxyId);
+    applyLatencyResult(proxyId, result);
     if (notify) {
       if (result.success) {
         const message = result.latency_ms
           ? `代理连接正常，延迟 ${result.latency_ms}ms`
-          : '代理连接正常'
-        appStore.showSuccess(message)
+          : "代理连接正常";
+        appStore.showSuccess(message);
       } else {
-        appStore.showError(result.message || '代理测试失败')
+        appStore.showError(result.message || "代理测试失败");
       }
     }
-    return result
+    return result;
   } catch (error: any) {
-    const message = error.response?.data?.detail || '测试代理失败'
-    applyLatencyResult(proxyId, { success: false, message })
+    const message = error.response?.data?.detail || "测试代理失败";
+    applyLatencyResult(proxyId, { success: false, message });
     if (notify) {
-      appStore.showError(message)
+      appStore.showError(message);
     }
-    console.error('Error testing proxy:', error)
-    return null
+    console.error("Error testing proxy:", error);
+    return null;
   } finally {
-    stopTestingProxy(proxyId)
+    stopTestingProxy(proxyId);
   }
-}
+};
 
 const handleTestConnection = async (proxy: Proxy) => {
-  await runProxyTest(proxy.id, true)
-}
+  await runProxyTest(proxy.id, true);
+};
 
 const fetchAllProxiesForBatch = async (): Promise<Proxy[]> => {
-  const pageSize = 200
-  const result: Proxy[] = []
-  let page = 1
-  let totalPages = 1
+  const pageSize = 200;
+  const result: Proxy[] = [];
+  let page = 1;
+  let totalPages = 1;
 
   while (page <= totalPages) {
-    const response = await adminAPI.proxies.list(
-      page,
-      pageSize,
-      {
-        protocol: filters.protocol || undefined,
-        status: filters.status as any,
-        search: searchQuery.value || undefined
-      }
-    )
-    result.push(...response.items)
-    totalPages = response.pages || 1
-    page++
+    const response = await adminAPI.proxies.list(page, pageSize, {
+      protocol: filters.protocol || undefined,
+      status: filters.status as any,
+      search: searchQuery.value || undefined,
+    });
+    result.push(...response.items);
+    totalPages = response.pages || 1;
+    page++;
   }
 
-  return result
-}
+  return result;
+};
 
 const runBatchProxyTests = async (ids: number[]) => {
-  if (ids.length === 0) return
-  const concurrency = 5
-  let index = 0
+  if (ids.length === 0) return;
+  const concurrency = 5;
+  let index = 0;
 
   const worker = async () => {
     while (index < ids.length) {
-      const current = ids[index]
-      index++
-      await runProxyTest(current, false)
+      const current = ids[index];
+      index++;
+      await runProxyTest(current, false);
     }
-  }
+  };
 
-  const workers = Array.from({ length: Math.min(concurrency, ids.length) }, () => worker())
-  await Promise.all(workers)
-}
+  const workers = Array.from(
+    { length: Math.min(concurrency, ids.length) },
+    () => worker(),
+  );
+  await Promise.all(workers);
+};
 
 const handleBatchTest = async () => {
-  if (batchTesting.value) return
+  if (batchTesting.value) return;
 
-  batchTesting.value = true
+  batchTesting.value = true;
   try {
-    let ids: number[] = []
+    let ids: number[] = [];
     if (selectedCount.value > 0) {
-      ids = Array.from(selectedProxyIds.value)
+      ids = Array.from(selectedProxyIds.value);
     } else {
-      const allProxies = await fetchAllProxiesForBatch()
-      ids = allProxies.map((proxy) => proxy.id)
+      const allProxies = await fetchAllProxiesForBatch();
+      ids = allProxies.map((proxy) => proxy.id);
     }
 
     if (ids.length === 0) {
-      appStore.showInfo('暂无可测试的代理')
-      return
+      appStore.showInfo("暂无可测试的代理");
+      return;
     }
 
-    await runBatchProxyTests(ids)
-    appStore.showSuccess(`批量测试完成，共测试 ${ids.length} 个代理`)
-    loadProxies()
+    await runBatchProxyTests(ids);
+    appStore.showSuccess(`批量测试完成，共测试 ${ids.length} 个代理`);
+    loadProxies();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '批量测试失败')
-    console.error('Error batch testing proxies:', error)
+    appStore.showError(error.response?.data?.detail || "批量测试失败");
+    console.error("Error batch testing proxies:", error);
   } finally {
-    batchTesting.value = false
+    batchTesting.value = false;
   }
-}
+};
 
 const handleDelete = (proxy: Proxy) => {
   if ((proxy.account_count || 0) > 0) {
-    appStore.showError('该代理已有账号使用，无法删除')
-    return
+    appStore.showError("该代理已有账号使用，无法删除");
+    return;
   }
-  deletingProxy.value = proxy
-  showDeleteDialog.value = true
-}
+  deletingProxy.value = proxy;
+  showDeleteDialog.value = true;
+};
 
 const openBatchDelete = () => {
   if (selectedCount.value === 0) {
-    return
+    return;
   }
-  showBatchDeleteDialog.value = true
-}
+  showBatchDeleteDialog.value = true;
+};
 
 const confirmDelete = async () => {
-  if (!deletingProxy.value) return
+  if (!deletingProxy.value) return;
 
   try {
-    await adminAPI.proxies.delete(deletingProxy.value.id)
-    appStore.showSuccess('代理删除成功')
-    showDeleteDialog.value = false
+    await adminAPI.proxies.delete(deletingProxy.value.id);
+    appStore.showSuccess("代理删除成功");
+    showDeleteDialog.value = false;
     if (selectedProxyIds.value.has(deletingProxy.value.id)) {
-      const next = new Set(selectedProxyIds.value)
-      next.delete(deletingProxy.value.id)
-      selectedProxyIds.value = next
+      const next = new Set(selectedProxyIds.value);
+      next.delete(deletingProxy.value.id);
+      selectedProxyIds.value = next;
     }
-    deletingProxy.value = null
-    loadProxies()
+    deletingProxy.value = null;
+    loadProxies();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '删除代理失败')
-    console.error('Error deleting proxy:', error)
+    appStore.showError(error.response?.data?.detail || "删除代理失败");
+    console.error("Error deleting proxy:", error);
   }
-}
+};
 
 const confirmBatchDelete = async () => {
-  const ids = Array.from(selectedProxyIds.value)
+  const ids = Array.from(selectedProxyIds.value);
   if (ids.length === 0) {
-    showBatchDeleteDialog.value = false
-    return
+    showBatchDeleteDialog.value = false;
+    return;
   }
 
   try {
-    const result = await adminAPI.proxies.batchDelete(ids)
-    const deleted = result.deleted_ids?.length || 0
-    const skipped = result.skipped?.length || 0
+    const result = await adminAPI.proxies.batchDelete(ids);
+    const deleted = result.deleted_ids?.length || 0;
+    const skipped = result.skipped?.length || 0;
 
     if (deleted > 0) {
-      appStore.showSuccess(`已删除 {deleted} 个代理，跳过 {skipped} 个`)
+      appStore.showSuccess(`已删除 {deleted} 个代理，跳过 {skipped} 个`);
     } else if (skipped > 0) {
-      appStore.showInfo(`已跳过 {skipped} 个代理`)
+      appStore.showInfo(`已跳过 {skipped} 个代理`);
     }
 
-    selectedProxyIds.value = new Set()
-    showBatchDeleteDialog.value = false
-    loadProxies()
+    selectedProxyIds.value = new Set();
+    showBatchDeleteDialog.value = false;
+    loadProxies();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '批量删除失败')
-    console.error('Error batch deleting proxies:', error)
+    appStore.showError(error.response?.data?.detail || "批量删除失败");
+    console.error("Error batch deleting proxies:", error);
   }
-}
+};
 
 const openAccountsModal = async (proxy: Proxy) => {
-  accountsProxy.value = proxy
-  proxyAccounts.value = []
-  accountsLoading.value = true
-  showAccountsModal.value = true
+  accountsProxy.value = proxy;
+  proxyAccounts.value = [];
+  accountsLoading.value = true;
+  showAccountsModal.value = true;
 
   try {
-    proxyAccounts.value = await adminAPI.proxies.getProxyAccounts(proxy.id)
+    proxyAccounts.value = await adminAPI.proxies.getProxyAccounts(proxy.id);
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '获取账号列表失败')
-    console.error('Error loading proxy accounts:', error)
+    appStore.showError(error.response?.data?.detail || "获取账号列表失败");
+    console.error("Error loading proxy accounts:", error);
   } finally {
-    accountsLoading.value = false
+    accountsLoading.value = false;
   }
-}
+};
 
 const closeAccountsModal = () => {
-  showAccountsModal.value = false
-  accountsProxy.value = null
-  proxyAccounts.value = []
-}
+  showAccountsModal.value = false;
+  accountsProxy.value = null;
+  proxyAccounts.value = [];
+};
 
 onMounted(() => {
-  loadProxies()
-})
+  loadProxies();
+});
 
 onUnmounted(() => {
-  clearTimeout(searchTimeout)
-  abortController?.abort()
-})
+  clearTimeout(searchTimeout);
+  abortController?.abort();
+});
 </script>

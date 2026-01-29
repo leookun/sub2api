@@ -4,11 +4,13 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ '验证您的邮箱' }}
+          {{ "验证您的邮箱" }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
           We'll send a verification code to
-          <span class="font-medium text-gray-700 dark:text-gray-300">{{ email }}</span>
+          <span class="font-medium text-gray-700 dark:text-gray-300">{{
+            email
+          }}</span>
         </p>
       </div>
 
@@ -22,8 +24,8 @@
             <Icon name="exclamationCircle" size="md" class="text-amber-500" />
           </div>
           <div class="text-sm text-amber-700 dark:text-amber-400">
-            <p class="font-medium">{{ '会话已过期' }}</p>
-            <p class="mt-1">{{ '请返回注册页面重新开始。' }}</p>
+            <p class="font-medium">{{ "会话已过期" }}</p>
+            <p class="mt-1">{{ "请返回注册页面重新开始。" }}</p>
           </div>
         </div>
       </div>
@@ -33,7 +35,7 @@
         <!-- Verification Code Input -->
         <div>
           <label for="code" class="input-label text-center">
-            {{ '验证码' }}
+            {{ "验证码" }}
           </label>
           <input
             id="code"
@@ -51,7 +53,9 @@
           <p v-if="errors.code" class="input-error-text text-center">
             {{ errors.code }}
           </p>
-          <p v-else class="input-hint text-center">{{ '请输入发送到您邮箱的6位验证码' }}</p>
+          <p v-else class="input-hint text-center">
+            {{ "请输入发送到您邮箱的6位验证码" }}
+          </p>
         </div>
 
         <!-- Code Status -->
@@ -101,7 +105,11 @@
         </transition>
 
         <!-- Submit Button -->
-        <button type="submit" :disabled="isLoading || !verifyCode" class="btn btn-primary w-full">
+        <button
+          type="submit"
+          :disabled="isLoading || !verifyCode"
+          class="btn btn-primary w-full"
+        >
           <svg
             v-if="isLoading"
             class="-ml-1 mr-2 h-4 w-4 animate-spin text-white"
@@ -123,7 +131,7 @@
             ></path>
           </svg>
           <Icon v-else name="checkCircle" size="md" class="mr-2" />
-          {{ isLoading ? 'Verifying...' : 'Verify & Create Account' }}
+          {{ isLoading ? "Verifying..." : "Verify & Create Account" }}
         </button>
 
         <!-- Resend Code -->
@@ -140,16 +148,17 @@
             v-else
             type="button"
             :disabled="
-              isSendingCode || (turnstileEnabled && showResendTurnstile && !resendTurnstileToken)
+              isSendingCode ||
+              (turnstileEnabled && showResendTurnstile && !resendTurnstileToken)
             "
             class="text-sm text-primary-600 transition-colors hover:text-primary-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-primary-400 dark:hover:text-primary-300"
             @click="handleResendCode"
           >
-            <span v-if="isSendingCode">{{ '发送中...' }}</span>
+            <span v-if="isSendingCode">{{ "发送中..." }}</span>
             <span v-else-if="turnstileEnabled && !showResendTurnstile">
-              {{ '点击重新发送验证码' }}
+              {{ "点击重新发送验证码" }}
             </span>
-            <span v-else>{{ '重新发送验证码' }}</span>
+            <span v-else>{{ "重新发送验证码" }}</span>
           </button>
         </div>
       </form>
@@ -169,163 +178,168 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
-import type TurnstileWidget from '@/components/TurnstileWidget.vue'
-import { useAuthStore, useAppStore } from '@/stores'
-import { getPublicSettings, sendVerifyCode } from '@/api/auth'
+import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
+import type TurnstileWidget from "@/components/TurnstileWidget.vue";
+import { useAuthStore, useAppStore } from "@/stores";
+import { getPublicSettings, sendVerifyCode } from "@/api/auth";
 
 // ==================== Router & Stores ====================
 
-const router = useRouter()
-const authStore = useAuthStore()
-const appStore = useAppStore()
+const router = useRouter();
+const authStore = useAuthStore();
+const appStore = useAppStore();
 
 // ==================== State ====================
 
-const isLoading = ref<boolean>(false)
-const isSendingCode = ref<boolean>(false)
-const errorMessage = ref<string>('')
-const codeSent = ref<boolean>(false)
-const verifyCode = ref<string>('')
-const countdown = ref<number>(0)
-let countdownTimer: ReturnType<typeof setInterval> | null = null
+const isLoading = ref<boolean>(false);
+const isSendingCode = ref<boolean>(false);
+const errorMessage = ref<string>("");
+const codeSent = ref<boolean>(false);
+const verifyCode = ref<string>("");
+const countdown = ref<number>(0);
+let countdownTimer: ReturnType<typeof setInterval> | null = null;
 
 // Registration data from sessionStorage
-const email = ref<string>('')
-const password = ref<string>('')
-const initialTurnstileToken = ref<string>('')
-const promoCode = ref<string>('')
-const hasRegisterData = ref<boolean>(false)
+const email = ref<string>("");
+const password = ref<string>("");
+const initialTurnstileToken = ref<string>("");
+const promoCode = ref<string>("");
+const hasRegisterData = ref<boolean>(false);
 
 // Public settings
-const turnstileEnabled = ref<boolean>(false)
-const turnstileSiteKey = ref<string>('')
-const siteName = ref<string>('Sub2API')
+const turnstileEnabled = ref<boolean>(false);
+const turnstileSiteKey = ref<string>("");
+const siteName = ref<string>("Sub2API");
 
 // Turnstile for resend
-const turnstileRef = ref<InstanceType<typeof TurnstileWidget> | null>(null)
-const resendTurnstileToken = ref<string>('')
-const showResendTurnstile = ref<boolean>(false)
+const turnstileRef = ref<InstanceType<typeof TurnstileWidget> | null>(null);
+const resendTurnstileToken = ref<string>("");
+const showResendTurnstile = ref<boolean>(false);
 
 const errors = ref({
-  code: '',
-  turnstile: ''
-})
+  code: "",
+  turnstile: "",
+});
 
 // ==================== Lifecycle ====================
 
 onMounted(async () => {
   // Load registration data from sessionStorage
-  const registerDataStr = sessionStorage.getItem('register_data')
+  const registerDataStr = sessionStorage.getItem("register_data");
   if (registerDataStr) {
     try {
-      const registerData = JSON.parse(registerDataStr)
-      email.value = registerData.email || ''
-      password.value = registerData.password || ''
-      initialTurnstileToken.value = registerData.turnstile_token || ''
-      promoCode.value = registerData.promo_code || ''
-      hasRegisterData.value = !!(email.value && password.value)
+      const registerData = JSON.parse(registerDataStr);
+      email.value = registerData.email || "";
+      password.value = registerData.password || "";
+      initialTurnstileToken.value = registerData.turnstile_token || "";
+      promoCode.value = registerData.promo_code || "";
+      hasRegisterData.value = !!(email.value && password.value);
     } catch {
-      hasRegisterData.value = false
+      hasRegisterData.value = false;
     }
   }
 
   // Load public settings
   try {
-    const settings = await getPublicSettings()
-    turnstileEnabled.value = settings.turnstile_enabled
-    turnstileSiteKey.value = settings.turnstile_site_key || ''
-    siteName.value = settings.site_name || 'Sub2API'
+    const settings = await getPublicSettings();
+    turnstileEnabled.value = settings.turnstile_enabled;
+    turnstileSiteKey.value = settings.turnstile_site_key || "";
+    siteName.value = settings.site_name || "Sub2API";
   } catch (error) {
-    console.error('Failed to load public settings:', error)
+    console.error("Failed to load public settings:", error);
   }
 
   // Auto-send verification code if we have valid data
   if (hasRegisterData.value) {
-    await sendCode()
+    await sendCode();
   }
-})
+});
 
 onUnmounted(() => {
   if (countdownTimer) {
-    clearInterval(countdownTimer)
-    countdownTimer = null
+    clearInterval(countdownTimer);
+    countdownTimer = null;
   }
-})
+});
 
 // ==================== Countdown ====================
 
 function startCountdown(seconds: number): void {
-  countdown.value = seconds
+  countdown.value = seconds;
 
   if (countdownTimer) {
-    clearInterval(countdownTimer)
+    clearInterval(countdownTimer);
   }
 
   countdownTimer = setInterval(() => {
     if (countdown.value > 0) {
-      countdown.value--
+      countdown.value--;
     } else {
       if (countdownTimer) {
-        clearInterval(countdownTimer)
-        countdownTimer = null
+        clearInterval(countdownTimer);
+        countdownTimer = null;
       }
     }
-  }, 1000)
+  }, 1000);
 }
 
 // ==================== Turnstile Handlers ====================
 
 function onTurnstileVerify(token: string): void {
-  resendTurnstileToken.value = token
-  errors.value.turnstile = ''
+  resendTurnstileToken.value = token;
+  errors.value.turnstile = "";
 }
 
 function onTurnstileExpire(): void {
-  resendTurnstileToken.value = ''
-  errors.value.turnstile = 'Verification expired, please try again'
+  resendTurnstileToken.value = "";
+  errors.value.turnstile = "Verification expired, please try again";
 }
 
 function onTurnstileError(): void {
-  resendTurnstileToken.value = ''
-  errors.value.turnstile = 'Verification failed, please try again'
+  resendTurnstileToken.value = "";
+  errors.value.turnstile = "Verification failed, please try again";
 }
 
 // ==================== Send Code ====================
 
 async function sendCode(): Promise<void> {
-  isSendingCode.value = true
-  errorMessage.value = ''
+  isSendingCode.value = true;
+  errorMessage.value = "";
 
   try {
     const response = await sendVerifyCode({
       email: email.value,
       // 优先使用重发时新获取的 token（因为初始 token 可能已被使用）
-      turnstile_token: resendTurnstileToken.value || initialTurnstileToken.value || undefined
-    })
+      turnstile_token:
+        resendTurnstileToken.value || initialTurnstileToken.value || undefined,
+    });
 
-    codeSent.value = true
-    startCountdown(response.countdown)
+    codeSent.value = true;
+    startCountdown(response.countdown);
 
     // Reset turnstile state（token 已使用，清除以避免重复使用）
-    initialTurnstileToken.value = ''
-    showResendTurnstile.value = false
-    resendTurnstileToken.value = ''
+    initialTurnstileToken.value = "";
+    showResendTurnstile.value = false;
+    resendTurnstileToken.value = "";
   } catch (error: unknown) {
-    const err = error as { message?: string; response?: { data?: { detail?: string } } }
+    const err = error as {
+      message?: string;
+      response?: { data?: { detail?: string } };
+    };
 
     if (err.response?.data?.detail) {
-      errorMessage.value = err.response.data.detail
+      errorMessage.value = err.response.data.detail;
     } else if (err.message) {
-      errorMessage.value = err.message
+      errorMessage.value = err.message;
     } else {
-      errorMessage.value = 'Failed to send verification code. Please try again.'
+      errorMessage.value =
+        "Failed to send verification code. Please try again.";
     }
 
-    appStore.showError(errorMessage.value)
+    appStore.showError(errorMessage.value);
   } finally {
-    isSendingCode.value = false
+    isSendingCode.value = false;
   }
 }
 
@@ -334,43 +348,43 @@ async function sendCode(): Promise<void> {
 async function handleResendCode(): Promise<void> {
   // If turnstile is enabled and we haven't shown it yet, show it
   if (turnstileEnabled.value && !showResendTurnstile.value) {
-    showResendTurnstile.value = true
-    return
+    showResendTurnstile.value = true;
+    return;
   }
 
   // If turnstile is enabled but no token yet, wait
   if (turnstileEnabled.value && !resendTurnstileToken.value) {
-    errors.value.turnstile = 'Please complete the verification'
-    return
+    errors.value.turnstile = "Please complete the verification";
+    return;
   }
 
-  await sendCode()
+  await sendCode();
 }
 
 function validateForm(): boolean {
-  errors.value.code = ''
+  errors.value.code = "";
 
   if (!verifyCode.value.trim()) {
-    errors.value.code = 'Verification code is required'
-    return false
+    errors.value.code = "Verification code is required";
+    return false;
   }
 
   if (!/^\d{6}$/.test(verifyCode.value.trim())) {
-    errors.value.code = 'Please enter a valid 6-digit code'
-    return false
+    errors.value.code = "Please enter a valid 6-digit code";
+    return false;
   }
 
-  return true
+  return true;
 }
 
 async function handleVerify(): Promise<void> {
-  errorMessage.value = ''
+  errorMessage.value = "";
 
   if (!validateForm()) {
-    return
+    return;
   }
 
-  isLoading.value = true
+  isLoading.value = true;
 
   try {
     // Register with verification code
@@ -379,40 +393,45 @@ async function handleVerify(): Promise<void> {
       password: password.value,
       verify_code: verifyCode.value.trim(),
       turnstile_token: initialTurnstileToken.value || undefined,
-      promo_code: promoCode.value || undefined
-    })
+      promo_code: promoCode.value || undefined,
+    });
 
     // Clear session data
-    sessionStorage.removeItem('register_data')
+    sessionStorage.removeItem("register_data");
 
     // Show success toast
-    appStore.showSuccess('Account created successfully! Welcome to ' + siteName.value + '.')
+    appStore.showSuccess(
+      "Account created successfully! Welcome to " + siteName.value + ".",
+    );
 
     // Redirect to dashboard
-    await router.push('/dashboard')
+    await router.push("/dashboard");
   } catch (error: unknown) {
-    const err = error as { message?: string; response?: { data?: { detail?: string } } }
+    const err = error as {
+      message?: string;
+      response?: { data?: { detail?: string } };
+    };
 
     if (err.response?.data?.detail) {
-      errorMessage.value = err.response.data.detail
+      errorMessage.value = err.response.data.detail;
     } else if (err.message) {
-      errorMessage.value = err.message
+      errorMessage.value = err.message;
     } else {
-      errorMessage.value = 'Verification failed. Please try again.'
+      errorMessage.value = "Verification failed. Please try again.";
     }
 
-    appStore.showError(errorMessage.value)
+    appStore.showError(errorMessage.value);
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 }
 
 function handleBack(): void {
   // Clear session data
-  sessionStorage.removeItem('register_data')
+  sessionStorage.removeItem("register_data");
 
   // Go back to registration
-  router.push('/register')
+  router.push("/register");
 }
 </script>
 

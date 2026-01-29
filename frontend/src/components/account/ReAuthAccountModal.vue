@@ -20,7 +20,7 @@
                   ? 'from-blue-500 to-blue-600'
                   : isAntigravity
                     ? 'from-purple-500 to-purple-600'
-                    : 'from-orange-500 to-orange-600'
+                    : 'from-orange-500 to-orange-600',
             ]"
           >
             <Icon name="sparkles" size="md" class="text-white" />
@@ -32,12 +32,12 @@
             <span class="text-sm text-gray-500 dark:text-gray-400">
               {{
                 isOpenAI
-                  ? 'OpenAI 账号'
+                  ? "OpenAI 账号"
                   : isGemini
-                    ? 'Gemini 账号'
+                    ? "Gemini 账号"
                     : isAntigravity
-                      ? 'Antigravity 账号'
-                      : 'Claude Code 账号'
+                      ? "Antigravity 账号"
+                      : "Claude Code 账号"
               }}
             </span>
           </div>
@@ -46,7 +46,7 @@
 
       <!-- Add Method Selection (Claude only) -->
       <fieldset v-if="isAnthropic" class="border-0 p-0">
-        <legend class="input-label">{{ '授权方式' }}</legend>
+        <legend class="input-label">{{ "授权方式" }}</legend>
         <div class="mt-2 flex gap-4">
           <label class="flex cursor-pointer items-center">
             <input
@@ -56,7 +56,7 @@
               class="mr-2 text-primary-600 focus:ring-primary-500"
             />
             <span class="text-sm text-gray-700 dark:text-gray-300">{{
-              'OAuth'
+              "OAuth"
             }}</span>
           </label>
           <label class="flex cursor-pointer items-center">
@@ -67,16 +67,19 @@
               class="mr-2 text-primary-600 focus:ring-primary-500"
             />
             <span class="text-sm text-gray-700 dark:text-gray-300">{{
-              'Setup Token（长期有效）'
+              "Setup Token（长期有效）"
             }}</span>
           </label>
         </div>
       </fieldset>
 
       <!-- Gemini OAuth Type Display (read-only) -->
-      <div v-if="isGemini" class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-dark-600 dark:bg-dark-700">
+      <div
+        v-if="isGemini"
+        class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-dark-600 dark:bg-dark-700"
+      >
         <div class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-          {{ 'OAuth 类型' }}
+          {{ "OAuth 类型" }}
         </div>
         <div class="flex items-center gap-3">
           <div
@@ -86,30 +89,40 @@
                 ? 'bg-purple-500 text-white'
                 : geminiOAuthType === 'code_assist'
                   ? 'bg-blue-500 text-white'
-                  : 'bg-amber-500 text-white'
+                  : 'bg-amber-500 text-white',
             ]"
           >
-            <Icon v-if="geminiOAuthType === 'google_one'" name="user" size="sm" />
-            <Icon v-else-if="geminiOAuthType === 'code_assist'" name="cloud" size="sm" />
+            <Icon
+              v-if="geminiOAuthType === 'google_one'"
+              name="user"
+              size="sm"
+            />
+            <Icon
+              v-else-if="geminiOAuthType === 'code_assist'"
+              name="cloud"
+              size="sm"
+            />
             <Icon v-else name="sparkles" size="sm" />
           </div>
           <div>
-            <span class="block text-sm font-medium text-gray-900 dark:text-white">
+            <span
+              class="block text-sm font-medium text-gray-900 dark:text-white"
+            >
               {{
-                geminiOAuthType === 'google_one'
-                  ? 'Google One'
-                  : geminiOAuthType === 'code_assist'
-                    ? '内置授权（Gemini CLI / Code Assist）'
-                    : '自定义授权（AI Studio OAuth）'
+                geminiOAuthType === "google_one"
+                  ? "Google One"
+                  : geminiOAuthType === "code_assist"
+                    ? "内置授权（Gemini CLI / Code Assist）"
+                    : "自定义授权（AI Studio OAuth）"
               }}
             </span>
             <span class="text-xs text-gray-500 dark:text-gray-400">
               {{
-                geminiOAuthType === 'google_one'
-                  ? '个人账号'
-                  : geminiOAuthType === 'code_assist'
-                    ? '使用 Google 内置客户端 ID，无需管理员配置。'
-                    : '使用管理员预设的 OAuth 客户端，适合组织管理。'
+                geminiOAuthType === "google_one"
+                  ? "个人账号"
+                  : geminiOAuthType === "code_assist"
+                    ? "使用 Google 内置客户端 ID，无需管理员配置。"
+                    : "使用管理员预设的 OAuth 客户端，适合组织管理。"
               }}
             </span>
           </div>
@@ -128,17 +141,25 @@
         :show-cookie-option="isAnthropic"
         :allow-multiple="false"
         :method-label="'输入方式'"
-        :platform="isOpenAI ? 'openai' : isGemini ? 'gemini' : isAntigravity ? 'antigravity' : 'anthropic'"
+        :platform="
+          isOpenAI
+            ? 'openai'
+            : isGemini
+              ? 'gemini'
+              : isAntigravity
+                ? 'antigravity'
+                : 'anthropic'
+        "
         :show-project-id="isGemini && geminiOAuthType === 'code_assist'"
         @generate-url="handleGenerateUrl"
         @cookie-auth="handleCookieAuth"
       />
-</div>
+    </div>
 
     <template #footer>
       <div v-if="account" class="flex justify-between gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ '取消' }}
+          {{ "取消" }}
         </button>
         <button
           v-if="isManualInputMethod"
@@ -167,11 +188,7 @@
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          {{
-            currentLoading
-              ? '验证中...'
-              : '完成授权'
-          }}
+          {{ currentLoading ? "验证中..." : "完成授权" }}
         </button>
       </div>
     </template>
@@ -179,99 +196,106 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { adminAPI } from '@/api/admin'
+import { ref, computed, watch } from "vue";
+import { useAppStore } from "@/stores/app";
+import { adminAPI } from "@/api/admin";
 import {
   useAccountOAuth,
   type AddMethod,
-  type AuthInputMethod
-} from '@/composables/useAccountOAuth'
-import { useOpenAIOAuth } from '@/composables/useOpenAIOAuth'
-import { useGeminiOAuth } from '@/composables/useGeminiOAuth'
-import { useAntigravityOAuth } from '@/composables/useAntigravityOAuth'
-import type { Account } from '@/types'
+  type AuthInputMethod,
+} from "@/composables/useAccountOAuth";
+import { useOpenAIOAuth } from "@/composables/useOpenAIOAuth";
+import { useGeminiOAuth } from "@/composables/useGeminiOAuth";
+import { useAntigravityOAuth } from "@/composables/useAntigravityOAuth";
+import type { Account } from "@/types";
 
 // Type for exposed OAuthAuthorizationFlow component
 // Note: defineExpose automatically unwraps refs, so we use the unwrapped types
 interface OAuthFlowExposed {
-  authCode: string
-  oauthState: string
-  projectId: string
-  sessionKey: string
-  inputMethod: AuthInputMethod
-  reset: () => void
+  authCode: string;
+  oauthState: string;
+  projectId: string;
+  sessionKey: string;
+  inputMethod: AuthInputMethod;
+  reset: () => void;
 }
 
 interface Props {
-  show: boolean
-  account: Account | null
+  show: boolean;
+  account: Account | null;
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 const emit = defineEmits<{
-  close: []
-  reauthorized: []
-}>()
+  close: [];
+  reauthorized: [];
+}>();
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 // OAuth composables
-const claudeOAuth = useAccountOAuth()
-const openaiOAuth = useOpenAIOAuth()
-const geminiOAuth = useGeminiOAuth()
-const antigravityOAuth = useAntigravityOAuth()
+const claudeOAuth = useAccountOAuth();
+const openaiOAuth = useOpenAIOAuth();
+const geminiOAuth = useGeminiOAuth();
+const antigravityOAuth = useAntigravityOAuth();
 
 // Refs
-const oauthFlowRef = ref<OAuthFlowExposed | null>(null)
+const oauthFlowRef = ref<OAuthFlowExposed | null>(null);
 
 // State
-const addMethod = ref<AddMethod>('oauth')
-const geminiOAuthType = ref<'code_assist' | 'google_one' | 'ai_studio'>('code_assist')
+const addMethod = ref<AddMethod>("oauth");
+const geminiOAuthType = ref<"code_assist" | "google_one" | "ai_studio">(
+  "code_assist",
+);
 
 // Computed - check platform
-const isOpenAI = computed(() => props.account?.platform === 'openai')
-const isGemini = computed(() => props.account?.platform === 'gemini')
-const isAnthropic = computed(() => props.account?.platform === 'anthropic')
-const isAntigravity = computed(() => props.account?.platform === 'antigravity')
+const isOpenAI = computed(() => props.account?.platform === "openai");
+const isGemini = computed(() => props.account?.platform === "gemini");
+const isAnthropic = computed(() => props.account?.platform === "anthropic");
+const isAntigravity = computed(() => props.account?.platform === "antigravity");
 
 // Computed - current OAuth state based on platform
 const currentAuthUrl = computed(() => {
-  if (isOpenAI.value) return openaiOAuth.authUrl.value
-  if (isGemini.value) return geminiOAuth.authUrl.value
-  if (isAntigravity.value) return antigravityOAuth.authUrl.value
-  return claudeOAuth.authUrl.value
-})
+  if (isOpenAI.value) return openaiOAuth.authUrl.value;
+  if (isGemini.value) return geminiOAuth.authUrl.value;
+  if (isAntigravity.value) return antigravityOAuth.authUrl.value;
+  return claudeOAuth.authUrl.value;
+});
 const currentSessionId = computed(() => {
-  if (isOpenAI.value) return openaiOAuth.sessionId.value
-  if (isGemini.value) return geminiOAuth.sessionId.value
-  if (isAntigravity.value) return antigravityOAuth.sessionId.value
-  return claudeOAuth.sessionId.value
-})
+  if (isOpenAI.value) return openaiOAuth.sessionId.value;
+  if (isGemini.value) return geminiOAuth.sessionId.value;
+  if (isAntigravity.value) return antigravityOAuth.sessionId.value;
+  return claudeOAuth.sessionId.value;
+});
 const currentLoading = computed(() => {
-  if (isOpenAI.value) return openaiOAuth.loading.value
-  if (isGemini.value) return geminiOAuth.loading.value
-  if (isAntigravity.value) return antigravityOAuth.loading.value
-  return claudeOAuth.loading.value
-})
+  if (isOpenAI.value) return openaiOAuth.loading.value;
+  if (isGemini.value) return geminiOAuth.loading.value;
+  if (isAntigravity.value) return antigravityOAuth.loading.value;
+  return claudeOAuth.loading.value;
+});
 const currentError = computed(() => {
-  if (isOpenAI.value) return openaiOAuth.error.value
-  if (isGemini.value) return geminiOAuth.error.value
-  if (isAntigravity.value) return antigravityOAuth.error.value
-  return claudeOAuth.error.value
-})
+  if (isOpenAI.value) return openaiOAuth.error.value;
+  if (isGemini.value) return geminiOAuth.error.value;
+  if (isAntigravity.value) return antigravityOAuth.error.value;
+  return claudeOAuth.error.value;
+});
 
 // Computed
 const isManualInputMethod = computed(() => {
   // OpenAI/Gemini/Antigravity always use manual input (no cookie auth option)
-  return isOpenAI.value || isGemini.value || isAntigravity.value || oauthFlowRef.value?.inputMethod === 'manual'
-})
+  return (
+    isOpenAI.value ||
+    isGemini.value ||
+    isAntigravity.value ||
+    oauthFlowRef.value?.inputMethod === "manual"
+  );
+});
 
 const canExchangeCode = computed(() => {
-  const authCode = oauthFlowRef.value?.authCode || ''
-  const sessionId = currentSessionId.value
-  const loading = currentLoading.value
-  return authCode.trim() && sessionId && !loading
-})
+  const authCode = oauthFlowRef.value?.authCode || "";
+  const sessionId = currentSessionId.value;
+  const loading = currentLoading.value;
+  return authCode.trim() && sessionId && !loading;
+});
 
 // Watchers
 watch(
@@ -281,104 +305,116 @@ watch(
       // Initialize addMethod based on current account type (Claude only)
       if (
         isAnthropic.value &&
-        (props.account.type === 'oauth' || props.account.type === 'setup-token')
+        (props.account.type === "oauth" || props.account.type === "setup-token")
       ) {
-        addMethod.value = props.account.type as AddMethod
+        addMethod.value = props.account.type as AddMethod;
       }
       if (isGemini.value) {
-        const creds = (props.account.credentials || {}) as Record<string, unknown>
+        const creds = (props.account.credentials || {}) as Record<
+          string,
+          unknown
+        >;
         geminiOAuthType.value =
-          creds.oauth_type === 'google_one'
-            ? 'google_one'
-            : creds.oauth_type === 'ai_studio'
-              ? 'ai_studio'
-              : 'code_assist'
+          creds.oauth_type === "google_one"
+            ? "google_one"
+            : creds.oauth_type === "ai_studio"
+              ? "ai_studio"
+              : "code_assist";
       }
     } else {
-      resetState()
+      resetState();
     }
-  }
-)
+  },
+);
 
 // Methods
 const resetState = () => {
-  addMethod.value = 'oauth'
-  geminiOAuthType.value = 'code_assist'
-  claudeOAuth.resetState()
-  openaiOAuth.resetState()
-  geminiOAuth.resetState()
-  antigravityOAuth.resetState()
-  oauthFlowRef.value?.reset()
-}
+  addMethod.value = "oauth";
+  geminiOAuthType.value = "code_assist";
+  claudeOAuth.resetState();
+  openaiOAuth.resetState();
+  geminiOAuth.resetState();
+  antigravityOAuth.resetState();
+  oauthFlowRef.value?.reset();
+};
 
 const handleClose = () => {
-  emit('close')
-}
+  emit("close");
+};
 
 const handleGenerateUrl = async () => {
-  if (!props.account) return
+  if (!props.account) return;
 
   if (isOpenAI.value) {
-    await openaiOAuth.generateAuthUrl(props.account.proxy_id)
+    await openaiOAuth.generateAuthUrl(props.account.proxy_id);
   } else if (isGemini.value) {
-    const creds = (props.account.credentials || {}) as Record<string, unknown>
-    const tierId = typeof creds.tier_id === 'string' ? creds.tier_id : undefined
-    const projectId = geminiOAuthType.value === 'code_assist' ? oauthFlowRef.value?.projectId : undefined
-    await geminiOAuth.generateAuthUrl(props.account.proxy_id, projectId, geminiOAuthType.value, tierId)
+    const creds = (props.account.credentials || {}) as Record<string, unknown>;
+    const tierId =
+      typeof creds.tier_id === "string" ? creds.tier_id : undefined;
+    const projectId =
+      geminiOAuthType.value === "code_assist"
+        ? oauthFlowRef.value?.projectId
+        : undefined;
+    await geminiOAuth.generateAuthUrl(
+      props.account.proxy_id,
+      projectId,
+      geminiOAuthType.value,
+      tierId,
+    );
   } else if (isAntigravity.value) {
-    await antigravityOAuth.generateAuthUrl(props.account.proxy_id)
+    await antigravityOAuth.generateAuthUrl(props.account.proxy_id);
   } else {
-    await claudeOAuth.generateAuthUrl(addMethod.value, props.account.proxy_id)
+    await claudeOAuth.generateAuthUrl(addMethod.value, props.account.proxy_id);
   }
-}
+};
 
 const handleExchangeCode = async () => {
-  if (!props.account) return
+  if (!props.account) return;
 
-  const authCode = oauthFlowRef.value?.authCode || ''
-  if (!authCode.trim()) return
+  const authCode = oauthFlowRef.value?.authCode || "";
+  if (!authCode.trim()) return;
 
   if (isOpenAI.value) {
     // OpenAI OAuth flow
-    const sessionId = openaiOAuth.sessionId.value
-    if (!sessionId) return
+    const sessionId = openaiOAuth.sessionId.value;
+    if (!sessionId) return;
 
     const tokenInfo = await openaiOAuth.exchangeAuthCode(
       authCode.trim(),
       sessionId,
-      props.account.proxy_id
-    )
-    if (!tokenInfo) return
+      props.account.proxy_id,
+    );
+    if (!tokenInfo) return;
 
     // Build credentials and extra info
-    const credentials = openaiOAuth.buildCredentials(tokenInfo)
-    const extra = openaiOAuth.buildExtraInfo(tokenInfo)
+    const credentials = openaiOAuth.buildCredentials(tokenInfo);
+    const extra = openaiOAuth.buildExtraInfo(tokenInfo);
 
     try {
       // Update account with new credentials
       await adminAPI.accounts.update(props.account.id, {
-        type: 'oauth', // OpenAI OAuth is always 'oauth' type
+        type: "oauth", // OpenAI OAuth is always 'oauth' type
         credentials,
-        extra
-      })
+        extra,
+      });
 
       // Clear error status after successful re-authorization
-      await adminAPI.accounts.clearError(props.account.id)
+      await adminAPI.accounts.clearError(props.account.id);
 
-      appStore.showSuccess('账号重新授权成功')
-      emit('reauthorized')
-      handleClose()
+      appStore.showSuccess("账号重新授权成功");
+      emit("reauthorized");
+      handleClose();
     } catch (error: any) {
-      openaiOAuth.error.value = error.response?.data?.detail || '授权失败'
-      appStore.showError(openaiOAuth.error.value)
+      openaiOAuth.error.value = error.response?.data?.detail || "授权失败";
+      appStore.showError(openaiOAuth.error.value);
     }
   } else if (isGemini.value) {
-    const sessionId = geminiOAuth.sessionId.value
-    if (!sessionId) return
+    const sessionId = geminiOAuth.sessionId.value;
+    if (!sessionId) return;
 
-    const stateFromInput = oauthFlowRef.value?.oauthState || ''
-    const stateToUse = stateFromInput || geminiOAuth.state.value
-    if (!stateToUse) return
+    const stateFromInput = oauthFlowRef.value?.oauthState || "";
+    const stateToUse = stateFromInput || geminiOAuth.state.value;
+    if (!stateToUse) return;
 
     const tokenInfo = await geminiOAuth.exchangeAuthCode({
       code: authCode.trim(),
@@ -386,141 +422,147 @@ const handleExchangeCode = async () => {
       state: stateToUse,
       proxyId: props.account.proxy_id,
       oauthType: geminiOAuthType.value,
-      tierId: typeof (props.account.credentials as any)?.tier_id === 'string' ? ((props.account.credentials as any).tier_id as string) : undefined
-    })
-    if (!tokenInfo) return
+      tierId:
+        typeof (props.account.credentials as any)?.tier_id === "string"
+          ? ((props.account.credentials as any).tier_id as string)
+          : undefined,
+    });
+    if (!tokenInfo) return;
 
-    const credentials = geminiOAuth.buildCredentials(tokenInfo)
+    const credentials = geminiOAuth.buildCredentials(tokenInfo);
 
     try {
       await adminAPI.accounts.update(props.account.id, {
-        type: 'oauth',
-        credentials
-      })
-      await adminAPI.accounts.clearError(props.account.id)
-      appStore.showSuccess('账号重新授权成功')
-      emit('reauthorized')
-      handleClose()
+        type: "oauth",
+        credentials,
+      });
+      await adminAPI.accounts.clearError(props.account.id);
+      appStore.showSuccess("账号重新授权成功");
+      emit("reauthorized");
+      handleClose();
     } catch (error: any) {
-      geminiOAuth.error.value = error.response?.data?.detail || '授权失败'
-      appStore.showError(geminiOAuth.error.value)
+      geminiOAuth.error.value = error.response?.data?.detail || "授权失败";
+      appStore.showError(geminiOAuth.error.value);
     }
   } else if (isAntigravity.value) {
     // Antigravity OAuth flow
-    const sessionId = antigravityOAuth.sessionId.value
-    if (!sessionId) return
+    const sessionId = antigravityOAuth.sessionId.value;
+    if (!sessionId) return;
 
-    const stateFromInput = oauthFlowRef.value?.oauthState || ''
-    const stateToUse = stateFromInput || antigravityOAuth.state.value
-    if (!stateToUse) return
+    const stateFromInput = oauthFlowRef.value?.oauthState || "";
+    const stateToUse = stateFromInput || antigravityOAuth.state.value;
+    if (!stateToUse) return;
 
     const tokenInfo = await antigravityOAuth.exchangeAuthCode({
       code: authCode.trim(),
       sessionId,
       state: stateToUse,
-      proxyId: props.account.proxy_id
-    })
-    if (!tokenInfo) return
+      proxyId: props.account.proxy_id,
+    });
+    if (!tokenInfo) return;
 
-    const credentials = antigravityOAuth.buildCredentials(tokenInfo)
+    const credentials = antigravityOAuth.buildCredentials(tokenInfo);
 
     try {
       await adminAPI.accounts.update(props.account.id, {
-        type: 'oauth',
-        credentials
-      })
-      await adminAPI.accounts.clearError(props.account.id)
-      appStore.showSuccess('账号重新授权成功')
-      emit('reauthorized')
-      handleClose()
+        type: "oauth",
+        credentials,
+      });
+      await adminAPI.accounts.clearError(props.account.id);
+      appStore.showSuccess("账号重新授权成功");
+      emit("reauthorized");
+      handleClose();
     } catch (error: any) {
-      antigravityOAuth.error.value = error.response?.data?.detail || '授权失败'
-      appStore.showError(antigravityOAuth.error.value)
+      antigravityOAuth.error.value = error.response?.data?.detail || "授权失败";
+      appStore.showError(antigravityOAuth.error.value);
     }
   } else {
     // Claude OAuth flow
-    const sessionId = claudeOAuth.sessionId.value
-    if (!sessionId) return
+    const sessionId = claudeOAuth.sessionId.value;
+    if (!sessionId) return;
 
-    claudeOAuth.loading.value = true
-    claudeOAuth.error.value = ''
+    claudeOAuth.loading.value = true;
+    claudeOAuth.error.value = "";
 
     try {
-      const proxyConfig = props.account.proxy_id ? { proxy_id: props.account.proxy_id } : {}
+      const proxyConfig = props.account.proxy_id
+        ? { proxy_id: props.account.proxy_id }
+        : {};
       const endpoint =
-        addMethod.value === 'oauth'
-          ? '/admin/accounts/exchange-code'
-          : '/admin/accounts/exchange-setup-token-code'
+        addMethod.value === "oauth"
+          ? "/admin/accounts/exchange-code"
+          : "/admin/accounts/exchange-setup-token-code";
 
       const tokenInfo = await adminAPI.accounts.exchangeCode(endpoint, {
         session_id: sessionId,
         code: authCode.trim(),
-        ...proxyConfig
-      })
+        ...proxyConfig,
+      });
 
-      const extra = claudeOAuth.buildExtraInfo(tokenInfo)
+      const extra = claudeOAuth.buildExtraInfo(tokenInfo);
 
       // Update account with new credentials and type
       await adminAPI.accounts.update(props.account.id, {
         type: addMethod.value, // Update type based on selected method
         credentials: tokenInfo,
-        extra
-      })
+        extra,
+      });
 
       // Clear error status after successful re-authorization
-      await adminAPI.accounts.clearError(props.account.id)
+      await adminAPI.accounts.clearError(props.account.id);
 
-      appStore.showSuccess('账号重新授权成功')
-      emit('reauthorized')
-      handleClose()
+      appStore.showSuccess("账号重新授权成功");
+      emit("reauthorized");
+      handleClose();
     } catch (error: any) {
-      claudeOAuth.error.value = error.response?.data?.detail || '授权失败'
-      appStore.showError(claudeOAuth.error.value)
+      claudeOAuth.error.value = error.response?.data?.detail || "授权失败";
+      appStore.showError(claudeOAuth.error.value);
     } finally {
-      claudeOAuth.loading.value = false
+      claudeOAuth.loading.value = false;
     }
   }
-}
+};
 
 const handleCookieAuth = async (sessionKey: string) => {
-  if (!props.account || isOpenAI.value) return
+  if (!props.account || isOpenAI.value) return;
 
-  claudeOAuth.loading.value = true
-  claudeOAuth.error.value = ''
+  claudeOAuth.loading.value = true;
+  claudeOAuth.error.value = "";
 
   try {
-    const proxyConfig = props.account.proxy_id ? { proxy_id: props.account.proxy_id } : {}
+    const proxyConfig = props.account.proxy_id
+      ? { proxy_id: props.account.proxy_id }
+      : {};
     const endpoint =
-      addMethod.value === 'oauth'
-        ? '/admin/accounts/cookie-auth'
-        : '/admin/accounts/setup-token-cookie-auth'
+      addMethod.value === "oauth"
+        ? "/admin/accounts/cookie-auth"
+        : "/admin/accounts/setup-token-cookie-auth";
 
     const tokenInfo = await adminAPI.accounts.exchangeCode(endpoint, {
-      session_id: '',
+      session_id: "",
       code: sessionKey.trim(),
-      ...proxyConfig
-    })
+      ...proxyConfig,
+    });
 
-    const extra = claudeOAuth.buildExtraInfo(tokenInfo)
+    const extra = claudeOAuth.buildExtraInfo(tokenInfo);
 
     // Update account with new credentials and type
     await adminAPI.accounts.update(props.account.id, {
       type: addMethod.value, // Update type based on selected method
       credentials: tokenInfo,
-      extra
-    })
+      extra,
+    });
 
     // Clear error status after successful re-authorization
-    await adminAPI.accounts.clearError(props.account.id)
+    await adminAPI.accounts.clearError(props.account.id);
 
-    appStore.showSuccess('账号重新授权成功')
-    emit('reauthorized')
-    handleClose()
+    appStore.showSuccess("账号重新授权成功");
+    emit("reauthorized");
+    handleClose();
   } catch (error: any) {
-    claudeOAuth.error.value =
-      error.response?.data?.detail || 'Cookie 授权失败'
+    claudeOAuth.error.value = error.response?.data?.detail || "Cookie 授权失败";
   } finally {
-    claudeOAuth.loading.value = false
+    claudeOAuth.loading.value = false;
   }
-}
+};
 </script>

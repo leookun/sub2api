@@ -3,18 +3,20 @@
     <div class="mx-auto max-w-2xl space-y-6">
       <!-- Current Balance Card -->
       <div class="card overflow-hidden">
-        <div class="bg-gradient-to-br from-primary-500 to-primary-600 px-6 py-8 text-center">
+        <div
+          class="bg-gradient-to-br from-primary-500 to-primary-600 px-6 py-8 text-center"
+        >
           <div
             class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm"
           >
             <Icon name="creditCard" size="xl" class="text-white" />
           </div>
-          <p class="text-sm font-medium text-primary-100">{{ '当前余额' }}</p>
+          <p class="text-sm font-medium text-primary-100">{{ "当前余额" }}</p>
           <p class="mt-2 text-4xl font-bold text-white">
-            ${{ user?.balance?.toFixed(2) || '0.00' }}
+            ${{ user?.balance?.toFixed(2) || "0.00" }}
           </p>
           <p class="mt-2 text-sm text-primary-100">
-            {{ '并发数' }}: {{ user?.concurrency || 0 }} {{ '请求' }}
+            {{ "并发数" }}: {{ user?.concurrency || 0 }} {{ "请求" }}
           </p>
         </div>
       </div>
@@ -25,11 +27,17 @@
           <form class="space-y-5" @submit.prevent="handleRedeem">
             <div>
               <label for="code" class="input-label">
-                {{ '兑换码' }}
+                {{ "兑换码" }}
               </label>
               <div class="relative mt-1">
-                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                  <Icon name="gift" size="md" class="text-gray-400 dark:text-dark-500" />
+                <div
+                  class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4"
+                >
+                  <Icon
+                    name="gift"
+                    size="md"
+                    class="text-gray-400 dark:text-dark-500"
+                  />
                 </div>
                 <input
                   id="code"
@@ -42,7 +50,7 @@
                 />
               </div>
               <p class="input-hint">
-                {{ '兑换码区分大小写' }}
+                {{ "兑换码区分大小写" }}
               </p>
             </div>
 
@@ -72,7 +80,7 @@
                 ></path>
               </svg>
               <Icon v-else name="checkCircle" size="md" class="mr-2" />
-              {{ submitting ? '兑换中...' : '兑换' }}
+              {{ submitting ? "兑换中..." : "兑换" }}
             </button>
           </form>
         </div>
@@ -89,39 +97,58 @@
               <div
                 class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900/30"
               >
-                <Icon name="checkCircle" size="md" class="text-emerald-600 dark:text-emerald-400" />
+                <Icon
+                  name="checkCircle"
+                  size="md"
+                  class="text-emerald-600 dark:text-emerald-400"
+                />
               </div>
               <div class="flex-1">
-                <h3 class="text-sm font-semibold text-emerald-800 dark:text-emerald-300">
-                  {{ '兑换成功！' }}
+                <h3
+                  class="text-sm font-semibold text-emerald-800 dark:text-emerald-300"
+                >
+                  {{ "兑换成功！" }}
                 </h3>
-                <div class="mt-2 text-sm text-emerald-700 dark:text-emerald-400">
+                <div
+                  class="mt-2 text-sm text-emerald-700 dark:text-emerald-400"
+                >
                   <p>{{ redeemResult.message }}</p>
                   <div class="mt-3 space-y-1">
-                    <p v-if="redeemResult.type === 'balance'" class="font-medium">
-                      {{ '已添加' }}: ${{ redeemResult.value.toFixed(2) }}
+                    <p
+                      v-if="redeemResult.type === 'balance'"
+                      class="font-medium"
+                    >
+                      {{ "已添加" }}: ${{ redeemResult.value.toFixed(2) }}
                     </p>
-                    <p v-else-if="redeemResult.type === 'concurrency'" class="font-medium">
-                      {{ '已添加' }}: {{ redeemResult.value }}
-                      {{ '并发请求' }}
+                    <p
+                      v-else-if="redeemResult.type === 'concurrency'"
+                      class="font-medium"
+                    >
+                      {{ "已添加" }}: {{ redeemResult.value }}
+                      {{ "并发请求" }}
                     </p>
-                    <p v-else-if="redeemResult.type === 'subscription'" class="font-medium">
-                      {{ '订阅已分配' }}
-                      <span v-if="redeemResult.group_name"> - {{ redeemResult.group_name }}</span>
+                    <p
+                      v-else-if="redeemResult.type === 'subscription'"
+                      class="font-medium"
+                    >
+                      {{ "订阅已分配" }}
+                      <span v-if="redeemResult.group_name">
+                        - {{ redeemResult.group_name }}</span
+                      >
                       <span v-if="redeemResult.validity_days">
-                        ({{
-                          `${redeemResult.validity_days} 天`
-                        }})</span
+                        ({{ `${redeemResult.validity_days} 天` }})</span
                       >
                     </p>
                     <p v-if="redeemResult.new_balance !== undefined">
-                      {{ '新余额' }}:
-                      <span class="font-semibold">${{ redeemResult.new_balance.toFixed(2) }}</span>
+                      {{ "新余额" }}:
+                      <span class="font-semibold"
+                        >${{ redeemResult.new_balance.toFixed(2) }}</span
+                      >
                     </p>
                     <p v-if="redeemResult.new_concurrency !== undefined">
-                      {{ '新并发数' }}:
+                      {{ "新并发数" }}:
                       <span class="font-semibold"
-                        >{{ redeemResult.new_concurrency }} {{ '请求' }}</span
+                        >{{ redeemResult.new_concurrency }} {{ "请求" }}</span
                       >
                     </p>
                   </div>
@@ -150,8 +177,10 @@
                 />
               </div>
               <div class="flex-1">
-                <h3 class="text-sm font-semibold text-red-800 dark:text-red-300">
-                  {{ '兑换失败' }}
+                <h3
+                  class="text-sm font-semibold text-red-800 dark:text-red-300"
+                >
+                  {{ "兑换失败" }}
                 </h3>
                 <p class="mt-2 text-sm text-red-700 dark:text-red-400">
                   {{ errorMessage }}
@@ -171,19 +200,25 @@
             <div
               class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-900/30"
             >
-              <Icon name="infoCircle" size="md" class="text-primary-600 dark:text-primary-400" />
+              <Icon
+                name="infoCircle"
+                size="md"
+                class="text-primary-600 dark:text-primary-400"
+              />
             </div>
             <div class="flex-1">
-              <h3 class="text-sm font-semibold text-primary-800 dark:text-primary-300">
-                {{ '关于兑换码' }}
+              <h3
+                class="text-sm font-semibold text-primary-800 dark:text-primary-300"
+              >
+                {{ "关于兑换码" }}
               </h3>
               <ul
                 class="mt-2 list-inside list-disc space-y-1 text-sm text-primary-700 dark:text-primary-400"
               >
-                <li>{{ '每个兑换码只能使用一次' }}</li>
-                <li>{{ '兑换码可以增加余额、并发数或试用权限' }}</li>
+                <li>{{ "每个兑换码只能使用一次" }}</li>
+                <li>{{ "兑换码可以增加余额、并发数或试用权限" }}</li>
                 <li>
-                  {{ '如有兑换问题，请联系客服' }}
+                  {{ "如有兑换问题，请联系客服" }}
                   <span
                     v-if="contactInfo"
                     class="ml-1.5 inline-flex items-center rounded-md bg-primary-200/50 px-2 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-800/40 dark:text-primary-200"
@@ -191,7 +226,7 @@
                     {{ contactInfo }}
                   </span>
                 </li>
-                <li>{{ '余额和并发数即时更新' }}</li>
+                <li>{{ "余额和并发数即时更新" }}</li>
               </ul>
             </div>
           </div>
@@ -202,13 +237,20 @@
       <div class="card">
         <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-            {{ '最近活动' }}
+            {{ "最近活动" }}
           </h2>
         </div>
         <div class="p-6">
           <!-- Loading State -->
-          <div v-if="loadingHistory" class="flex items-center justify-center py-8">
-            <svg class="h-6 w-6 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24">
+          <div
+            v-if="loadingHistory"
+            class="flex items-center justify-center py-8"
+          >
+            <svg
+              class="h-6 w-6 animate-spin text-primary-500"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
               <circle
                 class="opacity-25"
                 cx="12"
@@ -244,7 +286,7 @@
                         ? 'bg-purple-100 dark:bg-purple-900/30'
                         : item.value >= 0
                           ? 'bg-blue-100 dark:bg-blue-900/30'
-                          : 'bg-orange-100 dark:bg-orange-900/30'
+                          : 'bg-orange-100 dark:bg-orange-900/30',
                   ]"
                 >
                   <!-- 余额类型图标 -->
@@ -298,7 +340,7 @@
                         ? 'text-purple-600 dark:text-purple-400'
                         : item.value >= 0
                           ? 'text-blue-600 dark:text-blue-400'
-                          : 'text-orange-600 dark:text-orange-400'
+                          : 'text-orange-600 dark:text-orange-400',
                   ]"
                 >
                   {{ formatHistoryValue(item) }}
@@ -310,7 +352,7 @@
                   {{ item.code.slice(0, 8) }}...
                 </p>
                 <p v-else class="text-xs text-gray-400 dark:text-dark-500">
-                  {{ '管理员调整' }}
+                  {{ "管理员调整" }}
                 </p>
               </div>
             </div>
@@ -321,10 +363,14 @@
             <div
               class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 dark:bg-dark-800"
             >
-              <Icon name="clock" size="xl" class="text-gray-400 dark:text-dark-500" />
+              <Icon
+                name="clock"
+                size="xl"
+                class="text-gray-400 dark:text-dark-500"
+              />
             </div>
             <p class="text-sm text-gray-500 dark:text-dark-400">
-              {{ '您的兑换历史将显示在这里' }}
+              {{ "您的兑换历史将显示在这里" }}
             </p>
           </div>
         </div>
@@ -334,144 +380,145 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useAppStore } from '@/stores/app'
-import { useSubscriptionStore } from '@/stores/subscriptions'
-import { redeemAPI, authAPI, type RedeemHistoryItem } from '@/api'
+import { ref, computed, onMounted } from "vue";
+import { useAuthStore } from "@/stores/auth";
+import { useAppStore } from "@/stores/app";
+import { useSubscriptionStore } from "@/stores/subscriptions";
+import { redeemAPI, authAPI, type RedeemHistoryItem } from "@/api";
 
-const authStore = useAuthStore()
-const appStore = useAppStore()
-const subscriptionStore = useSubscriptionStore()
+const authStore = useAuthStore();
+const appStore = useAppStore();
+const subscriptionStore = useSubscriptionStore();
 
-const user = computed(() => authStore.user)
+const user = computed(() => authStore.user);
 
-const redeemCode = ref('')
-const submitting = ref(false)
+const redeemCode = ref("");
+const submitting = ref(false);
 const redeemResult = ref<{
-  message: string
-  type: string
-  value: number
-  new_balance?: number
-  new_concurrency?: number
-  group_name?: string
-  validity_days?: number
-} | null>(null)
-const errorMessage = ref('')
+  message: string;
+  type: string;
+  value: number;
+  new_balance?: number;
+  new_concurrency?: number;
+  group_name?: string;
+  validity_days?: number;
+} | null>(null);
+const errorMessage = ref("");
 
 // History data
-const history = ref<RedeemHistoryItem[]>([])
-const loadingHistory = ref(false)
-const contactInfo = ref('')
+const history = ref<RedeemHistoryItem[]>([]);
+const loadingHistory = ref(false);
+const contactInfo = ref("");
 
 // Helper functions for history display
 const isBalanceType = (type: string) => {
-  return type === 'balance' || type === 'admin_balance'
-}
+  return type === "balance" || type === "admin_balance";
+};
 
 const isSubscriptionType = (type: string) => {
-  return type === 'subscription'
-}
+  return type === "subscription";
+};
 
 const isAdminAdjustment = (type: string) => {
-  return type === 'admin_balance' || type === 'admin_concurrency'
-}
+  return type === "admin_balance" || type === "admin_concurrency";
+};
 
 const getHistoryItemTitle = (item: RedeemHistoryItem) => {
-  if (item.type === 'balance') {
-    return '余额充值（兑换）'
-  } else if (item.type === 'admin_balance') {
-    return item.value >= 0 ? '余额充值（管理员）' : '余额扣除（管理员）'
-  } else if (item.type === 'concurrency') {
-    return '并发增加（兑换）'
-  } else if (item.type === 'admin_concurrency') {
-    return item.value >= 0 ? '并发增加（管理员）' : '并发减少（管理员）'
-  } else if (item.type === 'subscription') {
-    return '订阅已分配'
+  if (item.type === "balance") {
+    return "余额充值（兑换）";
+  } else if (item.type === "admin_balance") {
+    return item.value >= 0 ? "余额充值（管理员）" : "余额扣除（管理员）";
+  } else if (item.type === "concurrency") {
+    return "并发增加（兑换）";
+  } else if (item.type === "admin_concurrency") {
+    return item.value >= 0 ? "并发增加（管理员）" : "并发减少（管理员）";
+  } else if (item.type === "subscription") {
+    return "订阅已分配";
   }
-  return '未知'
-}
+  return "未知";
+};
 
 const formatHistoryValue = (item: RedeemHistoryItem) => {
   if (isBalanceType(item.type)) {
-    const sign = item.value >= 0 ? '+' : ''
-    return `${sign}$${item.value.toFixed(2)}`
+    const sign = item.value >= 0 ? "+" : "";
+    return `${sign}$${item.value.toFixed(2)}`;
   } else if (isSubscriptionType(item.type)) {
     // 订阅类型显示有效天数和分组名称
-    const days = item.validity_days || Math.round(item.value)
-    const groupName = item.group?.name || ''
-    return groupName ? `${days}${'天'} - ${groupName}` : `${days}${'天'}`
+    const days = item.validity_days || Math.round(item.value);
+    const groupName = item.group?.name || "";
+    return groupName ? `${days}${"天"} - ${groupName}` : `${days}${"天"}`;
   } else {
-    const sign = item.value >= 0 ? '+' : ''
-    return `${sign}${item.value} ${'请求'}`
+    const sign = item.value >= 0 ? "+" : "";
+    return `${sign}${item.value} ${"请求"}`;
   }
-}
+};
 
 const fetchHistory = async () => {
-  loadingHistory.value = true
+  loadingHistory.value = true;
   try {
-    history.value = await redeemAPI.getHistory()
+    history.value = await redeemAPI.getHistory();
   } catch (error) {
-    console.error('Failed to fetch history:', error)
+    console.error("Failed to fetch history:", error);
   } finally {
-    loadingHistory.value = false
+    loadingHistory.value = false;
   }
-}
+};
 
 const handleRedeem = async () => {
   if (!redeemCode.value.trim()) {
-    appStore.showError('请输入兑换码')
-    return
+    appStore.showError("请输入兑换码");
+    return;
   }
 
-  submitting.value = true
-  errorMessage.value = ''
-  redeemResult.value = null
+  submitting.value = true;
+  errorMessage.value = "";
+  redeemResult.value = null;
 
   try {
-    const result = await redeemAPI.redeem(redeemCode.value.trim())
+    const result = await redeemAPI.redeem(redeemCode.value.trim());
 
-    redeemResult.value = result
+    redeemResult.value = result;
 
     // Refresh user data to get updated balance/concurrency
-    await authStore.refreshUser()
+    await authStore.refreshUser();
 
     // If subscription type, immediately refresh subscription status
-    if (result.type === 'subscription') {
+    if (result.type === "subscription") {
       try {
-        await subscriptionStore.fetchActiveSubscriptions(true) // force refresh
+        await subscriptionStore.fetchActiveSubscriptions(true); // force refresh
       } catch (error) {
-        console.error('Failed to refresh subscriptions after redeem:', error)
-        appStore.showWarning('兑换成功，但订阅状态刷新失败。')
+        console.error("Failed to refresh subscriptions after redeem:", error);
+        appStore.showWarning("兑换成功，但订阅状态刷新失败。");
       }
     }
 
     // Clear the input
-    redeemCode.value = ''
+    redeemCode.value = "";
 
     // Refresh history
-    await fetchHistory()
+    await fetchHistory();
 
     // Show success toast
-    appStore.showSuccess('兑换成功！')
+    appStore.showSuccess("兑换成功！");
   } catch (error: any) {
-    errorMessage.value = error.response?.data?.detail || '兑换失败，请检查兑换码后重试。'
+    errorMessage.value =
+      error.response?.data?.detail || "兑换失败，请检查兑换码后重试。";
 
-    appStore.showError('兑换失败')
+    appStore.showError("兑换失败");
   } finally {
-    submitting.value = false
+    submitting.value = false;
   }
-}
+};
 
 onMounted(async () => {
-  fetchHistory()
+  fetchHistory();
   try {
-    const settings = await authAPI.getPublicSettings()
-    contactInfo.value = settings.contact_info || ''
+    const settings = await authAPI.getPublicSettings();
+    contactInfo.value = settings.contact_info || "";
   } catch (error) {
-    console.error('Failed to load contact info:', error)
+    console.error("Failed to load contact info:", error);
   }
-})
+});
 </script>
 
 <style scoped>

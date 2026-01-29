@@ -3,21 +3,21 @@
  * Centralized exports for all admin API modules
  */
 
-import dashboardAPI from './dashboard'
-import usersAPI from './users'
-import groupsAPI from './groups'
-import accountsAPI from './accounts'
-import proxiesAPI from './proxies'
-import redeemAPI from './redeem'
-import promoAPI from './promo'
-import settingsAPI from './settings'
-import systemAPI from './system'
-import subscriptionsAPI from './subscriptions'
-import usageAPI from './usage'
-import geminiAPI from './gemini'
-import antigravityAPI from './antigravity'
-import userAttributesAPI from './userAttributes'
-import opsAPI from './ops'
+import dashboardAPI from "./dashboard";
+import usersAPI from "./users";
+import groupsAPI from "./groups";
+import accountsAPI from "./accounts";
+import proxiesAPI from "./proxies";
+import redeemAPI from "./redeem";
+import promoAPI from "./promo";
+import settingsAPI from "./settings";
+import systemAPI from "./system";
+import subscriptionsAPI from "./subscriptions";
+import usageAPI from "./usage";
+import geminiAPI from "./gemini";
+import antigravityAPI from "./antigravity";
+import userAttributesAPI from "./userAttributes";
+import opsAPI from "./ops";
 
 /**
  * Unified admin API object for convenient access
@@ -37,8 +37,8 @@ export const adminAPI = {
   gemini: geminiAPI,
   antigravity: antigravityAPI,
   userAttributes: userAttributesAPI,
-  ops: opsAPI
-}
+  ops: opsAPI,
+};
 
 export {
   dashboardAPI,
@@ -55,7 +55,7 @@ export {
   geminiAPI,
   antigravityAPI,
   userAttributesAPI,
-  opsAPI
-}
+  opsAPI,
+};
 
-export default adminAPI
+export default adminAPI;

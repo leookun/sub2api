@@ -1,21 +1,40 @@
 <template>
   <div class="md:hidden space-y-3">
     <template v-if="loading">
-      <div v-for="i in 5" :key="i" class="rounded-lg border border-gray-200 bg-white p-4 dark:border-dark-700 dark:bg-dark-900">
+      <div
+        v-for="i in 5"
+        :key="i"
+        class="rounded-lg border border-gray-200 bg-white p-4 dark:border-dark-700 dark:bg-dark-900"
+      >
         <div class="space-y-3">
-          <div v-for="column in columns.filter(c => c.key !== 'actions')" :key="column.key" class="flex justify-between">
-            <div class="h-4 w-20 animate-pulse rounded bg-gray-200 dark:bg-dark-700"></div>
-            <div class="h-4 w-32 animate-pulse rounded bg-gray-200 dark:bg-dark-700"></div>
+          <div
+            v-for="column in columns.filter((c) => c.key !== 'actions')"
+            :key="column.key"
+            class="flex justify-between"
+          >
+            <div
+              class="h-4 w-20 animate-pulse rounded bg-gray-200 dark:bg-dark-700"
+            ></div>
+            <div
+              class="h-4 w-32 animate-pulse rounded bg-gray-200 dark:bg-dark-700"
+            ></div>
           </div>
-          <div v-if="hasActionsColumn" class="border-t border-gray-200 pt-3 dark:border-dark-700">
-            <div class="h-8 w-full animate-pulse rounded bg-gray-200 dark:bg-dark-700"></div>
+          <div
+            v-if="hasActionsColumn"
+            class="border-t border-gray-200 pt-3 dark:border-dark-700"
+          >
+            <div
+              class="h-8 w-full animate-pulse rounded bg-gray-200 dark:bg-dark-700"
+            ></div>
           </div>
         </div>
       </div>
     </template>
 
     <template v-else-if="!data || data.length === 0">
-      <div class="rounded-lg border border-gray-200 bg-white p-12 text-center dark:border-dark-700 dark:bg-dark-900">
+      <div
+        class="rounded-lg border border-gray-200 bg-white p-12 text-center dark:border-dark-700 dark:bg-dark-900"
+      >
         <slot name="empty">
           <div class="flex flex-col items-center">
             <Icon
@@ -24,7 +43,7 @@
               class="mb-4 h-12 w-12 text-gray-400 dark:text-dark-500"
             />
             <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-              {{ '暂无数据' }}
+              {{ "暂无数据" }}
             </p>
           </div>
         </slot>
@@ -39,21 +58,40 @@
       >
         <div class="space-y-3">
           <div
-            v-for="column in columns.filter(c => c.key !== 'actions')"
+            v-for="column in columns.filter((c) => c.key !== 'actions')"
             :key="column.key"
             class="flex items-start justify-between gap-4"
           >
-            <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-dark-400">
+            <span
+              class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-dark-400"
+            >
               {{ column.label }}
             </span>
             <div class="text-right text-sm text-gray-900 dark:text-gray-100">
-              <slot :name="`cell-${column.key}`" :row="row" :value="row[column.key]" :expanded="actionsExpanded">
-                {{ column.formatter ? column.formatter(row[column.key], row) : row[column.key] }}
+              <slot
+                :name="`cell-${column.key}`"
+                :row="row"
+                :value="row[column.key]"
+                :expanded="actionsExpanded"
+              >
+                {{
+                  column.formatter
+                    ? column.formatter(row[column.key], row)
+                    : row[column.key]
+                }}
               </slot>
             </div>
           </div>
-          <div v-if="hasActionsColumn" class="border-t border-gray-200 pt-3 dark:border-dark-700">
-            <slot name="cell-actions" :row="row" :value="row['actions']" :expanded="actionsExpanded"></slot>
+          <div
+            v-if="hasActionsColumn"
+            class="border-t border-gray-200 pt-3 dark:border-dark-700"
+          >
+            <slot
+              name="cell-actions"
+              :row="row"
+              :value="row['actions']"
+              :expanded="actionsExpanded"
+            ></slot>
           </div>
         </div>
       </div>
@@ -65,7 +103,7 @@
     class="table-wrapper hidden md:block"
     :class="{
       'actions-expanded': actionsExpanded,
-      'is-scrollable': isScrollable
+      'is-scrollable': isScrollable,
     }"
   >
     <table class="min-w-full divide-y divide-gray-200 dark:divide-dark-700">
@@ -78,8 +116,11 @@
             :class="[
               'sticky-header-cell py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-dark-400',
               getAdaptivePaddingClass(),
-              { 'cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-700': column.sortable },
-              getStickyColumnClass(column, index)
+              {
+                'cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-700':
+                  column.sortable,
+              },
+              getStickyColumnClass(column, index),
             ]"
             @click="column.sortable && handleSort(column.key)"
           >
@@ -91,7 +132,10 @@
             >
               <div class="flex items-center space-x-1">
                 <span>{{ column.label }}</span>
-                <span v-if="column.sortable" class="text-gray-400 dark:text-dark-500">
+                <span
+                  v-if="column.sortable"
+                  class="text-gray-400 dark:text-dark-500"
+                >
                   <svg
                     v-if="sortKey === column.key"
                     class="h-4 w-4"
@@ -105,7 +149,12 @@
                       clip-rule="evenodd"
                     />
                   </svg>
-                  <svg v-else class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    v-else
+                    class="h-4 w-4"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path
                       d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                     />
@@ -116,13 +165,21 @@
           </th>
         </tr>
       </thead>
-      <tbody class="table-body divide-y divide-gray-200 bg-white dark:divide-dark-700 dark:bg-dark-900">
+      <tbody
+        class="table-body divide-y divide-gray-200 bg-white dark:divide-dark-700 dark:bg-dark-900"
+      >
         <!-- Loading skeleton -->
         <template v-if="loading">
           <tr v-for="i in 5" :key="i">
-            <td v-for="column in columns" :key="column.key" :class="['whitespace-nowrap py-4', getAdaptivePaddingClass()]">
+            <td
+              v-for="column in columns"
+              :key="column.key"
+              :class="['whitespace-nowrap py-4', getAdaptivePaddingClass()]"
+            >
               <div class="animate-pulse">
-                <div class="h-4 w-3/4 rounded bg-gray-200 dark:bg-dark-700"></div>
+                <div
+                  class="h-4 w-3/4 rounded bg-gray-200 dark:bg-dark-700"
+                ></div>
               </div>
             </td>
           </tr>
@@ -132,7 +189,10 @@
         <tr v-else-if="!data || data.length === 0">
           <td
             :colspan="columns.length"
-            :class="['py-12 text-center text-gray-500 dark:text-dark-400', getAdaptivePaddingClass()]"
+            :class="[
+              'py-12 text-center text-gray-500 dark:text-dark-400',
+              getAdaptivePaddingClass(),
+            ]"
           >
             <slot name="empty">
               <div class="flex flex-col items-center">
@@ -142,7 +202,7 @@
                   class="mb-4 h-12 w-12 text-gray-400 dark:text-dark-500"
                 />
                 <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                  {{ '暂无数据' }}
+                  {{ "暂无数据" }}
                 </p>
               </div>
             </slot>
@@ -162,11 +222,20 @@
             :class="[
               'whitespace-nowrap py-4 text-sm text-gray-900 dark:text-gray-100',
               getAdaptivePaddingClass(),
-              getStickyColumnClass(column, colIndex)
+              getStickyColumnClass(column, colIndex),
             ]"
           >
-            <slot :name="`cell-${column.key}`" :row="row" :value="row[column.key]" :expanded="actionsExpanded">
-              {{ column.formatter ? column.formatter(row[column.key], row) : row[column.key] }}
+            <slot
+              :name="`cell-${column.key}`"
+              :row="row"
+              :value="row[column.key]"
+              :expanded="actionsExpanded"
+            >
+              {{
+                column.formatter
+                  ? column.formatter(row[column.key], row)
+                  : row[column.key]
+              }}
             </slot>
           </td>
         </tr>
@@ -176,126 +245,131 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
-import type { Column } from './types'
+import { computed, ref, onMounted, onUnmounted, watch, nextTick } from "vue";
+import type { Column } from "./types";
 
 const emit = defineEmits<{
-  sort: [key: string, order: 'asc' | 'desc']
-}>()
+  sort: [key: string, order: "asc" | "desc"];
+}>();
 
 // 表格容器引用
-const tableWrapperRef = ref<HTMLElement | null>(null)
-const isScrollable = ref(false)
-const actionsColumnNeedsExpanding = ref(false)
+const tableWrapperRef = ref<HTMLElement | null>(null);
+const isScrollable = ref(false);
+const actionsColumnNeedsExpanding = ref(false);
 
 // 检查是否可滚动
 const checkScrollable = () => {
   if (tableWrapperRef.value) {
-    isScrollable.value = tableWrapperRef.value.scrollWidth > tableWrapperRef.value.clientWidth
+    isScrollable.value =
+      tableWrapperRef.value.scrollWidth > tableWrapperRef.value.clientWidth;
   }
-}
+};
 
 // 检查操作列是否需要展开
 const checkActionsColumnWidth = () => {
-  if (!tableWrapperRef.value) return
+  if (!tableWrapperRef.value) return;
 
   // 查找第一行的操作列单元格
-  const firstActionCell = tableWrapperRef.value.querySelector('tbody tr:first-child td:last-child')
-  if (!firstActionCell) return
+  const firstActionCell = tableWrapperRef.value.querySelector(
+    "tbody tr:first-child td:last-child",
+  );
+  if (!firstActionCell) return;
 
   // 查找操作列内容的容器div
-  const actionsContainer = firstActionCell.querySelector('div')
-  if (!actionsContainer) return
+  const actionsContainer = firstActionCell.querySelector("div");
+  if (!actionsContainer) return;
 
   // 临时展开以测量完整宽度
-  const wasExpanded = actionsExpanded.value
-  actionsExpanded.value = true
+  const wasExpanded = actionsExpanded.value;
+  actionsExpanded.value = true;
 
   // 等待DOM更新
   nextTick(() => {
     // 测量所有按钮的总宽度
-    const actionItems = actionsContainer.querySelectorAll('button, a, [role="button"]')
+    const actionItems = actionsContainer.querySelectorAll(
+      'button, a, [role="button"]',
+    );
     if (actionItems.length <= 2) {
-      actionsColumnNeedsExpanding.value = false
-      actionsExpanded.value = wasExpanded
-      return
+      actionsColumnNeedsExpanding.value = false;
+      actionsExpanded.value = wasExpanded;
+      return;
     }
 
     // 计算所有按钮的总宽度（包括gap）
-    let totalWidth = 0
+    let totalWidth = 0;
     actionItems.forEach((item, index) => {
-      totalWidth += (item as HTMLElement).offsetWidth
+      totalWidth += (item as HTMLElement).offsetWidth;
       if (index < actionItems.length - 1) {
-        totalWidth += 4 // gap-1 = 4px
+        totalWidth += 4; // gap-1 = 4px
       }
-    })
+    });
 
     // 获取单元格可用宽度（减去padding）
-    const cellWidth = (firstActionCell as HTMLElement).clientWidth - 32 // 减去左右padding
+    const cellWidth = (firstActionCell as HTMLElement).clientWidth - 32; // 减去左右padding
 
     // 如果总宽度超过可用宽度，需要展开功能
-    actionsColumnNeedsExpanding.value = totalWidth > cellWidth
+    actionsColumnNeedsExpanding.value = totalWidth > cellWidth;
 
     // 恢复原来的展开状态
-    actionsExpanded.value = wasExpanded
-  })
-}
+    actionsExpanded.value = wasExpanded;
+  });
+};
 
 // 监听尺寸变化
-let resizeObserver: ResizeObserver | null = null
-let resizeHandler: (() => void) | null = null
+let resizeObserver: ResizeObserver | null = null;
+let resizeHandler: (() => void) | null = null;
 
 onMounted(() => {
-  checkScrollable()
-  checkActionsColumnWidth()
-  if (tableWrapperRef.value && typeof ResizeObserver !== 'undefined') {
+  checkScrollable();
+  checkActionsColumnWidth();
+  if (tableWrapperRef.value && typeof ResizeObserver !== "undefined") {
     resizeObserver = new ResizeObserver(() => {
-      checkScrollable()
-      checkActionsColumnWidth()
-    })
-    resizeObserver.observe(tableWrapperRef.value)
+      checkScrollable();
+      checkActionsColumnWidth();
+    });
+    resizeObserver.observe(tableWrapperRef.value);
   } else {
     // 降级方案：不支持 ResizeObserver 时使用 window resize
     resizeHandler = () => {
-      checkScrollable()
-      checkActionsColumnWidth()
-    }
-    window.addEventListener('resize', resizeHandler)
+      checkScrollable();
+      checkActionsColumnWidth();
+    };
+    window.addEventListener("resize", resizeHandler);
   }
-})
+});
 
 onUnmounted(() => {
-  resizeObserver?.disconnect()
+  resizeObserver?.disconnect();
   if (resizeHandler) {
-    window.removeEventListener('resize', resizeHandler)
-    resizeHandler = null
+    window.removeEventListener("resize", resizeHandler);
+    resizeHandler = null;
   }
-})
+});
 
 interface Props {
-  columns: Column[]
-  data: any[]
-  loading?: boolean
-  stickyFirstColumn?: boolean
-  stickyActionsColumn?: boolean
-  expandableActions?: boolean
-  actionsCount?: number // 操作按钮总数，用于判断是否需要展开功能
-  rowKey?: string | ((row: any) => string | number)
+  columns: Column[];
+  data: any[];
+  loading?: boolean;
+  stickyFirstColumn?: boolean;
+  stickyActionsColumn?: boolean;
+  expandableActions?: boolean;
+  actionsCount?: number; // 操作按钮总数，用于判断是否需要展开功能
+  rowKey?: string | ((row: any) => string | number);
   /**
    * Default sort configuration (only applied when there is no persisted sort state)
    */
-  defaultSortKey?: string
-  defaultSortOrder?: 'asc' | 'desc'
+  defaultSortKey?: string;
+  defaultSortOrder?: "asc" | "desc";
   /**
    * Persist sort state (key + order) to localStorage using this key.
    * If provided, DataTable will load the stored sort state on mount.
    */
-  sortStorageKey?: string
+  sortStorageKey?: string;
   /**
    * Enable server-side sorting mode. When true, clicking sort headers
    * will emit 'sort' events instead of performing client-side sorting.
    */
-  serverSideSort?: boolean
+  serverSideSort?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -303,290 +377,294 @@ const props = withDefaults(defineProps<Props>(), {
   stickyFirstColumn: true,
   stickyActionsColumn: true,
   expandableActions: true,
-  defaultSortOrder: 'asc',
-  serverSideSort: false
-})
+  defaultSortOrder: "asc",
+  serverSideSort: false,
+});
 
-const sortKey = ref<string>('')
-const sortOrder = ref<'asc' | 'desc'>('asc')
-const actionsExpanded = ref(false)
+const sortKey = ref<string>("");
+const sortOrder = ref<"asc" | "desc">("asc");
+const actionsExpanded = ref(false);
 
 type PersistedSortState = {
-  key: string
-  order: 'asc' | 'desc'
-}
+  key: string;
+  order: "asc" | "desc";
+};
 
 const collator = new Intl.Collator(undefined, {
   numeric: true,
-  sensitivity: 'base'
-})
+  sensitivity: "base",
+});
 
 const getSortableKeys = () => {
-  const keys = new Set<string>()
+  const keys = new Set<string>();
   for (const col of props.columns) {
-    if (col.sortable) keys.add(col.key)
+    if (col.sortable) keys.add(col.key);
   }
-  return keys
-}
+  return keys;
+};
 
 const normalizeSortKey = (candidate: string) => {
-  if (!candidate) return ''
-  const sortableKeys = getSortableKeys()
-  return sortableKeys.has(candidate) ? candidate : ''
-}
+  if (!candidate) return "";
+  const sortableKeys = getSortableKeys();
+  return sortableKeys.has(candidate) ? candidate : "";
+};
 
-const normalizeSortOrder = (candidate: any): 'asc' | 'desc' => {
-  return candidate === 'desc' ? 'desc' : 'asc'
-}
+const normalizeSortOrder = (candidate: any): "asc" | "desc" => {
+  return candidate === "desc" ? "desc" : "asc";
+};
 
 const readPersistedSortState = (): PersistedSortState | null => {
-  if (!props.sortStorageKey) return null
+  if (!props.sortStorageKey) return null;
   try {
-    const raw = localStorage.getItem(props.sortStorageKey)
-    if (!raw) return null
-    const parsed = JSON.parse(raw) as Partial<PersistedSortState>
-    const key = normalizeSortKey(typeof parsed.key === 'string' ? parsed.key : '')
-    if (!key) return null
-    return { key, order: normalizeSortOrder(parsed.order) }
+    const raw = localStorage.getItem(props.sortStorageKey);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<PersistedSortState>;
+    const key = normalizeSortKey(
+      typeof parsed.key === "string" ? parsed.key : "",
+    );
+    if (!key) return null;
+    return { key, order: normalizeSortOrder(parsed.order) };
   } catch (e) {
-    console.error('[DataTable] Failed to read persisted sort state:', e)
-    return null
+    console.error("[DataTable] Failed to read persisted sort state:", e);
+    return null;
   }
-}
+};
 
 const writePersistedSortState = (state: PersistedSortState) => {
-  if (!props.sortStorageKey) return
+  if (!props.sortStorageKey) return;
   try {
-    localStorage.setItem(props.sortStorageKey, JSON.stringify(state))
+    localStorage.setItem(props.sortStorageKey, JSON.stringify(state));
   } catch (e) {
-    console.error('[DataTable] Failed to persist sort state:', e)
+    console.error("[DataTable] Failed to persist sort state:", e);
   }
-}
+};
 
 const resolveInitialSortState = (): PersistedSortState | null => {
-  const persisted = readPersistedSortState()
-  if (persisted) return persisted
+  const persisted = readPersistedSortState();
+  if (persisted) return persisted;
 
-  const key = normalizeSortKey(props.defaultSortKey || '')
-  if (!key) return null
-  return { key, order: normalizeSortOrder(props.defaultSortOrder) }
-}
+  const key = normalizeSortKey(props.defaultSortKey || "");
+  if (!key) return null;
+  return { key, order: normalizeSortOrder(props.defaultSortOrder) };
+};
 
 const applySortState = (state: PersistedSortState | null) => {
-  if (!state) return
-  sortKey.value = state.key
-  sortOrder.value = state.order
-}
+  if (!state) return;
+  sortKey.value = state.key;
+  sortOrder.value = state.order;
+};
 
-const isNullishOrEmpty = (value: any) => value === null || value === undefined || value === ''
+const isNullishOrEmpty = (value: any) =>
+  value === null || value === undefined || value === "";
 
 const toFiniteNumberOrNull = (value: any): number | null => {
-  if (typeof value === 'number') return Number.isFinite(value) ? value : null
-  if (typeof value === 'boolean') return value ? 1 : 0
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-    if (!trimmed) return null
-    const n = Number(trimmed)
-    return Number.isFinite(n) ? n : null
+  if (typeof value === "number") return Number.isFinite(value) ? value : null;
+  if (typeof value === "boolean") return value ? 1 : 0;
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+    const n = Number(trimmed);
+    return Number.isFinite(n) ? n : null;
   }
-  return null
-}
+  return null;
+};
 
 const toSortableString = (value: any): string => {
-  if (value === null || value === undefined) return ''
-  if (typeof value === 'string') return value
-  if (typeof value === 'number' || typeof value === 'boolean') return String(value)
-  if (value instanceof Date) return value.toISOString()
+  if (value === null || value === undefined) return "";
+  if (typeof value === "string") return value;
+  if (typeof value === "number" || typeof value === "boolean")
+    return String(value);
+  if (value instanceof Date) return value.toISOString();
   try {
-    return JSON.stringify(value)
+    return JSON.stringify(value);
   } catch {
-    return String(value)
+    return String(value);
   }
-}
+};
 
 const compareSortValues = (a: any, b: any): number => {
-  const aEmpty = isNullishOrEmpty(a)
-  const bEmpty = isNullishOrEmpty(b)
-  if (aEmpty && bEmpty) return 0
-  if (aEmpty) return 1
-  if (bEmpty) return -1
+  const aEmpty = isNullishOrEmpty(a);
+  const bEmpty = isNullishOrEmpty(b);
+  if (aEmpty && bEmpty) return 0;
+  if (aEmpty) return 1;
+  if (bEmpty) return -1;
 
-  const aNum = toFiniteNumberOrNull(a)
-  const bNum = toFiniteNumberOrNull(b)
+  const aNum = toFiniteNumberOrNull(a);
+  const bNum = toFiniteNumberOrNull(b);
   if (aNum !== null && bNum !== null) {
-    if (aNum === bNum) return 0
-    return aNum < bNum ? -1 : 1
+    if (aNum === bNum) return 0;
+    return aNum < bNum ? -1 : 1;
   }
 
-  const aStr = toSortableString(a)
-  const bStr = toSortableString(b)
-  const res = collator.compare(aStr, bStr)
-  if (res === 0) return 0
-  return res < 0 ? -1 : 1
-}
+  const aStr = toSortableString(a);
+  const bStr = toSortableString(b);
+  const res = collator.compare(aStr, bStr);
+  if (res === 0) return 0;
+  return res < 0 ? -1 : 1;
+};
 const resolveRowKey = (row: any, index: number) => {
-  if (typeof props.rowKey === 'function') {
-    const key = props.rowKey(row)
-    return key ?? index
+  if (typeof props.rowKey === "function") {
+    const key = props.rowKey(row);
+    return key ?? index;
   }
-  if (typeof props.rowKey === 'string' && props.rowKey) {
-    const key = row?.[props.rowKey]
-    return key ?? index
+  if (typeof props.rowKey === "string" && props.rowKey) {
+    const key = row?.[props.rowKey];
+    return key ?? index;
   }
-  const key = row?.id
-  return key ?? index
-}
+  const key = row?.id;
+  return key ?? index;
+};
 
 // 数据/列变化时重新检查滚动状态
 // 注意：不能监听 actionsExpanded，因为 checkActionsColumnWidth 会临时修改它，会导致无限循环
 watch(
   [() => props.data.length, () => props.columns],
   async () => {
-    await nextTick()
-    checkScrollable()
-    checkActionsColumnWidth()
+    await nextTick();
+    checkScrollable();
+    checkActionsColumnWidth();
   },
-  { flush: 'post' }
-)
+  { flush: "post" },
+);
 
 // 单独监听展开状态变化，只更新滚动状态
 watch(actionsExpanded, async () => {
-  await nextTick()
-  checkScrollable()
-})
+  await nextTick();
+  checkScrollable();
+});
 
 const handleSort = (key: string) => {
-  let newOrder: 'asc' | 'desc' = 'asc'
+  let newOrder: "asc" | "desc" = "asc";
   if (sortKey.value === key) {
-    newOrder = sortOrder.value === 'asc' ? 'desc' : 'asc'
+    newOrder = sortOrder.value === "asc" ? "desc" : "asc";
   }
 
   if (props.serverSideSort) {
     // Server-side sort mode: emit event and update internal state for UI feedback
-    sortKey.value = key
-    sortOrder.value = newOrder
-    emit('sort', key, newOrder)
+    sortKey.value = key;
+    sortOrder.value = newOrder;
+    emit("sort", key, newOrder);
   } else {
     // Client-side sort mode: just update internal state
-    sortKey.value = key
-    sortOrder.value = newOrder
+    sortKey.value = key;
+    sortOrder.value = newOrder;
   }
-}
+};
 
 const sortedData = computed(() => {
   // Server-side sort mode: return data as-is (server handles sorting)
-  if (props.serverSideSort || !sortKey.value || !props.data) return props.data
+  if (props.serverSideSort || !sortKey.value || !props.data) return props.data;
 
-  const key = sortKey.value
-  const order = sortOrder.value
+  const key = sortKey.value;
+  const order = sortOrder.value;
 
   // Stable sort (tie-break with original index) to avoid jitter when values are equal.
   return props.data
     .map((row, index) => ({ row, index }))
     .sort((a, b) => {
-      const cmp = compareSortValues(a.row?.[key], b.row?.[key])
-      if (cmp !== 0) return order === 'asc' ? cmp : -cmp
-      return a.index - b.index
+      const cmp = compareSortValues(a.row?.[key], b.row?.[key]);
+      if (cmp !== 0) return order === "asc" ? cmp : -cmp;
+      return a.index - b.index;
     })
-    .map(item => item.row)
-})
+    .map((item) => item.row);
+});
 
 const hasActionsColumn = computed(() => {
-  return props.columns.some(column => column.key === 'actions')
-})
+  return props.columns.some((column) => column.key === "actions");
+});
 
 const hasSelectColumn = computed(() => {
-  return props.columns.length > 0 && props.columns[0].key === 'select'
-})
+  return props.columns.length > 0 && props.columns[0].key === "select";
+});
 
 // 生成固定列的 CSS 类
 const getStickyColumnClass = (column: Column, index: number) => {
-  const classes: string[] = []
+  const classes: string[] = [];
 
   if (props.stickyFirstColumn) {
     // 如果第一列是勾选列，固定前两列（勾选+名称）
     if (hasSelectColumn.value) {
       if (index === 0) {
-        classes.push('sticky-col sticky-col-left-first')
+        classes.push("sticky-col sticky-col-left-first");
       } else if (index === 1) {
-        classes.push('sticky-col sticky-col-left-second')
+        classes.push("sticky-col sticky-col-left-second");
       }
     } else {
       // 否则只固定第一列
       if (index === 0) {
-        classes.push('sticky-col sticky-col-left')
+        classes.push("sticky-col sticky-col-left");
       }
     }
   }
 
   // 操作列固定（最后一列）
-  if (props.stickyActionsColumn && column.key === 'actions') {
-    classes.push('sticky-col sticky-col-right')
+  if (props.stickyActionsColumn && column.key === "actions") {
+    classes.push("sticky-col sticky-col-right");
   }
 
-  return classes.join(' ')
-}
+  return classes.join(" ");
+};
 
 // 根据列数自适应调整内边距
 const getAdaptivePaddingClass = () => {
-  const columnCount = props.columns.length
+  const columnCount = props.columns.length;
 
   // 列数越多，内边距越小
   if (columnCount >= 10) {
-    return 'px-2' // 8px
+    return "px-2"; // 8px
   } else if (columnCount >= 7) {
-    return 'px-3' // 12px
+    return "px-3"; // 12px
   } else if (columnCount >= 5) {
-    return 'px-4' // 16px
+    return "px-4"; // 16px
   } else {
-    return 'px-6' // 24px (原始值)
+    return "px-6"; // 24px (原始值)
   }
-}
+};
 
 // Init + keep persisted sort state consistent with current columns
-const didInitSort = ref(false)
+const didInitSort = ref(false);
 
 onMounted(() => {
-  const initial = resolveInitialSortState()
-  applySortState(initial)
-  didInitSort.value = true
-})
+  const initial = resolveInitialSortState();
+  applySortState(initial);
+  didInitSort.value = true;
+});
 
 watch(
   () => props.columns,
   () => {
     // If current sort key is no longer sortable/visible, fall back to default/persisted.
-    const normalized = normalizeSortKey(sortKey.value)
+    const normalized = normalizeSortKey(sortKey.value);
     if (!sortKey.value) {
-      const initial = resolveInitialSortState()
-      applySortState(initial)
-      return
+      const initial = resolveInitialSortState();
+      applySortState(initial);
+      return;
     }
 
     if (!normalized) {
-      const fallback = resolveInitialSortState()
+      const fallback = resolveInitialSortState();
       if (fallback) {
-        applySortState(fallback)
+        applySortState(fallback);
       } else {
-        sortKey.value = ''
-        sortOrder.value = 'asc'
+        sortKey.value = "";
+        sortOrder.value = "asc";
       }
     }
   },
-  { deep: true }
-)
+  { deep: true },
+);
 
 watch(
   [sortKey, sortOrder],
   ([nextKey, nextOrder]) => {
-    if (!didInitSort.value) return
-    if (!props.sortStorageKey) return
-    const key = normalizeSortKey(nextKey)
-    if (!key) return
-    writePersistedSortState({ key, order: normalizeSortOrder(nextOrder) })
+    if (!didInitSort.value) return;
+    if (!props.sortStorageKey) return;
+    const key = normalizeSortKey(nextKey);
+    if (!key) return;
+    writePersistedSortState({ key, order: normalizeSortOrder(nextOrder) });
   },
-  { flush: 'post' }
-)
+  { flush: "post" },
+);
 </script>
 
 <style scoped>
@@ -680,7 +758,7 @@ tbody tr:hover .sticky-col {
 /* 阴影只在可滚动时显示 */
 /* 单列固定右侧阴影 */
 .is-scrollable .sticky-col-left::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
@@ -693,7 +771,7 @@ tbody tr:hover .sticky-col {
 
 /* 双列固定：只在第二列显示阴影 */
 .is-scrollable .sticky-col-left-second::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
@@ -706,7 +784,7 @@ tbody tr:hover .sticky-col {
 
 /* 操作列左侧阴影 */
 .is-scrollable .sticky-col-right::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;

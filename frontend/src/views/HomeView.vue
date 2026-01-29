@@ -42,7 +42,11 @@
         <!-- Logo -->
         <div class="flex items-center">
           <div class="h-10 w-10 overflow-hidden rounded-xl shadow-md">
-            <img :src="siteLogo || '/logo.png'" alt="Logo" class="h-full w-full object-contain" />
+            <img
+              :src="siteLogo || '/logo.png'"
+              alt="Logo"
+              class="h-full w-full object-contain"
+            />
           </div>
         </div>
 
@@ -81,7 +85,7 @@
             >
               {{ userInitial }}
             </span>
-            <span class="text-xs font-medium text-white">{{ '控制台' }}</span>
+            <span class="text-xs font-medium text-white">{{ "控制台" }}</span>
             <svg
               class="h-3 w-3 text-gray-400"
               fill="none"
@@ -101,7 +105,7 @@
             to="/login"
             class="inline-flex items-center rounded-full bg-gray-900 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
-            {{ '登录' }}
+            {{ "登录" }}
           </router-link>
         </div>
       </nav>
@@ -111,7 +115,9 @@
     <main class="relative z-10 flex-1 px-6 py-16">
       <div class="mx-auto max-w-6xl">
         <!-- Hero Section - Left/Right Layout -->
-        <div class="mb-12 flex flex-col items-center justify-between gap-12 lg:flex-row lg:gap-16">
+        <div
+          class="mb-12 flex flex-col items-center justify-between gap-12 lg:flex-row lg:gap-16"
+        >
           <!-- Left: Text Content -->
           <div class="flex-1 text-center lg:text-left">
             <h1
@@ -129,8 +135,13 @@
                 :to="isAuthenticated ? dashboardPath : '/login'"
                 class="btn btn-primary px-8 py-3 text-base shadow-lg shadow-primary-500/30"
               >
-                {{ isAuthenticated ? '进入控制台' : '开始使用' }}
-                <Icon name="arrowRight" size="md" class="ml-2" :stroke-width="2" />
+                {{ isAuthenticated ? "进入控制台" : "开始使用" }}
+                <Icon
+                  name="arrowRight"
+                  size="md"
+                  class="ml-2"
+                  :stroke-width="2"
+                />
               </router-link>
             </div>
           </div>
@@ -174,30 +185,35 @@
         </div>
 
         <!-- Feature Tags - Centered -->
-        <div class="mb-12 flex flex-wrap items-center justify-center gap-4 md:gap-6">
+        <div
+          class="mb-12 flex flex-wrap items-center justify-center gap-4 md:gap-6"
+        >
           <div
             class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
           >
             <Icon name="swap" size="sm" class="text-primary-500" />
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
-              '订阅转 API'
-            }}</span>
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-dark-200"
+              >{{ "订阅转 API" }}</span
+            >
           </div>
           <div
             class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
           >
             <Icon name="shield" size="sm" class="text-primary-500" />
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
-              '粘性会话'
-            }}</span>
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-dark-200"
+              >{{ "粘性会话" }}</span
+            >
           </div>
           <div
             class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
           >
             <Icon name="chart" size="sm" class="text-primary-500" />
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
-              '实时计费'
-            }}</span>
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-dark-200"
+              >{{ "实时计费" }}</span
+            >
           </div>
         </div>
 
@@ -212,11 +228,15 @@
             >
               <Icon name="server" size="lg" class="text-white" />
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              {{ '统一 API 网关' }}
+            <h3
+              class="mb-2 text-lg font-semibold text-gray-900 dark:text-white"
+            >
+              {{ "统一 API 网关" }}
             </h3>
             <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
-              {{ '将 Claude 订阅转换为 API 接口，通过标准 /v1/messages 接口访问 AI 能力。' }}
+              {{
+                "将 Claude 订阅转换为 API 接口，通过标准 /v1/messages 接口访问 AI 能力。"
+              }}
             </p>
           </div>
 
@@ -241,11 +261,13 @@
                 />
               </svg>
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              {{ '多账号池' }}
+            <h3
+              class="mb-2 text-lg font-semibold text-gray-900 dark:text-white"
+            >
+              {{ "多账号池" }}
             </h3>
             <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
-              {{ '智能负载均衡管理多个上游账号，支持 OAuth 和 API Key 认证。' }}
+              {{ "智能负载均衡管理多个上游账号，支持 OAuth 和 API Key 认证。" }}
             </p>
           </div>
 
@@ -270,11 +292,15 @@
                 />
               </svg>
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              {{ '余额与配额' }}
+            <h3
+              class="mb-2 text-lg font-semibold text-gray-900 dark:text-white"
+            >
+              {{ "余额与配额" }}
             </h3>
             <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
-              {{ '基于 Token 的精确计费和用量追踪，支持配额管理和兑换码充值。' }}
+              {{
+                "基于 Token 的精确计费和用量追踪，支持配额管理和兑换码充值。"
+              }}
             </p>
           </div>
         </div>
@@ -282,10 +308,10 @@
         <!-- Supported Providers -->
         <div class="mb-8 text-center">
           <h2 class="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-            {{ '支持的服务商' }}
+            {{ "支持的服务商" }}
           </h2>
           <p class="text-sm text-gray-600 dark:text-dark-400">
-            {{ 'AI 服务的统一 API 接口' }}
+            {{ "AI 服务的统一 API 接口" }}
           </p>
         </div>
 
@@ -299,10 +325,13 @@
             >
               <span class="text-xs font-bold text-white">C</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ 'Claude' }}</span>
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-dark-200"
+              >{{ "Claude" }}</span
+            >
             <span
               class="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-medium text-primary-600 dark:bg-primary-900/30 dark:text-primary-400"
-              >{{ '已支持' }}</span
+              >{{ "已支持" }}</span
             >
           </div>
           <!-- GPT - Supported -->
@@ -314,10 +343,12 @@
             >
               <span class="text-xs font-bold text-white">G</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">GPT</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-dark-200"
+              >GPT</span
+            >
             <span
               class="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-medium text-primary-600 dark:bg-primary-900/30 dark:text-primary-400"
-              >{{ '已支持' }}</span
+              >{{ "已支持" }}</span
             >
           </div>
           <!-- Gemini - Supported -->
@@ -329,10 +360,13 @@
             >
               <span class="text-xs font-bold text-white">G</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ 'Gemini' }}</span>
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-dark-200"
+              >{{ "Gemini" }}</span
+            >
             <span
               class="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-medium text-primary-600 dark:bg-primary-900/30 dark:text-primary-400"
-              >{{ '已支持' }}</span
+              >{{ "已支持" }}</span
             >
           </div>
           <!-- Antigravity - Supported -->
@@ -344,10 +378,13 @@
             >
               <span class="text-xs font-bold text-white">A</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ 'Antigravity' }}</span>
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-dark-200"
+              >{{ "Antigravity" }}</span
+            >
             <span
               class="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-medium text-primary-600 dark:bg-primary-900/30 dark:text-primary-400"
-              >{{ '已支持' }}</span
+              >{{ "已支持" }}</span
             >
           </div>
           <!-- More - Coming Soon -->
@@ -359,10 +396,13 @@
             >
               <span class="text-xs font-bold text-white">+</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ '更多' }}</span>
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-dark-200"
+              >{{ "更多" }}</span
+            >
             <span
               class="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:bg-dark-700 dark:text-dark-400"
-              >{{ '即将推出' }}</span
+              >{{ "即将推出" }}</span
             >
           </div>
         </div>
@@ -370,12 +410,14 @@
     </main>
 
     <!-- Footer -->
-    <footer class="relative z-10 border-t border-gray-200/50 px-6 py-8 dark:border-dark-800/50">
+    <footer
+      class="relative z-10 border-t border-gray-200/50 px-6 py-8 dark:border-dark-800/50"
+    >
       <div
         class="mx-auto flex max-w-6xl flex-col items-center justify-center gap-4 text-center sm:flex-row sm:text-left"
       >
         <p class="text-sm text-gray-500 dark:text-dark-400">
-          &copy; {{ currentYear }} {{ siteName }}. {{ '保留所有权利。' }}
+          &copy; {{ currentYear }} {{ siteName }}. {{ "保留所有权利。" }}
         </p>
         <div class="flex items-center gap-4">
           <a
@@ -385,7 +427,7 @@
             rel="noopener noreferrer"
             class="text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-dark-400 dark:hover:text-white"
           >
-            {{ '文档' }}
+            {{ "文档" }}
           </a>
           <a
             :href="githubUrl"
@@ -402,74 +444,88 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useAuthStore, useAppStore } from '@/stores'
+import { ref, computed, onMounted } from "vue";
+import { useAuthStore, useAppStore } from "@/stores";
 
-const authStore = useAuthStore()
-const appStore = useAppStore()
+const authStore = useAuthStore();
+const appStore = useAppStore();
 
 // Site settings - directly from appStore (already initialized from injected config)
-const siteName = computed(() => appStore.cachedPublicSettings?.site_name || appStore.siteName || 'Sub2API')
-const siteLogo = computed(() => appStore.cachedPublicSettings?.site_logo || appStore.siteLogo || '')
-const siteSubtitle = computed(() => appStore.cachedPublicSettings?.site_subtitle || 'AI API Gateway Platform')
-const docUrl = computed(() => appStore.cachedPublicSettings?.doc_url || appStore.docUrl || '')
-const homeContent = computed(() => appStore.cachedPublicSettings?.home_content || '')
+const siteName = computed(
+  () =>
+    appStore.cachedPublicSettings?.site_name || appStore.siteName || "Sub2API",
+);
+const siteLogo = computed(
+  () => appStore.cachedPublicSettings?.site_logo || appStore.siteLogo || "",
+);
+const siteSubtitle = computed(
+  () =>
+    appStore.cachedPublicSettings?.site_subtitle || "AI API Gateway Platform",
+);
+const docUrl = computed(
+  () => appStore.cachedPublicSettings?.doc_url || appStore.docUrl || "",
+);
+const homeContent = computed(
+  () => appStore.cachedPublicSettings?.home_content || "",
+);
 
 // Check if homeContent is a URL (for iframe display)
 const isHomeContentUrl = computed(() => {
-  const content = homeContent.value.trim()
-  return content.startsWith('http://') || content.startsWith('https://')
-})
+  const content = homeContent.value.trim();
+  return content.startsWith("http://") || content.startsWith("https://");
+});
 
 // Theme
-const isDark = ref(document.documentElement.classList.contains('dark'))
+const isDark = ref(document.documentElement.classList.contains("dark"));
 
 // GitHub URL
-const githubUrl = 'https://github.com/Wei-Shaw/sub2api'
+const githubUrl = "https://github.com/Wei-Shaw/sub2api";
 
 // Auth state
-const isAuthenticated = computed(() => authStore.isAuthenticated)
-const isAdmin = computed(() => authStore.isAdmin)
-const dashboardPath = computed(() => isAdmin.value ? '/admin/dashboard' : '/dashboard')
+const isAuthenticated = computed(() => authStore.isAuthenticated);
+const isAdmin = computed(() => authStore.isAdmin);
+const dashboardPath = computed(() =>
+  isAdmin.value ? "/admin/dashboard" : "/dashboard",
+);
 const userInitial = computed(() => {
-  const user = authStore.user
-  if (!user || !user.email) return ''
-  return user.email.charAt(0).toUpperCase()
-})
+  const user = authStore.user;
+  if (!user || !user.email) return "";
+  return user.email.charAt(0).toUpperCase();
+});
 
 // Current year for footer
-const currentYear = computed(() => new Date().getFullYear())
+const currentYear = computed(() => new Date().getFullYear());
 
 // Toggle theme
 function toggleTheme() {
-  isDark.value = !isDark.value
-  document.documentElement.classList.toggle('dark', isDark.value)
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+  isDark.value = !isDark.value;
+  document.documentElement.classList.toggle("dark", isDark.value);
+  localStorage.setItem("theme", isDark.value ? "dark" : "light");
 }
 
 // Initialize theme
 function initTheme() {
-  const savedTheme = localStorage.getItem('theme')
+  const savedTheme = localStorage.getItem("theme");
   if (
-    savedTheme === 'dark' ||
-    (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    savedTheme === "dark" ||
+    (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)
   ) {
-    isDark.value = true
-    document.documentElement.classList.add('dark')
+    isDark.value = true;
+    document.documentElement.classList.add("dark");
   }
 }
 
 onMounted(() => {
-  initTheme()
+  initTheme();
 
   // Check auth state
-  authStore.checkAuth()
+  authStore.checkAuth();
 
   // Ensure public settings are loaded (will use cache if already loaded from injected config)
   if (!appStore.publicSettingsLoaded) {
-    appStore.fetchPublicSettings()
+    appStore.fetchPublicSettings();
   }
-})
+});
 </script>
 
 <style scoped>
@@ -539,7 +595,7 @@ onMounted(() => {
 /* Terminal Body */
 .terminal-body {
   padding: 20px 24px;
-  font-family: ui-monospace, 'Fira Code', monospace;
+  font-family: ui-monospace, "Fira Code", monospace;
   font-size: 14px;
   line-height: 2;
 }

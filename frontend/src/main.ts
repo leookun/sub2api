@@ -1,27 +1,27 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import App from './App.vue'
-import router from './router'
-import './style.css'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import App from "./App.vue";
+import router from "./router";
+import "./style.css";
 
-const app = createApp(App)
-const pinia = createPinia()
-app.use(pinia)
+const app = createApp(App);
+const pinia = createPinia();
+app.use(pinia);
 
 // Initialize settings from injected config BEFORE mounting (prevents flash)
 // This must happen after pinia is installed but before router
-import { useAppStore } from '@/stores/app'
-const appStore = useAppStore()
-appStore.initFromInjectedConfig()
+import { useAppStore } from "@/stores/app";
+const appStore = useAppStore();
+appStore.initFromInjectedConfig();
 
 // Set document title immediately after config is loaded
-if (appStore.siteName && appStore.siteName !== 'Sub2API') {
-  document.title = `${appStore.siteName} - AI API Gateway`
+if (appStore.siteName && appStore.siteName !== "Sub2API") {
+  document.title = `${appStore.siteName} - AI API Gateway`;
 }
 
-app.use(router)
+app.use(router);
 
 // 等待路由器完成初始导航后再挂载，避免竞态条件导致的空白渲染
 router.isReady().then(() => {
-  app.mount('#app')
-})
+  app.mount("#app");
+});

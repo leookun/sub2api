@@ -31,21 +31,21 @@
 </template>
 
 <script setup lang="ts">
-import type { SubscriptionType, GroupPlatform } from '@/types'
+import type { SubscriptionType, GroupPlatform } from "@/types";
 
 interface Props {
-  name: string
-  platform: GroupPlatform
-  subscriptionType?: SubscriptionType
-  rateMultiplier?: number
-  description?: string | null
-  selected?: boolean
-  showCheckmark?: boolean
+  name: string;
+  platform: GroupPlatform;
+  subscriptionType?: SubscriptionType;
+  rateMultiplier?: number;
+  description?: string | null;
+  selected?: boolean;
+  showCheckmark?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
-  subscriptionType: 'standard',
+  subscriptionType: "standard",
   selected: false,
-  showCheckmark: true
-})
+  showCheckmark: true,
+});
 </script>

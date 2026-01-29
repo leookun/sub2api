@@ -24,15 +24,19 @@
                   :title="'自动刷新'"
                   @click="
                     showAutoRefreshDropdown = !showAutoRefreshDropdown;
-                    showColumnDropdown = false
+                    showColumnDropdown = false;
                   "
                 >
-                  <Icon name="refresh" size="sm" :class="[autoRefreshEnabled ? 'animate-spin' : '']" />
+                  <Icon
+                    name="refresh"
+                    size="sm"
+                    :class="[autoRefreshEnabled ? 'animate-spin' : '']"
+                  />
                   <span class="hidden md:inline">
                     {{
                       autoRefreshEnabled
                         ? `自动刷新：${autoRefreshCountdown}s`
-                        : '自动刷新'
+                        : "自动刷新"
                     }}
                   </span>
                 </button>
@@ -45,10 +49,17 @@
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                       @click="setAutoRefreshEnabled(!autoRefreshEnabled)"
                     >
-                      <span>{{ '启用自动刷新' }}</span>
-                      <Icon v-if="autoRefreshEnabled" name="check" size="sm" class="text-primary-500" />
+                      <span>{{ "启用自动刷新" }}</span>
+                      <Icon
+                        v-if="autoRefreshEnabled"
+                        name="check"
+                        size="sm"
+                        class="text-primary-500"
+                      />
                     </button>
-                    <div class="my-1 border-t border-gray-100 dark:border-gray-700"></div>
+                    <div
+                      class="my-1 border-t border-gray-100 dark:border-gray-700"
+                    ></div>
                     <button
                       v-for="sec in autoRefreshIntervals"
                       :key="sec"
@@ -56,7 +67,12 @@
                       @click="setAutoRefreshInterval(sec)"
                     >
                       <span>{{ autoRefreshIntervalLabel(sec) }}</span>
-                      <Icon v-if="autoRefreshIntervalSeconds === sec" name="check" size="sm" class="text-primary-500" />
+                      <Icon
+                        v-if="autoRefreshIntervalSeconds === sec"
+                        name="check"
+                        size="sm"
+                        class="text-primary-500"
+                      />
                     </button>
                   </div>
                 </div>
@@ -69,13 +85,23 @@
                   :title="'列设置'"
                   @click="
                     showColumnDropdown = !showColumnDropdown;
-                    showAutoRefreshDropdown = false
+                    showAutoRefreshDropdown = false;
                   "
                 >
-                  <svg class="h-4 w-4 md:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
+                  <svg
+                    class="h-4 w-4 md:mr-1.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z"
+                    />
                   </svg>
-                  <span class="hidden md:inline">{{ '列设置' }}</span>
+                  <span class="hidden md:inline">{{ "列设置" }}</span>
                 </button>
                 <!-- Dropdown menu -->
                 <div
@@ -90,7 +116,12 @@
                       @click="toggleColumn(col.key)"
                     >
                       <span>{{ col.label }}</span>
-                      <Icon v-if="isColumnVisible(col.key)" name="check" size="sm" class="text-primary-500" />
+                      <Icon
+                        v-if="isColumnVisible(col.key)"
+                        name="check"
+                        size="sm"
+                        class="text-primary-500"
+                      />
                     </button>
                   </div>
                 </div>
@@ -100,7 +131,14 @@
         </div>
       </template>
       <template #table>
-        <AccountBulkActionsBar :selected-ids="selIds" @delete="handleBulkDelete" @edit="showBulkEdit = true" @clear="selIds = []" @select-page="selectPage" @toggle-schedulable="handleBulkToggleSchedulable" />
+        <AccountBulkActionsBar
+          :selected-ids="selIds"
+          @delete="handleBulkDelete"
+          @edit="showBulkEdit = true"
+          @clear="selIds = []"
+          @select-page="selectPage"
+          @toggle-schedulable="handleBulkToggleSchedulable"
+        />
         <DataTable
           :columns="cols"
           :data="accounts"
@@ -111,11 +149,18 @@
           :sort-storage-key="ACCOUNT_SORT_STORAGE_KEY"
         >
           <template #cell-select="{ row }">
-            <input type="checkbox" :checked="selIds.includes(row.id)" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" @change="toggleSel(row.id)" />
+            <input
+              type="checkbox"
+              :checked="selIds.includes(row.id)"
+              class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              @change="toggleSel(row.id)"
+            />
           </template>
           <template #cell-name="{ row, value }">
             <div class="flex flex-col">
-              <span class="font-medium text-gray-900 dark:text-white">{{ value }}</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{
+                value
+              }}</span>
               <span
                 v-if="row.extra?.email_address"
                 class="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[200px]"
@@ -126,8 +171,15 @@
             </div>
           </template>
           <template #cell-notes="{ value }">
-            <span v-if="value" :title="value" class="block max-w-xs truncate text-sm text-gray-600 dark:text-gray-300">{{ value }}</span>
-            <span v-else class="text-sm text-gray-400 dark:text-dark-500">-</span>
+            <span
+              v-if="value"
+              :title="value"
+              class="block max-w-xs truncate text-sm text-gray-600 dark:text-gray-300"
+              >{{ value }}</span
+            >
+            <span v-else class="text-sm text-gray-400 dark:text-dark-500"
+              >-</span
+            >
           </template>
           <template #cell-platform_type="{ row }">
             <PlatformTypeBadge :platform="row.platform" :type="row.type" />
@@ -136,11 +188,27 @@
             <AccountCapacityCell :account="row" />
           </template>
           <template #cell-status="{ row }">
-            <AccountStatusIndicator :account="row" @show-temp-unsched="handleShowTempUnsched" />
+            <AccountStatusIndicator
+              :account="row"
+              @show-temp-unsched="handleShowTempUnsched"
+            />
           </template>
           <template #cell-schedulable="{ row }">
-            <button :disabled="togglingSchedulable === row.id" class="relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-dark-800" :class="[row.schedulable ? 'bg-primary-500 hover:bg-primary-600' : 'bg-gray-200 hover:bg-gray-300 dark:bg-dark-600 dark:hover:bg-dark-500']" :title="row.schedulable ? '调度已开启' : '调度已关闭'" @click="handleToggleSchedulable(row)">
-              <span class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out" :class="[row.schedulable ? 'translate-x-4' : 'translate-x-0']" />
+            <button
+              :disabled="togglingSchedulable === row.id"
+              class="relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-dark-800"
+              :class="[
+                row.schedulable
+                  ? 'bg-primary-500 hover:bg-primary-600'
+                  : 'bg-gray-200 hover:bg-gray-300 dark:bg-dark-600 dark:hover:bg-dark-500',
+              ]"
+              :title="row.schedulable ? '调度已开启' : '调度已关闭'"
+              @click="handleToggleSchedulable(row)"
+            >
+              <span
+                class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                :class="[row.schedulable ? 'translate-x-4' : 'translate-x-0']"
+              />
             </button>
           </template>
           <template #cell-today_stats="{ row }">
@@ -154,12 +222,19 @@
           </template>
           <template #cell-proxy="{ row }">
             <div v-if="row.proxy" class="flex items-center gap-2">
-              <span class="text-sm text-gray-700 dark:text-gray-300">{{ row.proxy.name }}</span>
-              <span v-if="row.proxy.country_code" class="text-xs text-gray-500 dark:text-gray-400">
+              <span class="text-sm text-gray-700 dark:text-gray-300">{{
+                row.proxy.name
+              }}</span>
+              <span
+                v-if="row.proxy.country_code"
+                class="text-xs text-gray-500 dark:text-gray-400"
+              >
                 ({{ row.proxy.country_code }})
               </span>
             </div>
-            <span v-else class="text-sm text-gray-400 dark:text-dark-500">-</span>
+            <span v-else class="text-sm text-gray-400 dark:text-dark-500"
+              >-</span
+            >
           </template>
           <template #cell-rate_multiplier="{ row }">
             <span class="text-sm font-mono text-gray-700 dark:text-gray-300">
@@ -167,161 +242,302 @@
             </span>
           </template>
           <template #cell-priority="{ value }">
-            <span class="text-sm text-gray-700 dark:text-gray-300">{{ value }}</span>
+            <span class="text-sm text-gray-700 dark:text-gray-300">{{
+              value
+            }}</span>
           </template>
           <template #cell-last_used_at="{ value }">
-            <span class="text-sm text-gray-500 dark:text-dark-400">{{ formatRelativeTime(value) }}</span>
+            <span class="text-sm text-gray-500 dark:text-dark-400">{{
+              formatRelativeTime(value)
+            }}</span>
           </template>
           <template #cell-expires_at="{ row, value }">
             <div class="flex flex-col items-start gap-1">
-              <span class="text-sm text-gray-500 dark:text-dark-400">{{ formatExpiresAt(value) }}</span>
-              <div v-if="isExpired(value) || (row.auto_pause_on_expired && value)" class="flex items-center gap-1">
+              <span class="text-sm text-gray-500 dark:text-dark-400">{{
+                formatExpiresAt(value)
+              }}</span>
+              <div
+                v-if="isExpired(value) || (row.auto_pause_on_expired && value)"
+                class="flex items-center gap-1"
+              >
                 <span
                   v-if="isExpired(value)"
                   class="inline-flex items-center rounded-md bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
                 >
-                  {{ '已过期' }}
+                  {{ "已过期" }}
                 </span>
                 <span
                   v-if="row.auto_pause_on_expired && value"
                   class="inline-flex items-center rounded-md bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
                 >
-                  {{ '过期自动暂停调度' }}
+                  {{ "过期自动暂停调度" }}
                 </span>
               </div>
             </div>
           </template>
           <template #cell-actions="{ row }">
             <div class="flex items-center gap-1">
-              <button class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400" @click="handleEdit(row)">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
-                <span class="text-xs">{{ '编辑' }}</span>
+              <button
+                class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
+                @click="handleEdit(row)"
+              >
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+                <span class="text-xs">{{ "编辑" }}</span>
               </button>
-              <button class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400" @click="handleDelete(row)">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
-                <span class="text-xs">{{ '删除' }}</span>
+              <button
+                class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                @click="handleDelete(row)"
+              >
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                  />
+                </svg>
+                <span class="text-xs">{{ "删除" }}</span>
               </button>
-              <button class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-dark-700 dark:hover:text-white" @click="openMenu(row, $event)">
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
-                <span class="text-xs">{{ '更多' }}</span>
+              <button
+                class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-dark-700 dark:hover:text-white"
+                @click="openMenu(row, $event)"
+              >
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                  />
+                </svg>
+                <span class="text-xs">{{ "更多" }}</span>
               </button>
             </div>
           </template>
         </DataTable>
       </template>
-      <template #pagination><Pagination v-if="pagination.total > 0" :page="pagination.page" :total="pagination.total" :page-size="pagination.page_size" @update:page="handlePageChange" @update:pageSize="handlePageSizeChange" /></template>
+      <template #pagination>
+        <Pagination
+          v-if="pagination.total > 0"
+          :page="pagination.page"
+          :total="pagination.total"
+          :page-size="pagination.page_size"
+          @update:page="handlePageChange"
+          @update:pageSize="handlePageSizeChange"
+        />
+      </template>
     </TablePageLayout>
-    <CreateAccountModal :show="showCreate" :proxies="proxies" :groups="groups" @close="showCreate = false" @created="reload" />
-    <EditAccountModal :show="showEdit" :account="edAcc" :proxies="proxies" :groups="groups" @close="showEdit = false" @updated="load" />
-    <ReAuthAccountModal :show="showReAuth" :account="reAuthAcc" @close="closeReAuthModal" @reauthorized="load" />
-    <AccountTestModal :show="showTest" :account="testingAcc" @close="closeTestModal" />
-    <AccountStatsModal :show="showStats" :account="statsAcc" @close="closeStatsModal" />
-    <AccountActionMenu :show="menu.show" :account="menu.acc" :position="menu.pos" @close="menu.show = false" @test="handleTest" @stats="handleViewStats" @reauth="handleReAuth" @refresh-token="handleRefresh" @reset-status="handleResetStatus" @clear-rate-limit="handleClearRateLimit" />
-    <SyncFromCrsModal :show="showSync" @close="showSync = false" @synced="reload" />
-    <BulkEditAccountModal :show="showBulkEdit" :account-ids="selIds" :proxies="proxies" :groups="groups" @close="showBulkEdit = false" @updated="handleBulkUpdated" />
-    <TempUnschedStatusModal :show="showTempUnsched" :account="tempUnschedAcc" @close="showTempUnsched = false" @reset="handleTempUnschedReset" />
-    <ConfirmDialog :show="showDeleteDialog" :title="'删除账号'" :message="`确定要删除账号 '${deletingAcc?.name}' 吗？此操作无法撤销。`" :confirm-text="'删除'" :cancel-text="'取消'" :danger="true" @confirm="confirmDelete" @cancel="showDeleteDialog = false" />
+    <CreateAccountModal
+      :show="showCreate"
+      :proxies="proxies"
+      :groups="groups"
+      @close="showCreate = false"
+      @created="reload"
+    />
+    <EditAccountModal
+      :show="showEdit"
+      :account="edAcc"
+      :proxies="proxies"
+      :groups="groups"
+      @close="showEdit = false"
+      @updated="load"
+    />
+    <ReAuthAccountModal
+      :show="showReAuth"
+      :account="reAuthAcc"
+      @close="closeReAuthModal"
+      @reauthorized="load"
+    />
+    <AccountTestModal
+      :show="showTest"
+      :account="testingAcc"
+      @close="closeTestModal"
+    />
+    <AccountStatsModal
+      :show="showStats"
+      :account="statsAcc"
+      @close="closeStatsModal"
+    />
+    <AccountActionMenu
+      :show="menu.show"
+      :account="menu.acc"
+      :position="menu.pos"
+      @close="menu.show = false"
+      @test="handleTest"
+      @stats="handleViewStats"
+      @reauth="handleReAuth"
+      @refresh-token="handleRefresh"
+      @reset-status="handleResetStatus"
+      @clear-rate-limit="handleClearRateLimit"
+    />
+    <SyncFromCrsModal
+      :show="showSync"
+      @close="showSync = false"
+      @synced="reload"
+    />
+    <BulkEditAccountModal
+      :show="showBulkEdit"
+      :account-ids="selIds"
+      :proxies="proxies"
+      :groups="groups"
+      @close="showBulkEdit = false"
+      @updated="handleBulkUpdated"
+    />
+    <TempUnschedStatusModal
+      :show="showTempUnsched"
+      :account="tempUnschedAcc"
+      @close="showTempUnsched = false"
+      @reset="handleTempUnschedReset"
+    />
+    <ConfirmDialog
+      :show="showDeleteDialog"
+      :title="'删除账号'"
+      :message="`确定要删除账号 '${deletingAcc?.name}' 吗？此操作无法撤销。`"
+      :confirm-text="'删除'"
+      :cancel-text="'取消'"
+      :danger="true"
+      @confirm="confirmDelete"
+      @cancel="showDeleteDialog = false"
+    />
   </AppLayout>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useIntervalFn } from '@vueuse/core'
-import { useAppStore } from '@/stores/app'
-import { useAuthStore } from '@/stores/auth'
-import { adminAPI } from '@/api/admin'
-import { useTableLoader } from '@/composables/useTableLoader'
-import { formatDateTime } from '@/utils/format'
-import type { Account, Proxy, AdminGroup } from '@/types'
+import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
+import { useIntervalFn } from "@vueuse/core";
+import { useAppStore } from "@/stores/app";
+import { useAuthStore } from "@/stores/auth";
+import { adminAPI } from "@/api/admin";
+import { useTableLoader } from "@/composables/useTableLoader";
+import { formatDateTime } from "@/utils/format";
+import type { Account, Proxy, AdminGroup } from "@/types";
 
-const appStore = useAppStore()
-const authStore = useAuthStore()
+const appStore = useAppStore();
+const authStore = useAuthStore();
 
-const proxies = ref<Proxy[]>([])
-const groups = ref<AdminGroup[]>([])
-const selIds = ref<number[]>([])
-const showCreate = ref(false)
-const showEdit = ref(false)
-const showSync = ref(false)
-const showBulkEdit = ref(false)
-const showTempUnsched = ref(false)
-const showDeleteDialog = ref(false)
-const showReAuth = ref(false)
-const showTest = ref(false)
-const showStats = ref(false)
-const edAcc = ref<Account | null>(null)
-const tempUnschedAcc = ref<Account | null>(null)
-const deletingAcc = ref<Account | null>(null)
-const reAuthAcc = ref<Account | null>(null)
-const testingAcc = ref<Account | null>(null)
-const statsAcc = ref<Account | null>(null)
-const togglingSchedulable = ref<number | null>(null)
-const menu = reactive<{show:boolean, acc:Account|null, pos:{top:number, left:number}|null}>({ show: false, acc: null, pos: null })
+const proxies = ref<Proxy[]>([]);
+const groups = ref<AdminGroup[]>([]);
+const selIds = ref<number[]>([]);
+const showCreate = ref(false);
+const showEdit = ref(false);
+const showSync = ref(false);
+const showBulkEdit = ref(false);
+const showTempUnsched = ref(false);
+const showDeleteDialog = ref(false);
+const showReAuth = ref(false);
+const showTest = ref(false);
+const showStats = ref(false);
+const edAcc = ref<Account | null>(null);
+const tempUnschedAcc = ref<Account | null>(null);
+const deletingAcc = ref<Account | null>(null);
+const reAuthAcc = ref<Account | null>(null);
+const testingAcc = ref<Account | null>(null);
+const statsAcc = ref<Account | null>(null);
+const togglingSchedulable = ref<number | null>(null);
+const menu = reactive<{
+  show: boolean;
+  acc: Account | null;
+  pos: { top: number; left: number } | null;
+}>({ show: false, acc: null, pos: null });
 
 // Column settings
-const showColumnDropdown = ref(false)
-const columnDropdownRef = ref<HTMLElement | null>(null)
-const hiddenColumns = reactive<Set<string>>(new Set())
-const DEFAULT_HIDDEN_COLUMNS = ['proxy', 'notes', 'priority', 'rate_multiplier']
-const HIDDEN_COLUMNS_KEY = 'account-hidden-columns'
+const showColumnDropdown = ref(false);
+const columnDropdownRef = ref<HTMLElement | null>(null);
+const hiddenColumns = reactive<Set<string>>(new Set());
+const DEFAULT_HIDDEN_COLUMNS = [
+  "proxy",
+  "notes",
+  "priority",
+  "rate_multiplier",
+];
+const HIDDEN_COLUMNS_KEY = "account-hidden-columns";
 
 // Sorting settings
-const ACCOUNT_SORT_STORAGE_KEY = 'account-table-sort'
+const ACCOUNT_SORT_STORAGE_KEY = "account-table-sort";
 
 // Auto refresh settings
-const showAutoRefreshDropdown = ref(false)
-const autoRefreshDropdownRef = ref<HTMLElement | null>(null)
-const AUTO_REFRESH_STORAGE_KEY = 'account-auto-refresh'
-const autoRefreshIntervals = [5, 10, 15, 30] as const
-const autoRefreshEnabled = ref(false)
-const autoRefreshIntervalSeconds = ref<(typeof autoRefreshIntervals)[number]>(30)
-const autoRefreshCountdown = ref(0)
+const showAutoRefreshDropdown = ref(false);
+const autoRefreshDropdownRef = ref<HTMLElement | null>(null);
+const AUTO_REFRESH_STORAGE_KEY = "account-auto-refresh";
+const autoRefreshIntervals = [5, 10, 15, 30] as const;
+const autoRefreshEnabled = ref(false);
+const autoRefreshIntervalSeconds =
+  ref<(typeof autoRefreshIntervals)[number]>(30);
+const autoRefreshCountdown = ref(0);
 
 const autoRefreshIntervalLabel = (sec: number) => {
-  if (sec === 5) return '5 秒'
-  if (sec === 10) return '10 秒'
-  if (sec === 15) return '15 秒'
-  if (sec === 30) return '30 秒'
-  return `${sec}s`
-}
+  if (sec === 5) return "5 秒";
+  if (sec === 10) return "10 秒";
+  if (sec === 15) return "15 秒";
+  if (sec === 30) return "30 秒";
+  return `${sec}s`;
+};
 
 const loadSavedColumns = () => {
   try {
-    const saved = localStorage.getItem(HIDDEN_COLUMNS_KEY)
+    const saved = localStorage.getItem(HIDDEN_COLUMNS_KEY);
     if (saved) {
-      const parsed = JSON.parse(saved) as string[]
-      parsed.forEach(key => hiddenColumns.add(key))
+      const parsed = JSON.parse(saved) as string[];
+      parsed.forEach((key) => hiddenColumns.add(key));
     } else {
-      DEFAULT_HIDDEN_COLUMNS.forEach(key => hiddenColumns.add(key))
+      DEFAULT_HIDDEN_COLUMNS.forEach((key) => hiddenColumns.add(key));
     }
   } catch (e) {
-    console.error('Failed to load saved columns:', e)
-    DEFAULT_HIDDEN_COLUMNS.forEach(key => hiddenColumns.add(key))
+    console.error("Failed to load saved columns:", e);
+    DEFAULT_HIDDEN_COLUMNS.forEach((key) => hiddenColumns.add(key));
   }
-}
+};
 
 const saveColumnsToStorage = () => {
   try {
-    localStorage.setItem(HIDDEN_COLUMNS_KEY, JSON.stringify([...hiddenColumns]))
+    localStorage.setItem(
+      HIDDEN_COLUMNS_KEY,
+      JSON.stringify([...hiddenColumns]),
+    );
   } catch (e) {
-    console.error('Failed to save columns:', e)
+    console.error("Failed to save columns:", e);
   }
-}
+};
 
 const loadSavedAutoRefresh = () => {
   try {
-    const saved = localStorage.getItem(AUTO_REFRESH_STORAGE_KEY)
-    if (!saved) return
-    const parsed = JSON.parse(saved) as { enabled?: boolean; interval_seconds?: number }
-    autoRefreshEnabled.value = parsed.enabled === true
-    const interval = Number(parsed.interval_seconds)
+    const saved = localStorage.getItem(AUTO_REFRESH_STORAGE_KEY);
+    if (!saved) return;
+    const parsed = JSON.parse(saved) as {
+      enabled?: boolean;
+      interval_seconds?: number;
+    };
+    autoRefreshEnabled.value = parsed.enabled === true;
+    const interval = Number(parsed.interval_seconds);
     if (autoRefreshIntervals.includes(interval as any)) {
-      autoRefreshIntervalSeconds.value = interval as any
+      autoRefreshIntervalSeconds.value = interval as any;
     }
   } catch (e) {
-    console.error('Failed to load saved auto refresh settings:', e)
+    console.error("Failed to load saved auto refresh settings:", e);
   }
-}
+};
 
 const saveAutoRefreshToStorage = () => {
   try {
@@ -329,54 +545,66 @@ const saveAutoRefreshToStorage = () => {
       AUTO_REFRESH_STORAGE_KEY,
       JSON.stringify({
         enabled: autoRefreshEnabled.value,
-        interval_seconds: autoRefreshIntervalSeconds.value
-      })
-    )
+        interval_seconds: autoRefreshIntervalSeconds.value,
+      }),
+    );
   } catch (e) {
-    console.error('Failed to save auto refresh settings:', e)
+    console.error("Failed to save auto refresh settings:", e);
   }
-}
+};
 
-if (typeof window !== 'undefined') {
-  loadSavedColumns()
-  loadSavedAutoRefresh()
+if (typeof window !== "undefined") {
+  loadSavedColumns();
+  loadSavedAutoRefresh();
 }
 
 const setAutoRefreshEnabled = (enabled: boolean) => {
-  autoRefreshEnabled.value = enabled
-  saveAutoRefreshToStorage()
+  autoRefreshEnabled.value = enabled;
+  saveAutoRefreshToStorage();
   if (enabled) {
-    autoRefreshCountdown.value = autoRefreshIntervalSeconds.value
-    resumeAutoRefresh()
+    autoRefreshCountdown.value = autoRefreshIntervalSeconds.value;
+    resumeAutoRefresh();
   } else {
-    pauseAutoRefresh()
-    autoRefreshCountdown.value = 0
+    pauseAutoRefresh();
+    autoRefreshCountdown.value = 0;
   }
-}
+};
 
-const setAutoRefreshInterval = (seconds: (typeof autoRefreshIntervals)[number]) => {
-  autoRefreshIntervalSeconds.value = seconds
-  saveAutoRefreshToStorage()
+const setAutoRefreshInterval = (
+  seconds: (typeof autoRefreshIntervals)[number],
+) => {
+  autoRefreshIntervalSeconds.value = seconds;
+  saveAutoRefreshToStorage();
   if (autoRefreshEnabled.value) {
-    autoRefreshCountdown.value = seconds
+    autoRefreshCountdown.value = seconds;
   }
-}
+};
 
 const toggleColumn = (key: string) => {
   if (hiddenColumns.has(key)) {
-    hiddenColumns.delete(key)
+    hiddenColumns.delete(key);
   } else {
-    hiddenColumns.add(key)
+    hiddenColumns.add(key);
   }
-  saveColumnsToStorage()
-}
+  saveColumnsToStorage();
+};
 
-const isColumnVisible = (key: string) => !hiddenColumns.has(key)
+const isColumnVisible = (key: string) => !hiddenColumns.has(key);
 
-const { items: accounts, loading, params, pagination, load, reload, debouncedReload, handlePageChange, handlePageSizeChange } = useTableLoader<Account, any>({
+const {
+  items: accounts,
+  loading,
+  params,
+  pagination,
+  load,
+  reload,
+  debouncedReload,
+  handlePageChange,
+  handlePageSizeChange,
+} = useTableLoader<Account, any>({
   fetchFn: adminAPI.accounts.list,
-  initialParams: { platform: '', type: '', status: '', search: '' }
-})
+  initialParams: { platform: "", type: "", status: "", search: "" },
+});
 
 const isAnyModalOpen = computed(() => {
   return (
@@ -389,180 +617,237 @@ const isAnyModalOpen = computed(() => {
     showReAuth.value ||
     showTest.value ||
     showStats.value
-  )
-})
+  );
+});
 
 const { pause: pauseAutoRefresh, resume: resumeAutoRefresh } = useIntervalFn(
   async () => {
-    if (!autoRefreshEnabled.value) return
-    if (document.hidden) return
-    if (loading.value) return
-    if (isAnyModalOpen.value) return
-    if (menu.show) return
+    if (!autoRefreshEnabled.value) return;
+    if (document.hidden) return;
+    if (loading.value) return;
+    if (isAnyModalOpen.value) return;
+    if (menu.show) return;
 
     if (autoRefreshCountdown.value <= 0) {
-      autoRefreshCountdown.value = autoRefreshIntervalSeconds.value
+      autoRefreshCountdown.value = autoRefreshIntervalSeconds.value;
       try {
-        await load()
+        await load();
       } catch (e) {
-        console.error('Auto refresh failed:', e)
+        console.error("Auto refresh failed:", e);
       }
-      return
+      return;
     }
 
-    autoRefreshCountdown.value -= 1
+    autoRefreshCountdown.value -= 1;
   },
   1000,
-  { immediate: false }
-)
+  { immediate: false },
+);
 
 // All available columns
 const allColumns = computed(() => {
   const c = [
-    { key: 'select', label: '', sortable: false },
-    { key: 'name', label: '名称', sortable: true },
-    { key: 'platform_type', label: '平台/类型', sortable: false },
-    { key: 'capacity', label: '容量', sortable: false },
-    { key: 'status', label: '状态', sortable: true },
-    { key: 'schedulable', label: '调度', sortable: true },
-    { key: 'today_stats', label: '今日统计', sortable: false }
-  ]
+    { key: "select", label: "", sortable: false },
+    { key: "name", label: "名称", sortable: true },
+    { key: "platform_type", label: "平台/类型", sortable: false },
+    { key: "capacity", label: "容量", sortable: false },
+    { key: "status", label: "状态", sortable: true },
+    { key: "schedulable", label: "调度", sortable: true },
+    { key: "today_stats", label: "今日统计", sortable: false },
+  ];
   if (!authStore.isSimpleMode) {
-    c.push({ key: 'groups', label: '分组', sortable: false })
+    c.push({ key: "groups", label: "分组", sortable: false });
   }
   c.push(
-    { key: 'usage', label: '用量窗口', sortable: false },
-    { key: 'proxy', label: '代理', sortable: false },
-    { key: 'priority', label: '优先级', sortable: true },
-    { key: 'rate_multiplier', label: '账号倍率', sortable: true },
-    { key: 'last_used_at', label: '最近使用', sortable: true },
-    { key: 'expires_at', label: '过期时间', sortable: true },
-    { key: 'notes', label: '备注', sortable: false },
-    { key: 'actions', label: '操作', sortable: false }
-  )
-  return c
-})
+    { key: "usage", label: "用量窗口", sortable: false },
+    { key: "proxy", label: "代理", sortable: false },
+    { key: "priority", label: "优先级", sortable: true },
+    { key: "rate_multiplier", label: "账号倍率", sortable: true },
+    { key: "last_used_at", label: "最近使用", sortable: true },
+    { key: "expires_at", label: "过期时间", sortable: true },
+    { key: "notes", label: "备注", sortable: false },
+    { key: "actions", label: "操作", sortable: false },
+  );
+  return c;
+});
 
 // Columns that can be toggled (exclude select, name, and actions)
 const toggleableColumns = computed(() =>
-  allColumns.value.filter(col => col.key !== 'select' && col.key !== 'name' && col.key !== 'actions')
-)
+  allColumns.value.filter(
+    (col) =>
+      col.key !== "select" && col.key !== "name" && col.key !== "actions",
+  ),
+);
 
 // Filtered columns based on visibility
 const cols = computed(() =>
-  allColumns.value.filter(col =>
-    col.key === 'select' || col.key === 'name' || col.key === 'actions' || !hiddenColumns.has(col.key)
-  )
-)
+  allColumns.value.filter(
+    (col) =>
+      col.key === "select" ||
+      col.key === "name" ||
+      col.key === "actions" ||
+      !hiddenColumns.has(col.key),
+  ),
+);
 
-const handleEdit = (a: Account) => { edAcc.value = a; showEdit.value = true }
+const handleEdit = (a: Account) => {
+  edAcc.value = a;
+  showEdit.value = true;
+};
 const openMenu = (a: Account, e: MouseEvent) => {
-  menu.acc = a
+  menu.acc = a;
 
-  const target = e.currentTarget as HTMLElement
+  const target = e.currentTarget as HTMLElement;
   if (target) {
-    const rect = target.getBoundingClientRect()
-    const menuWidth = 200
-    const menuHeight = 240
-    const padding = 8
-    const viewportWidth = window.innerWidth
-    const viewportHeight = window.innerHeight
+    const rect = target.getBoundingClientRect();
+    const menuWidth = 200;
+    const menuHeight = 240;
+    const padding = 8;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
 
-    let left, top
+    let left, top;
 
     if (viewportWidth < 768) {
       // 居中显示,水平位置
-      left = Math.max(padding, Math.min(
-        rect.left + rect.width / 2 - menuWidth / 2,
-        viewportWidth - menuWidth - padding
-      ))
+      left = Math.max(
+        padding,
+        Math.min(
+          rect.left + rect.width / 2 - menuWidth / 2,
+          viewportWidth - menuWidth - padding,
+        ),
+      );
 
       // 优先显示在按钮下方
-      top = rect.bottom + 4
+      top = rect.bottom + 4;
 
       // 如果下方空间不够,显示在上方
       if (top + menuHeight > viewportHeight - padding) {
-        top = rect.top - menuHeight - 4
+        top = rect.top - menuHeight - 4;
         // 如果上方也不够,就贴在视口顶部
         if (top < padding) {
-          top = padding
+          top = padding;
         }
       }
     } else {
-      left = Math.max(padding, Math.min(
-        e.clientX - menuWidth,
-        viewportWidth - menuWidth - padding
-      ))
-      top = e.clientY
+      left = Math.max(
+        padding,
+        Math.min(e.clientX - menuWidth, viewportWidth - menuWidth - padding),
+      );
+      top = e.clientY;
       if (top + menuHeight > viewportHeight - padding) {
-        top = viewportHeight - menuHeight - padding
+        top = viewportHeight - menuHeight - padding;
       }
     }
 
-    menu.pos = { top, left }
+    menu.pos = { top, left };
   } else {
-    menu.pos = { top: e.clientY, left: e.clientX - 200 }
+    menu.pos = { top: e.clientY, left: e.clientX - 200 };
   }
 
-  menu.show = true
-}
-const toggleSel = (id: number) => { const i = selIds.value.indexOf(id); if(i === -1) selIds.value.push(id); else selIds.value.splice(i, 1) }
-const selectPage = () => { selIds.value = [...new Set([...selIds.value, ...accounts.value.map(a => a.id)])] }
-const handleBulkDelete = async () => { if(!confirm('确认')) return; try { await Promise.all(selIds.value.map(id => adminAPI.accounts.delete(id))); selIds.value = []; reload() } catch (error) { console.error('Failed to bulk delete accounts:', error) } }
-const updateSchedulableInList = (accountIds: number[], schedulable: boolean) => {
-  if (accountIds.length === 0) return
-  const idSet = new Set(accountIds)
-  accounts.value = accounts.value.map((account) => (idSet.has(account.id) ? { ...account, schedulable } : account))
-}
+  menu.show = true;
+};
+const toggleSel = (id: number) => {
+  const i = selIds.value.indexOf(id);
+  if (i === -1) selIds.value.push(id);
+  else selIds.value.splice(i, 1);
+};
+const selectPage = () => {
+  selIds.value = [
+    ...new Set([...selIds.value, ...accounts.value.map((a) => a.id)]),
+  ];
+};
+const handleBulkDelete = async () => {
+  if (!confirm("确认")) return;
+  try {
+    await Promise.all(selIds.value.map((id) => adminAPI.accounts.delete(id)));
+    selIds.value = [];
+    reload();
+  } catch (error) {
+    console.error("Failed to bulk delete accounts:", error);
+  }
+};
+const updateSchedulableInList = (
+  accountIds: number[],
+  schedulable: boolean,
+) => {
+  if (accountIds.length === 0) return;
+  const idSet = new Set(accountIds);
+  accounts.value = accounts.value.map((account) =>
+    idSet.has(account.id) ? { ...account, schedulable } : account,
+  );
+};
 const normalizeBulkSchedulableResult = (
   result: {
-    success?: number
-    failed?: number
-    success_ids?: number[]
-    failed_ids?: number[]
-    results?: Array<{ account_id: number; success: boolean }>
+    success?: number;
+    failed?: number;
+    success_ids?: number[];
+    failed_ids?: number[];
+    results?: Array<{ account_id: number; success: boolean }>;
   },
-  accountIds: number[]
+  accountIds: number[],
 ) => {
-  const responseSuccessIds = Array.isArray(result.success_ids) ? result.success_ids : []
-  const responseFailedIds = Array.isArray(result.failed_ids) ? result.failed_ids : []
+  const responseSuccessIds = Array.isArray(result.success_ids)
+    ? result.success_ids
+    : [];
+  const responseFailedIds = Array.isArray(result.failed_ids)
+    ? result.failed_ids
+    : [];
   if (responseSuccessIds.length > 0 || responseFailedIds.length > 0) {
     return {
       successIds: responseSuccessIds,
       failedIds: responseFailedIds,
-      successCount: typeof result.success === 'number' ? result.success : responseSuccessIds.length,
-      failedCount: typeof result.failed === 'number' ? result.failed : responseFailedIds.length,
+      successCount:
+        typeof result.success === "number"
+          ? result.success
+          : responseSuccessIds.length,
+      failedCount:
+        typeof result.failed === "number"
+          ? result.failed
+          : responseFailedIds.length,
       hasIds: true,
-      hasCounts: true
-    }
+      hasCounts: true,
+    };
   }
 
-  const results = Array.isArray(result.results) ? result.results : []
+  const results = Array.isArray(result.results) ? result.results : [];
   if (results.length > 0) {
-    const successIds = results.filter(item => item.success).map(item => item.account_id)
-    const failedIds = results.filter(item => !item.success).map(item => item.account_id)
+    const successIds = results
+      .filter((item) => item.success)
+      .map((item) => item.account_id);
+    const failedIds = results
+      .filter((item) => !item.success)
+      .map((item) => item.account_id);
     return {
       successIds,
       failedIds,
-      successCount: typeof result.success === 'number' ? result.success : successIds.length,
-      failedCount: typeof result.failed === 'number' ? result.failed : failedIds.length,
+      successCount:
+        typeof result.success === "number" ? result.success : successIds.length,
+      failedCount:
+        typeof result.failed === "number" ? result.failed : failedIds.length,
       hasIds: true,
-      hasCounts: true
-    }
+      hasCounts: true,
+    };
   }
 
-  const hasExplicitCounts = typeof result.success === 'number' || typeof result.failed === 'number'
-  const successCount = typeof result.success === 'number' ? result.success : 0
-  const failedCount = typeof result.failed === 'number' ? result.failed : 0
-  if (hasExplicitCounts && failedCount === 0 && successCount === accountIds.length && accountIds.length > 0) {
+  const hasExplicitCounts =
+    typeof result.success === "number" || typeof result.failed === "number";
+  const successCount = typeof result.success === "number" ? result.success : 0;
+  const failedCount = typeof result.failed === "number" ? result.failed : 0;
+  if (
+    hasExplicitCounts &&
+    failedCount === 0 &&
+    successCount === accountIds.length &&
+    accountIds.length > 0
+  ) {
     return {
       successIds: accountIds,
       failedIds: [],
       successCount,
       failedCount,
       hasIds: true,
-      hasCounts: true
-    }
+      hasCounts: true,
+    };
   }
 
   return {
@@ -571,130 +856,220 @@ const normalizeBulkSchedulableResult = (
     successCount,
     failedCount,
     hasIds: false,
-    hasCounts: hasExplicitCounts
-  }
-}
+    hasCounts: hasExplicitCounts,
+  };
+};
 const handleBulkToggleSchedulable = async (schedulable: boolean) => {
-  const accountIds = [...selIds.value]
+  const accountIds = [...selIds.value];
   try {
-    const result = await adminAPI.accounts.bulkUpdate(accountIds, { schedulable })
-    const { successIds, failedIds, successCount, failedCount, hasIds, hasCounts } = normalizeBulkSchedulableResult(result, accountIds)
+    const result = await adminAPI.accounts.bulkUpdate(accountIds, {
+      schedulable,
+    });
+    const {
+      successIds,
+      failedIds,
+      successCount,
+      failedCount,
+      hasIds,
+      hasCounts,
+    } = normalizeBulkSchedulableResult(result, accountIds);
     if (!hasIds && !hasCounts) {
-      appStore.showError('批量调度结果不完整，请稍后重试或刷新列表')
-      selIds.value = accountIds
+      appStore.showError("批量调度结果不完整，请稍后重试或刷新列表");
+      selIds.value = accountIds;
       load().catch((error) => {
-        console.error('Failed to refresh accounts:', error)
-      })
-      return
+        console.error("Failed to refresh accounts:", error);
+      });
+      return;
     }
     if (successIds.length > 0) {
-      updateSchedulableInList(successIds, schedulable)
+      updateSchedulableInList(successIds, schedulable);
     }
     if (successCount > 0 && failedCount === 0) {
       const message = schedulable
         ? `成功启用 ${successCount} 个账号的调度`
-        : `成功停止 ${successCount} 个账号的调度`
-      appStore.showSuccess(message)
+        : `成功停止 ${successCount} 个账号的调度`;
+      appStore.showSuccess(message);
     }
     if (failedCount > 0) {
-      const message = hasCounts || hasIds
-        ? `部分调度更新成功：成功 ${successCount} 个，失败 ${failedCount} 个`
-        : '批量调度结果不完整，请稍后重试或刷新列表'
-      appStore.showError(message)
-      selIds.value = failedIds.length > 0 ? failedIds : accountIds
+      const message =
+        hasCounts || hasIds
+          ? `部分调度更新成功：成功 ${successCount} 个，失败 ${failedCount} 个`
+          : "批量调度结果不完整，请稍后重试或刷新列表";
+      appStore.showError(message);
+      selIds.value = failedIds.length > 0 ? failedIds : accountIds;
     } else {
-      selIds.value = hasIds ? [] : accountIds
+      selIds.value = hasIds ? [] : accountIds;
     }
   } catch (error) {
-    console.error('Failed to bulk toggle schedulable:', error)
-    appStore.showError('错误')
+    console.error("Failed to bulk toggle schedulable:", error);
+    appStore.showError("错误");
   }
-}
-const handleBulkUpdated = () => { showBulkEdit.value = false; selIds.value = []; reload() }
-const closeTestModal = () => { showTest.value = false; testingAcc.value = null }
-const closeStatsModal = () => { showStats.value = false; statsAcc.value = null }
-const closeReAuthModal = () => { showReAuth.value = false; reAuthAcc.value = null }
-const handleTest = (a: Account) => { testingAcc.value = a; showTest.value = true }
-const handleViewStats = (a: Account) => { statsAcc.value = a; showStats.value = true }
-const handleReAuth = (a: Account) => { reAuthAcc.value = a; showReAuth.value = true }
-const handleRefresh = async (a: Account) => { try { await adminAPI.accounts.refreshCredentials(a.id); load() } catch (error) { console.error('Failed to refresh credentials:', error) } }
-const handleResetStatus = async (a: Account) => { try { await adminAPI.accounts.clearError(a.id); appStore.showSuccess('成功'); load() } catch (error) { console.error('Failed to reset status:', error) } }
-const handleClearRateLimit = async (a: Account) => { try { await adminAPI.accounts.clearRateLimit(a.id); appStore.showSuccess('成功'); load() } catch (error) { console.error('Failed to clear rate limit:', error) } }
-const handleDelete = (a: Account) => { deletingAcc.value = a; showDeleteDialog.value = true }
-const confirmDelete = async () => { if(!deletingAcc.value) return; try { await adminAPI.accounts.delete(deletingAcc.value.id); showDeleteDialog.value = false; deletingAcc.value = null; reload() } catch (error) { console.error('Failed to delete account:', error) } }
-const handleToggleSchedulable = async (a: Account) => {
-  const nextSchedulable = !a.schedulable
-  togglingSchedulable.value = a.id
+};
+const handleBulkUpdated = () => {
+  showBulkEdit.value = false;
+  selIds.value = [];
+  reload();
+};
+const closeTestModal = () => {
+  showTest.value = false;
+  testingAcc.value = null;
+};
+const closeStatsModal = () => {
+  showStats.value = false;
+  statsAcc.value = null;
+};
+const closeReAuthModal = () => {
+  showReAuth.value = false;
+  reAuthAcc.value = null;
+};
+const handleTest = (a: Account) => {
+  testingAcc.value = a;
+  showTest.value = true;
+};
+const handleViewStats = (a: Account) => {
+  statsAcc.value = a;
+  showStats.value = true;
+};
+const handleReAuth = (a: Account) => {
+  reAuthAcc.value = a;
+  showReAuth.value = true;
+};
+const handleRefresh = async (a: Account) => {
   try {
-    const updated = await adminAPI.accounts.setSchedulable(a.id, nextSchedulable)
-    updateSchedulableInList([a.id], updated?.schedulable ?? nextSchedulable)
+    await adminAPI.accounts.refreshCredentials(a.id);
+    load();
   } catch (error) {
-    console.error('Failed to toggle schedulable:', error)
-    appStore.showError('切换调度状态失败')
-  } finally {
-    togglingSchedulable.value = null
+    console.error("Failed to refresh credentials:", error);
   }
-}
-const handleShowTempUnsched = (a: Account) => { tempUnschedAcc.value = a; showTempUnsched.value = true }
-const handleTempUnschedReset = async () => { if(!tempUnschedAcc.value) return; try { await adminAPI.accounts.clearError(tempUnschedAcc.value.id); showTempUnsched.value = false; tempUnschedAcc.value = null; load() } catch (error) { console.error('Failed to reset temp unscheduled:', error) } }
+};
+const handleResetStatus = async (a: Account) => {
+  try {
+    await adminAPI.accounts.clearError(a.id);
+    appStore.showSuccess("成功");
+    load();
+  } catch (error) {
+    console.error("Failed to reset status:", error);
+  }
+};
+const handleClearRateLimit = async (a: Account) => {
+  try {
+    await adminAPI.accounts.clearRateLimit(a.id);
+    appStore.showSuccess("成功");
+    load();
+  } catch (error) {
+    console.error("Failed to clear rate limit:", error);
+  }
+};
+const handleDelete = (a: Account) => {
+  deletingAcc.value = a;
+  showDeleteDialog.value = true;
+};
+const confirmDelete = async () => {
+  if (!deletingAcc.value) return;
+  try {
+    await adminAPI.accounts.delete(deletingAcc.value.id);
+    showDeleteDialog.value = false;
+    deletingAcc.value = null;
+    reload();
+  } catch (error) {
+    console.error("Failed to delete account:", error);
+  }
+};
+const handleToggleSchedulable = async (a: Account) => {
+  const nextSchedulable = !a.schedulable;
+  togglingSchedulable.value = a.id;
+  try {
+    const updated = await adminAPI.accounts.setSchedulable(
+      a.id,
+      nextSchedulable,
+    );
+    updateSchedulableInList([a.id], updated?.schedulable ?? nextSchedulable);
+  } catch (error) {
+    console.error("Failed to toggle schedulable:", error);
+    appStore.showError("切换调度状态失败");
+  } finally {
+    togglingSchedulable.value = null;
+  }
+};
+const handleShowTempUnsched = (a: Account) => {
+  tempUnschedAcc.value = a;
+  showTempUnsched.value = true;
+};
+const handleTempUnschedReset = async () => {
+  if (!tempUnschedAcc.value) return;
+  try {
+    await adminAPI.accounts.clearError(tempUnschedAcc.value.id);
+    showTempUnsched.value = false;
+    tempUnschedAcc.value = null;
+    load();
+  } catch (error) {
+    console.error("Failed to reset temp unscheduled:", error);
+  }
+};
 const formatExpiresAt = (value: number | null) => {
-  if (!value) return '-'
+  if (!value) return "-";
   return formatDateTime(
     new Date(value * 1000),
     {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
     },
-    'sv-SE'
-  )
-}
+    "sv-SE",
+  );
+};
 const isExpired = (value: number | null) => {
-  if (!value) return false
-  return value * 1000 <= Date.now()
-}
+  if (!value) return false;
+  return value * 1000 <= Date.now();
+};
 
 // 滚动时关闭操作菜单（不关闭列设置下拉菜单）
 const handleScroll = () => {
-  menu.show = false
-}
+  menu.show = false;
+};
 
 // 点击外部关闭列设置下拉菜单
 const handleClickOutside = (event: MouseEvent) => {
-  const target = event.target as HTMLElement
+  const target = event.target as HTMLElement;
   if (columnDropdownRef.value && !columnDropdownRef.value.contains(target)) {
-    showColumnDropdown.value = false
+    showColumnDropdown.value = false;
   }
-  if (autoRefreshDropdownRef.value && !autoRefreshDropdownRef.value.contains(target)) {
-    showAutoRefreshDropdown.value = false
+  if (
+    autoRefreshDropdownRef.value &&
+    !autoRefreshDropdownRef.value.contains(target)
+  ) {
+    showAutoRefreshDropdown.value = false;
   }
-}
+};
 
 onMounted(async () => {
-  load()
+  load();
   try {
-    const [p, g] = await Promise.all([adminAPI.proxies.getAll(), adminAPI.groups.getAll()])
-    proxies.value = p
-    groups.value = g
+    const [p, g] = await Promise.all([
+      adminAPI.proxies.getAll(),
+      adminAPI.groups.getAll(),
+    ]);
+    proxies.value = p;
+    groups.value = g;
   } catch (error) {
-    console.error('Failed to load proxies/groups:', error)
+    console.error("Failed to load proxies/groups:", error);
   }
-  window.addEventListener('scroll', handleScroll, true)
-  document.addEventListener('click', handleClickOutside)
+  window.addEventListener("scroll", handleScroll, true);
+  document.addEventListener("click", handleClickOutside);
 
   if (autoRefreshEnabled.value) {
-    autoRefreshCountdown.value = autoRefreshIntervalSeconds.value
-    resumeAutoRefresh()
+    autoRefreshCountdown.value = autoRefreshIntervalSeconds.value;
+    resumeAutoRefresh();
   } else {
-    pauseAutoRefresh()
+    pauseAutoRefresh();
   }
-})
+});
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll, true)
-  document.removeEventListener('click', handleClickOutside)
-})
+  window.removeEventListener("scroll", handleScroll, true);
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>

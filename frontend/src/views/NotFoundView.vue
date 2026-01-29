@@ -16,7 +16,8 @@
       <!-- 404 Display -->
       <div class="mb-8">
         <div class="relative inline-block">
-          <span class="text-[12rem] font-bold leading-none text-gray-100 dark:text-dark-800"
+          <span
+            class="text-[12rem] font-bold leading-none text-gray-100 dark:text-dark-800"
             >404</span
           >
           <div class="absolute inset-0 flex items-center justify-center">
@@ -44,7 +45,7 @@
       <!-- Text Content -->
       <div class="mb-8">
         <h1 class="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-          {{ '页面未找到' }}
+          {{ "页面未找到" }}
         </h1>
         <p class="text-gray-500 dark:text-dark-400">
           The page you are looking for doesn't exist or has been moved.
@@ -78,11 +79,11 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 function goBack(): void {
-  router.back()
+  router.back();
 }
 </script>

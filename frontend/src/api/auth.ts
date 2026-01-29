@@ -3,7 +3,7 @@
  * Handles user login, registration, and logout operations
  */
 
-import { apiClient } from './client'
+import { apiClient } from "./client";
 import type {
   LoginRequest,
   RegisterRequest,
@@ -13,41 +13,43 @@ import type {
   SendVerifyCodeResponse,
   PublicSettings,
   TotpLoginResponse,
-  TotpLogin2FARequest
-} from '@/types'
+  TotpLogin2FARequest,
+} from "@/types";
 
 /**
  * Login response type - can be either full auth or 2FA required
  */
-export type LoginResponse = AuthResponse | TotpLoginResponse
+export type LoginResponse = AuthResponse | TotpLoginResponse;
 
 /**
  * Type guard to check if login response requires 2FA
  */
-export function isTotp2FARequired(response: LoginResponse): response is TotpLoginResponse {
-  return 'requires_2fa' in response && response.requires_2fa === true
+export function isTotp2FARequired(
+  response: LoginResponse,
+): response is TotpLoginResponse {
+  return "requires_2fa" in response && response.requires_2fa === true;
 }
 
 /**
  * Store authentication token in localStorage
  */
 export function setAuthToken(token: string): void {
-  localStorage.setItem('auth_token', token)
+  localStorage.setItem("auth_token", token);
 }
 
 /**
  * Get authentication token from localStorage
  */
 export function getAuthToken(): string | null {
-  return localStorage.getItem('auth_token')
+  return localStorage.getItem("auth_token");
 }
 
 /**
  * Clear authentication token from localStorage
  */
 export function clearAuthToken(): void {
-  localStorage.removeItem('auth_token')
-  localStorage.removeItem('auth_user')
+  localStorage.removeItem("auth_token");
+  localStorage.removeItem("auth_user");
 }
 
 /**
@@ -56,15 +58,18 @@ export function clearAuthToken(): void {
  * @returns Authentication response with token and user data, or 2FA required response
  */
 export async function login(credentials: LoginRequest): Promise<LoginResponse> {
-  const { data } = await apiClient.post<LoginResponse>('/auth/login', credentials)
+  const { data } = await apiClient.post<LoginResponse>(
+    "/auth/login",
+    credentials,
+  );
 
   // Only store token if 2FA is not required
   if (!isTotp2FARequired(data)) {
-    setAuthToken(data.access_token)
-    localStorage.setItem('auth_user', JSON.stringify(data.user))
+    setAuthToken(data.access_token);
+    localStorage.setItem("auth_user", JSON.stringify(data.user));
   }
 
-  return data
+  return data;
 }
 
 /**
@@ -72,14 +77,19 @@ export async function login(credentials: LoginRequest): Promise<LoginResponse> {
  * @param request - Temp token and TOTP code
  * @returns Authentication response with token and user data
  */
-export async function login2FA(request: TotpLogin2FARequest): Promise<AuthResponse> {
-  const { data } = await apiClient.post<AuthResponse>('/auth/login/2fa', request)
+export async function login2FA(
+  request: TotpLogin2FARequest,
+): Promise<AuthResponse> {
+  const { data } = await apiClient.post<AuthResponse>(
+    "/auth/login/2fa",
+    request,
+  );
 
   // Store token and user data
-  setAuthToken(data.access_token)
-  localStorage.setItem('auth_user', JSON.stringify(data.user))
+  setAuthToken(data.access_token);
+  localStorage.setItem("auth_user", JSON.stringify(data.user));
 
-  return data
+  return data;
 }
 
 /**
@@ -87,14 +97,19 @@ export async function login2FA(request: TotpLogin2FARequest): Promise<AuthRespon
  * @param userData - Registration data (username, email, password)
  * @returns Authentication response with token and user data
  */
-export async function register(userData: RegisterRequest): Promise<AuthResponse> {
-  const { data } = await apiClient.post<AuthResponse>('/auth/register', userData)
+export async function register(
+  userData: RegisterRequest,
+): Promise<AuthResponse> {
+  const { data } = await apiClient.post<AuthResponse>(
+    "/auth/register",
+    userData,
+  );
 
   // Store token and user data
-  setAuthToken(data.access_token)
-  localStorage.setItem('auth_user', JSON.stringify(data.user))
+  setAuthToken(data.access_token);
+  localStorage.setItem("auth_user", JSON.stringify(data.user));
 
-  return data
+  return data;
 }
 
 /**
@@ -102,7 +117,7 @@ export async function register(userData: RegisterRequest): Promise<AuthResponse>
  * @returns User profile data
  */
 export async function getCurrentUser() {
-  return apiClient.get<CurrentUserResponse>('/auth/me')
+  return apiClient.get<CurrentUserResponse>("/auth/me");
 }
 
 /**
@@ -110,7 +125,7 @@ export async function getCurrentUser() {
  * Clears authentication token and user data from localStorage
  */
 export function logout(): void {
-  clearAuthToken()
+  clearAuthToken();
   // Optionally redirect to login page
   // window.location.href = '/login';
 }
@@ -120,7 +135,7 @@ export function logout(): void {
  * @returns True if user has valid token
  */
 export function isAuthenticated(): boolean {
-  return getAuthToken() !== null
+  return getAuthToken() !== null;
 }
 
 /**
@@ -128,8 +143,8 @@ export function isAuthenticated(): boolean {
  * @returns Public settings including registration and Turnstile config
  */
 export async function getPublicSettings(): Promise<PublicSettings> {
-  const { data } = await apiClient.get<PublicSettings>('/settings/public')
-  return data
+  const { data } = await apiClient.get<PublicSettings>("/settings/public");
+  return data;
 }
 
 /**
@@ -138,20 +153,23 @@ export async function getPublicSettings(): Promise<PublicSettings> {
  * @returns Response with countdown seconds
  */
 export async function sendVerifyCode(
-  request: SendVerifyCodeRequest
+  request: SendVerifyCodeRequest,
 ): Promise<SendVerifyCodeResponse> {
-  const { data } = await apiClient.post<SendVerifyCodeResponse>('/auth/send-verify-code', request)
-  return data
+  const { data } = await apiClient.post<SendVerifyCodeResponse>(
+    "/auth/send-verify-code",
+    request,
+  );
+  return data;
 }
 
 /**
  * Validate promo code response
  */
 export interface ValidatePromoCodeResponse {
-  valid: boolean
-  bonus_amount?: number
-  error_code?: string
-  message?: string
+  valid: boolean;
+  bonus_amount?: number;
+  error_code?: string;
+  message?: string;
 }
 
 /**
@@ -159,24 +177,29 @@ export interface ValidatePromoCodeResponse {
  * @param code - Promo code to validate
  * @returns Validation result with bonus amount if valid
  */
-export async function validatePromoCode(code: string): Promise<ValidatePromoCodeResponse> {
-  const { data } = await apiClient.post<ValidatePromoCodeResponse>('/auth/validate-promo-code', { code })
-  return data
+export async function validatePromoCode(
+  code: string,
+): Promise<ValidatePromoCodeResponse> {
+  const { data } = await apiClient.post<ValidatePromoCodeResponse>(
+    "/auth/validate-promo-code",
+    { code },
+  );
+  return data;
 }
 
 /**
  * Forgot password request
  */
 export interface ForgotPasswordRequest {
-  email: string
-  turnstile_token?: string
+  email: string;
+  turnstile_token?: string;
 }
 
 /**
  * Forgot password response
  */
 export interface ForgotPasswordResponse {
-  message: string
+  message: string;
 }
 
 /**
@@ -184,25 +207,30 @@ export interface ForgotPasswordResponse {
  * @param request - Email and optional Turnstile token
  * @returns Response with message
  */
-export async function forgotPassword(request: ForgotPasswordRequest): Promise<ForgotPasswordResponse> {
-  const { data } = await apiClient.post<ForgotPasswordResponse>('/auth/forgot-password', request)
-  return data
+export async function forgotPassword(
+  request: ForgotPasswordRequest,
+): Promise<ForgotPasswordResponse> {
+  const { data } = await apiClient.post<ForgotPasswordResponse>(
+    "/auth/forgot-password",
+    request,
+  );
+  return data;
 }
 
 /**
  * Reset password request
  */
 export interface ResetPasswordRequest {
-  email: string
-  token: string
-  new_password: string
+  email: string;
+  token: string;
+  new_password: string;
 }
 
 /**
  * Reset password response
  */
 export interface ResetPasswordResponse {
-  message: string
+  message: string;
 }
 
 /**
@@ -210,9 +238,14 @@ export interface ResetPasswordResponse {
  * @param request - Email, token, and new password
  * @returns Response with message
  */
-export async function resetPassword(request: ResetPasswordRequest): Promise<ResetPasswordResponse> {
-  const { data } = await apiClient.post<ResetPasswordResponse>('/auth/reset-password', request)
-  return data
+export async function resetPassword(
+  request: ResetPasswordRequest,
+): Promise<ResetPasswordResponse> {
+  const { data } = await apiClient.post<ResetPasswordResponse>(
+    "/auth/reset-password",
+    request,
+  );
+  return data;
 }
 
 export const authAPI = {
@@ -230,7 +263,7 @@ export const authAPI = {
   sendVerifyCode,
   validatePromoCode,
   forgotPassword,
-  resetPassword
-}
+  resetPassword,
+};
 
-export default authAPI
+export default authAPI;

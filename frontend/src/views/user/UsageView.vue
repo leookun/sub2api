@@ -5,143 +5,169 @@
         <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
           <!-- Total Requests -->
           <div class="card p-4">
-          <div class="flex items-center gap-3">
-            <div class="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
-              <Icon name="document" size="md" class="text-blue-600 dark:text-blue-400" />
-            </div>
-            <div>
-              <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ '总请求数' }}
-              </p>
-              <p class="text-xl font-bold text-gray-900 dark:text-white">
-                {{ usageStats?.total_requests?.toLocaleString() || '0' }}
-              </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">
-                {{ '所选范围内' }}
-              </p>
+            <div class="flex items-center gap-3">
+              <div class="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
+                <Icon
+                  name="document"
+                  size="md"
+                  class="text-blue-600 dark:text-blue-400"
+                />
+              </div>
+              <div>
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
+                  {{ "总请求数" }}
+                </p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">
+                  {{ usageStats?.total_requests?.toLocaleString() || "0" }}
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  {{ "所选范围内" }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Total Tokens -->
-        <div class="card p-4">
-          <div class="flex items-center gap-3">
-            <div class="rounded-lg bg-amber-100 p-2 dark:bg-amber-900/30">
-              <Icon name="cube" size="md" class="text-amber-600 dark:text-amber-400" />
-            </div>
-            <div>
-              <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ '总 Token' }}
-              </p>
-              <p class="text-xl font-bold text-gray-900 dark:text-white">
-                {{ formatTokens(usageStats?.total_tokens || 0) }}
-              </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">
-                {{ '输入' }}: {{ formatTokens(usageStats?.total_input_tokens || 0) }} /
-                {{ '输出' }}: {{ formatTokens(usageStats?.total_output_tokens || 0) }}
-              </p>
+          <!-- Total Tokens -->
+          <div class="card p-4">
+            <div class="flex items-center gap-3">
+              <div class="rounded-lg bg-amber-100 p-2 dark:bg-amber-900/30">
+                <Icon
+                  name="cube"
+                  size="md"
+                  class="text-amber-600 dark:text-amber-400"
+                />
+              </div>
+              <div>
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
+                  {{ "总 Token" }}
+                </p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">
+                  {{ formatTokens(usageStats?.total_tokens || 0) }}
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  {{ "输入" }}:
+                  {{ formatTokens(usageStats?.total_input_tokens || 0) }} /
+                  {{ "输出" }}:
+                  {{ formatTokens(usageStats?.total_output_tokens || 0) }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Total Cost -->
-        <div class="card p-4">
-          <div class="flex items-center gap-3">
-            <div class="rounded-lg bg-green-100 p-2 dark:bg-green-900/30">
-              <Icon name="dollar" size="md" class="text-green-600 dark:text-green-400" />
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ '总消费' }}
-              </p>
-              <p class="text-xl font-bold text-green-600 dark:text-green-400">
-                ${{ (usageStats?.total_actual_cost || 0).toFixed(4) }}
-              </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">
-                {{ '实际' }} /
-                <span class="line-through">${{ (usageStats?.total_cost || 0).toFixed(4) }}</span>
-                {{ '标准' }}
-              </p>
+          <!-- Total Cost -->
+          <div class="card p-4">
+            <div class="flex items-center gap-3">
+              <div class="rounded-lg bg-green-100 p-2 dark:bg-green-900/30">
+                <Icon
+                  name="dollar"
+                  size="md"
+                  class="text-green-600 dark:text-green-400"
+                />
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
+                  {{ "总消费" }}
+                </p>
+                <p class="text-xl font-bold text-green-600 dark:text-green-400">
+                  ${{ (usageStats?.total_actual_cost || 0).toFixed(4) }}
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  {{ "实际" }} /
+                  <span class="line-through"
+                    >${{ (usageStats?.total_cost || 0).toFixed(4) }}</span
+                  >
+                  {{ "标准" }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Average Duration -->
-        <div class="card p-4">
-          <div class="flex items-center gap-3">
-            <div class="rounded-lg bg-purple-100 p-2 dark:bg-purple-900/30">
-              <Icon name="clock" size="md" class="text-purple-600 dark:text-purple-400" />
-            </div>
-            <div>
-              <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ '平均耗时' }}
-              </p>
-              <p class="text-xl font-bold text-gray-900 dark:text-white">
-                {{ formatDuration(usageStats?.average_duration_ms || 0) }}
-              </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">{{ '每次请求' }}</p>
+          <!-- Average Duration -->
+          <div class="card p-4">
+            <div class="flex items-center gap-3">
+              <div class="rounded-lg bg-purple-100 p-2 dark:bg-purple-900/30">
+                <Icon
+                  name="clock"
+                  size="md"
+                  class="text-purple-600 dark:text-purple-400"
+                />
+              </div>
+              <div>
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
+                  {{ "平均耗时" }}
+                </p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">
+                  {{ formatDuration(usageStats?.average_duration_ms || 0) }}
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  {{ "每次请求" }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </template>
 
       <template #filters>
         <div class="card">
           <div class="px-6 py-4">
-          <div class="flex flex-wrap items-end gap-4">
-            <!-- API Key Filter -->
-            <div class="min-w-[180px]">
-              <label class="input-label">{{ 'API 密钥' }}</label>
-              <Select
-                v-model="filters.api_key_id"
-                :options="apiKeyOptions"
-                :placeholder="'全部密钥'"
-                @change="applyFilters"
-              />
-            </div>
+            <div class="flex flex-wrap items-end gap-4">
+              <!-- API Key Filter -->
+              <div class="min-w-[180px]">
+                <label class="input-label">{{ "API 密钥" }}</label>
+                <Select
+                  v-model="filters.api_key_id"
+                  :options="apiKeyOptions"
+                  :placeholder="'全部密钥'"
+                  @change="applyFilters"
+                />
+              </div>
 
-            <!-- Date Range Filter -->
-            <div>
-              <label class="input-label">{{ '时间范围' }}</label>
-              <DateRangePicker
-                v-model:start-date="startDate"
-                v-model:end-date="endDate"
-                @change="onDateRangeChange"
-              />
-            </div>
+              <!-- Date Range Filter -->
+              <div>
+                <label class="input-label">{{ "时间范围" }}</label>
+                <DateRangePicker
+                  v-model:start-date="startDate"
+                  v-model:end-date="endDate"
+                  @change="onDateRangeChange"
+                />
+              </div>
 
-            <!-- Actions -->
-            <div class="ml-auto flex items-center gap-3">
-              <button class="btn btn-secondary" @click="resetFilters">
-                {{ '重置' }}
-              </button>
-              <button :disabled="exporting" class="btn btn-primary" @click="exportToCSV">
-                <svg
-                  v-if="exporting"
-                  class="-ml-1 mr-2 h-4 w-4 animate-spin"
-                  fill="none"
-                  viewBox="0 0 24 24"
+              <!-- Actions -->
+              <div class="ml-auto flex items-center gap-3">
+                <button class="btn btn-secondary" @click="resetFilters">
+                  {{ "重置" }}
+                </button>
+                <button
+                  :disabled="exporting"
+                  class="btn btn-primary"
+                  @click="exportToCSV"
                 >
-                  <circle
-                    class="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    stroke-width="4"
-                  ></circle>
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                {{ exporting ? '导出中...' : '导出 CSV' }}
-              </button>
+                  <svg
+                    v-if="exporting"
+                    class="-ml-1 mr-2 h-4 w-4 animate-spin"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      class="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    ></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  {{ exporting ? "导出中..." : "导出 CSV" }}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </template>
 
@@ -149,12 +175,14 @@
         <DataTable :columns="columns" :data="usageLogs" :loading="loading">
           <template #cell-api_key="{ row }">
             <span class="text-sm text-gray-900 dark:text-white">{{
-              row.api_key?.name || '-'
+              row.api_key?.name || "-"
             }}</span>
           </template>
 
           <template #cell-model="{ value }">
-            <span class="font-medium text-gray-900 dark:text-white">{{ value }}</span>
+            <span class="font-medium text-gray-900 dark:text-white">{{
+              value
+            }}</span>
           </template>
 
           <template #cell-stream="{ row }">
@@ -166,7 +194,7 @@
                   : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
               "
             >
-              {{ row.stream ? '流式' : '同步' }}
+              {{ row.stream ? "流式" : "同步" }}
             </span>
           </template>
 
@@ -186,8 +214,10 @@
                   d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <span class="font-medium text-gray-900 dark:text-white">{{ row.image_count }}张</span>
-              <span class="text-gray-400">({{ row.image_size || '2K' }})</span>
+              <span class="font-medium text-gray-900 dark:text-white"
+                >{{ row.image_count }}张</span
+              >
+              <span class="text-gray-400">({{ row.image_size || "2K" }})</span>
             </div>
             <!-- Token 请求 -->
             <div v-else class="flex items-center gap-1.5">
@@ -211,22 +241,31 @@
                 </div>
                 <!-- Cache Tokens (Read + Write) -->
                 <div
-                  v-if="row.cache_read_tokens > 0 || row.cache_creation_tokens > 0"
+                  v-if="
+                    row.cache_read_tokens > 0 || row.cache_creation_tokens > 0
+                  "
                   class="flex items-center gap-2"
                 >
                   <!-- Cache Read -->
-                  <div v-if="row.cache_read_tokens > 0" class="inline-flex items-center gap-1">
+                  <div
+                    v-if="row.cache_read_tokens > 0"
+                    class="inline-flex items-center gap-1"
+                  >
                     <Icon name="inbox" size="sm" class="text-sky-500" />
                     <span class="font-medium text-sky-600 dark:text-sky-400">{{
                       formatCacheTokens(row.cache_read_tokens)
                     }}</span>
                   </div>
                   <!-- Cache Write -->
-                  <div v-if="row.cache_creation_tokens > 0" class="inline-flex items-center gap-1">
+                  <div
+                    v-if="row.cache_creation_tokens > 0"
+                    class="inline-flex items-center gap-1"
+                  >
                     <Icon name="edit" size="sm" class="text-amber-500" />
-                    <span class="font-medium text-amber-600 dark:text-amber-400">{{
-                      formatCacheTokens(row.cache_creation_tokens)
-                    }}</span>
+                    <span
+                      class="font-medium text-amber-600 dark:text-amber-400"
+                      >{{ formatCacheTokens(row.cache_creation_tokens) }}</span
+                    >
                   </div>
                 </div>
               </div>
@@ -280,7 +319,9 @@
             >
               {{ formatDuration(row.first_token_ms) }}
             </span>
-            <span v-else class="text-sm text-gray-400 dark:text-gray-500">-</span>
+            <span v-else class="text-sm text-gray-400 dark:text-gray-500"
+              >-</span
+            >
           </template>
 
           <template #cell-duration="{ row }">
@@ -296,8 +337,15 @@
           </template>
 
           <template #cell-user_agent="{ row }">
-            <span v-if="row.user_agent" class="text-sm text-gray-600 dark:text-gray-400 max-w-[150px] truncate block" :title="row.user_agent">{{ formatUserAgent(row.user_agent) }}</span>
-            <span v-else class="text-sm text-gray-400 dark:text-gray-500">-</span>
+            <span
+              v-if="row.user_agent"
+              class="text-sm text-gray-600 dark:text-gray-400 max-w-[150px] truncate block"
+              :title="row.user_agent"
+              >{{ formatUserAgent(row.user_agent) }}</span
+            >
+            <span v-else class="text-sm text-gray-400 dark:text-gray-500"
+              >-</span
+            >
           </template>
 
           <template #empty>
@@ -326,7 +374,7 @@
       class="fixed z-[9999] pointer-events-none -translate-y-1/2"
       :style="{
         left: tokenTooltipPosition.x + 'px',
-        top: tokenTooltipPosition.y + 'px'
+        top: tokenTooltipPosition.y + 'px',
       }"
     >
       <div
@@ -335,28 +383,61 @@
         <div class="space-y-1.5">
           <!-- Token Breakdown -->
           <div>
-            <div class="text-xs font-semibold text-gray-300 mb-1">{{ 'Token 明细' }}</div>
-            <div v-if="tokenTooltipData && tokenTooltipData.input_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ '输入 Token' }}</span>
-              <span class="font-medium text-white">{{ tokenTooltipData.input_tokens.toLocaleString() }}</span>
+            <div class="text-xs font-semibold text-gray-300 mb-1">
+              {{ "Token 明细" }}
             </div>
-            <div v-if="tokenTooltipData && tokenTooltipData.output_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ '输出 Token' }}</span>
-              <span class="font-medium text-white">{{ tokenTooltipData.output_tokens.toLocaleString() }}</span>
+            <div
+              v-if="tokenTooltipData && tokenTooltipData.input_tokens > 0"
+              class="flex items-center justify-between gap-4"
+            >
+              <span class="text-gray-400">{{ "输入 Token" }}</span>
+              <span class="font-medium text-white">{{
+                tokenTooltipData.input_tokens.toLocaleString()
+              }}</span>
             </div>
-            <div v-if="tokenTooltipData && tokenTooltipData.cache_creation_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ '缓存创建 Token' }}</span>
-              <span class="font-medium text-white">{{ tokenTooltipData.cache_creation_tokens.toLocaleString() }}</span>
+            <div
+              v-if="tokenTooltipData && tokenTooltipData.output_tokens > 0"
+              class="flex items-center justify-between gap-4"
+            >
+              <span class="text-gray-400">{{ "输出 Token" }}</span>
+              <span class="font-medium text-white">{{
+                tokenTooltipData.output_tokens.toLocaleString()
+              }}</span>
             </div>
-            <div v-if="tokenTooltipData && tokenTooltipData.cache_read_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ '缓存读取 Token' }}</span>
-              <span class="font-medium text-white">{{ tokenTooltipData.cache_read_tokens.toLocaleString() }}</span>
+            <div
+              v-if="
+                tokenTooltipData && tokenTooltipData.cache_creation_tokens > 0
+              "
+              class="flex items-center justify-between gap-4"
+            >
+              <span class="text-gray-400">{{ "缓存创建 Token" }}</span>
+              <span class="font-medium text-white">{{
+                tokenTooltipData.cache_creation_tokens.toLocaleString()
+              }}</span>
+            </div>
+            <div
+              v-if="tokenTooltipData && tokenTooltipData.cache_read_tokens > 0"
+              class="flex items-center justify-between gap-4"
+            >
+              <span class="text-gray-400">{{ "缓存读取 Token" }}</span>
+              <span class="font-medium text-white">{{
+                tokenTooltipData.cache_read_tokens.toLocaleString()
+              }}</span>
             </div>
           </div>
           <!-- Total -->
-          <div class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5">
-            <span class="text-gray-400">{{ '总 Token' }}</span>
-            <span class="font-semibold text-blue-400">{{ ((tokenTooltipData?.input_tokens || 0) + (tokenTooltipData?.output_tokens || 0) + (tokenTooltipData?.cache_creation_tokens || 0) + (tokenTooltipData?.cache_read_tokens || 0)).toLocaleString() }}</span>
+          <div
+            class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5"
+          >
+            <span class="text-gray-400">{{ "总 Token" }}</span>
+            <span class="font-semibold text-blue-400">{{
+              (
+                (tokenTooltipData?.input_tokens || 0) +
+                (tokenTooltipData?.output_tokens || 0) +
+                (tokenTooltipData?.cache_creation_tokens || 0) +
+                (tokenTooltipData?.cache_read_tokens || 0)
+              ).toLocaleString()
+            }}</span>
           </div>
         </div>
         <!-- Tooltip Arrow (left side) -->
@@ -374,7 +455,7 @@
       class="fixed z-[9999] pointer-events-none -translate-y-1/2"
       :style="{
         left: tooltipPosition.x + 'px',
-        top: tooltipPosition.y + 'px'
+        top: tooltipPosition.y + 'px',
       }"
     >
       <div
@@ -383,37 +464,63 @@
         <div class="space-y-1.5">
           <!-- Cost Breakdown -->
           <div class="mb-2 border-b border-gray-700 pb-1.5">
-            <div class="text-xs font-semibold text-gray-300 mb-1">{{ '成本明细' }}</div>
-            <div v-if="tooltipData && tooltipData.input_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ '输入成本' }}</span>
-              <span class="font-medium text-white">${{ tooltipData.input_cost.toFixed(6) }}</span>
+            <div class="text-xs font-semibold text-gray-300 mb-1">
+              {{ "成本明细" }}
             </div>
-            <div v-if="tooltipData && tooltipData.output_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ '输出成本' }}</span>
-              <span class="font-medium text-white">${{ tooltipData.output_cost.toFixed(6) }}</span>
+            <div
+              v-if="tooltipData && tooltipData.input_cost > 0"
+              class="flex items-center justify-between gap-4"
+            >
+              <span class="text-gray-400">{{ "输入成本" }}</span>
+              <span class="font-medium text-white"
+                >${{ tooltipData.input_cost.toFixed(6) }}</span
+              >
             </div>
-            <div v-if="tooltipData && tooltipData.cache_creation_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ '缓存创建成本' }}</span>
-              <span class="font-medium text-white">${{ tooltipData.cache_creation_cost.toFixed(6) }}</span>
+            <div
+              v-if="tooltipData && tooltipData.output_cost > 0"
+              class="flex items-center justify-between gap-4"
+            >
+              <span class="text-gray-400">{{ "输出成本" }}</span>
+              <span class="font-medium text-white"
+                >${{ tooltipData.output_cost.toFixed(6) }}</span
+              >
             </div>
-            <div v-if="tooltipData && tooltipData.cache_read_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ '缓存读取成本' }}</span>
-              <span class="font-medium text-white">${{ tooltipData.cache_read_cost.toFixed(6) }}</span>
+            <div
+              v-if="tooltipData && tooltipData.cache_creation_cost > 0"
+              class="flex items-center justify-between gap-4"
+            >
+              <span class="text-gray-400">{{ "缓存创建成本" }}</span>
+              <span class="font-medium text-white"
+                >${{ tooltipData.cache_creation_cost.toFixed(6) }}</span
+              >
+            </div>
+            <div
+              v-if="tooltipData && tooltipData.cache_read_cost > 0"
+              class="flex items-center justify-between gap-4"
+            >
+              <span class="text-gray-400">{{ "缓存读取成本" }}</span>
+              <span class="font-medium text-white"
+                >${{ tooltipData.cache_read_cost.toFixed(6) }}</span
+              >
             </div>
           </div>
           <!-- Rate and Summary -->
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ '倍率' }}</span>
+            <span class="text-gray-400">{{ "倍率" }}</span>
             <span class="font-semibold text-blue-400"
               >{{ (tooltipData?.rate_multiplier || 1).toFixed(2) }}x</span
             >
           </div>
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ '原始' }}</span>
-            <span class="font-medium text-white">${{ tooltipData?.total_cost.toFixed(6) }}</span>
+            <span class="text-gray-400">{{ "原始" }}</span>
+            <span class="font-medium text-white"
+              >${{ tooltipData?.total_cost.toFixed(6) }}</span
+            >
           </div>
-          <div class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5">
-            <span class="text-gray-400">{{ '计费' }}</span>
+          <div
+            class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5"
+          >
+            <span class="text-gray-400">{{ "计费" }}</span>
             <span class="font-semibold text-green-400"
               >${{ tooltipData?.actual_cost.toFixed(6) }}</span
             >
@@ -429,306 +536,317 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, onMounted } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { usageAPI, keysAPI } from '@/api'
-import type { UsageLog, ApiKey, UsageQueryParams, UsageStatsResponse } from '@/types'
-import type { Column } from '@/components/common/types'
+import { ref, computed, reactive, onMounted } from "vue";
+import { useAppStore } from "@/stores/app";
+import { usageAPI, keysAPI } from "@/api";
+import type {
+  UsageLog,
+  ApiKey,
+  UsageQueryParams,
+  UsageStatsResponse,
+} from "@/types";
+import type { Column } from "@/components/common/types";
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
-let abortController: AbortController | null = null
+let abortController: AbortController | null = null;
 
 // Tooltip state
-const tooltipVisible = ref(false)
-const tooltipPosition = ref({ x: 0, y: 0 })
-const tooltipData = ref<UsageLog | null>(null)
+const tooltipVisible = ref(false);
+const tooltipPosition = ref({ x: 0, y: 0 });
+const tooltipData = ref<UsageLog | null>(null);
 
 // Token tooltip state
-const tokenTooltipVisible = ref(false)
-const tokenTooltipPosition = ref({ x: 0, y: 0 })
-const tokenTooltipData = ref<UsageLog | null>(null)
+const tokenTooltipVisible = ref(false);
+const tokenTooltipPosition = ref({ x: 0, y: 0 });
+const tokenTooltipData = ref<UsageLog | null>(null);
 
 // Usage stats from API
-const usageStats = ref<UsageStatsResponse | null>(null)
+const usageStats = ref<UsageStatsResponse | null>(null);
 
 const columns = computed<Column[]>(() => [
-  { key: 'api_key', label: 'API 密钥', sortable: false },
-  { key: 'model', label: '模型', sortable: true },
-  { key: 'stream', label: '类型', sortable: false },
-  { key: 'tokens', label: 'Token', sortable: false },
-  { key: 'cost', label: '费用', sortable: false },
-  { key: 'first_token', label: '首 Token', sortable: false },
-  { key: 'duration', label: '耗时', sortable: false },
-  { key: 'created_at', label: '时间', sortable: true },
-  { key: 'user_agent', label: 'User-Agent', sortable: false }
-])
+  { key: "api_key", label: "API 密钥", sortable: false },
+  { key: "model", label: "模型", sortable: true },
+  { key: "stream", label: "类型", sortable: false },
+  { key: "tokens", label: "Token", sortable: false },
+  { key: "cost", label: "费用", sortable: false },
+  { key: "first_token", label: "首 Token", sortable: false },
+  { key: "duration", label: "耗时", sortable: false },
+  { key: "created_at", label: "时间", sortable: true },
+  { key: "user_agent", label: "User-Agent", sortable: false },
+]);
 
-const usageLogs = ref<UsageLog[]>([])
-const apiKeys = ref<ApiKey[]>([])
-const loading = ref(false)
-const exporting = ref(false)
+const usageLogs = ref<UsageLog[]>([]);
+const apiKeys = ref<ApiKey[]>([]);
+const loading = ref(false);
+const exporting = ref(false);
 
 const apiKeyOptions = computed(() => {
   return [
-    { value: null, label: '全部密钥' },
+    { value: null, label: "全部密钥" },
     ...apiKeys.value.map((key) => ({
       value: key.id,
-      label: key.name
-    }))
-  ]
-})
+      label: key.name,
+    })),
+  ];
+});
 
 // Helper function to format date in local timezone
 const formatLocalDate = (date: Date): string => {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-}
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+};
 
 // Initialize date range immediately
-const now = new Date()
-const weekAgo = new Date(now)
-weekAgo.setDate(weekAgo.getDate() - 6)
+const now = new Date();
+const weekAgo = new Date(now);
+weekAgo.setDate(weekAgo.getDate() - 6);
 
 // Date range state
-const startDate = ref(formatLocalDate(weekAgo))
-const endDate = ref(formatLocalDate(now))
+const startDate = ref(formatLocalDate(weekAgo));
+const endDate = ref(formatLocalDate(now));
 
 const filters = ref<UsageQueryParams>({
   api_key_id: undefined,
   start_date: undefined,
-  end_date: undefined
-})
+  end_date: undefined,
+});
 
 // Initialize filters with date range
-filters.value.start_date = startDate.value
-filters.value.end_date = endDate.value
+filters.value.start_date = startDate.value;
+filters.value.end_date = endDate.value;
 
 // Handle date range change from DateRangePicker
 const onDateRangeChange = (range: {
-  startDate: string
-  endDate: string
-  preset: string | null
+  startDate: string;
+  endDate: string;
+  preset: string | null;
 }) => {
-  filters.value.start_date = range.startDate
-  filters.value.end_date = range.endDate
-  applyFilters()
-}
+  filters.value.start_date = range.startDate;
+  filters.value.end_date = range.endDate;
+  applyFilters();
+};
 
 const pagination = reactive({
   page: 1,
   page_size: 20,
   total: 0,
-  pages: 0
-})
+  pages: 0,
+});
 
 const formatDuration = (ms: number): string => {
-  if (ms < 1000) return `${ms.toFixed(0)}ms`
-  return `${(ms / 1000).toFixed(2)}s`
-}
+  if (ms < 1000) return `${ms.toFixed(0)}ms`;
+  return `${(ms / 1000).toFixed(2)}s`;
+};
 
 const formatUserAgent = (ua: string): string => {
   // 提取主要客户端标识
-  if (ua.includes('claude-cli')) return ua.match(/claude-cli\/[\d.]+/)?.[0] || 'Claude CLI'
-  if (ua.includes('Cursor')) return 'Cursor'
-  if (ua.includes('VSCode') || ua.includes('vscode')) return 'VS Code'
-  if (ua.includes('Continue')) return 'Continue'
-  if (ua.includes('Cline')) return 'Cline'
-  if (ua.includes('OpenAI')) return 'OpenAI SDK'
-  if (ua.includes('anthropic')) return 'Anthropic SDK'
+  if (ua.includes("claude-cli"))
+    return ua.match(/claude-cli\/[\d.]+/)?.[0] || "Claude CLI";
+  if (ua.includes("Cursor")) return "Cursor";
+  if (ua.includes("VSCode") || ua.includes("vscode")) return "VS Code";
+  if (ua.includes("Continue")) return "Continue";
+  if (ua.includes("Cline")) return "Cline";
+  if (ua.includes("OpenAI")) return "OpenAI SDK";
+  if (ua.includes("anthropic")) return "Anthropic SDK";
   // 截断过长的 UA
-  return ua.length > 30 ? ua.substring(0, 30) + '...' : ua
-}
+  return ua.length > 30 ? ua.substring(0, 30) + "..." : ua;
+};
 
 const formatTokens = (value: number): string => {
   if (value >= 1_000_000_000) {
-    return `${(value / 1_000_000_000).toFixed(2)}B`
+    return `${(value / 1_000_000_000).toFixed(2)}B`;
   } else if (value >= 1_000_000) {
-    return `${(value / 1_000_000).toFixed(2)}M`
+    return `${(value / 1_000_000).toFixed(2)}M`;
   } else if (value >= 1_000) {
-    return `${(value / 1_000).toFixed(2)}K`
+    return `${(value / 1_000).toFixed(2)}K`;
   }
-  return value.toLocaleString()
-}
+  return value.toLocaleString();
+};
 
 // Compact format for cache tokens in table cells
 const formatCacheTokens = (value: number): string => {
   if (value >= 1_000_000) {
-    return `${(value / 1_000_000).toFixed(1)}M`
+    return `${(value / 1_000_000).toFixed(1)}M`;
   } else if (value >= 1_000) {
-    return `${(value / 1_000).toFixed(1)}K`
+    return `${(value / 1_000).toFixed(1)}K`;
   }
-  return value.toLocaleString()
-}
+  return value.toLocaleString();
+};
 
 const loadUsageLogs = async () => {
   if (abortController) {
-    abortController.abort()
+    abortController.abort();
   }
-  const currentAbortController = new AbortController()
-  abortController = currentAbortController
-  const { signal } = currentAbortController
-  loading.value = true
+  const currentAbortController = new AbortController();
+  abortController = currentAbortController;
+  const { signal } = currentAbortController;
+  loading.value = true;
   try {
     const params: UsageQueryParams = {
       page: pagination.page,
       page_size: pagination.page_size,
-      ...filters.value
-    }
+      ...filters.value,
+    };
 
-    const response = await usageAPI.query(params, { signal })
+    const response = await usageAPI.query(params, { signal });
     if (signal.aborted) {
-      return
+      return;
     }
-    usageLogs.value = response.items
-    pagination.total = response.total
-    pagination.pages = response.pages
+    usageLogs.value = response.items;
+    pagination.total = response.total;
+    pagination.pages = response.pages;
   } catch (error) {
     if (signal.aborted) {
-      return
+      return;
     }
-    const abortError = error as { name?: string; code?: string }
-    if (abortError?.name === 'AbortError' || abortError?.code === 'ERR_CANCELED') {
-      return
+    const abortError = error as { name?: string; code?: string };
+    if (
+      abortError?.name === "AbortError" ||
+      abortError?.code === "ERR_CANCELED"
+    ) {
+      return;
     }
-    appStore.showError('加载使用记录失败')
+    appStore.showError("加载使用记录失败");
   } finally {
     if (abortController === currentAbortController) {
-      loading.value = false
+      loading.value = false;
     }
   }
-}
+};
 
 const loadApiKeys = async () => {
   try {
-    const response = await keysAPI.list(1, 100)
-    apiKeys.value = response.items
+    const response = await keysAPI.list(1, 100);
+    apiKeys.value = response.items;
   } catch (error) {
-    console.error('Failed to load API keys:', error)
+    console.error("Failed to load API keys:", error);
   }
-}
+};
 
 const loadUsageStats = async () => {
   try {
-    const apiKeyId = filters.value.api_key_id ? Number(filters.value.api_key_id) : undefined
+    const apiKeyId = filters.value.api_key_id
+      ? Number(filters.value.api_key_id)
+      : undefined;
     const stats = await usageAPI.getStatsByDateRange(
       filters.value.start_date || startDate.value,
       filters.value.end_date || endDate.value,
-      apiKeyId
-    )
-    usageStats.value = stats
+      apiKeyId,
+    );
+    usageStats.value = stats;
   } catch (error) {
-    console.error('Failed to load usage stats:', error)
+    console.error("Failed to load usage stats:", error);
   }
-}
+};
 
 const applyFilters = () => {
-  pagination.page = 1
-  loadUsageLogs()
-  loadUsageStats()
-}
+  pagination.page = 1;
+  loadUsageLogs();
+  loadUsageStats();
+};
 
 const resetFilters = () => {
   filters.value = {
     api_key_id: undefined,
     start_date: undefined,
-    end_date: undefined
-  }
+    end_date: undefined,
+  };
   // Reset date range to default (last 7 days)
-  const now = new Date()
-  const weekAgo = new Date(now)
-  weekAgo.setDate(weekAgo.getDate() - 6)
-  startDate.value = formatLocalDate(weekAgo)
-  endDate.value = formatLocalDate(now)
-  filters.value.start_date = startDate.value
-  filters.value.end_date = endDate.value
-  pagination.page = 1
-  loadUsageLogs()
-  loadUsageStats()
-}
+  const now = new Date();
+  const weekAgo = new Date(now);
+  weekAgo.setDate(weekAgo.getDate() - 6);
+  startDate.value = formatLocalDate(weekAgo);
+  endDate.value = formatLocalDate(now);
+  filters.value.start_date = startDate.value;
+  filters.value.end_date = endDate.value;
+  pagination.page = 1;
+  loadUsageLogs();
+  loadUsageStats();
+};
 
 const handlePageChange = (page: number) => {
-  pagination.page = page
-  loadUsageLogs()
-}
+  pagination.page = page;
+  loadUsageLogs();
+};
 
 const handlePageSizeChange = (pageSize: number) => {
-  pagination.page_size = pageSize
-  pagination.page = 1
-  loadUsageLogs()
-}
+  pagination.page_size = pageSize;
+  pagination.page = 1;
+  loadUsageLogs();
+};
 
 /**
  * Escape CSV value to prevent injection and handle special characters
  */
 const escapeCSVValue = (value: unknown): string => {
-  if (value == null) return ''
+  if (value == null) return "";
 
-  const str = String(value)
-  const escaped = str.replace(/"/g, '""')
+  const str = String(value);
+  const escaped = str.replace(/"/g, '""');
 
   // Prevent formula injection by prefixing dangerous characters with single quote
   if (/^[=+\-@\t\r]/.test(str)) {
-    return `"\'${escaped}"`
+    return `"\'${escaped}"`;
   }
 
   // Escape values containing comma, quote, or newline
   if (/[,"\n\r]/.test(str)) {
-    return `"${escaped}"`
+    return `"${escaped}"`;
   }
 
-  return str
-}
+  return str;
+};
 
 const exportToCSV = async () => {
   if (pagination.total === 0) {
-    appStore.showWarning('没有可导出的数据')
-    return
+    appStore.showWarning("没有可导出的数据");
+    return;
   }
 
-  exporting.value = true
-  appStore.showInfo('正在准备导出...')
+  exporting.value = true;
+  appStore.showInfo("正在准备导出...");
 
   try {
-    const allLogs: UsageLog[] = []
-    const pageSize = 100 // Use a larger page size for export to reduce requests
-    const totalRequests = Math.ceil(pagination.total / pageSize)
+    const allLogs: UsageLog[] = [];
+    const pageSize = 100; // Use a larger page size for export to reduce requests
+    const totalRequests = Math.ceil(pagination.total / pageSize);
 
     for (let page = 1; page <= totalRequests; page++) {
       const params: UsageQueryParams = {
         page: page,
         page_size: pageSize,
-        ...filters.value
-      }
-      const response = await usageAPI.query(params)
-      allLogs.push(...response.items)
+        ...filters.value,
+      };
+      const response = await usageAPI.query(params);
+      allLogs.push(...response.items);
     }
 
     if (allLogs.length === 0) {
-      appStore.showWarning('没有可导出的数据')
-      return
+      appStore.showWarning("没有可导出的数据");
+      return;
     }
 
     const headers = [
-      'Time',
-      'API Key Name',
-      'Model',
-      'Type',
-      'Input Tokens',
-      'Output Tokens',
-      'Cache Read Tokens',
-      'Cache Creation Tokens',
-      'Rate Multiplier',
-      'Billed Cost',
-      'Original Cost',
-      'First Token (ms)',
-      'Duration (ms)'
-    ]
+      "Time",
+      "API Key Name",
+      "Model",
+      "Type",
+      "Input Tokens",
+      "Output Tokens",
+      "Cache Read Tokens",
+      "Cache Creation Tokens",
+      "Rate Multiplier",
+      "Billed Cost",
+      "Original Cost",
+      "First Token (ms)",
+      "Duration (ms)",
+    ];
     const rows = allLogs.map((log) =>
       [
         log.created_at,
-        log.api_key?.name || '',
+        log.api_key?.name || "",
         log.model,
-        log.stream ? 'Stream' : 'Sync',
+        log.stream ? "Stream" : "Sync",
         log.input_tokens,
         log.output_tokens,
         log.cache_read_tokens,
@@ -736,69 +854,69 @@ const exportToCSV = async () => {
         log.rate_multiplier,
         log.actual_cost.toFixed(8),
         log.total_cost.toFixed(8),
-        log.first_token_ms ?? '',
-        log.duration_ms
-      ].map(escapeCSVValue)
-    )
+        log.first_token_ms ?? "",
+        log.duration_ms,
+      ].map(escapeCSVValue),
+    );
 
     const csvContent = [
-      headers.map(escapeCSVValue).join(','),
-      ...rows.map((row) => row.join(','))
-    ].join('\n')
+      headers.map(escapeCSVValue).join(","),
+      ...rows.map((row) => row.join(",")),
+    ].join("\n");
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const url = window.URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `usage_${filters.value.start_date}_to_${filters.value.end_date}.csv`
-    link.click()
-    window.URL.revokeObjectURL(url)
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `usage_${filters.value.start_date}_to_${filters.value.end_date}.csv`;
+    link.click();
+    window.URL.revokeObjectURL(url);
 
-    appStore.showSuccess('使用数据导出成功')
+    appStore.showSuccess("使用数据导出成功");
   } catch (error) {
-    appStore.showError('使用数据导出失败')
-    console.error('CSV Export failed:', error)
+    appStore.showError("使用数据导出失败");
+    console.error("CSV Export failed:", error);
   } finally {
-    exporting.value = false
+    exporting.value = false;
   }
-}
+};
 
 // Tooltip functions
 const showTooltip = (event: MouseEvent, row: UsageLog) => {
-  const target = event.currentTarget as HTMLElement
-  const rect = target.getBoundingClientRect()
+  const target = event.currentTarget as HTMLElement;
+  const rect = target.getBoundingClientRect();
 
-  tooltipData.value = row
+  tooltipData.value = row;
   // Position to the right of the icon, vertically centered
-  tooltipPosition.value.x = rect.right + 8
-  tooltipPosition.value.y = rect.top + rect.height / 2
-  tooltipVisible.value = true
-}
+  tooltipPosition.value.x = rect.right + 8;
+  tooltipPosition.value.y = rect.top + rect.height / 2;
+  tooltipVisible.value = true;
+};
 
 const hideTooltip = () => {
-  tooltipVisible.value = false
-  tooltipData.value = null
-}
+  tooltipVisible.value = false;
+  tooltipData.value = null;
+};
 
 // Token tooltip functions
 const showTokenTooltip = (event: MouseEvent, row: UsageLog) => {
-  const target = event.currentTarget as HTMLElement
-  const rect = target.getBoundingClientRect()
+  const target = event.currentTarget as HTMLElement;
+  const rect = target.getBoundingClientRect();
 
-  tokenTooltipData.value = row
-  tokenTooltipPosition.value.x = rect.right + 8
-  tokenTooltipPosition.value.y = rect.top + rect.height / 2
-  tokenTooltipVisible.value = true
-}
+  tokenTooltipData.value = row;
+  tokenTooltipPosition.value.x = rect.right + 8;
+  tokenTooltipPosition.value.y = rect.top + rect.height / 2;
+  tokenTooltipVisible.value = true;
+};
 
 const hideTokenTooltip = () => {
-  tokenTooltipVisible.value = false
-  tokenTooltipData.value = null
-}
+  tokenTooltipVisible.value = false;
+  tokenTooltipData.value = null;
+};
 
 onMounted(() => {
-  loadApiKeys()
-  loadUsageLogs()
-  loadUsageStats()
-})
+  loadApiKeys();
+  loadUsageLogs();
+  loadUsageStats();
+});
 </script>

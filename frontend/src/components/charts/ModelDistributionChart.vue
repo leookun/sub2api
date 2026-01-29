@@ -1,12 +1,15 @@
 <template>
   <div class="card p-4">
     <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
-      {{ '模型分布' }}
+      {{ "模型分布" }}
     </h3>
     <div v-if="loading" class="flex h-48 items-center justify-center">
       <LoadingSpinner />
     </div>
-    <div v-else-if="modelStats.length > 0 && chartData" class="flex items-center gap-6">
+    <div
+      v-else-if="modelStats.length > 0 && chartData"
+      class="flex items-center gap-6"
+    >
       <div class="h-48 w-48">
         <Doughnut :data="chartData" :options="doughnutOptions" />
       </div>
@@ -14,11 +17,11 @@
         <table class="w-full text-xs">
           <thead>
             <tr class="text-gray-500 dark:text-gray-400">
-              <th class="pb-2 text-left">{{ '模型' }}</th>
-              <th class="pb-2 text-right">{{ '请求' }}</th>
-              <th class="pb-2 text-right">{{ 'Token' }}</th>
-              <th class="pb-2 text-right">{{ '实际' }}</th>
-              <th class="pb-2 text-right">{{ '标准' }}</th>
+              <th class="pb-2 text-left">{{ "模型" }}</th>
+              <th class="pb-2 text-right">{{ "请求" }}</th>
+              <th class="pb-2 text-right">{{ "Token" }}</th>
+              <th class="pb-2 text-right">{{ "实际" }}</th>
+              <th class="pb-2 text-right">{{ "标准" }}</th>
             </tr>
           </thead>
           <tbody>
@@ -54,38 +57,38 @@
       v-else
       class="flex h-48 items-center justify-center text-sm text-gray-500 dark:text-gray-400"
     >
-      {{ '暂无数据' }}
+      {{ "暂无数据" }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import type { ModelStat } from '@/types'
+import { computed } from "vue";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import type { ModelStat } from "@/types";
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const props = defineProps<{
-  modelStats: ModelStat[]
-  loading?: boolean
-}>()
+  modelStats: ModelStat[];
+  loading?: boolean;
+}>();
 
 const chartColors = [
-  '#3b82f6',
-  '#10b981',
-  '#f59e0b',
-  '#ef4444',
-  '#8b5cf6',
-  '#ec4899',
-  '#14b8a6',
-  '#f97316',
-  '#6366f1',
-  '#84cc16'
-]
+  "#3b82f6",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#ec4899",
+  "#14b8a6",
+  "#f97316",
+  "#6366f1",
+  "#84cc16",
+];
 
 const chartData = computed(() => {
-  if (!props.modelStats?.length) return null
+  if (!props.modelStats?.length) return null;
 
   return {
     labels: props.modelStats.map((m) => m.model),
@@ -93,55 +96,58 @@ const chartData = computed(() => {
       {
         data: props.modelStats.map((m) => m.total_tokens),
         backgroundColor: chartColors.slice(0, props.modelStats.length),
-        borderWidth: 0
-      }
-    ]
-  }
-})
+        borderWidth: 0,
+      },
+    ],
+  };
+});
 
 const doughnutOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      display: false
+      display: false,
     },
     tooltip: {
       callbacks: {
         label: (context: any) => {
-          const value = context.raw as number
-          const total = context.dataset.data.reduce((a: number, b: number) => a + b, 0)
-          const percentage = ((value / total) * 100).toFixed(1)
-          return `${context.label}: ${formatTokens(value)} (${percentage}%)`
-        }
-      }
-    }
-  }
-}))
+          const value = context.raw as number;
+          const total = context.dataset.data.reduce(
+            (a: number, b: number) => a + b,
+            0,
+          );
+          const percentage = ((value / total) * 100).toFixed(1);
+          return `${context.label}: ${formatTokens(value)} (${percentage}%)`;
+        },
+      },
+    },
+  },
+}));
 
 const formatTokens = (value: number): string => {
   if (value >= 1_000_000_000) {
-    return `${(value / 1_000_000_000).toFixed(2)}B`
+    return `${(value / 1_000_000_000).toFixed(2)}B`;
   } else if (value >= 1_000_000) {
-    return `${(value / 1_000_000).toFixed(2)}M`
+    return `${(value / 1_000_000).toFixed(2)}M`;
   } else if (value >= 1_000) {
-    return `${(value / 1_000).toFixed(2)}K`
+    return `${(value / 1_000).toFixed(2)}K`;
   }
-  return value.toLocaleString()
-}
+  return value.toLocaleString();
+};
 
 const formatNumber = (value: number): string => {
-  return value.toLocaleString()
-}
+  return value.toLocaleString();
+};
 
 const formatCost = (value: number): string => {
   if (value >= 1000) {
-    return (value / 1000).toFixed(2) + 'K'
+    return (value / 1000).toFixed(2) + "K";
   } else if (value >= 1) {
-    return value.toFixed(2)
+    return value.toFixed(2);
   } else if (value >= 0.01) {
-    return value.toFixed(3)
+    return value.toFixed(3);
   }
-  return value.toFixed(4)
-}
+  return value.toFixed(4);
+};
 </script>

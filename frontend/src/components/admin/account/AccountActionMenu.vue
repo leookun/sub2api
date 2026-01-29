@@ -10,32 +10,80 @@
       >
         <div class="py-1">
           <template v-if="account">
-            <button class="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-dark-700" @click="$emit('test', account); $emit('close')">
-              <Icon name="play" size="sm" class="text-green-500" :stroke-width="2" />
-              {{ '测试连接' }}
+            <button
+              class="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-dark-700"
+              @click="
+                $emit('test', account);
+                $emit('close');
+              "
+            >
+              <Icon
+                name="play"
+                size="sm"
+                class="text-green-500"
+                :stroke-width="2"
+              />
+              {{ "测试连接" }}
             </button>
-            <button class="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-dark-700" @click="$emit('stats', account); $emit('close')">
+            <button
+              class="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-dark-700"
+              @click="
+                $emit('stats', account);
+                $emit('close');
+              "
+            >
               <Icon name="chart" size="sm" class="text-indigo-500" />
-              {{ '查看统计' }}
+              {{ "查看统计" }}
             </button>
-            <template v-if="account.type === 'oauth' || account.type === 'setup-token'">
-              <button class="flex w-full items-center gap-2 px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 dark:hover:bg-dark-700" @click="$emit('reauth', account); $emit('close')">
+            <template
+              v-if="account.type === 'oauth' || account.type === 'setup-token'"
+            >
+              <button
+                class="flex w-full items-center gap-2 px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 dark:hover:bg-dark-700"
+                @click="
+                  $emit('reauth', account);
+                  $emit('close');
+                "
+              >
                 <Icon name="link" size="sm" />
-                {{ '重新授权' }}
+                {{ "重新授权" }}
               </button>
-              <button class="flex w-full items-center gap-2 px-4 py-2 text-sm text-purple-600 hover:bg-gray-100 dark:hover:bg-dark-700" @click="$emit('refresh-token', account); $emit('close')">
+              <button
+                class="flex w-full items-center gap-2 px-4 py-2 text-sm text-purple-600 hover:bg-gray-100 dark:hover:bg-dark-700"
+                @click="
+                  $emit('refresh-token', account);
+                  $emit('close');
+                "
+              >
                 <Icon name="refresh" size="sm" />
-                {{ '刷新令牌' }}
+                {{ "刷新令牌" }}
               </button>
             </template>
-            <div v-if="account.status === 'error' || isRateLimited || isOverloaded" class="my-1 border-t border-gray-100 dark:border-dark-700"></div>
-            <button v-if="account.status === 'error'" class="flex w-full items-center gap-2 px-4 py-2 text-sm text-yellow-600 hover:bg-gray-100 dark:hover:bg-dark-700" @click="$emit('reset-status', account); $emit('close')">
+            <div
+              v-if="account.status === 'error' || isRateLimited || isOverloaded"
+              class="my-1 border-t border-gray-100 dark:border-dark-700"
+            ></div>
+            <button
+              v-if="account.status === 'error'"
+              class="flex w-full items-center gap-2 px-4 py-2 text-sm text-yellow-600 hover:bg-gray-100 dark:hover:bg-dark-700"
+              @click="
+                $emit('reset-status', account);
+                $emit('close');
+              "
+            >
               <Icon name="sync" size="sm" />
-              {{ '重置状态' }}
+              {{ "重置状态" }}
             </button>
-            <button v-if="isRateLimited || isOverloaded" class="flex w-full items-center gap-2 px-4 py-2 text-sm text-amber-600 hover:bg-gray-100 dark:hover:bg-dark-700" @click="$emit('clear-rate-limit', account); $emit('close')">
+            <button
+              v-if="isRateLimited || isOverloaded"
+              class="flex w-full items-center gap-2 px-4 py-2 text-sm text-amber-600 hover:bg-gray-100 dark:hover:bg-dark-700"
+              @click="
+                $emit('clear-rate-limit', account);
+                $emit('close');
+              "
+            >
               <Icon name="clock" size="sm" />
-              {{ '清除速率限制' }}
+              {{ "清除速率限制" }}
             </button>
           </template>
         </div>
@@ -45,31 +93,51 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, onUnmounted } from 'vue'
-import type { Account } from '@/types'
+import { computed, watch, onUnmounted } from "vue";
+import type { Account } from "@/types";
 
-const props = defineProps<{ show: boolean; account: Account | null; position: { top: number; left: number } | null }>()
-const emit = defineEmits(['close', 'test', 'stats', 'reauth', 'refresh-token', 'reset-status', 'clear-rate-limit'])
-const isRateLimited = computed(() => props.account?.rate_limit_reset_at && new Date(props.account.rate_limit_reset_at) > new Date())
-const isOverloaded = computed(() => props.account?.overload_until && new Date(props.account.overload_until) > new Date())
+const props = defineProps<{
+  show: boolean;
+  account: Account | null;
+  position: { top: number; left: number } | null;
+}>();
+const emit = defineEmits([
+  "close",
+  "test",
+  "stats",
+  "reauth",
+  "refresh-token",
+  "reset-status",
+  "clear-rate-limit",
+]);
+const isRateLimited = computed(
+  () =>
+    props.account?.rate_limit_reset_at &&
+    new Date(props.account.rate_limit_reset_at) > new Date(),
+);
+const isOverloaded = computed(
+  () =>
+    props.account?.overload_until &&
+    new Date(props.account.overload_until) > new Date(),
+);
 
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Escape') emit('close')
-}
+  if (event.key === "Escape") emit("close");
+};
 
 watch(
   () => props.show,
   (visible) => {
     if (visible) {
-      window.addEventListener('keydown', handleKeydown)
+      window.addEventListener("keydown", handleKeydown);
     } else {
-      window.removeEventListener('keydown', handleKeydown)
+      window.removeEventListener("keydown", handleKeydown);
     }
   },
-  { immediate: true }
-)
+  { immediate: true },
+);
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown)
-})
+  window.removeEventListener("keydown", handleKeydown);
+});
 </script>

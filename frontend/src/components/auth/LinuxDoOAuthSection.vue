@@ -1,6 +1,11 @@
 <template>
   <div class="space-y-4">
-    <button type="button" :disabled="disabled" class="btn btn-secondary w-full" @click="startLogin">
+    <button
+      type="button"
+      :disabled="disabled"
+      class="btn btn-secondary w-full"
+      @click="startLogin"
+    >
       <svg
         class="icon mr-2"
         viewBox="0 0 16 16"
@@ -26,13 +31,13 @@
           ></path>
         </g>
       </svg>
-      {{ '使用 Linux.do 登录' }}
+      {{ "使用 Linux.do 登录" }}
     </button>
 
     <div class="flex items-center gap-3">
       <div class="h-px flex-1 bg-gray-200 dark:bg-dark-700"></div>
       <span class="text-xs text-gray-500 dark:text-dark-400">
-        {{ '或使用邮箱密码继续' }}
+        {{ "或使用邮箱密码继续" }}
       </span>
       <div class="h-px flex-1 bg-gray-200 dark:bg-dark-700"></div>
     </div>
@@ -40,18 +45,18 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router";
 defineProps<{
-  disabled?: boolean
-}>()
+  disabled?: boolean;
+}>();
 
-const route = useRoute()
+const route = useRoute();
 function startLogin(): void {
-  const redirectTo = (route.query.redirect as string) || '/dashboard'
-  const apiBase = (import.meta.env.VITE_API_BASE_URL as string | undefined) || '/api/v1'
-  const normalized = apiBase.replace(/\/$/, '')
-  const startURL = `${normalized}/auth/oauth/linuxdo/start?redirect=${encodeURIComponent(redirectTo)}`
-  window.location.href = startURL
+  const redirectTo = (route.query.redirect as string) || "/dashboard";
+  const apiBase =
+    (import.meta.env.VITE_API_BASE_URL as string | undefined) || "/api/v1";
+  const normalized = apiBase.replace(/\/$/, "");
+  const startURL = `${normalized}/auth/oauth/linuxdo/start?redirect=${encodeURIComponent(redirectTo)}`;
+  window.location.href = startURL;
 }
 </script>
-

@@ -6,23 +6,55 @@
       <div class="space-y-4">
         <div class="card p-4">
           <div class="flex items-center gap-4">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ '粒度' }}:</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >{{ "粒度" }}:</span
+            >
             <div class="w-28">
-              <Select v-model="granularity" :options="granularityOptions" @change="loadChartData" />
+              <Select
+                v-model="granularity"
+                :options="granularityOptions"
+                @change="loadChartData"
+              />
             </div>
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <ModelDistributionChart :model-stats="modelStats" :loading="chartsLoading" />
+          <ModelDistributionChart
+            :model-stats="modelStats"
+            :loading="chartsLoading"
+          />
           <TokenUsageTrend :trend-data="trendData" :loading="chartsLoading" />
         </div>
       </div>
-      <UsageFilters v-model="filters" v-model:start-date="startDate" v-model:end-date="endDate" :exporting="exporting" @change="applyFilters" @reset="resetFilters" @cleanup="openCleanupDialog" @export="exportToExcel" />
+      <UsageFilters
+        v-model="filters"
+        v-model:start-date="startDate"
+        v-model:end-date="endDate"
+        :exporting="exporting"
+        @change="applyFilters"
+        @reset="resetFilters"
+        @cleanup="openCleanupDialog"
+        @export="exportToExcel"
+      />
       <UsageTable :data="usageLogs" :loading="loading" />
-      <Pagination v-if="pagination.total > 0" :page="pagination.page" :total="pagination.total" :page-size="pagination.page_size" @update:page="handlePageChange" @update:pageSize="handlePageSizeChange" />
+      <Pagination
+        v-if="pagination.total > 0"
+        :page="pagination.page"
+        :total="pagination.total"
+        :page-size="pagination.page_size"
+        @update:page="handlePageChange"
+        @update:pageSize="handlePageSizeChange"
+      />
     </div>
   </AppLayout>
-  <UsageExportProgress :show="exportProgress.show" :progress="exportProgress.progress" :current="exportProgress.current" :total="exportProgress.total" :estimated-time="exportProgress.estimatedTime" @cancel="cancelExport" />
+  <UsageExportProgress
+    :show="exportProgress.show"
+    :progress="exportProgress.progress"
+    :current="exportProgress.current"
+    :total="exportProgress.total"
+    :estimated-time="exportProgress.estimatedTime"
+    @cancel="cancelExport"
+  />
   <UsageCleanupDialog
     :show="cleanupDialogVisible"
     :filters="filters"
@@ -33,117 +65,277 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { saveAs } from 'file-saver'
-import { useAppStore } from '@/stores/app'; import { adminAPI } from '@/api/admin'; import { adminUsageAPI } from '@/api/admin/usage'
-import type { AdminUsageLog, TrendDataPoint, ModelStat } from '@/types'; import type { AdminUsageStatsResponse, AdminUsageQueryParams } from '@/api/admin/usage'
+import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
+import { saveAs } from "file-saver";
+import { useAppStore } from "@/stores/app";
+import { adminAPI } from "@/api/admin";
+import { adminUsageAPI } from "@/api/admin/usage";
+import type { AdminUsageLog, TrendDataPoint, ModelStat } from "@/types";
+import type {
+  AdminUsageStatsResponse,
+  AdminUsageQueryParams,
+} from "@/api/admin/usage";
 
-const appStore = useAppStore()
-const usageStats = ref<AdminUsageStatsResponse | null>(null); const usageLogs = ref<AdminUsageLog[]>([]); const loading = ref(false); const exporting = ref(false)
-const trendData = ref<TrendDataPoint[]>([]); const modelStats = ref<ModelStat[]>([]); const chartsLoading = ref(false); const granularity = ref<'day' | 'hour'>('day')
-let abortController: AbortController | null = null; let exportAbortController: AbortController | null = null
-const exportProgress = reactive({ show: false, progress: 0, current: 0, total: 0, estimatedTime: '' })
-const cleanupDialogVisible = ref(false)
+const appStore = useAppStore();
+const usageStats = ref<AdminUsageStatsResponse | null>(null);
+const usageLogs = ref<AdminUsageLog[]>([]);
+const loading = ref(false);
+const exporting = ref(false);
+const trendData = ref<TrendDataPoint[]>([]);
+const modelStats = ref<ModelStat[]>([]);
+const chartsLoading = ref(false);
+const granularity = ref<"day" | "hour">("day");
+let abortController: AbortController | null = null;
+let exportAbortController: AbortController | null = null;
+const exportProgress = reactive({
+  show: false,
+  progress: 0,
+  current: 0,
+  total: 0,
+  estimatedTime: "",
+});
+const cleanupDialogVisible = ref(false);
 
-const granularityOptions = computed(() => [{ value: 'day', label: '按天' }, { value: 'hour', label: '按小时' }])
+const granularityOptions = computed(() => [
+  { value: "day", label: "按天" },
+  { value: "hour", label: "按小时" },
+]);
 // Use local timezone to avoid UTC timezone issues
 const formatLD = (d: Date) => {
-  const year = d.getFullYear()
-  const month = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-const now = new Date(); const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 6)
-const startDate = ref(formatLD(weekAgo)); const endDate = ref(formatLD(now))
-const filters = ref<AdminUsageQueryParams>({ user_id: undefined, model: undefined, group_id: undefined, billing_type: null, start_date: startDate.value, end_date: endDate.value })
-const pagination = reactive({ page: 1, page_size: 20, total: 0 })
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+const now = new Date();
+const weekAgo = new Date();
+weekAgo.setDate(weekAgo.getDate() - 6);
+const startDate = ref(formatLD(weekAgo));
+const endDate = ref(formatLD(now));
+const filters = ref<AdminUsageQueryParams>({
+  user_id: undefined,
+  model: undefined,
+  group_id: undefined,
+  billing_type: null,
+  start_date: startDate.value,
+  end_date: endDate.value,
+});
+const pagination = reactive({ page: 1, page_size: 20, total: 0 });
 
 const loadLogs = async () => {
-  abortController?.abort(); const c = new AbortController(); abortController = c; loading.value = true
+  abortController?.abort();
+  const c = new AbortController();
+  abortController = c;
+  loading.value = true;
   try {
-    const res = await adminAPI.usage.list({ page: pagination.page, page_size: pagination.page_size, ...filters.value }, { signal: c.signal })
-    if(!c.signal.aborted) { usageLogs.value = res.items; pagination.total = res.total }
-  } catch (error: any) { if(error?.name !== 'AbortError') console.error('Failed to load usage logs:', error) } finally { if(abortController === c) loading.value = false }
-}
-const loadStats = async () => { try { const s = await adminAPI.usage.getStats(filters.value); usageStats.value = s } catch (error) { console.error('Failed to load usage stats:', error) } }
+    const res = await adminAPI.usage.list(
+      {
+        page: pagination.page,
+        page_size: pagination.page_size,
+        ...filters.value,
+      },
+      { signal: c.signal },
+    );
+    if (!c.signal.aborted) {
+      usageLogs.value = res.items;
+      pagination.total = res.total;
+    }
+  } catch (error: any) {
+    if (error?.name !== "AbortError")
+      console.error("Failed to load usage logs:", error);
+  } finally {
+    if (abortController === c) loading.value = false;
+  }
+};
+const loadStats = async () => {
+  try {
+    const s = await adminAPI.usage.getStats(filters.value);
+    usageStats.value = s;
+  } catch (error) {
+    console.error("Failed to load usage stats:", error);
+  }
+};
 const loadChartData = async () => {
-  chartsLoading.value = true
+  chartsLoading.value = true;
   try {
-    const params = { start_date: filters.value.start_date || startDate.value, end_date: filters.value.end_date || endDate.value, granularity: granularity.value, user_id: filters.value.user_id, model: filters.value.model, api_key_id: filters.value.api_key_id, account_id: filters.value.account_id, group_id: filters.value.group_id, stream: filters.value.stream, billing_type: filters.value.billing_type }
-    const [trendRes, modelRes] = await Promise.all([adminAPI.dashboard.getUsageTrend(params), adminAPI.dashboard.getModelStats({ start_date: params.start_date, end_date: params.end_date, user_id: params.user_id, model: params.model, api_key_id: params.api_key_id, account_id: params.account_id, group_id: params.group_id, stream: params.stream, billing_type: params.billing_type })])
-    trendData.value = trendRes.trend || []; modelStats.value = modelRes.models || []
-  } catch (error) { console.error('Failed to load chart data:', error) } finally { chartsLoading.value = false }
-}
-const applyFilters = () => { pagination.page = 1; loadLogs(); loadStats(); loadChartData() }
-const resetFilters = () => { startDate.value = formatLD(weekAgo); endDate.value = formatLD(now); filters.value = { start_date: startDate.value, end_date: endDate.value, billing_type: null }; granularity.value = 'day'; applyFilters() }
-const handlePageChange = (p: number) => { pagination.page = p; loadLogs() }
-const handlePageSizeChange = (s: number) => { pagination.page_size = s; pagination.page = 1; loadLogs() }
-const cancelExport = () => exportAbortController?.abort()
-const openCleanupDialog = () => { cleanupDialogVisible.value = true }
+    const params = {
+      start_date: filters.value.start_date || startDate.value,
+      end_date: filters.value.end_date || endDate.value,
+      granularity: granularity.value,
+      user_id: filters.value.user_id,
+      model: filters.value.model,
+      api_key_id: filters.value.api_key_id,
+      account_id: filters.value.account_id,
+      group_id: filters.value.group_id,
+      stream: filters.value.stream,
+      billing_type: filters.value.billing_type,
+    };
+    const [trendRes, modelRes] = await Promise.all([
+      adminAPI.dashboard.getUsageTrend(params),
+      adminAPI.dashboard.getModelStats({
+        start_date: params.start_date,
+        end_date: params.end_date,
+        user_id: params.user_id,
+        model: params.model,
+        api_key_id: params.api_key_id,
+        account_id: params.account_id,
+        group_id: params.group_id,
+        stream: params.stream,
+        billing_type: params.billing_type,
+      }),
+    ]);
+    trendData.value = trendRes.trend || [];
+    modelStats.value = modelRes.models || [];
+  } catch (error) {
+    console.error("Failed to load chart data:", error);
+  } finally {
+    chartsLoading.value = false;
+  }
+};
+const applyFilters = () => {
+  pagination.page = 1;
+  loadLogs();
+  loadStats();
+  loadChartData();
+};
+const resetFilters = () => {
+  startDate.value = formatLD(weekAgo);
+  endDate.value = formatLD(now);
+  filters.value = {
+    start_date: startDate.value,
+    end_date: endDate.value,
+    billing_type: null,
+  };
+  granularity.value = "day";
+  applyFilters();
+};
+const handlePageChange = (p: number) => {
+  pagination.page = p;
+  loadLogs();
+};
+const handlePageSizeChange = (s: number) => {
+  pagination.page_size = s;
+  pagination.page = 1;
+  loadLogs();
+};
+const cancelExport = () => exportAbortController?.abort();
+const openCleanupDialog = () => {
+  cleanupDialogVisible.value = true;
+};
 
 const exportToExcel = async () => {
-  if (exporting.value) return; exporting.value = true; exportProgress.show = true
-  const c = new AbortController(); exportAbortController = c
+  if (exporting.value) return;
+  exporting.value = true;
+  exportProgress.show = true;
+  const c = new AbortController();
+  exportAbortController = c;
   try {
-    const all: AdminUsageLog[] = []; let p = 1; let total = pagination.total
+    const all: AdminUsageLog[] = [];
+    let p = 1;
+    let total = pagination.total;
     while (true) {
-      const res = await adminUsageAPI.list({ page: p, page_size: 100, ...filters.value }, { signal: c.signal })
-      if (c.signal.aborted) break; if (p === 1) { total = res.total; exportProgress.total = total }
-      if (res.items?.length) all.push(...res.items)
-      exportProgress.current = all.length; exportProgress.progress = total > 0 ? Math.min(100, Math.round(all.length/total*100)) : 0
-      if (all.length >= total || res.items.length < 100) break; p++
+      const res = await adminUsageAPI.list(
+        { page: p, page_size: 100, ...filters.value },
+        { signal: c.signal },
+      );
+      if (c.signal.aborted) break;
+      if (p === 1) {
+        total = res.total;
+        exportProgress.total = total;
+      }
+      if (res.items?.length) all.push(...res.items);
+      exportProgress.current = all.length;
+      exportProgress.progress =
+        total > 0 ? Math.min(100, Math.round((all.length / total) * 100)) : 0;
+      if (all.length >= total || res.items.length < 100) break;
+      p++;
     }
-    if(!c.signal.aborted) {
-      const XLSX = await import('xlsx')
+    if (!c.signal.aborted) {
+      const XLSX = await import("xlsx");
       const headers = [
-        '时间', '用户', 'API 密钥',
-        '账户', '模型', '分组',
-        '类型',
-        '输入 Token', '输出 Token',
-        '缓存读取 Token', '缓存创建 Token',
-        '输入成本', '输出成本',
-        '缓存读取成本', '缓存创建成本',
-        '倍率', '账号倍率', '原始', '用户扣费', '账号计费',
-        '首 Token', '耗时',
-        '请求ID', 'User-Agent', 'IP'
-      ]
-      const rows = all.map(log => [
+        "时间",
+        "用户",
+        "API 密钥",
+        "账户",
+        "模型",
+        "分组",
+        "类型",
+        "输入 Token",
+        "输出 Token",
+        "缓存读取 Token",
+        "缓存创建 Token",
+        "输入成本",
+        "输出成本",
+        "缓存读取成本",
+        "缓存创建成本",
+        "倍率",
+        "账号倍率",
+        "原始",
+        "用户扣费",
+        "账号计费",
+        "首 Token",
+        "耗时",
+        "请求ID",
+        "User-Agent",
+        "IP",
+      ];
+      const rows = all.map((log) => [
         log.created_at,
-        log.user?.email || '',
-        log.api_key?.name || '',
-        log.account?.name || '',
+        log.user?.email || "",
+        log.api_key?.name || "",
+        log.account?.name || "",
         log.model,
-        log.group?.name || '',
-        log.stream ? '流式' : '同步',
+        log.group?.name || "",
+        log.stream ? "流式" : "同步",
         log.input_tokens,
         log.output_tokens,
         log.cache_read_tokens,
         log.cache_creation_tokens,
-        log.input_cost?.toFixed(6) || '0.000000',
-        log.output_cost?.toFixed(6) || '0.000000',
-        log.cache_read_cost?.toFixed(6) || '0.000000',
-        log.cache_creation_cost?.toFixed(6) || '0.000000',
-        log.rate_multiplier?.toFixed(2) || '1.00',
+        log.input_cost?.toFixed(6) || "0.000000",
+        log.output_cost?.toFixed(6) || "0.000000",
+        log.cache_read_cost?.toFixed(6) || "0.000000",
+        log.cache_creation_cost?.toFixed(6) || "0.000000",
+        log.rate_multiplier?.toFixed(2) || "1.00",
         (log.account_rate_multiplier ?? 1).toFixed(2),
-        log.total_cost?.toFixed(6) || '0.000000',
-        log.actual_cost?.toFixed(6) || '0.000000',
+        log.total_cost?.toFixed(6) || "0.000000",
+        log.actual_cost?.toFixed(6) || "0.000000",
         (log.total_cost * (log.account_rate_multiplier ?? 1)).toFixed(6),
-        log.first_token_ms ?? '',
+        log.first_token_ms ?? "",
         log.duration_ms,
-        log.request_id || '',
-        log.user_agent || '',
-        log.ip_address || ''
-      ])
-      const ws = XLSX.utils.aoa_to_sheet([headers, ...rows])
-      const wb = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(wb, ws, 'Usage')
-      saveAs(new Blob([XLSX.write(wb, { bookType: 'xlsx', type: 'array' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), `usage_${filters.value.start_date}_to_${filters.value.end_date}.xlsx`)
-      appStore.showSuccess('使用数据导出成功')
+        log.request_id || "",
+        log.user_agent || "",
+        log.ip_address || "",
+      ]);
+      const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Usage");
+      saveAs(
+        new Blob([XLSX.write(wb, { bookType: "xlsx", type: "array" })], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        }),
+        `usage_${filters.value.start_date}_to_${filters.value.end_date}.xlsx`,
+      );
+      appStore.showSuccess("使用数据导出成功");
     }
-  } catch (error) { console.error('Failed to export:', error); appStore.showError('Export Failed') }
-  finally { if(exportAbortController === c) { exportAbortController = null; exporting.value = false; exportProgress.show = false } }
-}
+  } catch (error) {
+    console.error("Failed to export:", error);
+    appStore.showError("Export Failed");
+  } finally {
+    if (exportAbortController === c) {
+      exportAbortController = null;
+      exporting.value = false;
+      exportProgress.show = false;
+    }
+  }
+};
 
-onMounted(() => { loadLogs(); loadStats(); loadChartData() })
-onUnmounted(() => { abortController?.abort(); exportAbortController?.abort() })
+onMounted(() => {
+  loadLogs();
+  loadStats();
+  loadChartData();
+});
+onUnmounted(() => {
+  abortController?.abort();
+  exportAbortController?.abort();
+});
 </script>

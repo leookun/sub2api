@@ -1,200 +1,209 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { opsAPI, type OpsErrorLog } from '@/api/admin/ops'
+import { computed, ref, watch } from "vue";
+import { opsAPI, type OpsErrorLog } from "@/api/admin/ops";
 
 interface Props {
-  show: boolean
-  timeRange: string
-  platform?: string
-  groupId?: number | null
-  errorType: 'request' | 'upstream'
+  show: boolean;
+  timeRange: string;
+  platform?: string;
+  groupId?: number | null;
+  errorType: "request" | "upstream";
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 const emit = defineEmits<{
-  (e: 'update:show', value: boolean): void
-  (e: 'openErrorDetail', errorId: number): void
-}>()
+  (e: "update:show", value: boolean): void;
+  (e: "openErrorDetail", errorId: number): void;
+}>();
 
-const loading = ref(false)
-const rows = ref<OpsErrorLog[]>([])
-const total = ref(0)
-const page = ref(1)
-const pageSize = ref(10)
+const loading = ref(false);
+const rows = ref<OpsErrorLog[]>([]);
+const total = ref(0);
+const page = ref(1);
+const pageSize = ref(10);
 
-const q = ref('')
-const statusCode = ref<number | 'other' | null>(null)
-const phase = ref<string>('')
-const errorOwner = ref<string>('')
-const viewMode = ref<'errors' | 'excluded' | 'all'>('errors')
-
+const q = ref("");
+const statusCode = ref<number | "other" | null>(null);
+const phase = ref<string>("");
+const errorOwner = ref<string>("");
+const viewMode = ref<"errors" | "excluded" | "all">("errors");
 
 const modalTitle = computed(() => {
-  return props.errorType === 'upstream' ? '上游错误' : '请求错误'
-})
+  return props.errorType === "upstream" ? "上游错误" : "请求错误";
+});
 
 const statusCodeSelectOptions = computed(() => {
-  const codes = [400, 401, 403, 404, 409, 422, 429, 500, 502, 503, 504, 529]
+  const codes = [400, 401, 403, 404, 409, 422, 429, 500, 502, 503, 504, 529];
   return [
-    { value: null, label: '全部' },
+    { value: null, label: "全部" },
     ...codes.map((c) => ({ value: c, label: String(c) })),
-    { value: 'other', label: '其他' }
-  ]
-})
+    { value: "other", label: "其他" },
+  ];
+});
 
 const ownerSelectOptions = computed(() => {
   return [
-    { value: '', label: '全部' },
-    { value: 'provider', label: '服务商' },
-    { value: 'client', label: '客户端' },
-    { value: 'platform', label: '平台' }
-  ]
-})
-
+    { value: "", label: "全部" },
+    { value: "provider", label: "服务商" },
+    { value: "client", label: "客户端" },
+    { value: "platform", label: "平台" },
+  ];
+});
 
 const viewModeSelectOptions = computed(() => {
   return [
-    { value: 'errors', label: '错误' },
-    { value: 'excluded', label: '排除项' },
-    { value: 'all', label: '全部' }
-  ]
-})
+    { value: "errors", label: "错误" },
+    { value: "excluded", label: "排除项" },
+    { value: "all", label: "全部" },
+  ];
+});
 
 const phaseSelectOptions = computed(() => {
   const options = [
-    { value: '', label: '全部' },
-    { value: 'request', label: '请求' },
-    { value: 'auth', label: '认证' },
-    { value: 'routing', label: '路由' },
-    { value: 'upstream', label: '上游' },
-    { value: 'network', label: '网络' },
-    { value: 'internal', label: '内部' }
-  ]
-  return options
-})
+    { value: "", label: "全部" },
+    { value: "request", label: "请求" },
+    { value: "auth", label: "认证" },
+    { value: "routing", label: "路由" },
+    { value: "upstream", label: "上游" },
+    { value: "network", label: "网络" },
+    { value: "internal", label: "内部" },
+  ];
+  return options;
+});
 
 function close() {
-  emit('update:show', false)
+  emit("update:show", false);
 }
 
 async function fetchErrorLogs() {
-  if (!props.show) return
+  if (!props.show) return;
 
-  loading.value = true
+  loading.value = true;
   try {
     const params: Record<string, any> = {
       page: page.value,
       page_size: pageSize.value,
       time_range: props.timeRange,
-      view: viewMode.value
-    }
+      view: viewMode.value,
+    };
 
-    const platform = String(props.platform || '').trim()
-    if (platform) params.platform = platform
-    if (typeof props.groupId === 'number' && props.groupId > 0) params.group_id = props.groupId
+    const platform = String(props.platform || "").trim();
+    if (platform) params.platform = platform;
+    if (typeof props.groupId === "number" && props.groupId > 0)
+      params.group_id = props.groupId;
 
-    if (q.value.trim()) params.q = q.value.trim()
-    if (statusCode.value === 'other') params.status_codes_other = '1'
-    else if (typeof statusCode.value === 'number') params.status_codes = String(statusCode.value)
+    if (q.value.trim()) params.q = q.value.trim();
+    if (statusCode.value === "other") params.status_codes_other = "1";
+    else if (typeof statusCode.value === "number")
+      params.status_codes = String(statusCode.value);
 
-    const phaseVal = String(phase.value || '').trim()
-    if (phaseVal) params.phase = phaseVal
+    const phaseVal = String(phase.value || "").trim();
+    if (phaseVal) params.phase = phaseVal;
 
-    const ownerVal = String(errorOwner.value || '').trim()
-    if (ownerVal) params.error_owner = ownerVal
+    const ownerVal = String(errorOwner.value || "").trim();
+    if (ownerVal) params.error_owner = ownerVal;
 
-
-    const res = props.errorType === 'upstream'
-      ? await opsAPI.listUpstreamErrors(params)
-      : await opsAPI.listRequestErrors(params)
-    rows.value = res.items || []
-    total.value = res.total || 0
+    const res =
+      props.errorType === "upstream"
+        ? await opsAPI.listUpstreamErrors(params)
+        : await opsAPI.listRequestErrors(params);
+    rows.value = res.items || [];
+    total.value = res.total || 0;
   } catch (err) {
-    console.error('[OpsErrorDetailsModal] Failed to fetch error logs', err)
-    rows.value = []
-    total.value = 0
+    console.error("[OpsErrorDetailsModal] Failed to fetch error logs", err);
+    rows.value = [];
+    total.value = 0;
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
-  function resetFilters() {
-    q.value = ''
-    statusCode.value = null
-    phase.value = props.errorType === 'upstream' ? 'upstream' : ''
-    errorOwner.value = ''
-    viewMode.value = 'errors'
-    page.value = 1
-    fetchErrorLogs()
-  }
-
+function resetFilters() {
+  q.value = "";
+  statusCode.value = null;
+  phase.value = props.errorType === "upstream" ? "upstream" : "";
+  errorOwner.value = "";
+  viewMode.value = "errors";
+  page.value = 1;
+  fetchErrorLogs();
+}
 
 watch(
   () => props.show,
   (open) => {
-    if (!open) return
-    page.value = 1
-    pageSize.value = 10
-    resetFilters()
-  }
-)
+    if (!open) return;
+    page.value = 1;
+    pageSize.value = 10;
+    resetFilters();
+  },
+);
 
 watch(
   () => [props.timeRange, props.platform, props.groupId] as const,
   () => {
-    if (!props.show) return
-    page.value = 1
-    fetchErrorLogs()
-  }
-)
+    if (!props.show) return;
+    page.value = 1;
+    fetchErrorLogs();
+  },
+);
 
 watch(
   () => [page.value, pageSize.value] as const,
   () => {
-    if (!props.show) return
-    fetchErrorLogs()
-  }
-)
+    if (!props.show) return;
+    fetchErrorLogs();
+  },
+);
 
-let searchTimeout: number | null = null
+let searchTimeout: number | null = null;
 watch(
   () => q.value,
   () => {
-    if (!props.show) return
-    if (searchTimeout) window.clearTimeout(searchTimeout)
+    if (!props.show) return;
+    if (searchTimeout) window.clearTimeout(searchTimeout);
     searchTimeout = window.setTimeout(() => {
-      page.value = 1
-      fetchErrorLogs()
-    }, 350)
-  }
-)
+      page.value = 1;
+      fetchErrorLogs();
+    }, 350);
+  },
+);
 
 watch(
-  () => [statusCode.value, phase.value, errorOwner.value, viewMode.value] as const,
+  () =>
+    [statusCode.value, phase.value, errorOwner.value, viewMode.value] as const,
   () => {
-    if (!props.show) return
-    page.value = 1
-    fetchErrorLogs()
-  }
-)
+    if (!props.show) return;
+    page.value = 1;
+    fetchErrorLogs();
+  },
+);
 </script>
 
 <template>
   <BaseDialog :show="show" :title="modalTitle" width="full" @close="close">
     <div class="flex h-full min-h-0 flex-col">
       <!-- Filters -->
-      <div class="mb-4 flex-shrink-0 border-b border-gray-200 pb-4 dark:border-dark-700">
+      <div
+        class="mb-4 flex-shrink-0 border-b border-gray-200 pb-4 dark:border-dark-700"
+      >
         <div class="grid grid-cols-8 gap-2">
           <div class="col-span-2 compact-select">
             <div class="relative group">
-              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <div
+                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+              >
                 <svg
                   class="h-3.5 w-3.5 text-gray-400 transition-colors group-focus-within:text-blue-500"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </div>
               <input
@@ -207,26 +216,44 @@ watch(
           </div>
 
           <div class="compact-select">
-            <Select :model-value="statusCode" :options="statusCodeSelectOptions" @update:model-value="statusCode = $event as any" />
+            <Select
+              :model-value="statusCode"
+              :options="statusCodeSelectOptions"
+              @update:model-value="statusCode = $event as any"
+            />
           </div>
 
           <div class="compact-select">
-            <Select :model-value="phase" :options="phaseSelectOptions" @update:model-value="phase = String($event ?? '')" />
+            <Select
+              :model-value="phase"
+              :options="phaseSelectOptions"
+              @update:model-value="phase = String($event ?? '')"
+            />
           </div>
 
           <div class="compact-select">
-            <Select :model-value="errorOwner" :options="ownerSelectOptions" @update:model-value="errorOwner = String($event ?? '')" />
+            <Select
+              :model-value="errorOwner"
+              :options="ownerSelectOptions"
+              @update:model-value="errorOwner = String($event ?? '')"
+            />
           </div>
 
-
-
           <div class="compact-select">
-            <Select :model-value="viewMode" :options="viewModeSelectOptions" @update:model-value="viewMode = $event as any" />
+            <Select
+              :model-value="viewMode"
+              :options="viewModeSelectOptions"
+              @update:model-value="viewMode = $event as any"
+            />
           </div>
 
           <div class="flex items-center justify-end">
-            <button type="button" class="rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600" @click="resetFilters">
-              {{ '重置' }}
+            <button
+              type="button"
+              class="rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
+              @click="resetFilters"
+            >
+              {{ "重置" }}
             </button>
           </div>
         </div>
@@ -234,23 +261,24 @@ watch(
 
       <!-- Body -->
       <div class="flex min-h-0 flex-1 flex-col">
-        <div class="mb-2 flex-shrink-0 text-xs text-gray-500 dark:text-gray-400">
-          {{ '总计：' }} {{ total }}
+        <div
+          class="mb-2 flex-shrink-0 text-xs text-gray-500 dark:text-gray-400"
+        >
+          {{ "总计：" }} {{ total }}
         </div>
 
-          <OpsErrorLogTable
-            class="min-h-0 flex-1"
-            :rows="rows"
-            :total="total"
-            :loading="loading"
-            :page="page"
-            :page-size="pageSize"
-            @openErrorDetail="emit('openErrorDetail', $event)"
-
-            @update:page="page = $event"
-            @update:pageSize="pageSize = $event"
-          />
-</div>
+        <OpsErrorLogTable
+          class="min-h-0 flex-1"
+          :rows="rows"
+          :total="total"
+          :loading="loading"
+          :page="page"
+          :page-size="pageSize"
+          @openErrorDetail="emit('openErrorDetail', $event)"
+          @update:page="page = $event"
+          @update:pageSize="pageSize = $event"
+        />
+      </div>
     </div>
   </BaseDialog>
 </template>

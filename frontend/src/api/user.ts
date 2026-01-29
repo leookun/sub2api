@@ -3,16 +3,16 @@
  * Handles user profile management and password changes
  */
 
-import { apiClient } from './client'
-import type { User, ChangePasswordRequest } from '@/types'
+import { apiClient } from "./client";
+import type { User, ChangePasswordRequest } from "@/types";
 
 /**
  * Get current user profile
  * @returns User profile data
  */
 export async function getProfile(): Promise<User> {
-  const { data } = await apiClient.get<User>('/user/profile')
-  return data
+  const { data } = await apiClient.get<User>("/user/profile");
+  return data;
 }
 
 /**
@@ -21,10 +21,10 @@ export async function getProfile(): Promise<User> {
  * @returns Updated user profile data
  */
 export async function updateProfile(profile: {
-  username?: string
+  username?: string;
 }): Promise<User> {
-  const { data } = await apiClient.put<User>('/user', profile)
-  return data
+  const { data } = await apiClient.put<User>("/user", profile);
+  return data;
 }
 
 /**
@@ -34,21 +34,24 @@ export async function updateProfile(profile: {
  */
 export async function changePassword(
   oldPassword: string,
-  newPassword: string
+  newPassword: string,
 ): Promise<{ message: string }> {
   const payload: ChangePasswordRequest = {
     old_password: oldPassword,
-    new_password: newPassword
-  }
+    new_password: newPassword,
+  };
 
-  const { data } = await apiClient.put<{ message: string }>('/user/password', payload)
-  return data
+  const { data } = await apiClient.put<{ message: string }>(
+    "/user/password",
+    payload,
+  );
+  return data;
 }
 
 export const userAPI = {
   getProfile,
   updateProfile,
-  changePassword
-}
+  changePassword,
+};
 
-export default userAPI
+export default userAPI;

@@ -2,9 +2,15 @@
   <div>
     <!-- Loading state -->
     <div v-if="loading" class="space-y-0.5">
-      <div class="h-3 w-12 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
-      <div class="h-3 w-16 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
-      <div class="h-3 w-10 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
+      <div
+        class="h-3 w-12 animate-pulse rounded bg-gray-200 dark:bg-gray-700"
+      ></div>
+      <div
+        class="h-3 w-16 animate-pulse rounded bg-gray-200 dark:bg-gray-700"
+      ></div>
+      <div
+        class="h-3 w-10 animate-pulse rounded bg-gray-200 dark:bg-gray-700"
+      ></div>
     </div>
 
     <!-- Error state -->
@@ -16,32 +22,28 @@
     <div v-else-if="stats" class="space-y-0.5 text-xs">
       <!-- Requests -->
       <div class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400"
-          >{{ '请求' }}:</span
-        >
+        <span class="text-gray-500 dark:text-gray-400">{{ "请求" }}:</span>
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatNumber(stats.requests)
         }}</span>
       </div>
       <!-- Tokens -->
       <div class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400"
-          >{{ 'Token' }}:</span
-        >
+        <span class="text-gray-500 dark:text-gray-400">{{ "Token" }}:</span>
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatTokens(stats.tokens)
         }}</span>
       </div>
       <!-- Cost (Account) -->
       <div class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400">{{ '账号计费' }}:</span>
+        <span class="text-gray-500 dark:text-gray-400">{{ "账号计费" }}:</span>
         <span class="font-medium text-emerald-600 dark:text-emerald-400">{{
           formatCurrency(stats.cost)
         }}</span>
       </div>
       <!-- Cost (User/API Key) -->
       <div v-if="stats.user_cost != null" class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400">{{ '用户扣费' }}:</span>
+        <span class="text-gray-500 dark:text-gray-400">{{ "用户扣费" }}:</span>
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatCurrency(stats.user_cost)
         }}</span>
@@ -54,43 +56,43 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { adminAPI } from '@/api/admin'
-import type { Account, WindowStats } from '@/types'
+import { ref, onMounted } from "vue";
+import { adminAPI } from "@/api/admin";
+import type { Account, WindowStats } from "@/types";
 
 const props = defineProps<{
-  account: Account
-}>()
+  account: Account;
+}>();
 
-const loading = ref(false)
-const error = ref<string | null>(null)
-const stats = ref<WindowStats | null>(null)
+const loading = ref(false);
+const error = ref<string | null>(null);
+const stats = ref<WindowStats | null>(null);
 
 // Format large token numbers (e.g., 1234567 -> 1.23M)
 const formatTokens = (tokens: number): string => {
   if (tokens >= 1000000) {
-    return `${(tokens / 1000000).toFixed(2)}M`
+    return `${(tokens / 1000000).toFixed(2)}M`;
   } else if (tokens >= 1000) {
-    return `${(tokens / 1000).toFixed(1)}K`
+    return `${(tokens / 1000).toFixed(1)}K`;
   }
-  return tokens.toString()
-}
+  return tokens.toString();
+};
 
 const loadStats = async () => {
-  loading.value = true
-  error.value = null
+  loading.value = true;
+  error.value = null;
 
   try {
-    stats.value = await adminAPI.accounts.getTodayStats(props.account.id)
+    stats.value = await adminAPI.accounts.getTodayStats(props.account.id);
   } catch (e: any) {
-    error.value = 'Failed'
-    console.error('Failed to load today stats:', e)
+    error.value = "Failed";
+    console.error("Failed to load today stats:", e);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 onMounted(() => {
-  loadStats()
-})
+  loadStats();
+});
 </script>

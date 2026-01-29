@@ -8,25 +8,27 @@
  * @param date 日期字符串或 Date 对象
  * @returns 相对时间字符串，如 "5m ago", "2h ago", "3d ago"
  */
-export function formatRelativeTime(date: string | Date | null | undefined): string {
-  if (!date) return '从未'
+export function formatRelativeTime(
+  date: string | Date | null | undefined,
+): string {
+  if (!date) return "从未";
 
-  const now = new Date()
-  const past = new Date(date)
-  const diffMs = now.getTime() - past.getTime()
+  const now = new Date();
+  const past = new Date(date);
+  const diffMs = now.getTime() - past.getTime();
 
   // 处理未来时间或无效日期
-  if (diffMs < 0 || isNaN(diffMs)) return '从未'
+  if (diffMs < 0 || isNaN(diffMs)) return "从未";
 
-  const diffSecs = Math.floor(diffMs / 1000)
-  const diffMins = Math.floor(diffSecs / 60)
-  const diffHours = Math.floor(diffMins / 60)
-  const diffDays = Math.floor(diffHours / 24)
+  const diffSecs = Math.floor(diffMs / 1000);
+  const diffMins = Math.floor(diffSecs / 60);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
 
-  if (diffDays > 0) return `${diffDays}天前`
-  if (diffHours > 0) return `${diffHours}小时前`
-  if (diffMins > 0) return `${diffMins}分钟前`
-  return '刚刚'
+  if (diffDays > 0) return `${diffDays}天前`;
+  if (diffHours > 0) return `${diffHours}小时前`;
+  if (diffMins > 0) return `${diffMins}分钟前`;
+  return "刚刚";
 }
 
 /**
@@ -35,18 +37,18 @@ export function formatRelativeTime(date: string | Date | null | undefined): stri
  * @returns 格式化后的字符串，如 "1.2K", "3.5M"
  */
 export function formatNumber(num: number | null | undefined): string {
-  if (num === null || num === undefined) return '0'
+  if (num === null || num === undefined) return "0";
 
-  const absNum = Math.abs(num)
+  const absNum = Math.abs(num);
 
   // Use Intl.NumberFormat for compact notation if supported and needed
   // Note: Compact notation in 'zh' uses '万/亿', which is appropriate for Chinese
-  const formatter = new Intl.NumberFormat('zh-CN', {
-    notation: absNum >= 10000 ? 'compact' : 'standard',
-    maximumFractionDigits: 1
-  })
+  const formatter = new Intl.NumberFormat("zh-CN", {
+    notation: absNum >= 10000 ? "compact" : "standard",
+    maximumFractionDigits: 1,
+  });
 
-  return formatter.format(num)
+  return formatter.format(num);
 }
 
 /**
@@ -55,18 +57,21 @@ export function formatNumber(num: number | null | undefined): string {
  * @param currency 货币代码，默认 USD
  * @returns 格式化后的字符串，如 "$1.25"
  */
-export function formatCurrency(amount: number | null | undefined, currency: string = 'USD'): string {
-  if (amount === null || amount === undefined) return '$0.00'
+export function formatCurrency(
+  amount: number | null | undefined,
+  currency: string = "USD",
+): string {
+  if (amount === null || amount === undefined) return "$0.00";
 
   // For very small amounts, show more decimals
-  const fractionDigits = amount > 0 && amount < 0.01 ? 6 : 2
+  const fractionDigits = amount > 0 && amount < 0.01 ? 6 : 2;
 
-  return new Intl.NumberFormat('zh-CN', {
-    style: 'currency',
+  return new Intl.NumberFormat("zh-CN", {
+    style: "currency",
     currency: currency,
     minimumFractionDigits: fractionDigits,
-    maximumFractionDigits: fractionDigits
-  }).format(amount)
+    maximumFractionDigits: fractionDigits,
+  }).format(amount);
 }
 
 /**
@@ -76,15 +81,15 @@ export function formatCurrency(amount: number | null | undefined, currency: stri
  * @returns 格式化后的字符串，如 "1.5 MB"
  */
 export function formatBytes(bytes: number, decimals: number = 2): string {
-  if (bytes === 0) return '0 Bytes'
+  if (bytes === 0) return "0 Bytes";
 
-  const k = 1024
-  const dm = decimals < 0 ? 0 : decimals
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
 
 /**
@@ -97,23 +102,23 @@ export function formatBytes(bytes: number, decimals: number = 2): string {
 export function formatDate(
   date: string | Date | null | undefined,
   options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
   },
-  localeOverride?: string
+  localeOverride?: string,
 ): string {
-  if (!date) return ''
+  if (!date) return "";
 
-  const d = new Date(date)
-  if (isNaN(d.getTime())) return ''
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "";
 
-  const locale = localeOverride ?? 'zh-CN'
-  return new Intl.DateTimeFormat(locale, options).format(d)
+  const locale = localeOverride ?? "zh-CN";
+  return new Intl.DateTimeFormat(locale, options).format(d);
 }
 
 /**
@@ -123,10 +128,10 @@ export function formatDate(
  */
 export function formatDateOnly(date: string | Date | null | undefined): string {
   return formatDate(date, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  })
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
 }
 
 /**
@@ -139,34 +144,36 @@ export function formatDateOnly(date: string | Date | null | undefined): string {
 export function formatDateTime(
   date: string | Date | null | undefined,
   options?: Intl.DateTimeFormatOptions,
-  localeOverride?: string
+  localeOverride?: string,
 ): string {
-  return formatDate(date, options, localeOverride)
+  return formatDate(date, options, localeOverride);
 }
 
 /**
  * 格式化为 datetime-local 控件值（YYYY-MM-DDTHH:mm，使用本地时间）
  */
-export function formatDateTimeLocalInput(timestampSeconds: number | null): string {
-  if (!timestampSeconds) return ''
-  const date = new Date(timestampSeconds * 1000)
-  if (isNaN(date.getTime())) return ''
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
-  return `${year}-${month}-${day}T${hours}:${minutes}`
+export function formatDateTimeLocalInput(
+  timestampSeconds: number | null,
+): string {
+  if (!timestampSeconds) return "";
+  const date = new Date(timestampSeconds * 1000);
+  if (isNaN(date.getTime())) return "";
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
 /**
  * 解析 datetime-local 控件值为时间戳（秒，使用本地时间）
  */
 export function parseDateTimeLocalInput(value: string): number | null {
-  if (!value) return null
-  const date = new Date(value)
-  if (isNaN(date.getTime())) return null
-  return Math.floor(date.getTime() / 1000)
+  if (!value) return null;
+  const date = new Date(value);
+  if (isNaN(date.getTime())) return null;
+  return Math.floor(date.getTime() / 1000);
 }
 
 /**
@@ -176,10 +183,10 @@ export function parseDateTimeLocalInput(value: string): number | null {
  */
 export function formatTime(date: string | Date | null | undefined): string {
   return formatDate(date, {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  })
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 }
 
 /**
@@ -188,7 +195,7 @@ export function formatTime(date: string | Date | null | undefined): string {
  * @returns 格式化后的字符串，如 "12,345"
  */
 export function formatNumberLocaleString(num: number): string {
-  return num.toLocaleString()
+  return num.toLocaleString();
 }
 
 /**
@@ -197,8 +204,27 @@ export function formatNumberLocaleString(num: number): string {
  * @param fractionDigits 小数位数，默认 4
  * @returns 格式化后的字符串，如 "1.2345"
  */
-export function formatCostFixed(amount: number, fractionDigits: number = 4): string {
-  return amount.toFixed(fractionDigits)
+export function formatCostFixed(
+  amount: number,
+  fractionDigits: number = 4,
+): string {
+  return amount.toFixed(fractionDigits);
+}
+
+/**
+ * 格式化金额（简化格式，>=1000 显示为 K）
+ * @param amount 金额
+ * @returns 格式化后的字符串，如 "1.23K", "456.78"
+ */
+export function formatCost(amount: number | null | undefined): string {
+  if (amount === null || amount === undefined) return "0";
+  if (amount >= 1000) {
+    return (amount / 1000).toFixed(2) + "K";
+  } else if (amount >= 1) {
+    return amount.toFixed(2);
+  } else {
+    return amount.toFixed(4);
+  }
 }
 
 /**
@@ -207,9 +233,9 @@ export function formatCostFixed(amount: number, fractionDigits: number = 4): str
  * @returns 格式化后的字符串，如 "950", "1.2K", "3.5M"
  */
 export function formatTokensK(tokens: number): string {
-  if (tokens >= 1_000_000) return `${(tokens / 1_000_000).toFixed(1)}M`
-  if (tokens >= 1000) return `${(tokens / 1000).toFixed(1)}K`
-  return tokens.toString()
+  if (tokens >= 1_000_000) return `${(tokens / 1_000_000).toFixed(1)}M`;
+  if (tokens >= 1000) return `${(tokens / 1000).toFixed(1)}K`;
+  return tokens.toString();
 }
 
 /**
@@ -217,33 +243,35 @@ export function formatTokensK(tokens: number): string {
  * @param targetDate 目标日期字符串或 Date 对象
  * @returns 倒计时字符串，如 "2h 41m", "3d 5h", "15m"
  */
-export function formatCountdown(targetDate: string | Date | null | undefined): string | null {
-  if (!targetDate) return null
+export function formatCountdown(
+  targetDate: string | Date | null | undefined,
+): string | null {
+  if (!targetDate) return null;
 
-  const now = new Date()
-  const target = new Date(targetDate)
-  const diffMs = target.getTime() - now.getTime()
+  const now = new Date();
+  const target = new Date(targetDate);
+  const diffMs = target.getTime() - now.getTime();
 
   // 如果目标时间已过或无效
-  if (diffMs <= 0 || isNaN(diffMs)) return null
+  if (diffMs <= 0 || isNaN(diffMs)) return null;
 
-  const diffMins = Math.floor(diffMs / (1000 * 60))
-  const diffHours = Math.floor(diffMins / 60)
-  const diffDays = Math.floor(diffHours / 24)
+  const diffMins = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
 
-  const remainingHours = diffHours % 24
-  const remainingMins = diffMins % 60
+  const remainingHours = diffHours % 24;
+  const remainingMins = diffMins % 60;
 
   if (diffDays > 0) {
     // 超过1天：显示 "Xd Yh"
-    return `${diffDays}d ${remainingHours}h`
+    return `${diffDays}d ${remainingHours}h`;
   }
   if (diffHours > 0) {
     // 小于1天：显示 "Xh Ym"
-    return `${diffHours}h ${remainingMins}m`
+    return `${diffHours}h ${remainingMins}m`;
   }
   // 小于1小时：显示 "Ym"
-  return `${diffMins}m`
+  return `${diffMins}m`;
 }
 
 /**
@@ -251,8 +279,10 @@ export function formatCountdown(targetDate: string | Date | null | undefined): s
  * @param targetDate 目标日期字符串或 Date 对象
  * @returns 完整的倒计时字符串，如 "2h 41m to lift", "2小时41分钟后解除"
  */
-export function formatCountdownWithSuffix(targetDate: string | Date | null | undefined): string | null {
-  const countdown = formatCountdown(targetDate)
-  if (!countdown) return null
-  return `${countdown} 后解除`
+export function formatCountdownWithSuffix(
+  targetDate: string | Date | null | undefined,
+): string | null {
+  const countdown = formatCountdown(targetDate);
+  if (!countdown) return null;
+  return `${countdown} 后解除`;
 }

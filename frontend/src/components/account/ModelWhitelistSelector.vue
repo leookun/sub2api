@@ -25,10 +25,24 @@
             </button>
           </span>
         </div>
-        <div class="mt-2 flex items-center justify-between border-t border-gray-200 pt-2 dark:border-dark-600">
-          <span class="text-xs text-gray-400">{{ `${modelValue.length} 个模型` }}</span>
-          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        <div
+          class="mt-2 flex items-center justify-between border-t border-gray-200 pt-2 dark:border-dark-600"
+        >
+          <span class="text-xs text-gray-400">{{
+            `${modelValue.length} 个模型`
+          }}</span>
+          <svg
+            class="h-5 w-5 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </div>
       </div>
@@ -37,7 +51,9 @@
         v-if="showDropdown"
         class="absolute left-0 right-0 top-full z-50 mt-1 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-dark-600 dark:bg-dark-700"
       >
-        <div class="sticky top-0 border-b border-gray-200 bg-white p-2 dark:border-dark-600 dark:bg-dark-700">
+        <div
+          class="sticky top-0 border-b border-gray-200 bg-white p-2 dark:border-dark-600 dark:bg-dark-700"
+        >
           <input
             v-model="searchQuery"
             type="text"
@@ -59,18 +75,34 @@
                 'flex h-4 w-4 shrink-0 items-center justify-center rounded border',
                 modelValue.includes(model.value)
                   ? 'border-primary-500 bg-primary-500 text-white'
-                  : 'border-gray-300 dark:border-dark-500'
+                  : 'border-gray-300 dark:border-dark-500',
               ]"
             >
-              <svg v-if="modelValue.includes(model.value)" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+              <svg
+                v-if="modelValue.includes(model.value)"
+                class="h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="3"
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </span>
             <ModelIcon :model="model.value" size="18px" />
-            <span class="truncate text-gray-900 dark:text-white">{{ model.value }}</span>
+            <span class="truncate text-gray-900 dark:text-white">{{
+              model.value
+            }}</span>
           </button>
-          <div v-if="filteredModels.length === 0" class="px-3 py-4 text-center text-sm text-gray-500">
-            {{ '没有匹配的模型' }}
+          <div
+            v-if="filteredModels.length === 0"
+            class="px-3 py-4 text-center text-sm text-gray-500"
+          >
+            {{ "没有匹配的模型" }}
           </div>
         </div>
       </div>
@@ -83,20 +115,23 @@
         class="rounded-lg border border-blue-200 px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/30"
         @click="fillRelated"
       >
-        {{ '填入相关模型' }}
+        {{ "填入相关模型" }}
       </button>
       <button
         type="button"
         class="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30"
         @click="clearAll"
       >
-        {{ '清除所有模型' }}
+        {{ "清除所有模型" }}
       </button>
     </div>
 
     <!-- Custom Model Input -->
     <div class="mb-3">
-      <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">{{ '自定义模型名称' }}</label>
+      <label
+        class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >{{ "自定义模型名称" }}</label
+      >
       <div class="flex gap-2">
         <input
           v-model="customModel"
@@ -112,7 +147,7 @@
           class="rounded-lg bg-primary-50 px-4 py-2 text-sm font-medium text-primary-600 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50"
           @click="addCustom"
         >
-          {{ '填入' }}
+          {{ "填入" }}
         </button>
       </div>
     </div>
@@ -120,76 +155,84 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { allModels, getModelsByPlatform } from '@/composables/useModelWhitelist'
+import { ref, computed } from "vue";
+import { useAppStore } from "@/stores/app";
+import {
+  allModels,
+  getModelsByPlatform,
+} from "@/composables/useModelWhitelist";
 
 const props = defineProps<{
-  modelValue: string[]
-  platform: string
-}>()
+  modelValue: string[];
+  platform: string;
+}>();
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string[]]
-}>()
+  "update:modelValue": [value: string[]];
+}>();
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
-const showDropdown = ref(false)
-const searchQuery = ref('')
-const customModel = ref('')
-const isComposing = ref(false)
+const showDropdown = ref(false);
+const searchQuery = ref("");
+const customModel = ref("");
+const isComposing = ref(false);
 
 const filteredModels = computed(() => {
-  const query = searchQuery.value.toLowerCase().trim()
-  if (!query) return allModels
+  const query = searchQuery.value.toLowerCase().trim();
+  if (!query) return allModels;
   return allModels.filter(
-    m => m.value.toLowerCase().includes(query) || m.label.toLowerCase().includes(query)
-  )
-})
+    (m) =>
+      m.value.toLowerCase().includes(query) ||
+      m.label.toLowerCase().includes(query),
+  );
+});
 
 const toggleDropdown = () => {
-  showDropdown.value = !showDropdown.value
-  if (!showDropdown.value) searchQuery.value = ''
-}
+  showDropdown.value = !showDropdown.value;
+  if (!showDropdown.value) searchQuery.value = "";
+};
 
 const removeModel = (model: string) => {
-  emit('update:modelValue', props.modelValue.filter(m => m !== model))
-}
+  emit(
+    "update:modelValue",
+    props.modelValue.filter((m) => m !== model),
+  );
+};
 
 const toggleModel = (model: string) => {
   if (props.modelValue.includes(model)) {
-    removeModel(model)
+    removeModel(model);
   } else {
-    emit('update:modelValue', [...props.modelValue, model])
+    emit("update:modelValue", [...props.modelValue, model]);
   }
-}
+};
 
 const addCustom = () => {
-  const model = customModel.value.trim()
-  if (!model) return
+  const model = customModel.value.trim();
+  if (!model) return;
   if (props.modelValue.includes(model)) {
-    appStore.showInfo('该模型已存在')
-    return
+    appStore.showInfo("该模型已存在");
+    return;
   }
-  emit('update:modelValue', [...props.modelValue, model])
-  customModel.value = ''
-}
+  emit("update:modelValue", [...props.modelValue, model]);
+  customModel.value = "";
+};
 
 const handleEnter = () => {
-  if (!isComposing.value) addCustom()
-}
+  if (!isComposing.value) addCustom();
+};
 
 const fillRelated = () => {
-  const models = getModelsByPlatform(props.platform)
-  const newModels = [...props.modelValue]
+  const models = getModelsByPlatform(props.platform);
+  const newModels = [...props.modelValue];
   for (const model of models) {
-    if (!newModels.includes(model)) newModels.push(model)
+    if (!newModels.includes(model)) newModels.push(model);
   }
-  emit('update:modelValue', newModels)
-}
+  emit("update:modelValue", newModels);
+};
 
 const clearAll = () => {
-  emit('update:modelValue', [])
-}
+  emit("update:modelValue", []);
+};
 </script>

@@ -2,14 +2,18 @@
   <div class="flex items-center gap-2">
     <!-- Rate Limit Display (429) - Two-line layout -->
     <div v-if="isRateLimited" class="flex flex-col items-center gap-1">
-      <span class="badge text-xs badge-warning">{{ '限流中' }}</span>
-      <span class="text-[11px] text-gray-400 dark:text-gray-500">{{ rateLimitCountdown }}</span>
+      <span class="badge text-xs badge-warning">{{ "限流中" }}</span>
+      <span class="text-[11px] text-gray-400 dark:text-gray-500">{{
+        rateLimitCountdown
+      }}</span>
     </div>
 
     <!-- Overload Display (529) - Two-line layout -->
     <div v-else-if="isOverloaded" class="flex flex-col items-center gap-1">
-      <span class="badge text-xs badge-danger">{{ '过载中' }}</span>
-      <span class="text-[11px] text-gray-400 dark:text-gray-500">{{ overloadCountdown }}</span>
+      <span class="badge text-xs badge-danger">{{ "过载中" }}</span>
+      <span class="text-[11px] text-gray-400 dark:text-gray-500">{{
+        overloadCountdown
+      }}</span>
     </div>
 
     <!-- Main Status Badge (shown when not rate limited/overloaded) -->
@@ -47,7 +51,9 @@
       <div
         class="invisible absolute left-0 top-full z-[100] mt-1.5 min-w-[200px] max-w-[300px] rounded-lg bg-gray-800 px-3 py-2 text-xs text-white opacity-0 shadow-xl transition-all duration-200 group-hover/error:visible group-hover/error:opacity-100 dark:bg-gray-900"
       >
-        <div class="whitespace-pre-wrap break-words leading-relaxed text-gray-300">
+        <div
+          class="whitespace-pre-wrap break-words leading-relaxed text-gray-300"
+        >
           {{ account.error_message }}
         </div>
         <!-- 上方小三角 -->
@@ -60,99 +66,99 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { Account } from '@/types'
-import { formatCountdownWithSuffix } from '@/utils/format'
+import { computed } from "vue";
+import type { Account } from "@/types";
+import { formatCountdownWithSuffix } from "@/utils/format";
 
 const props = defineProps<{
-  account: Account
-}>()
+  account: Account;
+}>();
 
 const emit = defineEmits<{
-  (e: 'show-temp-unsched', account: Account): void
-}>()
+  (e: "show-temp-unsched", account: Account): void;
+}>();
 
 // Computed: is rate limited (429)
 const isRateLimited = computed(() => {
-  if (!props.account.rate_limit_reset_at) return false
-  return new Date(props.account.rate_limit_reset_at) > new Date()
-})
+  if (!props.account.rate_limit_reset_at) return false;
+  return new Date(props.account.rate_limit_reset_at) > new Date();
+});
 
 // Computed: is overloaded (529)
 const isOverloaded = computed(() => {
-  if (!props.account.overload_until) return false
-  return new Date(props.account.overload_until) > new Date()
-})
+  if (!props.account.overload_until) return false;
+  return new Date(props.account.overload_until) > new Date();
+});
 
 // Computed: is temp unschedulable
 const isTempUnschedulable = computed(() => {
-  if (!props.account.temp_unschedulable_until) return false
-  return new Date(props.account.temp_unschedulable_until) > new Date()
-})
+  if (!props.account.temp_unschedulable_until) return false;
+  return new Date(props.account.temp_unschedulable_until) > new Date();
+});
 
 // Computed: has error status
 const hasError = computed(() => {
-  return props.account.status === 'error'
-})
+  return props.account.status === "error";
+});
 
 // Computed: countdown text for rate limit (429)
 const rateLimitCountdown = computed(() => {
-  return formatCountdownWithSuffix(props.account.rate_limit_reset_at)
-})
+  return formatCountdownWithSuffix(props.account.rate_limit_reset_at);
+});
 
 // Computed: countdown text for overload (529)
 const overloadCountdown = computed(() => {
-  return formatCountdownWithSuffix(props.account.overload_until)
-})
+  return formatCountdownWithSuffix(props.account.overload_until);
+});
 
 // Computed: status badge class
 const statusClass = computed(() => {
   if (hasError.value) {
-    return 'badge-danger'
+    return "badge-danger";
   }
   if (isTempUnschedulable.value) {
-    return 'badge-warning'
+    return "badge-warning";
   }
   if (!props.account.schedulable) {
-    return 'badge-gray'
+    return "badge-gray";
   }
   switch (props.account.status) {
-    case 'active':
-      return 'badge-success'
-    case 'inactive':
-      return 'badge-gray'
-    case 'error':
-      return 'badge-danger'
+    case "active":
+      return "badge-success";
+    case "inactive":
+      return "badge-gray";
+    case "error":
+      return "badge-danger";
     default:
-      return 'badge-gray'
+      return "badge-gray";
   }
-})
+});
 
 // Computed: status text
 const statusText = computed(() => {
   if (hasError.value) {
-    return '错误'
+    return "错误";
   }
   if (isTempUnschedulable.value) {
-    return '临时不可调度'
+    return "临时不可调度";
   }
   if (!props.account.schedulable) {
-    return '暂停'
+    return "暂停";
   }
   // Status 文本映射
   const statusMap: Record<string, string> = {
-    active: '活动',
-    inactive: '未激活',
-    pending: '等待中',
-    disabled: '已禁用',
-    expired: '已过期',
-    error: '错误'
-  }
-  return statusMap[props.account.status] || props.account.status
-})
+    active: "活动",
+    inactive: "未激活",
+    pending: "等待中",
+    disabled: "已禁用",
+    expired: "已过期",
+    error: "错误",
+  };
+  return statusMap[props.account.status] || props.account.status;
+});
 
 const handleTempUnschedClick = () => {
-  if (!isTempUnschedulable.value) return
-  emit('show-temp-unsched', props.account)
-}
+  if (!isTempUnschedulable.value) return;
+  emit("show-temp-unsched", props.account);
+};
 </script>

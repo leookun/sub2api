@@ -3,76 +3,80 @@
  * Handles admin-level usage logs and statistics retrieval
  */
 
-import { apiClient } from '../client'
-import type { AdminUsageLog, UsageQueryParams, PaginatedResponse } from '@/types'
+import { apiClient } from "../client";
+import type {
+  AdminUsageLog,
+  UsageQueryParams,
+  PaginatedResponse,
+} from "@/types";
 
 // ==================== Types ====================
 
 export interface AdminUsageStatsResponse {
-  total_requests: number
-  total_input_tokens: number
-  total_output_tokens: number
-  total_cache_tokens: number
-  total_tokens: number
-  total_cost: number
-  total_actual_cost: number
-  total_account_cost?: number
-  average_duration_ms: number
+  total_requests: number;
+  total_input_tokens: number;
+  total_output_tokens: number;
+  total_cache_tokens: number;
+  total_tokens: number;
+  total_cost: number;
+  total_actual_cost: number;
+  total_account_cost?: number;
+  average_duration_ms: number;
 }
 
 export interface SimpleUser {
-  id: number
-  email: string
+  id: number;
+  email: string;
 }
 
 export interface SimpleApiKey {
-  id: number
-  name: string
-  user_id: number
+  id: number;
+  name: string;
+  user_id: number;
 }
 
 export interface UsageCleanupFilters {
-  start_time: string
-  end_time: string
-  user_id?: number
-  api_key_id?: number
-  account_id?: number
-  group_id?: number
-  model?: string | null
-  stream?: boolean | null
-  billing_type?: number | null
+  start_time: string;
+  end_time: string;
+  user_id?: number;
+  api_key_id?: number;
+  account_id?: number;
+  group_id?: number;
+  model?: string | null;
+  stream?: boolean | null;
+  billing_type?: number | null;
 }
 
 export interface UsageCleanupTask {
-  id: number
-  status: string
-  filters: UsageCleanupFilters
-  created_by: number
-  deleted_rows: number
-  error_message?: string | null
-  canceled_by?: number | null
-  canceled_at?: string | null
-  started_at?: string | null
-  finished_at?: string | null
-  created_at: string
-  updated_at: string
+  id: number;
+  status: string;
+  filters: UsageCleanupFilters;
+  created_by: number;
+  deleted_rows: number;
+  error_message?: string | null;
+  canceled_by?: number | null;
+  canceled_at?: string | null;
+  started_at?: string | null;
+  finished_at?: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CreateUsageCleanupTaskRequest {
-  start_date: string
-  end_date: string
-  user_id?: number
-  api_key_id?: number
-  account_id?: number
-  group_id?: number
-  model?: string | null
-  stream?: boolean | null
-  billing_type?: number | null
-  timezone?: string
+  start_date: string;
+  end_date: string;
+  user_id?: number;
+  api_key_id?: number;
+  account_id?: number;
+  group_id?: number;
+  model?: string | null;
+  stream?: boolean | null;
+  billing_type?: number | null;
+  timezone?: string;
 }
 
 export interface AdminUsageQueryParams extends UsageQueryParams {
-  user_id?: number
+  user_id?: number;
 }
 
 // ==================== API Functions ====================
@@ -84,13 +88,16 @@ export interface AdminUsageQueryParams extends UsageQueryParams {
  */
 export async function list(
   params: AdminUsageQueryParams,
-  options?: { signal?: AbortSignal }
+  options?: { signal?: AbortSignal },
 ): Promise<PaginatedResponse<AdminUsageLog>> {
-  const { data } = await apiClient.get<PaginatedResponse<AdminUsageLog>>('/admin/usage', {
-    params,
-    signal: options?.signal
-  })
-  return data
+  const { data } = await apiClient.get<PaginatedResponse<AdminUsageLog>>(
+    "/admin/usage",
+    {
+      params,
+      signal: options?.signal,
+    },
+  );
+  return data;
 }
 
 /**
@@ -99,21 +106,24 @@ export async function list(
  * @returns Usage statistics
  */
 export async function getStats(params: {
-  user_id?: number
-  api_key_id?: number
-  account_id?: number
-  group_id?: number
-  model?: string
-  stream?: boolean
-  period?: string
-  start_date?: string
-  end_date?: string
-  timezone?: string
+  user_id?: number;
+  api_key_id?: number;
+  account_id?: number;
+  group_id?: number;
+  model?: string;
+  stream?: boolean;
+  period?: string;
+  start_date?: string;
+  end_date?: string;
+  timezone?: string;
 }): Promise<AdminUsageStatsResponse> {
-  const { data } = await apiClient.get<AdminUsageStatsResponse>('/admin/usage/stats', {
-    params
-  })
-  return data
+  const { data } = await apiClient.get<AdminUsageStatsResponse>(
+    "/admin/usage/stats",
+    {
+      params,
+    },
+  );
+  return data;
 }
 
 /**
@@ -122,10 +132,13 @@ export async function getStats(params: {
  * @returns List of matching users (max 30)
  */
 export async function searchUsers(keyword: string): Promise<SimpleUser[]> {
-  const { data } = await apiClient.get<SimpleUser[]>('/admin/usage/search-users', {
-    params: { q: keyword }
-  })
-  return data
+  const { data } = await apiClient.get<SimpleUser[]>(
+    "/admin/usage/search-users",
+    {
+      params: { q: keyword },
+    },
+  );
+  return data;
 }
 
 /**
@@ -134,18 +147,24 @@ export async function searchUsers(keyword: string): Promise<SimpleUser[]> {
  * @param keyword - Optional keyword to search in key name
  * @returns List of matching API keys (max 30)
  */
-export async function searchApiKeys(userId?: number, keyword?: string): Promise<SimpleApiKey[]> {
-  const params: Record<string, unknown> = {}
+export async function searchApiKeys(
+  userId?: number,
+  keyword?: string,
+): Promise<SimpleApiKey[]> {
+  const params: Record<string, unknown> = {};
   if (userId !== undefined) {
-    params.user_id = userId
+    params.user_id = userId;
   }
   if (keyword) {
-    params.q = keyword
+    params.q = keyword;
   }
-  const { data } = await apiClient.get<SimpleApiKey[]>('/admin/usage/search-api-keys', {
-    params
-  })
-  return data
+  const { data } = await apiClient.get<SimpleApiKey[]>(
+    "/admin/usage/search-api-keys",
+    {
+      params,
+    },
+  );
+  return data;
 }
 
 /**
@@ -155,13 +174,16 @@ export async function searchApiKeys(userId?: number, keyword?: string): Promise<
  */
 export async function listCleanupTasks(
   params: { page?: number; page_size?: number },
-  options?: { signal?: AbortSignal }
+  options?: { signal?: AbortSignal },
 ): Promise<PaginatedResponse<UsageCleanupTask>> {
-  const { data } = await apiClient.get<PaginatedResponse<UsageCleanupTask>>('/admin/usage/cleanup-tasks', {
-    params,
-    signal: options?.signal
-  })
-  return data
+  const { data } = await apiClient.get<PaginatedResponse<UsageCleanupTask>>(
+    "/admin/usage/cleanup-tasks",
+    {
+      params,
+      signal: options?.signal,
+    },
+  );
+  return data;
 }
 
 /**
@@ -169,20 +191,27 @@ export async function listCleanupTasks(
  * @param payload - Cleanup task parameters
  * @returns Created cleanup task
  */
-export async function createCleanupTask(payload: CreateUsageCleanupTaskRequest): Promise<UsageCleanupTask> {
-  const { data } = await apiClient.post<UsageCleanupTask>('/admin/usage/cleanup-tasks', payload)
-  return data
+export async function createCleanupTask(
+  payload: CreateUsageCleanupTaskRequest,
+): Promise<UsageCleanupTask> {
+  const { data } = await apiClient.post<UsageCleanupTask>(
+    "/admin/usage/cleanup-tasks",
+    payload,
+  );
+  return data;
 }
 
 /**
  * Cancel a usage cleanup task (admin only)
  * @param taskId - Task ID to cancel
  */
-export async function cancelCleanupTask(taskId: number): Promise<{ id: number; status: string }> {
+export async function cancelCleanupTask(
+  taskId: number,
+): Promise<{ id: number; status: string }> {
   const { data } = await apiClient.post<{ id: number; status: string }>(
-    `/admin/usage/cleanup-tasks/${taskId}/cancel`
-  )
-  return data
+    `/admin/usage/cleanup-tasks/${taskId}/cancel`,
+  );
+  return data;
 }
 
 export const adminUsageAPI = {
@@ -192,7 +221,7 @@ export const adminUsageAPI = {
   searchApiKeys,
   listCleanupTasks,
   createCleanupTask,
-  cancelCleanupTask
-}
+  cancelCleanupTask,
+};
 
-export default adminUsageAPI
+export default adminUsageAPI;

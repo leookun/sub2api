@@ -7,10 +7,7 @@
           <!-- Left: Fuzzy user search + filters (wrap to multiple lines) -->
           <div class="flex flex-1 flex-wrap items-center gap-3">
             <!-- User Search -->
-            <div
-              class="relative w-full sm:w-64"
-              data-filter-user-search
-            >
+            <div class="relative w-full sm:w-64" data-filter-user-search>
               <Icon
                 name="search"
                 size="md"
@@ -36,20 +33,25 @@
 
               <!-- User Dropdown -->
               <div
-                v-if="showFilterUserDropdown && (filterUserResults.length > 0 || filterUserKeyword)"
+                v-if="
+                  showFilterUserDropdown &&
+                  (filterUserResults.length > 0 || filterUserKeyword)
+                "
                 class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
               >
                 <div
                   v-if="filterUserLoading"
                   class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
                 >
-                  {{ '加载中...' }}
+                  {{ "加载中..." }}
                 </div>
                 <div
-                  v-else-if="filterUserResults.length === 0 && filterUserKeyword"
+                  v-else-if="
+                    filterUserResults.length === 0 && filterUserKeyword
+                  "
                   class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
                 >
-                  {{ '无匹配选项' }}
+                  {{ "无匹配选项" }}
                 </div>
                 <button
                   v-for="user in filterUserResults"
@@ -58,8 +60,12 @@
                   class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
                   @click="selectFilterUser(user)"
                 >
-                  <span class="font-medium text-gray-900 dark:text-white">{{ user.email }}</span>
-                  <span class="ml-2 text-gray-500 dark:text-gray-400">#{{ user.id }}</span>
+                  <span class="font-medium text-gray-900 dark:text-white">{{
+                    user.email
+                  }}</span>
+                  <span class="ml-2 text-gray-500 dark:text-gray-400"
+                    >#{{ user.id }}</span
+                  >
                 </button>
               </div>
             </div>
@@ -91,7 +97,11 @@
               :title="'刷新'"
               @click="loadSubscriptions"
             >
-              <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
+              <Icon
+                name="refresh"
+                size="md"
+                :class="loading ? 'animate-spin' : ''"
+              />
             </button>
             <!-- Column Settings Dropdown -->
             <div ref="columnDropdownRef" class="relative">
@@ -100,10 +110,20 @@
                 :title="'列设置'"
                 @click="showColumnDropdown = !showColumnDropdown"
               >
-                <svg class="h-4 w-4 md:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
+                <svg
+                  class="h-4 w-4 md:mr-1.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z"
+                  />
                 </svg>
-                <span class="hidden md:inline">{{ '列设置' }}</span>
+                <span class="hidden md:inline">{{ "列设置" }}</span>
               </button>
               <!-- Dropdown menu -->
               <div
@@ -112,23 +132,37 @@
               >
                 <div class="p-2">
                   <!-- User column mode selection -->
-                  <div class="mb-2 border-b border-gray-200 pb-2 dark:border-gray-700">
-                    <div class="px-3 py-1 text-xs font-medium text-gray-500 dark:text-gray-400">
-                      {{ '用户' }}
+                  <div
+                    class="mb-2 border-b border-gray-200 pb-2 dark:border-gray-700"
+                  >
+                    <div
+                      class="px-3 py-1 text-xs font-medium text-gray-500 dark:text-gray-400"
+                    >
+                      {{ "用户" }}
                     </div>
                     <button
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                       @click="setUserColumnMode('email')"
                     >
-                      <span>{{ '邮箱' }}</span>
-                      <Icon v-if="userColumnMode === 'email'" name="check" size="sm" class="text-primary-500" />
+                      <span>{{ "邮箱" }}</span>
+                      <Icon
+                        v-if="userColumnMode === 'email'"
+                        name="check"
+                        size="sm"
+                        class="text-primary-500"
+                      />
                     </button>
                     <button
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                       @click="setUserColumnMode('username')"
                     >
-                      <span>{{ '用户名' }}</span>
-                      <Icon v-if="userColumnMode === 'username'" name="check" size="sm" class="text-primary-500" />
+                      <span>{{ "用户名" }}</span>
+                      <Icon
+                        v-if="userColumnMode === 'username'"
+                        name="check"
+                        size="sm"
+                        class="text-primary-500"
+                      />
                     </button>
                   </div>
                   <!-- Other columns toggle -->
@@ -139,14 +173,19 @@
                     @click="toggleColumn(col.key)"
                   >
                     <span>{{ col.label }}</span>
-                    <Icon v-if="isColumnVisible(col.key)" name="check" size="sm" class="text-primary-500" />
+                    <Icon
+                      v-if="isColumnVisible(col.key)"
+                      name="check"
+                      size="sm"
+                      class="text-primary-500"
+                    />
                   </button>
                 </div>
               </div>
             </div>
             <button class="btn btn-primary" @click="showAssignModal = true">
               <Icon name="plus" size="md" class="mr-2" />
-              {{ '分配订阅' }}
+              {{ "分配订阅" }}
             </button>
           </div>
         </div>
@@ -166,17 +205,21 @@
               <div
                 class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900/30"
               >
-                <span class="text-sm font-medium text-primary-700 dark:text-primary-300">
-                  {{ userColumnMode === 'email'
-                    ? (row.user?.email?.charAt(0).toUpperCase() || '?')
-                    : (row.user?.username?.charAt(0).toUpperCase() || '?')
+                <span
+                  class="text-sm font-medium text-primary-700 dark:text-primary-300"
+                >
+                  {{
+                    userColumnMode === "email"
+                      ? row.user?.email?.charAt(0).toUpperCase() || "?"
+                      : row.user?.username?.charAt(0).toUpperCase() || "?"
                   }}
                 </span>
               </div>
               <span class="font-medium text-gray-900 dark:text-white">
-                {{ userColumnMode === 'email'
-                  ? (row.user?.email || `用户 #${row.user_id}`)
-                  : (row.user?.username || '-')
+                {{
+                  userColumnMode === "email"
+                    ? row.user?.email || `用户 #${row.user_id}`
+                    : row.user?.username || "-"
                 }}
               </span>
             </div>
@@ -191,7 +234,9 @@
               :rate-multiplier="row.group.rate_multiplier"
               :show-rate="false"
             />
-            <span v-else class="text-sm text-gray-400 dark:text-dark-500">-</span>
+            <span v-else class="text-sm text-gray-400 dark:text-dark-500"
+              >-</span
+            >
           </template>
 
           <template #cell-usage="{ row }">
@@ -199,18 +244,28 @@
               <!-- Daily Usage -->
               <div v-if="row.group?.daily_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ '每日' }}</span>
-                  <div class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
+                  <span class="usage-label">{{ "每日" }}</span>
+                  <div
+                    class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
+                  >
                     <div
                       class="h-1.5 rounded-full transition-all"
-                      :class="getProgressClass(row.daily_usage_usd, row.group?.daily_limit_usd)"
+                      :class="
+                        getProgressClass(
+                          row.daily_usage_usd,
+                          row.group?.daily_limit_usd,
+                        )
+                      "
                       :style="{
-                        width: getProgressWidth(row.daily_usage_usd, row.group?.daily_limit_usd)
+                        width: getProgressWidth(
+                          row.daily_usage_usd,
+                          row.group?.daily_limit_usd,
+                        ),
                       }"
                     ></div>
                   </div>
                   <span class="usage-amount">
-                    ${{ row.daily_usage_usd?.toFixed(2) || '0.00' }}
+                    ${{ row.daily_usage_usd?.toFixed(2) || "0.00" }}
                     <span class="text-gray-400">/</span>
                     ${{ row.group?.daily_limit_usd?.toFixed(2) }}
                   </span>
@@ -229,25 +284,37 @@
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <span>{{ formatResetTime(row.daily_window_start, 'daily') }}</span>
+                  <span>{{
+                    formatResetTime(row.daily_window_start, "daily")
+                  }}</span>
                 </div>
               </div>
 
               <!-- Weekly Usage -->
               <div v-if="row.group?.weekly_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ '每周' }}</span>
-                  <div class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
+                  <span class="usage-label">{{ "每周" }}</span>
+                  <div
+                    class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
+                  >
                     <div
                       class="h-1.5 rounded-full transition-all"
-                      :class="getProgressClass(row.weekly_usage_usd, row.group?.weekly_limit_usd)"
+                      :class="
+                        getProgressClass(
+                          row.weekly_usage_usd,
+                          row.group?.weekly_limit_usd,
+                        )
+                      "
                       :style="{
-                        width: getProgressWidth(row.weekly_usage_usd, row.group?.weekly_limit_usd)
+                        width: getProgressWidth(
+                          row.weekly_usage_usd,
+                          row.group?.weekly_limit_usd,
+                        ),
                       }"
                     ></div>
                   </div>
                   <span class="usage-amount">
-                    ${{ row.weekly_usage_usd?.toFixed(2) || '0.00' }}
+                    ${{ row.weekly_usage_usd?.toFixed(2) || "0.00" }}
                     <span class="text-gray-400">/</span>
                     ${{ row.group?.weekly_limit_usd?.toFixed(2) }}
                   </span>
@@ -266,25 +333,37 @@
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <span>{{ formatResetTime(row.weekly_window_start, 'weekly') }}</span>
+                  <span>{{
+                    formatResetTime(row.weekly_window_start, "weekly")
+                  }}</span>
                 </div>
               </div>
 
               <!-- Monthly Usage -->
               <div v-if="row.group?.monthly_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ '每月' }}</span>
-                  <div class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
+                  <span class="usage-label">{{ "每月" }}</span>
+                  <div
+                    class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
+                  >
                     <div
                       class="h-1.5 rounded-full transition-all"
-                      :class="getProgressClass(row.monthly_usage_usd, row.group?.monthly_limit_usd)"
+                      :class="
+                        getProgressClass(
+                          row.monthly_usage_usd,
+                          row.group?.monthly_limit_usd,
+                        )
+                      "
                       :style="{
-                        width: getProgressWidth(row.monthly_usage_usd, row.group?.monthly_limit_usd)
+                        width: getProgressWidth(
+                          row.monthly_usage_usd,
+                          row.group?.monthly_limit_usd,
+                        ),
                       }"
                     ></div>
                   </div>
                   <span class="usage-amount">
-                    ${{ row.monthly_usage_usd?.toFixed(2) || '0.00' }}
+                    ${{ row.monthly_usage_usd?.toFixed(2) || "0.00" }}
                     <span class="text-gray-400">/</span>
                     ${{ row.group?.monthly_limit_usd?.toFixed(2) }}
                   </span>
@@ -303,7 +382,9 @@
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <span>{{ formatResetTime(row.monthly_window_start, 'monthly') }}</span>
+                  <span>{{
+                    formatResetTime(row.monthly_window_start, "monthly")
+                  }}</span>
                 </div>
               </div>
 
@@ -316,9 +397,13 @@
                 "
                 class="flex items-center gap-2 rounded-lg bg-gradient-to-r from-emerald-50 to-teal-50 px-3 py-2 dark:from-emerald-900/20 dark:to-teal-900/20"
               >
-                <span class="text-lg text-emerald-600 dark:text-emerald-400">∞</span>
-                <span class="text-xs font-medium text-emerald-700 dark:text-emerald-300">
-                  {{ '无限制' }}
+                <span class="text-lg text-emerald-600 dark:text-emerald-400"
+                  >∞</span
+                >
+                <span
+                  class="text-xs font-medium text-emerald-700 dark:text-emerald-300"
+                >
+                  {{ "无限制" }}
                 </span>
               </div>
             </div>
@@ -336,13 +421,14 @@
               >
                 {{ formatDateOnly(value) }}
               </span>
-              <div v-if="getDaysRemaining(value) !== null" class="text-xs text-gray-500">
-                {{ getDaysRemaining(value) }} {{ '天剩余' }}
+              <div
+                v-if="getDaysRemaining(value) !== null"
+                class="text-xs text-gray-500"
+              >
+                {{ getDaysRemaining(value) }} {{ "天剩余" }}
               </div>
             </div>
-            <span v-else class="text-sm text-gray-500">{{
-              '无过期时间'
-            }}</span>
+            <span v-else class="text-sm text-gray-500">{{ "无过期时间" }}</span>
           </template>
 
           <template #cell-status="{ value }">
@@ -353,10 +439,16 @@
                   ? 'badge-success'
                   : value === 'expired'
                     ? 'badge-warning'
-                    : 'badge-danger'
+                    : 'badge-danger',
               ]"
             >
-              {{ value === 'active' ? '生效中' : value === 'expired' ? '已过期' : '已撤销' }}
+              {{
+                value === "active"
+                  ? "生效中"
+                  : value === "expired"
+                    ? "已过期"
+                    : "已撤销"
+              }}
             </span>
           </template>
 
@@ -368,7 +460,7 @@
                 @click="handleExtend(row)"
               >
                 <Icon name="calendar" size="sm" />
-                <span class="text-xs">{{ '调整' }}</span>
+                <span class="text-xs">{{ "调整" }}</span>
               </button>
               <button
                 v-if="row.status === 'active'"
@@ -376,7 +468,7 @@
                 @click="handleRevoke(row)"
               >
                 <Icon name="ban" size="sm" />
-                <span class="text-xs">{{ '撤销' }}</span>
+                <span class="text-xs">{{ "撤销" }}</span>
               </button>
             </div>
           </template>
@@ -394,14 +486,14 @@
 
       <!-- Pagination -->
       <template #pagination>
-      <Pagination
-        v-if="pagination.total > 0"
-        :page="pagination.page"
-        :total="pagination.total"
-        :page-size="pagination.page_size"
-        @update:page="handlePageChange"
-        @update:pageSize="handlePageSizeChange"
-      />
+        <Pagination
+          v-if="pagination.total > 0"
+          :page="pagination.page"
+          :total="pagination.total"
+          :page-size="pagination.page_size"
+          @update:page="handlePageChange"
+          @update:pageSize="handlePageSizeChange"
+        />
       </template>
     </TablePageLayout>
 
@@ -418,7 +510,7 @@
         @submit.prevent="handleAssignSubscription"
       >
         <div>
-          <label class="input-label">{{ '用户' }}</label>
+          <label class="input-label">{{ "用户" }}</label>
           <div class="relative" data-assign-user-search>
             <input
               v-model="userSearchKeyword"
@@ -438,20 +530,23 @@
             </button>
             <!-- User Dropdown -->
             <div
-              v-if="showUserDropdown && (userSearchResults.length > 0 || userSearchKeyword)"
+              v-if="
+                showUserDropdown &&
+                (userSearchResults.length > 0 || userSearchKeyword)
+              "
               class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
             >
               <div
                 v-if="userSearchLoading"
                 class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ '加载中...' }}
+                {{ "加载中..." }}
               </div>
               <div
                 v-else-if="userSearchResults.length === 0 && userSearchKeyword"
                 class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ '无匹配选项' }}
+                {{ "无匹配选项" }}
               </div>
               <button
                 v-for="user in userSearchResults"
@@ -460,14 +555,18 @@
                 class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
                 @click="selectUser(user)"
               >
-                <span class="font-medium text-gray-900 dark:text-white">{{ user.email }}</span>
-                <span class="ml-2 text-gray-500 dark:text-gray-400">#{{ user.id }}</span>
+                <span class="font-medium text-gray-900 dark:text-white">{{
+                  user.email
+                }}</span>
+                <span class="ml-2 text-gray-500 dark:text-gray-400"
+                  >#{{ user.id }}</span
+                >
               </button>
             </div>
           </div>
         </div>
         <div>
-          <label class="input-label">{{ '订阅分组' }}</label>
+          <label class="input-label">{{ "订阅分组" }}</label>
           <Select
             v-model="assignForm.group_id"
             :options="subscriptionGroupOptions"
@@ -478,34 +577,47 @@
                 v-if="option"
                 :name="(option as unknown as GroupOption).label"
                 :platform="(option as unknown as GroupOption).platform"
-                :subscription-type="(option as unknown as GroupOption).subscriptionType"
+                :subscription-type="
+                  (option as unknown as GroupOption).subscriptionType
+                "
                 :rate-multiplier="(option as unknown as GroupOption).rate"
               />
-              <span v-else class="text-gray-400">{{ '选择订阅分组' }}</span>
+              <span v-else class="text-gray-400">{{ "选择订阅分组" }}</span>
             </template>
             <template #option="{ option, selected }">
               <GroupOptionItem
                 :name="(option as unknown as GroupOption).label"
                 :platform="(option as unknown as GroupOption).platform"
-                :subscription-type="(option as unknown as GroupOption).subscriptionType"
+                :subscription-type="
+                  (option as unknown as GroupOption).subscriptionType
+                "
                 :rate-multiplier="(option as unknown as GroupOption).rate"
                 :description="(option as unknown as GroupOption).description"
                 :selected="selected"
               />
             </template>
           </Select>
-          <p class="input-hint">{{ '仅显示订阅计费类型的分组' }}</p>
+          <p class="input-hint">{{ "仅显示订阅计费类型的分组" }}</p>
         </div>
         <div>
-          <label class="input-label">{{ '有效期（天）' }}</label>
-          <input v-model.number="assignForm.validity_days" type="number" min="1" class="input" />
-          <p class="input-hint">{{ '订阅的有效天数' }}</p>
+          <label class="input-label">{{ "有效期（天）" }}</label>
+          <input
+            v-model.number="assignForm.validity_days"
+            type="number"
+            min="1"
+            class="input"
+          />
+          <p class="input-hint">{{ "订阅的有效天数" }}</p>
         </div>
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button type="button" class="btn btn-secondary" @click="closeAssignModal">
-            {{ '取消' }}
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="closeAssignModal"
+          >
+            {{ "取消" }}
           </button>
           <button
             type="submit"
@@ -533,7 +645,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ submitting ? '分配中...' : '分配' }}
+            {{ submitting ? "分配中..." : "分配" }}
           </button>
         </div>
       </template>
@@ -554,30 +666,33 @@
       >
         <div class="rounded-lg bg-gray-50 p-4 dark:bg-dark-700">
           <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ '为以下用户调整订阅' }}
+            {{ "为以下用户调整订阅" }}
             <span class="font-medium text-gray-900 dark:text-white">{{
               extendingSubscription.user?.email
             }}</span>
           </p>
           <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ '当前到期时间' }}:
+            {{ "当前到期时间" }}:
             <span class="font-medium text-gray-900 dark:text-white">
               {{
                 extendingSubscription.expires_at
                   ? formatDateOnly(extendingSubscription.expires_at)
-                  : '无过期时间'
+                  : "无过期时间"
               }}
             </span>
           </p>
-          <p v-if="extendingSubscription.expires_at" class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ '剩余天数' }}:
+          <p
+            v-if="extendingSubscription.expires_at"
+            class="mt-1 text-sm text-gray-600 dark:text-gray-400"
+          >
+            {{ "剩余天数" }}:
             <span class="font-medium text-gray-900 dark:text-white">
               {{ getDaysRemaining(extendingSubscription.expires_at) ?? 0 }}
             </span>
           </p>
         </div>
         <div>
-          <label class="input-label">{{ '调整天数' }}</label>
+          <label class="input-label">{{ "调整天数" }}</label>
           <div class="flex items-center gap-2">
             <input
               v-model.number="extendForm.days"
@@ -587,13 +702,19 @@
               :placeholder="'正数延长，负数缩短'"
             />
           </div>
-          <p class="input-hint">{{ '输入正数延长订阅，负数缩短订阅（缩短后剩余天数需大于0）' }}</p>
+          <p class="input-hint">
+            {{ "输入正数延长订阅，负数缩短订阅（缩短后剩余天数需大于0）" }}
+          </p>
         </div>
       </form>
       <template #footer>
         <div v-if="extendingSubscription" class="flex justify-end gap-3">
-          <button type="button" class="btn btn-secondary" @click="closeExtendModal">
-            {{ '取消' }}
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="closeExtendModal"
+          >
+            {{ "取消" }}
           </button>
           <button
             type="submit"
@@ -601,7 +722,7 @@
             :disabled="submitting"
             class="btn btn-primary"
           >
-            {{ submitting ? '调整中...' : '调整' }}
+            {{ submitting ? "调整中..." : "调整" }}
           </button>
         </div>
       </template>
@@ -622,230 +743,241 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useAppStore } from '@/stores/app'
-import { adminAPI } from '@/api/admin'
-import type { UserSubscription, Group, GroupPlatform, SubscriptionType } from '@/types'
-import type { SimpleUser } from '@/api/admin/usage'
-import type { Column } from '@/components/common/types'
+import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
+import { useAppStore } from "@/stores/app";
+import { adminAPI } from "@/api/admin";
+import type {
+  UserSubscription,
+  Group,
+  GroupPlatform,
+  SubscriptionType,
+} from "@/types";
+import type { SimpleUser } from "@/api/admin/usage";
+import type { Column } from "@/components/common/types";
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
 interface GroupOption {
-  value: number
-  label: string
-  description: string | null
-  platform: GroupPlatform
-  subscriptionType: SubscriptionType
-  rate: number
+  value: number;
+  label: string;
+  description: string | null;
+  platform: GroupPlatform;
+  subscriptionType: SubscriptionType;
+  rate: number;
 }
 
 // User column display mode: 'email' or 'username'
-const userColumnMode = ref<'email' | 'username'>('email')
-const USER_COLUMN_MODE_KEY = 'subscription-user-column-mode'
+const userColumnMode = ref<"email" | "username">("email");
+const USER_COLUMN_MODE_KEY = "subscription-user-column-mode";
 
 const loadUserColumnMode = () => {
   try {
-    const saved = localStorage.getItem(USER_COLUMN_MODE_KEY)
-    if (saved === 'email' || saved === 'username') {
-      userColumnMode.value = saved
+    const saved = localStorage.getItem(USER_COLUMN_MODE_KEY);
+    if (saved === "email" || saved === "username") {
+      userColumnMode.value = saved;
     }
   } catch (e) {
-    console.error('Failed to load user column mode:', e)
+    console.error("Failed to load user column mode:", e);
   }
-}
+};
 
 const saveUserColumnMode = () => {
   try {
-    localStorage.setItem(USER_COLUMN_MODE_KEY, userColumnMode.value)
+    localStorage.setItem(USER_COLUMN_MODE_KEY, userColumnMode.value);
   } catch (e) {
-    console.error('Failed to save user column mode:', e)
+    console.error("Failed to save user column mode:", e);
   }
-}
+};
 
-const setUserColumnMode = (mode: 'email' | 'username') => {
-  userColumnMode.value = mode
-  saveUserColumnMode()
-}
+const setUserColumnMode = (mode: "email" | "username") => {
+  userColumnMode.value = mode;
+  saveUserColumnMode();
+};
 
 // All available columns
 const allColumns = computed<Column[]>(() => [
   {
-    key: 'user',
-    label: userColumnMode.value === 'email'
-      ? '用户'
-      : '用户名',
-    sortable: false
+    key: "user",
+    label: userColumnMode.value === "email" ? "用户" : "用户名",
+    sortable: false,
   },
-  { key: 'group', label: '分组', sortable: false },
-  { key: 'usage', label: '用量', sortable: false },
-  { key: 'expires_at', label: '到期时间', sortable: true },
-  { key: 'status', label: '状态', sortable: true },
-  { key: 'actions', label: '操作', sortable: false }
-])
+  { key: "group", label: "分组", sortable: false },
+  { key: "usage", label: "用量", sortable: false },
+  { key: "expires_at", label: "到期时间", sortable: true },
+  { key: "status", label: "状态", sortable: true },
+  { key: "actions", label: "操作", sortable: false },
+]);
 
 // Columns that can be toggled (exclude user and actions which are always visible)
 const toggleableColumns = computed(() =>
-  allColumns.value.filter(col => col.key !== 'user' && col.key !== 'actions')
-)
+  allColumns.value.filter((col) => col.key !== "user" && col.key !== "actions"),
+);
 
 // Hidden columns set
-const hiddenColumns = reactive<Set<string>>(new Set())
+const hiddenColumns = reactive<Set<string>>(new Set());
 
 // Default hidden columns
-const DEFAULT_HIDDEN_COLUMNS: string[] = []
+const DEFAULT_HIDDEN_COLUMNS: string[] = [];
 
 // localStorage key
-const HIDDEN_COLUMNS_KEY = 'subscription-hidden-columns'
+const HIDDEN_COLUMNS_KEY = "subscription-hidden-columns";
 
 // Load saved column settings
 const loadSavedColumns = () => {
   try {
-    const saved = localStorage.getItem(HIDDEN_COLUMNS_KEY)
+    const saved = localStorage.getItem(HIDDEN_COLUMNS_KEY);
     if (saved) {
-      const parsed = JSON.parse(saved) as string[]
-      parsed.forEach(key => hiddenColumns.add(key))
+      const parsed = JSON.parse(saved) as string[];
+      parsed.forEach((key) => hiddenColumns.add(key));
     } else {
-      DEFAULT_HIDDEN_COLUMNS.forEach(key => hiddenColumns.add(key))
+      DEFAULT_HIDDEN_COLUMNS.forEach((key) => hiddenColumns.add(key));
     }
   } catch (e) {
-    console.error('Failed to load saved columns:', e)
-    DEFAULT_HIDDEN_COLUMNS.forEach(key => hiddenColumns.add(key))
+    console.error("Failed to load saved columns:", e);
+    DEFAULT_HIDDEN_COLUMNS.forEach((key) => hiddenColumns.add(key));
   }
-}
+};
 
 // Save column settings to localStorage
 const saveColumnsToStorage = () => {
   try {
-    localStorage.setItem(HIDDEN_COLUMNS_KEY, JSON.stringify([...hiddenColumns]))
+    localStorage.setItem(
+      HIDDEN_COLUMNS_KEY,
+      JSON.stringify([...hiddenColumns]),
+    );
   } catch (e) {
-    console.error('Failed to save columns:', e)
+    console.error("Failed to save columns:", e);
   }
-}
+};
 
 // Toggle column visibility
 const toggleColumn = (key: string) => {
   if (hiddenColumns.has(key)) {
-    hiddenColumns.delete(key)
+    hiddenColumns.delete(key);
   } else {
-    hiddenColumns.add(key)
+    hiddenColumns.add(key);
   }
-  saveColumnsToStorage()
-}
+  saveColumnsToStorage();
+};
 
 // Check if column is visible
-const isColumnVisible = (key: string) => !hiddenColumns.has(key)
+const isColumnVisible = (key: string) => !hiddenColumns.has(key);
 
 // Filtered columns for display
 const columns = computed<Column[]>(() =>
-  allColumns.value.filter(col =>
-    col.key === 'user' || col.key === 'actions' || !hiddenColumns.has(col.key)
-  )
-)
+  allColumns.value.filter(
+    (col) =>
+      col.key === "user" ||
+      col.key === "actions" ||
+      !hiddenColumns.has(col.key),
+  ),
+);
 
 // Column dropdown state
-const showColumnDropdown = ref(false)
-const columnDropdownRef = ref<HTMLElement | null>(null)
+const showColumnDropdown = ref(false);
+const columnDropdownRef = ref<HTMLElement | null>(null);
 
 // Filter options
 const statusOptions = computed(() => [
-  { value: '', label: '全部状态' },
-  { value: 'active', label: '生效中' },
-  { value: 'expired', label: '已过期' },
-  { value: 'revoked', label: '已撤销' }
-])
+  { value: "", label: "全部状态" },
+  { value: "active", label: "生效中" },
+  { value: "expired", label: "已过期" },
+  { value: "revoked", label: "已撤销" },
+]);
 
-const subscriptions = ref<UserSubscription[]>([])
-const groups = ref<Group[]>([])
-const loading = ref(false)
-let abortController: AbortController | null = null
+const subscriptions = ref<UserSubscription[]>([]);
+const groups = ref<Group[]>([]);
+const loading = ref(false);
+let abortController: AbortController | null = null;
 
 // Toolbar user filter (fuzzy search -> select user_id)
-const filterUserKeyword = ref('')
-const filterUserResults = ref<SimpleUser[]>([])
-const filterUserLoading = ref(false)
-const showFilterUserDropdown = ref(false)
-const selectedFilterUser = ref<SimpleUser | null>(null)
-let filterUserSearchTimeout: ReturnType<typeof setTimeout> | null = null
+const filterUserKeyword = ref("");
+const filterUserResults = ref<SimpleUser[]>([]);
+const filterUserLoading = ref(false);
+const showFilterUserDropdown = ref(false);
+const selectedFilterUser = ref<SimpleUser | null>(null);
+let filterUserSearchTimeout: ReturnType<typeof setTimeout> | null = null;
 
 // User search state
-const userSearchKeyword = ref('')
-const userSearchResults = ref<SimpleUser[]>([])
-const userSearchLoading = ref(false)
-const showUserDropdown = ref(false)
-const selectedUser = ref<SimpleUser | null>(null)
-let userSearchTimeout: ReturnType<typeof setTimeout> | null = null
+const userSearchKeyword = ref("");
+const userSearchResults = ref<SimpleUser[]>([]);
+const userSearchLoading = ref(false);
+const showUserDropdown = ref(false);
+const selectedUser = ref<SimpleUser | null>(null);
+let userSearchTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const filters = reactive({
-  status: 'active',
-  group_id: '',
-  user_id: null as number | null
-})
+  status: "active",
+  group_id: "",
+  user_id: null as number | null,
+});
 
 // Sorting state
 const sortState = reactive({
-  sort_by: 'created_at',
-  sort_order: 'desc' as 'asc' | 'desc'
-})
+  sort_by: "created_at",
+  sort_order: "desc" as "asc" | "desc",
+});
 
 const pagination = reactive({
   page: 1,
   page_size: 20,
   total: 0,
-  pages: 0
-})
+  pages: 0,
+});
 
-const showAssignModal = ref(false)
-const showExtendModal = ref(false)
-const showRevokeDialog = ref(false)
-const submitting = ref(false)
-const extendingSubscription = ref<UserSubscription | null>(null)
-const revokingSubscription = ref<UserSubscription | null>(null)
+const showAssignModal = ref(false);
+const showExtendModal = ref(false);
+const showRevokeDialog = ref(false);
+const submitting = ref(false);
+const extendingSubscription = ref<UserSubscription | null>(null);
+const revokingSubscription = ref<UserSubscription | null>(null);
 
 const assignForm = reactive({
   user_id: null as number | null,
   group_id: null as number | null,
-  validity_days: 30
-})
+  validity_days: 30,
+});
 
 const extendForm = reactive({
-  days: 30
-})
+  days: 30,
+});
 
 // Group options for filter (all groups)
 const groupOptions = computed(() => [
-  { value: '', label: '全部分组' },
-  ...groups.value.map((g) => ({ value: g.id.toString(), label: g.name }))
-])
+  { value: "", label: "全部分组" },
+  ...groups.value.map((g) => ({ value: g.id.toString(), label: g.name })),
+]);
 
 // Group options for assign (only subscription type groups)
 const subscriptionGroupOptions = computed(() =>
   groups.value
-    .filter((g) => g.subscription_type === 'subscription' && g.status === 'active')
+    .filter(
+      (g) => g.subscription_type === "subscription" && g.status === "active",
+    )
     .map((g) => ({
       value: g.id,
       label: g.name,
       description: g.description,
       platform: g.platform,
       subscriptionType: g.subscription_type,
-      rate: g.rate_multiplier
-    }))
-)
+      rate: g.rate_multiplier,
+    })),
+);
 
 const applyFilters = () => {
-  pagination.page = 1
-  loadSubscriptions()
-}
+  pagination.page = 1;
+  loadSubscriptions();
+};
 
 const loadSubscriptions = async () => {
   if (abortController) {
-    abortController.abort()
+    abortController.abort();
   }
-  const requestController = new AbortController()
-  abortController = requestController
-  const { signal } = requestController
+  const requestController = new AbortController();
+  abortController = requestController;
+  const { signal } = requestController;
 
-  loading.value = true
+  loading.value = true;
   try {
     const response = await adminAPI.subscriptions.list(
       pagination.page,
@@ -855,353 +987,370 @@ const loadSubscriptions = async () => {
         group_id: filters.group_id ? parseInt(filters.group_id) : undefined,
         user_id: filters.user_id || undefined,
         sort_by: sortState.sort_by,
-        sort_order: sortState.sort_order
+        sort_order: sortState.sort_order,
       },
       {
-        signal
-      }
-    )
-    if (signal.aborted || abortController !== requestController) return
-    subscriptions.value = response.items
-    pagination.total = response.total
-    pagination.pages = response.pages
+        signal,
+      },
+    );
+    if (signal.aborted || abortController !== requestController) return;
+    subscriptions.value = response.items;
+    pagination.total = response.total;
+    pagination.pages = response.pages;
   } catch (error: any) {
-    if (signal.aborted || error?.name === 'AbortError' || error?.code === 'ERR_CANCELED') {
-      return
+    if (
+      signal.aborted ||
+      error?.name === "AbortError" ||
+      error?.code === "ERR_CANCELED"
+    ) {
+      return;
     }
-    appStore.showError('加载订阅列表失败')
-    console.error('Error loading subscriptions:', error)
+    appStore.showError("加载订阅列表失败");
+    console.error("Error loading subscriptions:", error);
   } finally {
     if (abortController === requestController) {
-      loading.value = false
-      abortController = null
+      loading.value = false;
+      abortController = null;
     }
   }
-}
+};
 
 const loadGroups = async () => {
   try {
-    groups.value = await adminAPI.groups.getAll()
+    groups.value = await adminAPI.groups.getAll();
   } catch (error) {
-    console.error('Error loading groups:', error)
+    console.error("Error loading groups:", error);
   }
-}
+};
 
 // Toolbar user filter search with debounce
 const debounceSearchFilterUsers = () => {
   if (filterUserSearchTimeout) {
-    clearTimeout(filterUserSearchTimeout)
+    clearTimeout(filterUserSearchTimeout);
   }
-  filterUserSearchTimeout = setTimeout(searchFilterUsers, 300)
-}
+  filterUserSearchTimeout = setTimeout(searchFilterUsers, 300);
+};
 
 const searchFilterUsers = async () => {
-  const keyword = filterUserKeyword.value.trim()
+  const keyword = filterUserKeyword.value.trim();
 
   // Clear active user filter if user modified the search keyword
   if (selectedFilterUser.value && keyword !== selectedFilterUser.value.email) {
-    selectedFilterUser.value = null
-    filters.user_id = null
-    applyFilters()
+    selectedFilterUser.value = null;
+    filters.user_id = null;
+    applyFilters();
   }
 
   if (!keyword) {
-    filterUserResults.value = []
-    return
+    filterUserResults.value = [];
+    return;
   }
 
-  filterUserLoading.value = true
+  filterUserLoading.value = true;
   try {
-    filterUserResults.value = await adminAPI.usage.searchUsers(keyword)
+    filterUserResults.value = await adminAPI.usage.searchUsers(keyword);
   } catch (error) {
-    console.error('Failed to search users:', error)
-    filterUserResults.value = []
+    console.error("Failed to search users:", error);
+    filterUserResults.value = [];
   } finally {
-    filterUserLoading.value = false
+    filterUserLoading.value = false;
   }
-}
+};
 
 const selectFilterUser = (user: SimpleUser) => {
-  selectedFilterUser.value = user
-  filterUserKeyword.value = user.email
-  showFilterUserDropdown.value = false
-  filters.user_id = user.id
-  applyFilters()
-}
+  selectedFilterUser.value = user;
+  filterUserKeyword.value = user.email;
+  showFilterUserDropdown.value = false;
+  filters.user_id = user.id;
+  applyFilters();
+};
 
 const clearFilterUser = () => {
-  selectedFilterUser.value = null
-  filterUserKeyword.value = ''
-  filterUserResults.value = []
-  showFilterUserDropdown.value = false
-  filters.user_id = null
-  applyFilters()
-}
+  selectedFilterUser.value = null;
+  filterUserKeyword.value = "";
+  filterUserResults.value = [];
+  showFilterUserDropdown.value = false;
+  filters.user_id = null;
+  applyFilters();
+};
 
 // User search with debounce
 const debounceSearchUsers = () => {
   if (userSearchTimeout) {
-    clearTimeout(userSearchTimeout)
+    clearTimeout(userSearchTimeout);
   }
-  userSearchTimeout = setTimeout(searchUsers, 300)
-}
+  userSearchTimeout = setTimeout(searchUsers, 300);
+};
 
 const searchUsers = async () => {
-  const keyword = userSearchKeyword.value.trim()
+  const keyword = userSearchKeyword.value.trim();
 
   // Clear selection if user modified the search keyword
   if (selectedUser.value && keyword !== selectedUser.value.email) {
-    selectedUser.value = null
-    assignForm.user_id = null
+    selectedUser.value = null;
+    assignForm.user_id = null;
   }
 
   if (!keyword) {
-    userSearchResults.value = []
-    return
+    userSearchResults.value = [];
+    return;
   }
 
-  userSearchLoading.value = true
+  userSearchLoading.value = true;
   try {
-    userSearchResults.value = await adminAPI.usage.searchUsers(keyword)
+    userSearchResults.value = await adminAPI.usage.searchUsers(keyword);
   } catch (error) {
-    console.error('Failed to search users:', error)
-    userSearchResults.value = []
+    console.error("Failed to search users:", error);
+    userSearchResults.value = [];
   } finally {
-    userSearchLoading.value = false
+    userSearchLoading.value = false;
   }
-}
+};
 
 const selectUser = (user: SimpleUser) => {
-  selectedUser.value = user
-  userSearchKeyword.value = user.email
-  showUserDropdown.value = false
-  assignForm.user_id = user.id
-}
+  selectedUser.value = user;
+  userSearchKeyword.value = user.email;
+  showUserDropdown.value = false;
+  assignForm.user_id = user.id;
+};
 
 const clearUserSelection = () => {
-  selectedUser.value = null
-  userSearchKeyword.value = ''
-  userSearchResults.value = []
-  assignForm.user_id = null
-}
+  selectedUser.value = null;
+  userSearchKeyword.value = "";
+  userSearchResults.value = [];
+  assignForm.user_id = null;
+};
 
 const handlePageChange = (page: number) => {
-  pagination.page = page
-  loadSubscriptions()
-}
+  pagination.page = page;
+  loadSubscriptions();
+};
 
 const handlePageSizeChange = (pageSize: number) => {
-  pagination.page_size = pageSize
-  pagination.page = 1
-  loadSubscriptions()
-}
+  pagination.page_size = pageSize;
+  pagination.page = 1;
+  loadSubscriptions();
+};
 
-const handleSort = (key: string, order: 'asc' | 'desc') => {
-  sortState.sort_by = key
-  sortState.sort_order = order
-  pagination.page = 1
-  loadSubscriptions()
-}
+const handleSort = (key: string, order: "asc" | "desc") => {
+  sortState.sort_by = key;
+  sortState.sort_order = order;
+  pagination.page = 1;
+  loadSubscriptions();
+};
 
 const closeAssignModal = () => {
-  showAssignModal.value = false
-  assignForm.user_id = null
-  assignForm.group_id = null
-  assignForm.validity_days = 30
+  showAssignModal.value = false;
+  assignForm.user_id = null;
+  assignForm.group_id = null;
+  assignForm.validity_days = 30;
   // Clear user search state
-  selectedUser.value = null
-  userSearchKeyword.value = ''
-  userSearchResults.value = []
-  showUserDropdown.value = false
-}
+  selectedUser.value = null;
+  userSearchKeyword.value = "";
+  userSearchResults.value = [];
+  showUserDropdown.value = false;
+};
 
 const handleAssignSubscription = async () => {
   if (!assignForm.user_id) {
-    appStore.showError('请选择用户')
-    return
+    appStore.showError("请选择用户");
+    return;
   }
   if (!assignForm.group_id) {
-    appStore.showError('请选择分组')
-    return
+    appStore.showError("请选择分组");
+    return;
   }
   if (!assignForm.validity_days || assignForm.validity_days < 1) {
-    appStore.showError('请输入有效的天数（至少1天）')
-    return
+    appStore.showError("请输入有效的天数（至少1天）");
+    return;
   }
 
-  submitting.value = true
+  submitting.value = true;
   try {
     await adminAPI.subscriptions.assign({
       user_id: assignForm.user_id,
       group_id: assignForm.group_id,
-      validity_days: assignForm.validity_days
-    })
-    appStore.showSuccess('订阅分配成功')
-    closeAssignModal()
-    loadSubscriptions()
+      validity_days: assignForm.validity_days,
+    });
+    appStore.showSuccess("订阅分配成功");
+    closeAssignModal();
+    loadSubscriptions();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '分配订阅失败')
-    console.error('Error assigning subscription:', error)
+    appStore.showError(error.response?.data?.detail || "分配订阅失败");
+    console.error("Error assigning subscription:", error);
   } finally {
-    submitting.value = false
+    submitting.value = false;
   }
-}
+};
 
 const handleExtend = (subscription: UserSubscription) => {
-  extendingSubscription.value = subscription
-  extendForm.days = 30
-  showExtendModal.value = true
-}
+  extendingSubscription.value = subscription;
+  extendForm.days = 30;
+  showExtendModal.value = true;
+};
 
 const closeExtendModal = () => {
-  showExtendModal.value = false
-  extendingSubscription.value = null
-}
+  showExtendModal.value = false;
+  extendingSubscription.value = null;
+};
 
 const handleExtendSubscription = async () => {
-  if (!extendingSubscription.value) return
+  if (!extendingSubscription.value) return;
 
   // 前端验证：调整后的过期时间必须在未来
   if (extendingSubscription.value.expires_at) {
-    const expiresAt = new Date(extendingSubscription.value.expires_at)
-    const newExpiresAt = new Date(expiresAt.getTime() + extendForm.days * 24 * 60 * 60 * 1000)
+    const expiresAt = new Date(extendingSubscription.value.expires_at);
+    const newExpiresAt = new Date(
+      expiresAt.getTime() + extendForm.days * 24 * 60 * 60 * 1000,
+    );
     if (newExpiresAt <= new Date()) {
-      appStore.showError('调整后剩余天数必须大于0')
-      return
+      appStore.showError("调整后剩余天数必须大于0");
+      return;
     }
   }
 
-  submitting.value = true
+  submitting.value = true;
   try {
     await adminAPI.subscriptions.extend(extendingSubscription.value.id, {
-      days: extendForm.days
-    })
-    appStore.showSuccess('订阅调整成功')
-    closeExtendModal()
-    loadSubscriptions()
+      days: extendForm.days,
+    });
+    appStore.showSuccess("订阅调整成功");
+    closeExtendModal();
+    loadSubscriptions();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '调整订阅失败')
-    console.error('Error adjusting subscription:', error)
+    appStore.showError(error.response?.data?.detail || "调整订阅失败");
+    console.error("Error adjusting subscription:", error);
   } finally {
-    submitting.value = false
+    submitting.value = false;
   }
-}
+};
 
 const handleRevoke = (subscription: UserSubscription) => {
-  revokingSubscription.value = subscription
-  showRevokeDialog.value = true
-}
+  revokingSubscription.value = subscription;
+  showRevokeDialog.value = true;
+};
 
 const confirmRevoke = async () => {
-  if (!revokingSubscription.value) return
+  if (!revokingSubscription.value) return;
 
   try {
-    await adminAPI.subscriptions.revoke(revokingSubscription.value.id)
-    appStore.showSuccess('订阅撤销成功')
-    showRevokeDialog.value = false
-    revokingSubscription.value = null
-    loadSubscriptions()
+    await adminAPI.subscriptions.revoke(revokingSubscription.value.id);
+    appStore.showSuccess("订阅撤销成功");
+    showRevokeDialog.value = false;
+    revokingSubscription.value = null;
+    loadSubscriptions();
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || '撤销订阅失败')
-    console.error('Error revoking subscription:', error)
+    appStore.showError(error.response?.data?.detail || "撤销订阅失败");
+    console.error("Error revoking subscription:", error);
   }
-}
+};
 
 // Helper functions
 const getDaysRemaining = (expiresAt: string): number | null => {
-  const now = new Date()
-  const expires = new Date(expiresAt)
-  const diff = expires.getTime() - now.getTime()
-  if (diff < 0) return null
-  return Math.ceil(diff / (1000 * 60 * 60 * 24))
-}
+  const now = new Date();
+  const expires = new Date(expiresAt);
+  const diff = expires.getTime() - now.getTime();
+  if (diff < 0) return null;
+  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+};
 
 const isExpiringSoon = (expiresAt: string): boolean => {
-  const days = getDaysRemaining(expiresAt)
-  return days !== null && days <= 7
-}
+  const days = getDaysRemaining(expiresAt);
+  return days !== null && days <= 7;
+};
 
-const getProgressWidth = (used: number | null | undefined, limit: number | null): string => {
-  if (!limit || limit === 0) return '0%'
-  const usedValue = used ?? 0
-  const percentage = Math.min((usedValue / limit) * 100, 100)
-  return `${percentage}%`
-}
+const getProgressWidth = (
+  used: number | null | undefined,
+  limit: number | null,
+): string => {
+  if (!limit || limit === 0) return "0%";
+  const usedValue = used ?? 0;
+  const percentage = Math.min((usedValue / limit) * 100, 100);
+  return `${percentage}%`;
+};
 
-const getProgressClass = (used: number | null | undefined, limit: number | null): string => {
-  if (!limit || limit === 0) return 'bg-gray-400'
-  const usedValue = used ?? 0
-  const percentage = (usedValue / limit) * 100
-  if (percentage >= 90) return 'bg-red-500'
-  if (percentage >= 70) return 'bg-orange-500'
-  return 'bg-green-500'
-}
+const getProgressClass = (
+  used: number | null | undefined,
+  limit: number | null,
+): string => {
+  if (!limit || limit === 0) return "bg-gray-400";
+  const usedValue = used ?? 0;
+  const percentage = (usedValue / limit) * 100;
+  if (percentage >= 90) return "bg-red-500";
+  if (percentage >= 70) return "bg-orange-500";
+  return "bg-green-500";
+};
 
 // Format reset time based on window start and period type
-const formatResetTime = (windowStart: string, period: 'daily' | 'weekly' | 'monthly'): string => {
-  if (!windowStart) return '窗口未激活'
+const formatResetTime = (
+  windowStart: string,
+  period: "daily" | "weekly" | "monthly",
+): string => {
+  if (!windowStart) return "窗口未激活";
 
-  const start = new Date(windowStart)
-  const now = new Date()
+  const start = new Date(windowStart);
+  const now = new Date();
 
   // Calculate reset time based on period
-  let resetTime: Date
+  let resetTime: Date;
   switch (period) {
-    case 'daily':
-      resetTime = new Date(start.getTime() + 24 * 60 * 60 * 1000)
-      break
-    case 'weekly':
-      resetTime = new Date(start.getTime() + 7 * 24 * 60 * 60 * 1000)
-      break
-    case 'monthly':
-      resetTime = new Date(start.getTime() + 30 * 24 * 60 * 60 * 1000)
-      break
+    case "daily":
+      resetTime = new Date(start.getTime() + 24 * 60 * 60 * 1000);
+      break;
+    case "weekly":
+      resetTime = new Date(start.getTime() + 7 * 24 * 60 * 60 * 1000);
+      break;
+    case "monthly":
+      resetTime = new Date(start.getTime() + 30 * 24 * 60 * 60 * 1000);
+      break;
   }
 
-  const diffMs = resetTime.getTime() - now.getTime()
-  if (diffMs <= 0) return '窗口未激活'
+  const diffMs = resetTime.getTime() - now.getTime();
+  if (diffMs <= 0) return "窗口未激活";
 
-  const diffSeconds = Math.floor(diffMs / 1000)
-  const days = Math.floor(diffSeconds / 86400)
-  const hours = Math.floor((diffSeconds % 86400) / 3600)
-  const minutes = Math.floor((diffSeconds % 3600) / 60)
+  const diffSeconds = Math.floor(diffMs / 1000);
+  const days = Math.floor(diffSeconds / 86400);
+  const hours = Math.floor((diffSeconds % 86400) / 3600);
+  const minutes = Math.floor((diffSeconds % 3600) / 60);
 
   if (days > 0) {
-    return `${days} 天 ${hours} 小时后重置`
+    return `${days} 天 ${hours} 小时后重置`;
   } else if (hours > 0) {
-    return `${hours} 小时 ${minutes} 分钟后重置`
+    return `${hours} 小时 ${minutes} 分钟后重置`;
   } else {
-    return `${minutes} 分钟后重置`
+    return `${minutes} 分钟后重置`;
   }
-}
+};
 
 // Handle click outside to close dropdowns
 const handleClickOutside = (event: MouseEvent) => {
-  const target = event.target as HTMLElement
-  if (!target.closest('[data-assign-user-search]')) showUserDropdown.value = false
-  if (!target.closest('[data-filter-user-search]')) showFilterUserDropdown.value = false
+  const target = event.target as HTMLElement;
+  if (!target.closest("[data-assign-user-search]"))
+    showUserDropdown.value = false;
+  if (!target.closest("[data-filter-user-search]"))
+    showFilterUserDropdown.value = false;
   if (columnDropdownRef.value && !columnDropdownRef.value.contains(target)) {
-    showColumnDropdown.value = false
+    showColumnDropdown.value = false;
   }
-}
+};
 
 onMounted(() => {
-  loadUserColumnMode()
-  loadSavedColumns()
-  loadSubscriptions()
-  loadGroups()
-  document.addEventListener('click', handleClickOutside)
-})
+  loadUserColumnMode();
+  loadSavedColumns();
+  loadSubscriptions();
+  loadGroups();
+  document.addEventListener("click", handleClickOutside);
+});
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener("click", handleClickOutside);
   if (filterUserSearchTimeout) {
-    clearTimeout(filterUserSearchTimeout)
+    clearTimeout(filterUserSearchTimeout);
   }
   if (userSearchTimeout) {
-    clearTimeout(userSearchTimeout)
+    clearTimeout(userSearchTimeout);
   }
-})
+});
 </script>
 
 <style scoped>

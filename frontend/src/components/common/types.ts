@@ -3,8 +3,8 @@
  */
 
 export interface Column {
-  key: string
-  label: string
-  sortable?: boolean
-  formatter?: (value: any, row: any) => string
+  key: string;
+  label: string;
+  sortable?: boolean;
+  formatter?: (value: any, row: any) => string;
 }

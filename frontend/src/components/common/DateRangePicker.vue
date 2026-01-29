@@ -27,7 +27,10 @@
           <button
             v-for="preset in presets"
             :key="preset.value"
-            :class="['date-picker-preset', isPresetActive(preset) && 'date-picker-preset-active']"
+            :class="[
+              'date-picker-preset',
+              isPresetActive(preset) && 'date-picker-preset-active',
+            ]"
             @click="selectPreset(preset)"
           >
             {{ getLabel(preset.labelKey) }}
@@ -39,7 +42,7 @@
         <!-- Custom date range inputs -->
         <div class="date-picker-custom">
           <div class="date-picker-field">
-            <label class="date-picker-label">{{ '开始日期' }}</label>
+            <label class="date-picker-label">{{ "开始日期" }}</label>
             <input
               v-model="localStartDate"
               type="date"
@@ -52,7 +55,7 @@
             <Icon name="arrowRight" size="sm" class="text-gray-400" />
           </div>
           <div class="date-picker-field">
-            <label class="date-picker-label">{{ '结束日期' }}</label>
+            <label class="date-picker-label">{{ "结束日期" }}</label>
             <input
               v-model="localEndDate"
               type="date"
@@ -67,7 +70,7 @@
         <!-- Apply button -->
         <div class="date-picker-actions">
           <button class="date-picker-apply" @click="apply">
-            {{ '应用' }}
+            {{ "应用" }}
           </button>
         </div>
       </div>
@@ -76,246 +79,261 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 
 interface DatePreset {
-  labelKey: string
-  value: string
-  getRange: () => { start: string; end: string }
+  labelKey: string;
+  value: string;
+  getRange: () => { start: string; end: string };
 }
 
 interface Props {
-  startDate: string
-  endDate: string
+  startDate: string;
+  endDate: string;
 }
 
 interface Emits {
-  (e: 'update:startDate', value: string): void
-  (e: 'update:endDate', value: string): void
-  (e: 'change', range: { startDate: string; endDate: string; preset: string | null }): void
+  (e: "update:startDate", value: string): void;
+  (e: "update:endDate", value: string): void;
+  (
+    e: "change",
+    range: { startDate: string; endDate: string; preset: string | null },
+  ): void;
 }
 
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
+const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
 
-const isOpen = ref(false)
-const containerRef = ref<HTMLElement | null>(null)
-const localStartDate = ref(props.startDate)
-const localEndDate = ref(props.endDate)
-const activePreset = ref<string | null>('7days')
+const isOpen = ref(false);
+const containerRef = ref<HTMLElement | null>(null);
+const localStartDate = ref(props.startDate);
+const localEndDate = ref(props.endDate);
+const activePreset = ref<string | null>("7days");
 
 const today = computed(() => {
   // Use local timezone to avoid UTC timezone issues
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = String(now.getMonth() + 1).padStart(2, '0')
-  const day = String(now.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-})
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+});
 
 // Tomorrow's date - used for max date to handle timezone differences
 // When user is in a timezone behind the server, "today" on server might be "tomorrow" locally
 const tomorrow = computed(() => {
-  const d = new Date()
-  d.setDate(d.getDate() + 1)
-  return formatDateToString(d)
-})
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  return formatDateToString(d);
+});
 
 // Helper function to format date to YYYY-MM-DD using local timezone
 const formatDateToString = (date: Date): string => {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 const presets: DatePreset[] = [
   {
-    labelKey: 'dates.today',
-    value: 'today',
+    labelKey: "dates.today",
+    value: "today",
     getRange: () => {
-      const t = today.value
-      return { start: t, end: t }
-    }
+      const t = today.value;
+      return { start: t, end: t };
+    },
   },
   {
-    labelKey: 'dates.yesterday',
-    value: 'yesterday',
+    labelKey: "dates.yesterday",
+    value: "yesterday",
     getRange: () => {
-      const d = new Date()
-      d.setDate(d.getDate() - 1)
-      const yesterday = formatDateToString(d)
-      return { start: yesterday, end: yesterday }
-    }
+      const d = new Date();
+      d.setDate(d.getDate() - 1);
+      const yesterday = formatDateToString(d);
+      return { start: yesterday, end: yesterday };
+    },
   },
   {
-    labelKey: 'dates.last7Days',
-    value: '7days',
+    labelKey: "dates.last7Days",
+    value: "7days",
     getRange: () => {
-      const end = today.value
-      const d = new Date()
-      d.setDate(d.getDate() - 6)
-      const start = formatDateToString(d)
-      return { start, end }
-    }
+      const end = today.value;
+      const d = new Date();
+      d.setDate(d.getDate() - 6);
+      const start = formatDateToString(d);
+      return { start, end };
+    },
   },
   {
-    labelKey: 'dates.last14Days',
-    value: '14days',
+    labelKey: "dates.last14Days",
+    value: "14days",
     getRange: () => {
-      const end = today.value
-      const d = new Date()
-      d.setDate(d.getDate() - 13)
-      const start = formatDateToString(d)
-      return { start, end }
-    }
+      const end = today.value;
+      const d = new Date();
+      d.setDate(d.getDate() - 13);
+      const start = formatDateToString(d);
+      return { start, end };
+    },
   },
   {
-    labelKey: 'dates.last30Days',
-    value: '30days',
+    labelKey: "dates.last30Days",
+    value: "30days",
     getRange: () => {
-      const end = today.value
-      const d = new Date()
-      d.setDate(d.getDate() - 29)
-      const start = formatDateToString(d)
-      return { start, end }
-    }
+      const end = today.value;
+      const d = new Date();
+      d.setDate(d.getDate() - 29);
+      const start = formatDateToString(d);
+      return { start, end };
+    },
   },
   {
-    labelKey: 'dates.thisMonth',
-    value: 'thisMonth',
+    labelKey: "dates.thisMonth",
+    value: "thisMonth",
     getRange: () => {
-      const now = new Date()
-      const start = formatDateToString(new Date(now.getFullYear(), now.getMonth(), 1))
-      return { start, end: today.value }
-    }
+      const now = new Date();
+      const start = formatDateToString(
+        new Date(now.getFullYear(), now.getMonth(), 1),
+      );
+      return { start, end: today.value };
+    },
   },
   {
-    labelKey: 'dates.lastMonth',
-    value: 'lastMonth',
+    labelKey: "dates.lastMonth",
+    value: "lastMonth",
     getRange: () => {
-      const now = new Date()
-      const start = formatDateToString(new Date(now.getFullYear(), now.getMonth() - 1, 1))
-      const end = formatDateToString(new Date(now.getFullYear(), now.getMonth(), 0))
-      return { start, end }
-    }
-  }
-]
+      const now = new Date();
+      const start = formatDateToString(
+        new Date(now.getFullYear(), now.getMonth() - 1, 1),
+      );
+      const end = formatDateToString(
+        new Date(now.getFullYear(), now.getMonth(), 0),
+      );
+      return { start, end };
+    },
+  },
+];
 
 // Label key 到中文的映射
 const labelKeyMap: Record<string, string> = {
-  'dates.today': '今天',
-  'dates.yesterday': '昨天',
-  'dates.last7Days': '最近 7 天',
-  'dates.last14Days': '最近 14 天',
-  'dates.last30Days': '最近 30 天',
-  'dates.thisMonth': '本月',
-  'dates.lastMonth': '上月'
-}
+  "dates.today": "今天",
+  "dates.yesterday": "昨天",
+  "dates.last7Days": "最近 7 天",
+  "dates.last14Days": "最近 14 天",
+  "dates.last30Days": "最近 30 天",
+  "dates.thisMonth": "本月",
+  "dates.lastMonth": "上月",
+};
 
 const getLabel = (key: string): string => {
-  return labelKeyMap[key] || key
-}
+  return labelKeyMap[key] || key;
+};
 
 const displayValue = computed(() => {
   if (activePreset.value) {
-    const preset = presets.find((p) => p.value === activePreset.value)
-    if (preset) return getLabel(preset.labelKey)
+    const preset = presets.find((p) => p.value === activePreset.value);
+    if (preset) return getLabel(preset.labelKey);
   }
 
   if (localStartDate.value && localEndDate.value) {
     if (localStartDate.value === localEndDate.value) {
-      return formatDate(localStartDate.value)
+      return formatDate(localStartDate.value);
     }
-    return `${formatDate(localStartDate.value)} - ${formatDate(localEndDate.value)}`
+    return `${formatDate(localStartDate.value)} - ${formatDate(localEndDate.value)}`;
   }
 
-  return '选择日期范围'
-})
+  return "选择日期范围";
+});
 
 const formatDate = (dateStr: string): string => {
-  const date = new Date(dateStr + 'T00:00:00')
-  return date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })
-}
+  const date = new Date(dateStr + "T00:00:00");
+  return date.toLocaleDateString("zh-CN", { month: "short", day: "numeric" });
+};
 
 const isPresetActive = (preset: DatePreset): boolean => {
-  return activePreset.value === preset.value
-}
+  return activePreset.value === preset.value;
+};
 
 const selectPreset = (preset: DatePreset) => {
-  const range = preset.getRange()
-  localStartDate.value = range.start
-  localEndDate.value = range.end
-  activePreset.value = preset.value
-}
+  const range = preset.getRange();
+  localStartDate.value = range.start;
+  localEndDate.value = range.end;
+  activePreset.value = preset.value;
+};
 
 const onDateChange = () => {
   // Check if current dates match any preset
-  activePreset.value = null
+  activePreset.value = null;
   for (const preset of presets) {
-    const range = preset.getRange()
-    if (range.start === localStartDate.value && range.end === localEndDate.value) {
-      activePreset.value = preset.value
-      break
+    const range = preset.getRange();
+    if (
+      range.start === localStartDate.value &&
+      range.end === localEndDate.value
+    ) {
+      activePreset.value = preset.value;
+      break;
     }
   }
-}
+};
 
 const toggle = () => {
-  isOpen.value = !isOpen.value
-}
+  isOpen.value = !isOpen.value;
+};
 
 const apply = () => {
-  emit('update:startDate', localStartDate.value)
-  emit('update:endDate', localEndDate.value)
-  emit('change', {
+  emit("update:startDate", localStartDate.value);
+  emit("update:endDate", localEndDate.value);
+  emit("change", {
     startDate: localStartDate.value,
     endDate: localEndDate.value,
-    preset: activePreset.value
-  })
-  isOpen.value = false
-}
+    preset: activePreset.value,
+  });
+  isOpen.value = false;
+};
 
 const handleClickOutside = (event: MouseEvent) => {
-  if (containerRef.value && !containerRef.value.contains(event.target as Node)) {
-    isOpen.value = false
+  if (
+    containerRef.value &&
+    !containerRef.value.contains(event.target as Node)
+  ) {
+    isOpen.value = false;
   }
-}
+};
 
 const handleEscape = (event: KeyboardEvent) => {
-  if (event.key === 'Escape' && isOpen.value) {
-    isOpen.value = false
+  if (event.key === "Escape" && isOpen.value) {
+    isOpen.value = false;
   }
-}
+};
 
 // Sync local state with props
 watch(
   () => props.startDate,
   (val) => {
-    localStartDate.value = val
-    onDateChange()
-  }
-)
+    localStartDate.value = val;
+    onDateChange();
+  },
+);
 
 watch(
   () => props.endDate,
   (val) => {
-    localEndDate.value = val
-    onDateChange()
-  }
-)
+    localEndDate.value = val;
+    onDateChange();
+  },
+);
 
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-  document.addEventListener('keydown', handleEscape)
+  document.addEventListener("click", handleClickOutside);
+  document.addEventListener("keydown", handleEscape);
   // Initialize active preset detection
-  onDateChange()
-})
+  onDateChange();
+});
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
-  document.removeEventListener('keydown', handleEscape)
-})
+  document.removeEventListener("click", handleClickOutside);
+  document.removeEventListener("keydown", handleEscape);
+});
 </script>
 
 <style scoped>

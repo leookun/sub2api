@@ -2,48 +2,73 @@
   <div class="flex h-full min-h-0 flex-col bg-white dark:bg-dark-900">
     <!-- Loading State -->
     <div v-if="loading" class="flex flex-1 items-center justify-center py-10">
-      <div class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary-600"></div>
+      <div
+        class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary-600"
+      ></div>
     </div>
 
     <!-- Table Container -->
     <div v-else class="flex min-h-0 flex-1 flex-col">
-      <div class="min-h-0 flex-1 overflow-auto border-b border-gray-200 dark:border-dark-700">
+      <div
+        class="min-h-0 flex-1 overflow-auto border-b border-gray-200 dark:border-dark-700"
+      >
         <table class="w-full border-separate border-spacing-0">
           <thead class="sticky top-0 z-10 bg-gray-50 dark:bg-dark-800">
             <tr>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '时间' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "时间" }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '类型' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "类型" }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '平台' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "平台" }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '模型' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "模型" }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '分组' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "分组" }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '用户' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "用户" }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '状态码' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "状态码" }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '响应内容' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "响应内容" }}
               </th>
-              <th class="border-b border-gray-200 px-4 py-2.5 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400">
-                {{ '操作' }}
+              <th
+                class="border-b border-gray-200 px-4 py-2.5 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
+              >
+                {{ "操作" }}
               </th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100 dark:divide-dark-700">
             <tr v-if="rows.length === 0">
-              <td colspan="9" class="py-12 text-center text-sm text-gray-400 dark:text-dark-500">
-                {{ '该窗口内暂无错误。' }}
+              <td
+                colspan="9"
+                class="py-12 text-center text-sm text-gray-400 dark:text-dark-500"
+              >
+                {{ "该窗口内暂无错误。" }}
               </td>
             </tr>
 
@@ -55,9 +80,15 @@
             >
               <!-- Time -->
               <td class="whitespace-nowrap px-4 py-2">
-                <el-tooltip :content="log.request_id || log.client_request_id" placement="top" :show-after="500">
-                  <span class="font-mono text-xs font-medium text-gray-900 dark:text-gray-200">
-                    {{ formatDateTime(log.created_at).split(' ')[1] }}
+                <el-tooltip
+                  :content="log.request_id || log.client_request_id"
+                  placement="top"
+                  :show-after="500"
+                >
+                  <span
+                    class="font-mono text-xs font-medium text-gray-900 dark:text-gray-200"
+                  >
+                    {{ formatDateTime(log.created_at).split(" ")[1] }}
                   </span>
                 </el-tooltip>
               </td>
@@ -67,7 +98,7 @@
                 <span
                   :class="[
                     'inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-bold ring-1 ring-inset',
-                    getTypeBadge(log).className
+                    getTypeBadge(log).className,
                   ]"
                 >
                   {{ getTypeBadge(log).label }}
@@ -76,15 +107,20 @@
 
               <!-- Platform -->
               <td class="whitespace-nowrap px-4 py-2">
-                <span class="inline-flex items-center rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase text-gray-600 dark:bg-dark-700 dark:text-gray-300">
-                  {{ log.platform || '-' }}
+                <span
+                  class="inline-flex items-center rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase text-gray-600 dark:bg-dark-700 dark:text-gray-300"
+                >
+                  {{ log.platform || "-" }}
                 </span>
               </td>
 
               <!-- Model -->
               <td class="px-4 py-2">
                 <div class="max-w-[120px] truncate" :title="log.model">
-                  <span v-if="log.model" class="font-mono text-[11px] text-gray-700 dark:text-gray-300">
+                  <span
+                    v-if="log.model"
+                    class="font-mono text-[11px] text-gray-700 dark:text-gray-300"
+                  >
                     {{ log.model }}
                   </span>
                   <span v-else class="text-xs text-gray-400">-</span>
@@ -93,9 +129,16 @@
 
               <!-- Group -->
               <td class="px-4 py-2">
-                 <el-tooltip v-if="log.group_id" :content="'ID：' + ' ' + log.group_id" placement="top" :show-after="500">
-                  <span class="max-w-[100px] truncate text-xs font-medium text-gray-900 dark:text-gray-200">
-                    {{ log.group_name || '-' }}
+                <el-tooltip
+                  v-if="log.group_id"
+                  :content="'ID：' + ' ' + log.group_id"
+                  placement="top"
+                  :show-after="500"
+                >
+                  <span
+                    class="max-w-[100px] truncate text-xs font-medium text-gray-900 dark:text-gray-200"
+                  >
+                    {{ log.group_name || "-" }}
                   </span>
                 </el-tooltip>
                 <span v-else class="text-xs text-gray-400">-</span>
@@ -104,17 +147,31 @@
               <!-- User / Account -->
               <td class="px-4 py-2">
                 <template v-if="isUpstreamRow(log)">
-                  <el-tooltip v-if="log.account_id" :content="'账号 ID' + ' ' + log.account_id" placement="top" :show-after="500">
-                    <span class="max-w-[100px] truncate text-xs font-medium text-gray-900 dark:text-gray-200">
-                      {{ log.account_name || '-' }}
+                  <el-tooltip
+                    v-if="log.account_id"
+                    :content="'账号 ID' + ' ' + log.account_id"
+                    placement="top"
+                    :show-after="500"
+                  >
+                    <span
+                      class="max-w-[100px] truncate text-xs font-medium text-gray-900 dark:text-gray-200"
+                    >
+                      {{ log.account_name || "-" }}
                     </span>
                   </el-tooltip>
                   <span v-else class="text-xs text-gray-400">-</span>
                 </template>
                 <template v-else>
-                  <el-tooltip v-if="log.user_id" :content="'用户 ID' + ' ' + log.user_id" placement="top" :show-after="500">
-                    <span class="max-w-[100px] truncate text-xs font-medium text-gray-900 dark:text-gray-200">
-                      {{ log.user_email || '-' }}
+                  <el-tooltip
+                    v-if="log.user_id"
+                    :content="'用户 ID' + ' ' + log.user_id"
+                    placement="top"
+                    :show-after="500"
+                  >
+                    <span
+                      class="max-w-[100px] truncate text-xs font-medium text-gray-900 dark:text-gray-200"
+                    >
+                      {{ log.user_email || "-" }}
                     </span>
                   </el-tooltip>
                   <span v-else class="text-xs text-gray-400">-</span>
@@ -127,14 +184,17 @@
                   <span
                     :class="[
                       'inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-bold ring-1 ring-inset',
-                      getStatusClass(log.status_code)
+                      getStatusClass(log.status_code),
                     ]"
                   >
                     {{ log.status_code }}
                   </span>
                   <span
                     v-if="log.severity"
-                    :class="['rounded px-1.5 py-0.5 text-[10px] font-bold', getSeverityClass(log.severity)]"
+                    :class="[
+                      'rounded px-1.5 py-0.5 text-[10px] font-bold',
+                      getSeverityClass(log.severity),
+                    ]"
                   >
                     {{ log.severity }}
                   </span>
@@ -144,8 +204,11 @@
               <!-- Message (Response Content) -->
               <td class="px-4 py-2">
                 <div class="max-w-[200px]">
-                  <p class="truncate text-[11px] font-medium text-gray-600 dark:text-gray-400" :title="log.message">
-                    {{ formatSmartMessage(log.message) || '-' }}
+                  <p
+                    class="truncate text-[11px] font-medium text-gray-600 dark:text-gray-400"
+                    :title="log.message"
+                  >
+                    {{ formatSmartMessage(log.message) || "-" }}
                   </p>
                 </div>
               </td>
@@ -153,8 +216,12 @@
               <!-- Actions -->
               <td class="whitespace-nowrap px-4 py-2 text-right" @click.stop>
                 <div class="flex items-center justify-end gap-3">
-                  <button type="button" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 text-xs font-bold" @click="emit('openErrorDetail', log.id)">
-                    {{ '详情' }}
+                  <button
+                    type="button"
+                    class="text-primary-600 hover:text-primary-700 dark:text-primary-400 text-xs font-bold"
+                    @click="emit('openErrorDetail', log.id)"
+                  >
+                    {{ "详情" }}
                   </button>
                 </div>
               </td>
@@ -180,82 +247,108 @@
 </template>
 
 <script setup lang="ts">
-import type { OpsErrorLog } from '@/api/admin/ops'
+import type { OpsErrorLog } from "@/api/admin/ops";
 
 function isUpstreamRow(log: OpsErrorLog): boolean {
-  const phase = String(log.phase || '').toLowerCase()
-  const owner = String(log.error_owner || '').toLowerCase()
-  return phase === 'upstream' && owner === 'provider'
+  const phase = String(log.phase || "").toLowerCase();
+  const owner = String(log.error_owner || "").toLowerCase();
+  return phase === "upstream" && owner === "provider";
 }
 
 function getTypeBadge(log: OpsErrorLog): { label: string; className: string } {
-  const phase = String(log.phase || '').toLowerCase()
-  const owner = String(log.error_owner || '').toLowerCase()
+  const phase = String(log.phase || "").toLowerCase();
+  const owner = String(log.error_owner || "").toLowerCase();
 
   if (isUpstreamRow(log)) {
-    return { label: '上游', className: 'bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-500/30' }
+    return {
+      label: "上游",
+      className:
+        "bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-500/30",
+    };
   }
-  if (phase === 'request' && owner === 'client') {
-    return { label: '请求', className: 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-500/30' }
+  if (phase === "request" && owner === "client") {
+    return {
+      label: "请求",
+      className:
+        "bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-500/30",
+    };
   }
-  if (phase === 'auth' && owner === 'client') {
-    return { label: '认证', className: 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-900/30 dark:text-blue-400 dark:ring-blue-500/30' }
+  if (phase === "auth" && owner === "client") {
+    return {
+      label: "认证",
+      className:
+        "bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-900/30 dark:text-blue-400 dark:ring-blue-500/30",
+    };
   }
-  if (phase === 'routing' && owner === 'platform') {
-    return { label: '路由', className: 'bg-purple-50 text-purple-700 ring-purple-600/20 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-500/30' }
+  if (phase === "routing" && owner === "platform") {
+    return {
+      label: "路由",
+      className:
+        "bg-purple-50 text-purple-700 ring-purple-600/20 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-500/30",
+    };
   }
-  if (phase === 'internal' && owner === 'platform') {
-    return { label: '内部', className: 'bg-gray-100 text-gray-800 ring-gray-600/20 dark:bg-dark-700 dark:text-gray-200 dark:ring-dark-500/40' }
+  if (phase === "internal" && owner === "platform") {
+    return {
+      label: "内部",
+      className:
+        "bg-gray-100 text-gray-800 ring-gray-600/20 dark:bg-dark-700 dark:text-gray-200 dark:ring-dark-500/40",
+    };
   }
 
-    const fallback = phase || owner || '未知'
-    return { label: fallback, className: 'bg-gray-50 text-gray-700 ring-gray-600/10 dark:bg-dark-900 dark:text-gray-300 dark:ring-dark-700' }
+  const fallback = phase || owner || "未知";
+  return {
+    label: fallback,
+    className:
+      "bg-gray-50 text-gray-700 ring-gray-600/10 dark:bg-dark-900 dark:text-gray-300 dark:ring-dark-700",
+  };
 }
 
 interface Props {
-  rows: OpsErrorLog[]
-  total: number
-  loading: boolean
-  page: number
-  pageSize: number
+  rows: OpsErrorLog[];
+  total: number;
+  loading: boolean;
+  page: number;
+  pageSize: number;
 }
 
 interface Emits {
-  (e: 'openErrorDetail', id: number): void
-  (e: 'update:page', value: number): void
-  (e: 'update:pageSize', value: number): void
+  (e: "openErrorDetail", id: number): void;
+  (e: "update:page", value: number): void;
+  (e: "update:pageSize", value: number): void;
 }
 
-defineProps<Props>()
-const emit = defineEmits<Emits>()
+defineProps<Props>();
+const emit = defineEmits<Emits>();
 
 function getStatusClass(code: number): string {
-  if (code >= 500) return 'bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-500/30'
-  if (code === 429) return 'bg-purple-50 text-purple-700 ring-purple-600/20 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-500/30'
-  if (code >= 400) return 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-500/30'
-  return 'bg-gray-50 text-gray-700 ring-gray-600/20 dark:bg-gray-900/30 dark:text-gray-400 dark:ring-gray-500/30'
+  if (code >= 500)
+    return "bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-500/30";
+  if (code === 429)
+    return "bg-purple-50 text-purple-700 ring-purple-600/20 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-500/30";
+  if (code >= 400)
+    return "bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-900/30 dark:text-amber-400 dark:ring-amber-500/30";
+  return "bg-gray-50 text-gray-700 ring-gray-600/20 dark:bg-gray-900/30 dark:text-gray-400 dark:ring-gray-500/30";
 }
 
 function formatSmartMessage(msg: string): string {
-  if (!msg) return ''
+  if (!msg) return "";
 
-  if (msg.startsWith('{') || msg.startsWith('[')) {
+  if (msg.startsWith("{") || msg.startsWith("[")) {
     try {
-      const obj = JSON.parse(msg)
-      if (obj?.error?.message) return String(obj.error.message)
-      if (obj?.message) return String(obj.message)
-      if (obj?.detail) return String(obj.detail)
-      if (typeof obj === 'object') return JSON.stringify(obj).substring(0, 150)
+      const obj = JSON.parse(msg);
+      if (obj?.error?.message) return String(obj.error.message);
+      if (obj?.message) return String(obj.message);
+      if (obj?.detail) return String(obj.detail);
+      if (typeof obj === "object") return JSON.stringify(obj).substring(0, 150);
     } catch {
       // ignore parse error
     }
   }
 
-  if (msg.includes('context deadline exceeded')) return '请求超时'
-  if (msg.includes('connection refused')) return '连接被拒绝'
-  if (msg.toLowerCase().includes('rate limit')) return '触发限流'
+  if (msg.includes("context deadline exceeded")) return "请求超时";
+  if (msg.includes("connection refused")) return "连接被拒绝";
+  if (msg.toLowerCase().includes("rate limit")) return "触发限流";
 
-  return msg.length > 200 ? msg.substring(0, 200) + '...' : msg
-
+  return msg.length > 200 ? msg.substring(0, 200) + "..." : msg;
 }
 </script>

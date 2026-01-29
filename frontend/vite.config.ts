@@ -16,6 +16,7 @@ export default defineConfig(() => {
       // 自动导入项目工具函数
       AutoImport({
         dts: "auto-import-utils.d.ts",
+        vueTemplate: true,
         imports: [
           {
             "@/utils/format": [
@@ -31,11 +32,14 @@ export default defineConfig(() => {
               "formatTime",
               "formatNumberLocaleString",
               "formatCostFixed",
+              "formatCost",
               "formatTokensK",
               "formatCountdown",
               "formatCountdownWithSuffix",
             ],
             "@/utils/url": ["sanitizeUrl"],
+            "@/composables/useModelWhitelist": ["commonErrorCodes"],
+            "@/views/admin/ops/utils/opsFormatters": ["getSeverityClass"],
           },
         ],
       }),

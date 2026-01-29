@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
 defineProps<{
-  content?: string
-}>()
+  content?: string;
+}>();
 
-const show = ref(false)
+const show = ref(false);
 </script>
 
 <template>
@@ -37,8 +37,9 @@ const show = ref(false)
       class="absolute bottom-full left-1/2 z-50 mb-2 w-64 -translate-x-1/2 rounded-lg bg-gray-900 p-3 text-xs leading-relaxed text-white shadow-xl ring-1 ring-white/10 opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:bg-gray-800"
     >
       <slot>{{ content }}</slot>
-      <div class="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-gray-900 dark:bg-gray-800"></div>
+      <div
+        class="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-gray-900 dark:bg-gray-800"
+      ></div>
     </div>
   </div>
 </template>
-

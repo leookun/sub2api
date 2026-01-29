@@ -7,12 +7,14 @@
         :class="[
           hasUpdate
             ? 'bg-amber-100 text-amber-700 hover:bg-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50'
-            : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-800 dark:text-dark-400 dark:hover:bg-dark-700'
+            : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-800 dark:text-dark-400 dark:hover:bg-dark-700',
         ]"
         :title="hasUpdate ? '有新版本可用！' : '已是最新版本'"
         @click="toggleDropdown"
       >
-        <span v-if="currentVersion" class="font-medium">v{{ currentVersion }}</span>
+        <span v-if="currentVersion" class="font-medium"
+          >v{{ currentVersion }}</span
+        >
         <span
           v-else
           class="h-3 w-12 animate-pulse rounded bg-gray-200 font-medium dark:bg-dark-600"
@@ -22,7 +24,9 @@
           <span
             class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"
           ></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+          <span
+            class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"
+          ></span>
         </span>
       </button>
 
@@ -37,9 +41,10 @@
           <div
             class="flex items-center justify-between border-b border-gray-100 px-4 py-3 dark:border-dark-700"
           >
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-300">{{
-              '当前版本'
-            }}</span>
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-dark-300"
+              >{{ "当前版本" }}</span
+            >
             <button
               class="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-dark-700 dark:hover:text-dark-200"
               :disabled="loading"
@@ -58,7 +63,11 @@
           <div class="p-4">
             <!-- Loading state -->
             <div v-if="loading" class="flex items-center justify-center py-6">
-              <svg class="h-6 w-6 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24">
+              <svg
+                class="h-6 w-6 animate-spin text-primary-500"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
                 <circle
                   class="opacity-25"
                   cx="12"
@@ -85,7 +94,11 @@
                     class="text-2xl font-bold text-gray-900 dark:text-white"
                     >v{{ currentVersion }}</span
                   >
-                  <span v-else class="text-2xl font-bold text-gray-400 dark:text-dark-500">--</span>
+                  <span
+                    v-else
+                    class="text-2xl font-bold text-gray-400 dark:text-dark-500"
+                    >--</span
+                  >
                   <!-- Show check mark when up to date -->
                   <span
                     v-if="!hasUpdate"
@@ -107,8 +120,8 @@
                 <p class="mt-1 text-xs text-gray-500 dark:text-dark-400">
                   {{
                     hasUpdate
-                      ? '最新版本' + ': v' + latestVersion
-                      : '已是最新版本'
+                      ? "最新版本" + ": v" + latestVersion
+                      : "已是最新版本"
                   }}
                 </p>
               </div>
@@ -129,10 +142,14 @@
                     />
                   </div>
                   <div class="min-w-0 flex-1">
-                    <p class="text-sm font-medium text-red-700 dark:text-red-300">
-                      {{ '更新失败' }}
+                    <p
+                      class="text-sm font-medium text-red-700 dark:text-red-300"
+                    >
+                      {{ "更新失败" }}
                     </p>
-                    <p class="truncate text-xs text-red-600/70 dark:text-red-400/70">
+                    <p
+                      class="truncate text-xs text-red-600/70 dark:text-red-400/70"
+                    >
                       {{ updateError }}
                     </p>
                   </div>
@@ -144,7 +161,7 @@
                   class="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50"
                   @click="handleUpdate"
                 >
-                  {{ '重试' }}
+                  {{ "重试" }}
                 </button>
               </div>
 
@@ -163,15 +180,21 @@
                       stroke="currentColor"
                       stroke-width="2"
                     >
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <div class="min-w-0 flex-1">
-                    <p class="text-sm font-medium text-green-700 dark:text-green-300">
-                      {{ '更新完成' }}
+                    <p
+                      class="text-sm font-medium text-green-700 dark:text-green-300"
+                    >
+                      {{ "更新完成" }}
                     </p>
                     <p class="text-xs text-green-600/70 dark:text-green-400/70">
-                      {{ '请重启服务以应用更新' }}
+                      {{ "请重启服务以应用更新" }}
                     </p>
                   </div>
                 </div>
@@ -217,12 +240,12 @@
                     />
                   </svg>
                   <template v-if="restarting">
-                    <span>{{ '正在重启...' }}</span>
+                    <span>{{ "正在重启..." }}</span>
                     <span v-if="restartCountdown > 0" class="tabular-nums"
                       >({{ restartCountdown }}s)</span
                     >
                   </template>
-                  <span v-else>{{ '立即重启' }}</span>
+                  <span v-else>{{ "立即重启" }}</span>
                 </button>
               </div>
 
@@ -246,8 +269,10 @@
                     />
                   </div>
                   <div class="min-w-0 flex-1">
-                    <p class="text-sm font-medium text-amber-700 dark:text-amber-300">
-                      {{ '有新版本可用！' }}
+                    <p
+                      class="text-sm font-medium text-amber-700 dark:text-amber-300"
+                    >
+                      {{ "有新版本可用！" }}
                     </p>
                     <p class="text-xs text-amber-600/70 dark:text-amber-400/70">
                       v{{ latestVersion }}
@@ -260,7 +285,11 @@
                     stroke="currentColor"
                     stroke-width="2"
                   >
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
                 </a>
                 <!-- Source build hint -->
@@ -281,7 +310,7 @@
                     />
                   </svg>
                   <p class="text-xs text-blue-600 dark:text-blue-400">
-                    {{ '源码构建请使用 git pull 更新' }}
+                    {{ "源码构建请使用 git pull 更新" }}
                   </p>
                 </div>
               </div>
@@ -292,19 +321,21 @@
                 <div
                   class="flex items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20"
                 >
-                <div
-                  class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/50"
-                >
-                  <Icon
-                    name="download"
-                    size="sm"
-                    :stroke-width="2"
-                    class="text-amber-600 dark:text-amber-400"
-                  />
-                </div>
+                  <div
+                    class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/50"
+                  >
+                    <Icon
+                      name="download"
+                      size="sm"
+                      :stroke-width="2"
+                      class="text-amber-600 dark:text-amber-400"
+                    />
+                  </div>
                   <div class="min-w-0 flex-1">
-                    <p class="text-sm font-medium text-amber-700 dark:text-amber-300">
-                      {{ '有新版本可用！' }}
+                    <p
+                      class="text-sm font-medium text-amber-700 dark:text-amber-300"
+                    >
+                      {{ "有新版本可用！" }}
                     </p>
                     <p class="text-xs text-amber-600/70 dark:text-amber-400/70">
                       v{{ latestVersion }}
@@ -318,7 +349,12 @@
                   class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
                   @click="handleUpdate"
                 >
-                  <svg v-if="updating" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <svg
+                    v-if="updating"
+                    class="h-4 w-4 animate-spin"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
                     <circle
                       class="opacity-25"
                       cx="12"
@@ -334,7 +370,7 @@
                     ></path>
                   </svg>
                   <Icon v-else name="download" size="sm" :stroke-width="2" />
-                  {{ updating ? '正在更新...' : '立即更新' }}
+                  {{ updating ? "正在更新..." : "立即更新" }}
                 </button>
 
                 <!-- View release link -->
@@ -345,14 +381,16 @@
                   rel="noopener noreferrer"
                   class="flex items-center justify-center gap-1 text-xs text-gray-500 transition-colors hover:text-gray-700 dark:text-dark-400 dark:hover:text-dark-200"
                 >
-                  {{ '查看更新日志' }}
+                  {{ "查看更新日志" }}
                   <Icon name="externalLink" size="xs" :stroke-width="2" />
                 </a>
               </div>
 
               <!-- Priority 5: Up to date - show GitHub link -->
               <a
-                v-else-if="releaseInfo?.html_url && releaseInfo.html_url !== '#'"
+                v-else-if="
+                  releaseInfo?.html_url && releaseInfo.html_url !== '#'
+                "
                 :href="releaseInfo.html_url"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -365,7 +403,7 @@
                     d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"
                   />
                 </svg>
-                {{ '查看发布' }}
+                {{ "查看发布" }}
               </a>
             </template>
           </div>
@@ -381,153 +419,163 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { useAuthStore, useAppStore } from '@/stores'
-import { performUpdate, restartService } from '@/api/admin/system'
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { useAuthStore, useAppStore } from "@/stores";
+import { performUpdate, restartService } from "@/api/admin/system";
 
 const props = defineProps<{
-  version?: string
-}>()
+  version?: string;
+}>();
 
-const authStore = useAuthStore()
-const appStore = useAppStore()
+const authStore = useAuthStore();
+const appStore = useAppStore();
 
-const isAdmin = computed(() => authStore.isAdmin)
+const isAdmin = computed(() => authStore.isAdmin);
 
-const dropdownOpen = ref(false)
-const dropdownRef = ref<HTMLElement | null>(null)
+const dropdownOpen = ref(false);
+const dropdownRef = ref<HTMLElement | null>(null);
 
 // Use store's cached version state
-const loading = computed(() => appStore.versionLoading)
-const currentVersion = computed(() => appStore.currentVersion || props.version || '')
-const latestVersion = computed(() => appStore.latestVersion)
-const hasUpdate = computed(() => appStore.hasUpdate)
-const releaseInfo = computed(() => appStore.releaseInfo)
-const buildType = computed(() => appStore.buildType)
+const loading = computed(() => appStore.versionLoading);
+const currentVersion = computed(
+  () => appStore.currentVersion || props.version || "",
+);
+const latestVersion = computed(() => appStore.latestVersion);
+const hasUpdate = computed(() => appStore.hasUpdate);
+const releaseInfo = computed(() => appStore.releaseInfo);
+const buildType = computed(() => appStore.buildType);
 
 // Update process states (local to this component)
-const updating = ref(false)
-const restarting = ref(false)
-const needRestart = ref(false)
-const updateError = ref('')
-const updateSuccess = ref(false)
-const restartCountdown = ref(0)
+const updating = ref(false);
+const restarting = ref(false);
+const needRestart = ref(false);
+const updateError = ref("");
+const updateSuccess = ref(false);
+const restartCountdown = ref(0);
 
 // Only show update check for release builds (binary/docker deployment)
-const isReleaseBuild = computed(() => buildType.value === 'release')
+const isReleaseBuild = computed(() => buildType.value === "release");
 
 function toggleDropdown() {
-  dropdownOpen.value = !dropdownOpen.value
+  dropdownOpen.value = !dropdownOpen.value;
 }
 
 function closeDropdown() {
-  dropdownOpen.value = false
+  dropdownOpen.value = false;
 }
 
 async function refreshVersion(force = true) {
-  if (!isAdmin.value) return
+  if (!isAdmin.value) return;
 
   // Reset update states when refreshing
-  updateError.value = ''
-  updateSuccess.value = false
-  needRestart.value = false
+  updateError.value = "";
+  updateSuccess.value = false;
+  needRestart.value = false;
 
-  await appStore.fetchVersion(force)
+  await appStore.fetchVersion(force);
 }
 
 async function handleUpdate() {
-  if (updating.value) return
+  if (updating.value) return;
 
-  updating.value = true
-  updateError.value = ''
-  updateSuccess.value = false
+  updating.value = true;
+  updateError.value = "";
+  updateSuccess.value = false;
 
   try {
-    const result = await performUpdate()
-    updateSuccess.value = true
-    needRestart.value = result.need_restart
+    const result = await performUpdate();
+    updateSuccess.value = true;
+    needRestart.value = result.need_restart;
     // Clear version cache to reflect update completed
-    appStore.clearVersionCache()
+    appStore.clearVersionCache();
   } catch (error: unknown) {
-    const err = error as { response?: { data?: { message?: string } }; message?: string }
-    updateError.value = err.response?.data?.message || err.message || '更新失败'
+    const err = error as {
+      response?: { data?: { message?: string } };
+      message?: string;
+    };
+    updateError.value =
+      err.response?.data?.message || err.message || "更新失败";
   } finally {
-    updating.value = false
+    updating.value = false;
   }
 }
 
 async function handleRestart() {
-  if (restarting.value) return
+  if (restarting.value) return;
 
-  restarting.value = true
-  restartCountdown.value = 8
+  restarting.value = true;
+  restartCountdown.value = 8;
 
   try {
-    await restartService()
+    await restartService();
     // Service will restart, page will reload automatically or show disconnected
   } catch {
     // Expected - connection will be lost during restart
-    console.log('Service restarting...')
+    console.log("Service restarting...");
   }
 
   // Start countdown
   const countdownInterval = setInterval(() => {
-    restartCountdown.value--
+    restartCountdown.value--;
     if (restartCountdown.value <= 0) {
-      clearInterval(countdownInterval)
+      clearInterval(countdownInterval);
       // Try to check if service is back before reload
-      checkServiceAndReload()
+      checkServiceAndReload();
     }
-  }, 1000)
+  }, 1000);
 }
 
 async function checkServiceAndReload() {
-  const maxRetries = 5
-  const retryDelay = 1000
+  const maxRetries = 5;
+  const retryDelay = 1000;
 
   for (let i = 0; i < maxRetries; i++) {
     try {
-      const response = await fetch('/api/health', {
-        method: 'GET',
-        cache: 'no-cache'
-      })
+      const response = await fetch("/api/health", {
+        method: "GET",
+        cache: "no-cache",
+      });
       if (response.ok) {
         // Service is back, reload page
-        window.location.reload()
-        return
+        window.location.reload();
+        return;
       }
     } catch {
       // Service not ready yet
     }
 
     if (i < maxRetries - 1) {
-      await new Promise((resolve) => setTimeout(resolve, retryDelay))
+      await new Promise((resolve) => setTimeout(resolve, retryDelay));
     }
   }
 
   // After retries, reload anyway
-  window.location.reload()
+  window.location.reload();
 }
 
 function handleClickOutside(event: MouseEvent) {
-  const target = event.target as Node
-  const button = (event.target as Element).closest('button')
-  if (dropdownRef.value && !dropdownRef.value.contains(target) && !button?.contains(target)) {
-    closeDropdown()
+  const target = event.target as Node;
+  const button = (event.target as Element).closest("button");
+  if (
+    dropdownRef.value &&
+    !dropdownRef.value.contains(target) &&
+    !button?.contains(target)
+  ) {
+    closeDropdown();
   }
 }
 
 onMounted(() => {
   if (isAdmin.value) {
     // Use cached version if available, otherwise fetch
-    appStore.fetchVersion(false)
+    appStore.fetchVersion(false);
   }
-  document.addEventListener('click', handleClickOutside)
-})
+  document.addEventListener("click", handleClickOutside);
+});
 
 onBeforeUnmount(() => {
-  document.removeEventListener('click', handleClickOutside)
-})
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>
 
 <style scoped>
