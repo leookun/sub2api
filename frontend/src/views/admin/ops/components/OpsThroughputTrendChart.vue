@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { Chart as ChartJS, CategoryScale, Filler, Legend, LineElement, LinearScale, PointElement, Title, Tooltip } from 'chart.js'
 import { Line } from 'vue-chartjs'
 import type { ChartComponentRef } from 'vue-chartjs'
@@ -23,7 +22,6 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { t } = useI18n()
 const emit = defineEmits<{
   (e: 'selectPlatform', platform: string): void
   (e: 'selectGroup', groupId: number): void
@@ -71,7 +69,7 @@ const chartData = computed(() => {
         pointHitRadius: 10
       },
       {
-        label: t('admin.ops.tpsK'),
+        label: 'TPS（千）',
         data: props.points.map((p) => (p.tps ?? 0) / 1000),
         borderColor: colors.value.green,
         backgroundColor: colors.value.greenAlpha,
@@ -179,39 +177,39 @@ function downloadChart() {
         <svg class="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
         </svg>
-        {{ t('admin.ops.throughputTrend') }}
-        <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.throughputTrend')" />
+        {{ '吞吐趋势' }}
+        <HelpTooltip v-if="!props.fullscreen" :content="'当前窗口内的请求/QPS 与 token/TPS 趋势。'" />
       </h3>
       <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
         <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-blue-500"></span>QPS</span>
-        <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-green-500"></span>{{ t('admin.ops.tpsK') }}</span>
+        <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-green-500"></span>{{ 'TPS（千）' }}</span>
         <template v-if="!props.fullscreen">
           <button
             type="button"
             class="ml-2 inline-flex items-center rounded-lg border border-gray-200 bg-white px-2 py-1 text-[11px] font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 dark:border-dark-700 dark:bg-dark-900 dark:text-gray-300 dark:hover:bg-dark-800"
             :disabled="state !== 'ready'"
-            :title="t('admin.ops.requestDetails.title')"
+            :title="'请求明细'"
             @click="emit('openDetails')"
           >
-            {{ t('admin.ops.requestDetails.details') }}
+            {{ '明细' }}
           </button>
           <button
             type="button"
             class="ml-2 inline-flex items-center rounded-lg border border-gray-200 bg-white px-2 py-1 text-[11px] font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 dark:border-dark-700 dark:bg-dark-900 dark:text-gray-300 dark:hover:bg-dark-800"
             :disabled="state !== 'ready'"
-            :title="t('admin.ops.charts.resetZoomHint')"
+            :title="'重置缩放（若启用）'"
             @click="resetZoom"
           >
-            {{ t('admin.ops.charts.resetZoom') }}
+            {{ '重置' }}
           </button>
           <button
             type="button"
             class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-2 py-1 text-[11px] font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 dark:border-dark-700 dark:bg-dark-900 dark:text-gray-300 dark:hover:bg-dark-800"
             :disabled="state !== 'ready'"
-            :title="t('admin.ops.charts.downloadChartHint')"
+            :title="'下载图表图片'"
             @click="downloadChart"
           >
-            {{ t('admin.ops.charts.downloadChart') }}
+            {{ '下载' }}
           </button>
         </template>
       </div>
@@ -247,8 +245,8 @@ function downloadChart() {
     <div class="min-h-0 flex-1">
       <Line v-if="state === 'ready' && chartData" ref="throughputChartRef" :data="chartData" :options="options" />
       <div v-else class="flex h-full items-center justify-center">
-        <div v-if="state === 'loading'" class="animate-pulse text-sm text-gray-400">{{ t('common.loading') }}</div>
-        <EmptyState v-else :title="t('common.noData')" :description="t('admin.ops.charts.emptyRequest')" />
+        <div v-if="state === 'loading'" class="animate-pulse text-sm text-gray-400">{{ '加载中...' }}</div>
+        <EmptyState v-else :title="'暂无数据'" :description="'该时间窗口内暂无请求。'" />
       </div>
     </div>
   </div>

@@ -7,12 +7,12 @@
           @click="loadCodes"
           :disabled="loading"
           class="btn btn-secondary"
-          :title="t('common.refresh')"
+          :title="'刷新'"
         >
           <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
         </button>
         <button @click="showGenerateDialog = true" class="btn btn-primary">
-          {{ t('admin.redeem.generateCodes') }}
+          {{ '生成兑换码' }}
         </button>
         </div>
       </template>
@@ -23,7 +23,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            :placeholder="t('admin.redeem.searchCodes')"
+            :placeholder="'搜索兑换码...'"
             class="input"
             @input="handleSearch"
           />
@@ -42,7 +42,7 @@
             @change="loadCodes"
           />
           <button @click="handleExportCodes" class="btn btn-secondary">
-            {{ t('admin.redeem.exportCsv') }}
+            {{ '导出 CSV' }}
           </button>
           </div>
         </div>
@@ -61,7 +61,7 @@
                     ? 'text-green-500'
                     : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                 ]"
-                :title="copiedCode === value ? t('admin.redeem.copied') : t('keys.copyToClipboard')"
+                :title="copiedCode === value ? '已复制！' : '复制到剪贴板'"
               >
                 <Icon v-if="copiedCode !== value" name="copy" size="sm" :stroke-width="2" />
                 <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +95,7 @@
             <span class="text-sm font-medium text-gray-900 dark:text-white">
               <template v-if="row.type === 'balance'">${{ value.toFixed(2) }}</template>
               <template v-else-if="row.type === 'subscription'">
-                {{ row.validity_days || 30 }} {{ t('admin.redeem.days') }}
+                {{ row.validity_days || 30 }} {{ '天' }}
                 <span v-if="row.group" class="ml-1 text-xs text-gray-500 dark:text-gray-400"
                   >({{ row.group.name }})</span
                 >
@@ -121,7 +121,7 @@
 
           <template #cell-used_by="{ value }">
             <span class="text-sm text-gray-500 dark:text-dark-400">
-              {{ value ? t('admin.redeem.userPrefix', { id: value }) : '-' }}
+              {{ value ? `用户 #${value}` : '-' }}
             </span>
           </template>
 
@@ -146,7 +146,7 @@
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                   />
                 </svg>
-                <span class="text-xs">{{ t('common.delete') }}</span>
+                <span class="text-xs">{{ '删除' }}</span>
               </button>
               <span v-else class="text-gray-400 dark:text-dark-500">-</span>
             </div>
@@ -167,7 +167,7 @@
         <!-- Batch Actions -->
         <div v-if="filters.status === 'unused'" class="flex justify-end">
           <button @click="showDeleteUnusedDialog = true" class="btn btn-danger">
-            {{ t('admin.redeem.deleteAllUnused') }}
+            {{ '删除全部未使用' }}
           </button>
         </div>
       </template>
@@ -176,10 +176,10 @@
     <!-- Delete Confirmation Dialog -->
     <ConfirmDialog
       :show="showDeleteDialog"
-      :title="t('admin.redeem.deleteCode')"
-      :message="t('admin.redeem.deleteCodeConfirm')"
-      :confirm-text="t('common.delete')"
-      :cancel-text="t('common.cancel')"
+      :title="'删除'"
+      :message="'确定要删除此兑换码吗？此操作无法撤销。'"
+      :confirm-text="'删除'"
+      :cancel-text="'取消'"
       danger
       @confirm="confirmDelete"
       @cancel="showDeleteDialog = false"
@@ -188,10 +188,10 @@
     <!-- Delete Unused Codes Dialog -->
     <ConfirmDialog
       :show="showDeleteUnusedDialog"
-      :title="t('admin.redeem.deleteAllUnused')"
-      :message="t('admin.redeem.deleteAllUnusedConfirm')"
-      :confirm-text="t('admin.redeem.deleteAll')"
-      :cancel-text="t('common.cancel')"
+      :title="'删除全部未使用'"
+      :message="'确定要删除全部未使用的兑换码吗？此操作无法撤销。'"
+      :confirm-text="'全部删除'"
+      :cancel-text="'取消'"
       danger
       @confirm="confirmDeleteUnused"
       @cancel="showDeleteUnusedDialog = false"
@@ -205,11 +205,11 @@
           class="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-dark-800"
         >
           <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-            {{ t('admin.redeem.generateCodesTitle') }}
+            {{ '生成兑换码' }}
           </h2>
           <form @submit.prevent="handleGenerateCodes" class="space-y-4">
             <div>
-              <label class="input-label">{{ t('admin.redeem.codeType') }}</label>
+              <label class="input-label">{{ '类型' }}</label>
               <Select v-model="generateForm.type" :options="typeOptions" />
             </div>
             <!-- 余额/并发类型：显示数值输入 -->
@@ -217,8 +217,8 @@
               <label class="input-label">
                 {{
                   generateForm.type === 'balance'
-                    ? t('admin.redeem.amount')
-                    : t('admin.redeem.columns.value')
+                    ? '金额 ($)'
+                    : '面值'
                 }}
               </label>
               <input
@@ -233,11 +233,11 @@
             <!-- 订阅类型：显示分组选择和有效天数 -->
             <template v-if="generateForm.type === 'subscription'">
               <div>
-                <label class="input-label">{{ t('admin.redeem.selectGroup') }}</label>
+                <label class="input-label">{{ '选择分组' }}</label>
                 <Select
                   v-model="generateForm.group_id"
                   :options="subscriptionGroupOptions"
-                  :placeholder="t('admin.redeem.selectGroupPlaceholder')"
+                  :placeholder="'选择订阅分组'"
                 >
                   <template #selected="{ option }">
                     <GroupBadge
@@ -248,7 +248,7 @@
                       :rate-multiplier="(option as unknown as GroupOption).rate"
                     />
                     <span v-else class="text-gray-400">{{
-                      t('admin.redeem.selectGroupPlaceholder')
+                      '选择订阅分组'
                     }}</span>
                   </template>
                   <template #option="{ option, selected }">
@@ -264,7 +264,7 @@
                 </Select>
               </div>
               <div>
-                <label class="input-label">{{ t('admin.redeem.validityDays') }}</label>
+                <label class="input-label">{{ '有效天数' }}</label>
                 <input
                   v-model.number="generateForm.validity_days"
                   type="number"
@@ -276,7 +276,7 @@
               </div>
             </template>
             <div>
-              <label class="input-label">{{ t('admin.redeem.count') }}</label>
+              <label class="input-label">{{ '数量' }}</label>
               <input
                 v-model.number="generateForm.count"
                 type="number"
@@ -288,10 +288,10 @@
             </div>
             <div class="flex justify-end gap-3 pt-2">
               <button type="button" @click="showGenerateDialog = false" class="btn btn-secondary">
-                {{ t('common.cancel') }}
+                {{ '取消' }}
               </button>
               <button type="submit" :disabled="generating" class="btn btn-primary">
-                {{ generating ? t('admin.redeem.generating') : t('admin.redeem.generate') }}
+                {{ generating ? '生成中...' : '生成' }}
               </button>
             </div>
           </form>
@@ -328,10 +328,10 @@
               </div>
               <div>
                 <h2 class="text-base font-semibold text-gray-900 dark:text-white">
-                  {{ t('admin.redeem.generatedSuccessfully') }}
+                  {{ '生成成功' }}
                 </h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.redeem.codesCreated', { count: generatedCodes.length }) }}
+                  {{ `已创建 ${generatedCodes.length} 个兑换码` }}
                 </p>
               </div>
             </div>
@@ -373,11 +373,11 @@
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              {{ copiedAll ? t('admin.redeem.copied') : t('admin.redeem.copyAll') }}
+              {{ copiedAll ? '已复制！' : '全部复制' }}
             </button>
             <button @click="downloadGeneratedCodes" class="btn btn-primary flex items-center gap-2">
               <Icon name="download" size="sm" :stroke-width="2" />
-              {{ t('admin.redeem.download') }}
+              {{ '下载' }}
             </button>
           </div>
         </div>
@@ -388,7 +388,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { useClipboard } from '@/composables/useClipboard'
 import { adminAPI } from '@/api/admin'
@@ -405,7 +404,6 @@ import GroupBadge from '@/components/common/GroupBadge.vue'
 import GroupOptionItem from '@/components/common/GroupOptionItem.vue'
 import Icon from '@/components/icons/Icon.vue'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const { copyToClipboard: clipboardCopy } = useClipboard()
 
@@ -470,7 +468,7 @@ const copyGeneratedCodes = async () => {
       copiedAll.value = false
     }, 2000)
   } catch (error) {
-    appStore.showError(t('admin.redeem.failedToCopy'))
+    appStore.showError('复制失败')
   }
 }
 
@@ -487,33 +485,33 @@ const downloadGeneratedCodes = () => {
 }
 
 const columns = computed<Column[]>(() => [
-  { key: 'code', label: t('admin.redeem.columns.code') },
-  { key: 'type', label: t('admin.redeem.columns.type'), sortable: true },
-  { key: 'value', label: t('admin.redeem.columns.value'), sortable: true },
-  { key: 'status', label: t('admin.redeem.columns.status'), sortable: true },
-  { key: 'used_by', label: t('admin.redeem.columns.usedBy') },
-  { key: 'used_at', label: t('admin.redeem.columns.usedAt'), sortable: true },
-  { key: 'actions', label: t('admin.redeem.columns.actions') }
+  { key: 'code', label: '兑换码' },
+  { key: 'type', label: '类型', sortable: true },
+  { key: 'value', label: '面值', sortable: true },
+  { key: 'status', label: '状态', sortable: true },
+  { key: 'used_by', label: '使用者' },
+  { key: 'used_at', label: '使用时间', sortable: true },
+  { key: 'actions', label: '操作' }
 ])
 
 const typeOptions = computed(() => [
-  { value: 'balance', label: t('admin.redeem.balance') },
-  { value: 'concurrency', label: t('admin.redeem.concurrency') },
-  { value: 'subscription', label: t('admin.redeem.subscription') }
+  { value: 'balance', label: '余额' },
+  { value: 'concurrency', label: '并发数' },
+  { value: 'subscription', label: '订阅' }
 ])
 
 const filterTypeOptions = computed(() => [
-  { value: '', label: t('admin.redeem.allTypes') },
-  { value: 'balance', label: t('admin.redeem.balance') },
-  { value: 'concurrency', label: t('admin.redeem.concurrency') },
-  { value: 'subscription', label: t('admin.redeem.subscription') }
+  { value: '', label: '全部类型' },
+  { value: 'balance', label: '余额' },
+  { value: 'concurrency', label: '并发数' },
+  { value: 'subscription', label: '订阅' }
 ])
 
 const filterStatusOptions = computed(() => [
-  { value: '', label: t('admin.redeem.allStatus') },
-  { value: 'unused', label: t('admin.redeem.unused') },
-  { value: 'used', label: t('admin.redeem.used') },
-  { value: 'expired', label: t('admin.redeem.status.expired') }
+  { value: '', label: '全部状态' },
+  { value: 'unused', label: '未使用' },
+  { value: 'used', label: '已使用' },
+  { value: 'expired', label: '已过期' }
 ])
 
 const codes = ref<RedeemCode[]>([])
@@ -580,7 +578,7 @@ const loadCodes = async () => {
     ) {
       return
     }
-    appStore.showError(t('admin.redeem.failedToLoad'))
+    appStore.showError('加载兑换码列表失败')
     console.error('Error loading redeem codes:', error)
   } finally {
     if (abortController === currentController && !currentController.signal.aborted) {
@@ -613,7 +611,7 @@ const handlePageSizeChange = (pageSize: number) => {
 const handleGenerateCodes = async () => {
   // 订阅类型必须选择分组
   if (generateForm.type === 'subscription' && !generateForm.group_id) {
-    appStore.showError(t('admin.redeem.groupRequired'))
+    appStore.showError('请选择订阅分组')
     return
   }
 
@@ -634,7 +632,7 @@ const handleGenerateCodes = async () => {
     generateForm.validity_days = 30
     loadCodes()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.redeem.failedToGenerate'))
+    appStore.showError(error.response?.data?.detail || '生成兑换码失败')
     console.error('Error generating codes:', error)
   } finally {
     generating.value = false
@@ -642,7 +640,7 @@ const handleGenerateCodes = async () => {
 }
 
 const copyToClipboard = async (text: string) => {
-  const success = await clipboardCopy(text, t('admin.redeem.copied'))
+  const success = await clipboardCopy(text, '已复制！')
   if (success) {
     copiedCode.value = text
     setTimeout(() => {
@@ -668,9 +666,9 @@ const handleExportCodes = async () => {
     document.body.removeChild(link)
     window.URL.revokeObjectURL(url)
 
-    appStore.showSuccess(t('admin.redeem.codesExported'))
+    appStore.showSuccess('兑换码导出成功')
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.redeem.failedToExport'))
+    appStore.showError(error.response?.data?.detail || '导出兑换码失败')
     console.error('Error exporting codes:', error)
   }
 }
@@ -685,12 +683,12 @@ const confirmDelete = async () => {
 
   try {
     await adminAPI.redeem.delete(deletingCode.value.id)
-    appStore.showSuccess(t('admin.redeem.codeDeleted'))
+    appStore.showSuccess('兑换码删除成功')
     showDeleteDialog.value = false
     deletingCode.value = null
     loadCodes()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.redeem.failedToDelete'))
+    appStore.showError(error.response?.data?.detail || '删除兑换码失败')
     console.error('Error deleting code:', error)
   }
 }
@@ -702,17 +700,17 @@ const confirmDeleteUnused = async () => {
     const unusedCodeIds = unusedCodesResponse.items.map((code) => code.id)
 
     if (unusedCodeIds.length === 0) {
-      appStore.showInfo(t('admin.redeem.noUnusedCodes'))
+      appStore.showInfo('没有未使用的兑换码可删除')
       showDeleteUnusedDialog.value = false
       return
     }
 
     const result = await adminAPI.redeem.batchDelete(unusedCodeIds)
-    appStore.showSuccess(t('admin.redeem.codesDeleted', { count: result.deleted }))
+    appStore.showSuccess(`成功删除 ${result.deleted} 个未使用的兑换码`)
     showDeleteUnusedDialog.value = false
     loadCodes()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.redeem.failedToDeleteUnused'))
+    appStore.showError(error.response?.data?.detail || '删除未使用的兑换码失败')
     console.error('Error deleting unused codes:', error)
   }
 }

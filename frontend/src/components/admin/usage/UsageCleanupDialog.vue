@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog :show="show" :title="t('admin.usage.cleanup.title')" width="wide" @close="handleClose">
+  <BaseDialog :show="show" :title="'清理使用记录'" width="wide" @close="handleClose">
     <div class="space-y-4">
       <UsageFilters
         v-model="localFilters"
@@ -11,25 +11,25 @@
       />
 
       <div class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
-        {{ t('admin.usage.cleanup.warning') }}
+        {{ '清理不可恢复，且会影响历史统计回看。' }}
       </div>
 
       <div class="rounded-xl border border-gray-200 p-4 dark:border-dark-700">
         <div class="flex items-center justify-between">
           <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-200">
-            {{ t('admin.usage.cleanup.recentTasks') }}
+            {{ '最近清理任务' }}
           </h4>
           <button type="button" class="btn btn-ghost btn-sm" @click="loadTasks">
-            {{ t('common.refresh') }}
+            {{ '刷新' }}
           </button>
         </div>
 
         <div class="mt-3 space-y-2">
           <div v-if="tasksLoading" class="text-sm text-gray-500 dark:text-gray-400">
-            {{ t('admin.usage.cleanup.loadingTasks') }}
+            {{ '正在加载任务...' }}
           </div>
           <div v-else-if="tasks.length === 0" class="text-sm text-gray-500 dark:text-gray-400">
-            {{ t('admin.usage.cleanup.noTasks') }}
+            {{ '暂无清理任务' }}
           </div>
           <div v-else class="space-y-2">
             <div
@@ -49,7 +49,7 @@
                     class="btn btn-ghost btn-xs text-rose-600 hover:text-rose-700 dark:text-rose-300"
                     @click="openCancelConfirm(task)"
                   >
-                    {{ t('admin.usage.cleanup.cancel') }}
+                    {{ '取消任务' }}
                   </button>
                 </div>
                 <div class="text-xs text-gray-400">
@@ -57,8 +57,8 @@
                 </div>
               </div>
               <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                <span>{{ t('admin.usage.cleanup.range') }}: {{ formatRange(task) }}</span>
-                <span>{{ t('admin.usage.cleanup.deletedRows') }}: {{ task.deleted_rows.toLocaleString() }}</span>
+                <span>{{ '时间范围' }}: {{ formatRange(task) }}</span>
+                <span>{{ '删除数量' }}: {{ task.deleted_rows.toLocaleString() }}</span>
               </div>
               <div v-if="task.error_message" class="text-xs text-rose-500">
                 {{ task.error_message }}
@@ -85,10 +85,10 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ t('common.cancel') }}
+          {{ '取消' }}
         </button>
         <button type="button" class="btn btn-danger" :disabled="submitting" @click="openConfirm">
-          {{ submitting ? t('admin.usage.cleanup.submitting') : t('admin.usage.cleanup.submit') }}
+          {{ submitting ? '提交中...' : '提交清理' }}
         </button>
       </div>
     </template>
@@ -96,9 +96,9 @@
 
   <ConfirmDialog
     :show="confirmVisible"
-    :title="t('admin.usage.cleanup.confirmTitle')"
-    :message="t('admin.usage.cleanup.confirmMessage')"
-    :confirm-text="t('admin.usage.cleanup.confirmSubmit')"
+    :title="'确认清理'"
+    :message="'确定要提交清理任务吗？清理不可恢复。'"
+    :confirm-text="'确认清理'"
     danger
     @confirm="submitCleanup"
     @cancel="confirmVisible = false"
@@ -106,9 +106,9 @@
 
   <ConfirmDialog
     :show="cancelConfirmVisible"
-    :title="t('admin.usage.cleanup.cancelConfirmTitle')"
-    :message="t('admin.usage.cleanup.cancelConfirmMessage')"
-    :confirm-text="t('admin.usage.cleanup.cancelConfirm')"
+    :title="'确认取消'"
+    :message="'确定要取消该清理任务吗？'"
+    :confirm-text="'确认取消'"
     danger
     @confirm="cancelTask"
     @cancel="cancelConfirmVisible = false"
@@ -117,7 +117,6 @@
 
 <script setup lang="ts">
 import { ref, watch, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
@@ -136,7 +135,6 @@ interface Props {
 const props = defineProps<Props>()
 const emit = defineEmits(['close'])
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const localFilters = ref<AdminUsageQueryParams>({})
@@ -193,11 +191,11 @@ const handleClose = () => {
 
 const statusLabel = (status: string) => {
   const map: Record<string, string> = {
-    pending: t('admin.usage.cleanup.status.pending'),
-    running: t('admin.usage.cleanup.status.running'),
-    succeeded: t('admin.usage.cleanup.status.succeeded'),
-    failed: t('admin.usage.cleanup.status.failed'),
-    canceled: t('admin.usage.cleanup.status.canceled')
+    pending: '待执行',
+    running: '执行中',
+    succeeded: '已完成',
+    failed: '失败',
+    canceled: '已取消'
   }
   return map[status] || status
 }
@@ -252,7 +250,7 @@ const loadTasks = async () => {
     }
   } catch (error) {
     console.error('Failed to load cleanup tasks:', error)
-    appStore.showError(t('admin.usage.cleanup.loadFailed'))
+    appStore.showError('加载清理任务失败')
   } finally {
     tasksLoading.value = false
   }
@@ -285,7 +283,7 @@ const openCancelConfirm = (task: UsageCleanupTask) => {
 
 const buildPayload = (): CreateUsageCleanupTaskRequest | null => {
   if (!localStartDate.value || !localEndDate.value) {
-    appStore.showError(t('admin.usage.cleanup.missingRange'))
+    appStore.showError('请选择时间范围')
     return null
   }
 
@@ -330,11 +328,11 @@ const submitCleanup = async () => {
   confirmVisible.value = false
   try {
     await adminUsageAPI.createCleanupTask(payload)
-    appStore.showSuccess(t('admin.usage.cleanup.submitSuccess'))
+    appStore.showSuccess('清理任务已创建')
     loadTasks()
   } catch (error) {
     console.error('Failed to create cleanup task:', error)
-    appStore.showError(t('admin.usage.cleanup.submitFailed'))
+    appStore.showError('创建清理任务失败')
   } finally {
     submitting.value = false
   }
@@ -350,11 +348,11 @@ const cancelTask = async () => {
   cancelConfirmVisible.value = false
   try {
     await adminUsageAPI.cancelCleanupTask(task.id)
-    appStore.showSuccess(t('admin.usage.cleanup.cancelSuccess'))
+    appStore.showSuccess('清理任务已取消')
     loadTasks()
   } catch (error) {
     console.error('Failed to cancel cleanup task:', error)
-    appStore.showError(t('admin.usage.cleanup.cancelFailed'))
+    appStore.showError('取消清理任务失败')
   } finally {
     canceling.value = false
     cancelTarget.value = null

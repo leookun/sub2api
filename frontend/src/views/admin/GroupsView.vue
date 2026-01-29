@@ -14,7 +14,7 @@
               <input
                 v-model="searchQuery"
                 type="text"
-                :placeholder="t('admin.groups.searchGroups')"
+                :placeholder="'搜索分组...'"
                 class="input pl-10"
                 @input="handleSearch"
               />
@@ -22,21 +22,21 @@
           <Select
             v-model="filters.platform"
             :options="platformFilterOptions"
-            :placeholder="t('admin.groups.allPlatforms')"
+            :placeholder="'全部平台'"
             class="w-44"
             @change="loadGroups"
           />
           <Select
             v-model="filters.status"
             :options="statusOptions"
-            :placeholder="t('admin.groups.allStatus')"
+            :placeholder="'全部状态'"
             class="w-40"
             @change="loadGroups"
           />
           <Select
             v-model="filters.is_exclusive"
             :options="exclusiveOptions"
-            :placeholder="t('admin.groups.allGroups')"
+            :placeholder="'全部分组'"
             class="w-44"
             @change="loadGroups"
           />
@@ -48,7 +48,7 @@
               @click="loadGroups"
               :disabled="loading"
               class="btn btn-secondary"
-              :title="t('common.refresh')"
+              :title="'刷新'"
             >
               <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
             </button>
@@ -58,7 +58,7 @@
               data-tour="groups-create-btn"
             >
               <Icon name="plus" size="md" class="mr-2" />
-              {{ t('admin.groups.createGroup') }}
+              {{ '创建分组' }}
             </button>
           </div>
         </div>
@@ -101,8 +101,8 @@
               >
                 {{
                   row.subscription_type === 'subscription'
-                    ? t('admin.groups.subscription.subscription')
-                    : t('admin.groups.subscription.standard')
+                    ? '订阅（配额）'
+                    : '标准（余额）'
                 }}
               </span>
               <!-- Subscription Limits - compact single line -->
@@ -114,7 +114,7 @@
                   v-if="row.daily_limit_usd || row.weekly_limit_usd || row.monthly_limit_usd"
                 >
                   <span v-if="row.daily_limit_usd"
-                    >${{ row.daily_limit_usd }}/{{ t('admin.groups.limitDay') }}</span
+                    >${{ row.daily_limit_usd }}/{{ '日' }}</span
                   >
                   <span
                     v-if="row.daily_limit_usd && (row.weekly_limit_usd || row.monthly_limit_usd)"
@@ -122,7 +122,7 @@
                     >·</span
                   >
                   <span v-if="row.weekly_limit_usd"
-                    >${{ row.weekly_limit_usd }}/{{ t('admin.groups.limitWeek') }}</span
+                    >${{ row.weekly_limit_usd }}/{{ '周' }}</span
                   >
                   <span
                     v-if="row.weekly_limit_usd && row.monthly_limit_usd"
@@ -130,11 +130,11 @@
                     >·</span
                   >
                   <span v-if="row.monthly_limit_usd"
-                    >${{ row.monthly_limit_usd }}/{{ t('admin.groups.limitMonth') }}</span
+                    >${{ row.monthly_limit_usd }}/{{ '月' }}</span
                   >
                 </template>
                 <span v-else class="text-gray-400 dark:text-gray-500">{{
-                  t('admin.groups.subscription.noLimit')
+                  '无限制'
                 }}</span>
               </div>
             </div>
@@ -146,7 +146,7 @@
 
           <template #cell-is_exclusive="{ value }">
             <span :class="['badge', value ? 'badge-primary' : 'badge-gray']">
-              {{ value ? t('admin.groups.exclusive') : t('admin.groups.public') }}
+              {{ value ? '专属' : '公开' }}
             </span>
           </template>
 
@@ -154,7 +154,7 @@
             <span
               class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-dark-600 dark:text-gray-300"
             >
-              {{ t('admin.groups.accountsCount', { count: value || 0 }) }}
+              {{ `${value || 0} 个账号` }}
             </span>
           </template>
 
@@ -171,23 +171,23 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ t('common.edit') }}</span>
+                <span class="text-xs">{{ '编辑' }}</span>
               </button>
               <button
                 @click="handleDelete(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
               >
                 <Icon name="trash" size="sm" />
-                <span class="text-xs">{{ t('common.delete') }}</span>
+                <span class="text-xs">{{ '删除' }}</span>
               </button>
             </div>
           </template>
 
           <template #empty>
             <EmptyState
-              :title="t('admin.groups.noGroupsYet')"
-              :description="t('admin.groups.createFirstGroup')"
-              :action-text="t('admin.groups.createGroup')"
+              :title="'暂无分组'"
+              :description="'创建您的第一个分组来组织 API 密钥。'"
+              :action-text="'创建分组'"
               @action="showCreateModal = true"
             />
           </template>
@@ -209,42 +209,42 @@
     <!-- Create Group Modal -->
     <BaseDialog
       :show="showCreateModal"
-      :title="t('admin.groups.createGroup')"
+      :title="'创建分组'"
       width="normal"
       @close="closeCreateModal"
     >
       <form id="create-group-form" @submit.prevent="handleCreateGroup" class="space-y-5">
         <div>
-          <label class="input-label">{{ t('admin.groups.form.name') }}</label>
+          <label class="input-label">{{ '名称' }}</label>
           <input
             v-model="createForm.name"
             type="text"
             required
             class="input"
-            :placeholder="t('admin.groups.enterGroupName')"
+            :placeholder="'请输入分组名称'"
             data-tour="group-form-name"
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.groups.form.description') }}</label>
+          <label class="input-label">{{ '描述' }}</label>
           <textarea
             v-model="createForm.description"
             rows="3"
             class="input"
-            :placeholder="t('admin.groups.optionalDescription')"
+            :placeholder="'可选描述'"
           ></textarea>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.groups.form.platform') }}</label>
+          <label class="input-label">{{ '平台' }}</label>
           <Select
             v-model="createForm.platform"
             :options="platformOptions"
             data-tour="group-form-platform"
           />
-          <p class="input-hint">{{ t('admin.groups.platformHint') }}</p>
+          <p class="input-hint">{{ '选择此分组关联的平台' }}</p>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.groups.form.rateMultiplier') }}</label>
+          <label class="input-label">{{ '费率倍数' }}</label>
           <input
             v-model.number="createForm.rate_multiplier"
             type="number"
@@ -254,12 +254,12 @@
             class="input"
             data-tour="group-form-multiplier"
           />
-          <p class="input-hint">{{ t('admin.groups.rateMultiplierHint') }}</p>
+          <p class="input-hint">{{ '1.0 = 标准费率，0.5 = 半价，2.0 = 双倍' }}</p>
         </div>
         <div v-if="createForm.subscription_type !== 'subscription'" data-tour="group-form-exclusive">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.groups.form.exclusive') }}
+              {{ '专属分组' }}
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -272,14 +272,14 @@
               <!-- Tooltip Popover -->
               <div class="pointer-events-none absolute bottom-full left-0 z-50 mb-2 w-72 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
                 <div class="rounded-lg bg-gray-900 p-3 text-white shadow-lg dark:bg-gray-800">
-                  <p class="mb-2 text-xs font-medium">{{ t('admin.groups.exclusiveTooltip.title') }}</p>
+                  <p class="mb-2 text-xs font-medium">{{ '什么是专属分组？' }}</p>
                   <p class="mb-2 text-xs leading-relaxed text-gray-300">
-                    {{ t('admin.groups.exclusiveTooltip.description') }}
+                    {{ '开启后，用户在创建 API Key 时将无法看到此分组。只有管理员手动将用户分配到此分组后，用户才能使用。' }}
                   </p>
                   <div class="rounded bg-gray-800 p-2 dark:bg-gray-700">
                     <p class="text-xs leading-relaxed text-gray-300">
-                      <span class="inline-flex items-center gap-1 text-primary-400"><Icon name="lightbulb" size="xs" /> {{ t('admin.groups.exclusiveTooltip.example') }}</span>
-                      {{ t('admin.groups.exclusiveTooltip.exampleContent') }}
+                      <span class="inline-flex items-center gap-1 text-primary-400"><Icon name="lightbulb" size="xs" /> {{ '使用场景：' }}</span>
+                      {{ '公开分组费率 0.8，您可以创建一个费率 0.7 的专属分组，手动分配给 VIP 用户，让他们享受更优惠的价格。' }}
                     </p>
                   </div>
                   <!-- Arrow -->
@@ -305,7 +305,7 @@
               />
             </button>
             <span class="text-sm text-gray-500 dark:text-gray-400">
-              {{ createForm.is_exclusive ? t('admin.groups.exclusive') : t('admin.groups.public') }}
+              {{ createForm.is_exclusive ? '专属' : '公开' }}
             </span>
           </div>
         </div>
@@ -313,9 +313,9 @@
         <!-- Subscription Configuration -->
         <div class="mt-4 border-t pt-4">
           <div>
-            <label class="input-label">{{ t('admin.groups.subscription.type') }}</label>
+            <label class="input-label">{{ '计费类型' }}</label>
             <Select v-model="createForm.subscription_type" :options="subscriptionTypeOptions" />
-            <p class="input-hint">{{ t('admin.groups.subscription.typeHint') }}</p>
+            <p class="input-hint">{{ '标准计费从用户余额扣除。订阅模式使用配额限制。' }}</p>
           </div>
 
           <!-- Subscription limits (only show when subscription type is selected) -->
@@ -324,36 +324,36 @@
             class="space-y-4 border-l-2 border-primary-200 pl-4 dark:border-primary-800"
           >
             <div>
-              <label class="input-label">{{ t('admin.groups.subscription.dailyLimit') }}</label>
+              <label class="input-label">{{ '每日限额（USD）' }}</label>
               <input
                 v-model.number="createForm.daily_limit_usd"
                 type="number"
                 step="0.01"
                 min="0"
                 class="input"
-                :placeholder="t('admin.groups.subscription.noLimit')"
+                :placeholder="'无限制'"
               />
             </div>
             <div>
-              <label class="input-label">{{ t('admin.groups.subscription.weeklyLimit') }}</label>
+              <label class="input-label">{{ '每周限额（USD）' }}</label>
               <input
                 v-model.number="createForm.weekly_limit_usd"
                 type="number"
                 step="0.01"
                 min="0"
                 class="input"
-                :placeholder="t('admin.groups.subscription.noLimit')"
+                :placeholder="'无限制'"
               />
             </div>
             <div>
-              <label class="input-label">{{ t('admin.groups.subscription.monthlyLimit') }}</label>
+              <label class="input-label">{{ '每月限额（USD）' }}</label>
               <input
                 v-model.number="createForm.monthly_limit_usd"
                 type="number"
                 step="0.01"
                 min="0"
                 class="input"
-                :placeholder="t('admin.groups.subscription.noLimit')"
+                :placeholder="'无限制'"
               />
             </div>
           </div>
@@ -362,10 +362,10 @@
         <!-- 图片生成计费配置（antigravity 和 gemini 平台） -->
         <div v-if="createForm.platform === 'antigravity' || createForm.platform === 'gemini'" class="border-t pt-4">
           <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
-            {{ t('admin.groups.imagePricing.title') }}
+            {{ '图片生成计费' }}
           </label>
           <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">
-            {{ t('admin.groups.imagePricing.description') }}
+            {{ '配置 gemini-3-pro-image 模型的图片生成价格，留空则使用默认价格' }}
           </p>
           <div class="grid grid-cols-3 gap-3">
             <div>
@@ -408,7 +408,7 @@
         <div v-if="createForm.platform === 'anthropic'" class="border-t pt-4">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.groups.claudeCode.title') }}
+              {{ 'Claude Code 客户端限制' }}
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -421,7 +421,7 @@
               <div class="pointer-events-none absolute bottom-full left-0 z-50 mb-2 w-72 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
                 <div class="rounded-lg bg-gray-900 p-3 text-white shadow-lg dark:bg-gray-800">
                   <p class="text-xs leading-relaxed text-gray-300">
-                    {{ t('admin.groups.claudeCode.tooltip') }}
+                    {{ '启用后，此分组仅允许 Claude Code 官方客户端访问。非 Claude Code 请求将被拒绝或降级到指定分组。' }}
                   </p>
                   <div class="absolute -bottom-1.5 left-3 h-3 w-3 rotate-45 bg-gray-900 dark:bg-gray-800"></div>
                 </div>
@@ -445,18 +445,18 @@
               />
             </button>
             <span class="text-sm text-gray-500 dark:text-gray-400">
-              {{ createForm.claude_code_only ? t('admin.groups.claudeCode.enabled') : t('admin.groups.claudeCode.disabled') }}
+              {{ createForm.claude_code_only ? '仅限 Claude Code' : '允许所有客户端' }}
             </span>
           </div>
           <!-- 降级分组选择（仅当启用 claude_code_only 时显示） -->
           <div v-if="createForm.claude_code_only" class="mt-3">
-            <label class="input-label">{{ t('admin.groups.claudeCode.fallbackGroup') }}</label>
+            <label class="input-label">{{ '降级分组' }}</label>
             <Select
               v-model="createForm.fallback_group_id"
               :options="fallbackGroupOptions"
-              :placeholder="t('admin.groups.claudeCode.noFallback')"
+              :placeholder="'不降级（直接拒绝）'"
             />
-            <p class="input-hint">{{ t('admin.groups.claudeCode.fallbackHint') }}</p>
+            <p class="input-hint">{{ '非 Claude Code 请求将使用此分组，留空则直接拒绝' }}</p>
           </div>
         </div>
 
@@ -464,7 +464,7 @@
         <div v-if="createForm.platform === 'anthropic'" class="border-t pt-4">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.groups.modelRouting.title') }}
+              {{ '模型路由配置' }}
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -477,7 +477,7 @@
               <div class="pointer-events-none absolute bottom-full left-0 z-50 mb-2 w-80 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
                 <div class="rounded-lg bg-gray-900 p-3 text-white shadow-lg dark:bg-gray-800">
                   <p class="text-xs leading-relaxed text-gray-300">
-                    {{ t('admin.groups.modelRouting.tooltip') }}
+                    {{ '配置特定模型请求优先路由到指定账号。支持通配符匹配，如 claude-opus-* 匹配所有 opus 模型。' }}
                   </p>
                   <div class="absolute -bottom-1.5 left-3 h-3 w-3 rotate-45 bg-gray-900 dark:bg-gray-800"></div>
                 </div>
@@ -502,14 +502,14 @@
               />
             </button>
             <span class="text-sm text-gray-500 dark:text-gray-400">
-              {{ createForm.model_routing_enabled ? t('admin.groups.modelRouting.enabled') : t('admin.groups.modelRouting.disabled') }}
+              {{ createForm.model_routing_enabled ? '已启用' : '已禁用' }}
             </span>
           </div>
           <p v-if="!createForm.model_routing_enabled" class="text-xs text-gray-500 dark:text-gray-400 mb-3">
-            {{ t('admin.groups.modelRouting.disabledHint') }}
+            {{ '启用后，配置的路由规则才会生效' }}
           </p>
           <p v-else class="text-xs text-gray-500 dark:text-gray-400 mb-3">
-            {{ t('admin.groups.modelRouting.noRulesHint') }}
+            {{ '添加路由规则以将特定模型请求优先路由到指定账号' }}
           </p>
           <!-- 路由规则列表（仅在启用时显示） -->
           <div v-if="createForm.model_routing_enabled" class="space-y-3">
@@ -521,16 +521,16 @@
               <div class="flex items-start gap-3">
                 <div class="flex-1 space-y-2">
                   <div>
-                    <label class="input-label text-xs">{{ t('admin.groups.modelRouting.modelPattern') }}</label>
+                    <label class="input-label text-xs">{{ '模型模式' }}</label>
                     <input
                       v-model="rule.pattern"
                       type="text"
                       class="input text-sm"
-                      :placeholder="t('admin.groups.modelRouting.modelPatternPlaceholder')"
+                      :placeholder="'claude-opus-*'"
                     />
                   </div>
                   <div>
-                    <label class="input-label text-xs">{{ t('admin.groups.modelRouting.accounts') }}</label>
+                    <label class="input-label text-xs">{{ '优先账号' }}</label>
                     <!-- 已选账号标签 -->
                     <div v-if="rule.accounts.length > 0" class="flex flex-wrap gap-1.5 mb-2">
                       <span
@@ -554,7 +554,7 @@
                         v-model="accountSearchKeyword[`create-${index}`]"
                         type="text"
                         class="input text-sm"
-                        :placeholder="t('admin.groups.modelRouting.searchAccountPlaceholder')"
+                        :placeholder="'搜索账号...'"
                         @input="searchAccounts(`create-${index}`)"
                         @focus="onAccountSearchFocus(index, false)"
                       />
@@ -577,14 +577,14 @@
                         </button>
                       </div>
                     </div>
-                    <p class="text-xs text-gray-400 mt-1">{{ t('admin.groups.modelRouting.accountsHint') }}</p>
+                    <p class="text-xs text-gray-400 mt-1">{{ '选择此模型模式优先使用的账号' }}</p>
                   </div>
                 </div>
                 <button
                   type="button"
                   @click="removeCreateRoutingRule(index)"
                   class="mt-5 p-1.5 text-gray-400 hover:text-red-500 transition-colors"
-                  :title="t('admin.groups.modelRouting.removeRule')"
+                  :title="'删除规则'"
                 >
                   <Icon name="trash" size="sm" />
                 </button>
@@ -599,7 +599,7 @@
             class="mt-3 flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
           >
             <Icon name="plus" size="sm" />
-            {{ t('admin.groups.modelRouting.addRule') }}
+            {{ '添加路由规则' }}
           </button>
         </div>
 
@@ -608,7 +608,7 @@
       <template #footer>
         <div class="flex justify-end gap-3 pt-4">
           <button @click="closeCreateModal" type="button" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button
             type="submit"
@@ -637,7 +637,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ submitting ? t('admin.groups.creating') : t('common.create') }}
+            {{ submitting ? '创建中...' : '创建' }}
           </button>
         </div>
       </template>
@@ -646,7 +646,7 @@
     <!-- Edit Group Modal -->
     <BaseDialog
       :show="showEditModal"
-      :title="t('admin.groups.editGroup')"
+      :title="'编辑分组'"
       width="normal"
       @close="closeEditModal"
     >
@@ -657,7 +657,7 @@
         class="space-y-5"
       >
         <div>
-          <label class="input-label">{{ t('admin.groups.form.name') }}</label>
+          <label class="input-label">{{ '名称' }}</label>
           <input
             v-model="editForm.name"
             type="text"
@@ -667,21 +667,21 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.groups.form.description') }}</label>
+          <label class="input-label">{{ '描述' }}</label>
           <textarea v-model="editForm.description" rows="3" class="input"></textarea>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.groups.form.platform') }}</label>
+          <label class="input-label">{{ '平台' }}</label>
           <Select
             v-model="editForm.platform"
             :options="platformOptions"
             :disabled="true"
             data-tour="group-form-platform"
           />
-          <p class="input-hint">{{ t('admin.groups.platformNotEditable') }}</p>
+          <p class="input-hint">{{ '创建后不可更改平台' }}</p>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.groups.form.rateMultiplier') }}</label>
+          <label class="input-label">{{ '费率倍数' }}</label>
           <input
             v-model.number="editForm.rate_multiplier"
             type="number"
@@ -695,7 +695,7 @@
         <div v-if="editForm.subscription_type !== 'subscription'">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.groups.form.exclusive') }}
+              {{ '专属分组' }}
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -708,14 +708,14 @@
               <!-- Tooltip Popover -->
               <div class="pointer-events-none absolute bottom-full left-0 z-50 mb-2 w-72 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
                 <div class="rounded-lg bg-gray-900 p-3 text-white shadow-lg dark:bg-gray-800">
-                  <p class="mb-2 text-xs font-medium">{{ t('admin.groups.exclusiveTooltip.title') }}</p>
+                  <p class="mb-2 text-xs font-medium">{{ '什么是专属分组？' }}</p>
                   <p class="mb-2 text-xs leading-relaxed text-gray-300">
-                    {{ t('admin.groups.exclusiveTooltip.description') }}
+                    {{ '开启后，用户在创建 API Key 时将无法看到此分组。只有管理员手动将用户分配到此分组后，用户才能使用。' }}
                   </p>
                   <div class="rounded bg-gray-800 p-2 dark:bg-gray-700">
                     <p class="text-xs leading-relaxed text-gray-300">
-                      <span class="inline-flex items-center gap-1 text-primary-400"><Icon name="lightbulb" size="xs" /> {{ t('admin.groups.exclusiveTooltip.example') }}</span>
-                      {{ t('admin.groups.exclusiveTooltip.exampleContent') }}
+                      <span class="inline-flex items-center gap-1 text-primary-400"><Icon name="lightbulb" size="xs" /> {{ '使用场景：' }}</span>
+                      {{ '公开分组费率 0.8，您可以创建一个费率 0.7 的专属分组，手动分配给 VIP 用户，让他们享受更优惠的价格。' }}
                     </p>
                   </div>
                   <!-- Arrow -->
@@ -741,25 +741,25 @@
               />
             </button>
             <span class="text-sm text-gray-500 dark:text-gray-400">
-              {{ editForm.is_exclusive ? t('admin.groups.exclusive') : t('admin.groups.public') }}
+              {{ editForm.is_exclusive ? '专属' : '公开' }}
             </span>
           </div>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.groups.form.status') }}</label>
+          <label class="input-label">{{ '状态' }}</label>
           <Select v-model="editForm.status" :options="editStatusOptions" />
         </div>
 
         <!-- Subscription Configuration -->
         <div class="mt-4 border-t pt-4">
           <div>
-            <label class="input-label">{{ t('admin.groups.subscription.type') }}</label>
+            <label class="input-label">{{ '计费类型' }}</label>
             <Select
               v-model="editForm.subscription_type"
               :options="subscriptionTypeOptions"
               :disabled="true"
             />
-            <p class="input-hint">{{ t('admin.groups.subscription.typeNotEditable') }}</p>
+            <p class="input-hint">{{ '分组创建后无法修改计费类型。' }}</p>
           </div>
 
           <!-- Subscription limits (only show when subscription type is selected) -->
@@ -768,36 +768,36 @@
             class="space-y-4 border-l-2 border-primary-200 pl-4 dark:border-primary-800"
           >
             <div>
-              <label class="input-label">{{ t('admin.groups.subscription.dailyLimit') }}</label>
+              <label class="input-label">{{ '每日限额（USD）' }}</label>
               <input
                 v-model.number="editForm.daily_limit_usd"
                 type="number"
                 step="0.01"
                 min="0"
                 class="input"
-                :placeholder="t('admin.groups.subscription.noLimit')"
+                :placeholder="'无限制'"
               />
             </div>
             <div>
-              <label class="input-label">{{ t('admin.groups.subscription.weeklyLimit') }}</label>
+              <label class="input-label">{{ '每周限额（USD）' }}</label>
               <input
                 v-model.number="editForm.weekly_limit_usd"
                 type="number"
                 step="0.01"
                 min="0"
                 class="input"
-                :placeholder="t('admin.groups.subscription.noLimit')"
+                :placeholder="'无限制'"
               />
             </div>
             <div>
-              <label class="input-label">{{ t('admin.groups.subscription.monthlyLimit') }}</label>
+              <label class="input-label">{{ '每月限额（USD）' }}</label>
               <input
                 v-model.number="editForm.monthly_limit_usd"
                 type="number"
                 step="0.01"
                 min="0"
                 class="input"
-                :placeholder="t('admin.groups.subscription.noLimit')"
+                :placeholder="'无限制'"
               />
             </div>
           </div>
@@ -806,10 +806,10 @@
         <!-- 图片生成计费配置（antigravity 和 gemini 平台） -->
         <div v-if="editForm.platform === 'antigravity' || editForm.platform === 'gemini'" class="border-t pt-4">
           <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
-            {{ t('admin.groups.imagePricing.title') }}
+            {{ '图片生成计费' }}
           </label>
           <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">
-            {{ t('admin.groups.imagePricing.description') }}
+            {{ '配置 gemini-3-pro-image 模型的图片生成价格，留空则使用默认价格' }}
           </p>
           <div class="grid grid-cols-3 gap-3">
             <div>
@@ -852,7 +852,7 @@
         <div v-if="editForm.platform === 'anthropic'" class="border-t pt-4">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.groups.claudeCode.title') }}
+              {{ 'Claude Code 客户端限制' }}
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -865,7 +865,7 @@
               <div class="pointer-events-none absolute bottom-full left-0 z-50 mb-2 w-72 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
                 <div class="rounded-lg bg-gray-900 p-3 text-white shadow-lg dark:bg-gray-800">
                   <p class="text-xs leading-relaxed text-gray-300">
-                    {{ t('admin.groups.claudeCode.tooltip') }}
+                    {{ '启用后，此分组仅允许 Claude Code 官方客户端访问。非 Claude Code 请求将被拒绝或降级到指定分组。' }}
                   </p>
                   <div class="absolute -bottom-1.5 left-3 h-3 w-3 rotate-45 bg-gray-900 dark:bg-gray-800"></div>
                 </div>
@@ -889,18 +889,18 @@
               />
             </button>
             <span class="text-sm text-gray-500 dark:text-gray-400">
-              {{ editForm.claude_code_only ? t('admin.groups.claudeCode.enabled') : t('admin.groups.claudeCode.disabled') }}
+              {{ editForm.claude_code_only ? '仅限 Claude Code' : '允许所有客户端' }}
             </span>
           </div>
           <!-- 降级分组选择（仅当启用 claude_code_only 时显示） -->
           <div v-if="editForm.claude_code_only" class="mt-3">
-            <label class="input-label">{{ t('admin.groups.claudeCode.fallbackGroup') }}</label>
+            <label class="input-label">{{ '降级分组' }}</label>
             <Select
               v-model="editForm.fallback_group_id"
               :options="fallbackGroupOptionsForEdit"
-              :placeholder="t('admin.groups.claudeCode.noFallback')"
+              :placeholder="'不降级（直接拒绝）'"
             />
-            <p class="input-hint">{{ t('admin.groups.claudeCode.fallbackHint') }}</p>
+            <p class="input-hint">{{ '非 Claude Code 请求将使用此分组，留空则直接拒绝' }}</p>
           </div>
         </div>
 
@@ -908,7 +908,7 @@
         <div v-if="editForm.platform === 'anthropic'" class="border-t pt-4">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.groups.modelRouting.title') }}
+              {{ '模型路由配置' }}
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -921,7 +921,7 @@
               <div class="pointer-events-none absolute bottom-full left-0 z-50 mb-2 w-80 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
                 <div class="rounded-lg bg-gray-900 p-3 text-white shadow-lg dark:bg-gray-800">
                   <p class="text-xs leading-relaxed text-gray-300">
-                    {{ t('admin.groups.modelRouting.tooltip') }}
+                    {{ '配置特定模型请求优先路由到指定账号。支持通配符匹配，如 claude-opus-* 匹配所有 opus 模型。' }}
                   </p>
                   <div class="absolute -bottom-1.5 left-3 h-3 w-3 rotate-45 bg-gray-900 dark:bg-gray-800"></div>
                 </div>
@@ -946,14 +946,14 @@
               />
             </button>
             <span class="text-sm text-gray-500 dark:text-gray-400">
-              {{ editForm.model_routing_enabled ? t('admin.groups.modelRouting.enabled') : t('admin.groups.modelRouting.disabled') }}
+              {{ editForm.model_routing_enabled ? '已启用' : '已禁用' }}
             </span>
           </div>
           <p v-if="!editForm.model_routing_enabled" class="text-xs text-gray-500 dark:text-gray-400 mb-3">
-            {{ t('admin.groups.modelRouting.disabledHint') }}
+            {{ '启用后，配置的路由规则才会生效' }}
           </p>
           <p v-else class="text-xs text-gray-500 dark:text-gray-400 mb-3">
-            {{ t('admin.groups.modelRouting.noRulesHint') }}
+            {{ '添加路由规则以将特定模型请求优先路由到指定账号' }}
           </p>
           <!-- 路由规则列表（仅在启用时显示） -->
           <div v-if="editForm.model_routing_enabled" class="space-y-3">
@@ -965,16 +965,16 @@
               <div class="flex items-start gap-3">
                 <div class="flex-1 space-y-2">
                   <div>
-                    <label class="input-label text-xs">{{ t('admin.groups.modelRouting.modelPattern') }}</label>
+                    <label class="input-label text-xs">{{ '模型模式' }}</label>
                     <input
                       v-model="rule.pattern"
                       type="text"
                       class="input text-sm"
-                      :placeholder="t('admin.groups.modelRouting.modelPatternPlaceholder')"
+                      :placeholder="'claude-opus-*'"
                     />
                   </div>
                   <div>
-                    <label class="input-label text-xs">{{ t('admin.groups.modelRouting.accounts') }}</label>
+                    <label class="input-label text-xs">{{ '优先账号' }}</label>
                     <!-- 已选账号标签 -->
                     <div v-if="rule.accounts.length > 0" class="flex flex-wrap gap-1.5 mb-2">
                       <span
@@ -998,7 +998,7 @@
                         v-model="accountSearchKeyword[`edit-${index}`]"
                         type="text"
                         class="input text-sm"
-                        :placeholder="t('admin.groups.modelRouting.searchAccountPlaceholder')"
+                        :placeholder="'搜索账号...'"
                         @input="searchAccounts(`edit-${index}`)"
                         @focus="onAccountSearchFocus(index, true)"
                       />
@@ -1021,14 +1021,14 @@
                         </button>
                       </div>
                     </div>
-                    <p class="text-xs text-gray-400 mt-1">{{ t('admin.groups.modelRouting.accountsHint') }}</p>
+                    <p class="text-xs text-gray-400 mt-1">{{ '选择此模型模式优先使用的账号' }}</p>
                   </div>
                 </div>
                 <button
                   type="button"
                   @click="removeEditRoutingRule(index)"
                   class="mt-5 p-1.5 text-gray-400 hover:text-red-500 transition-colors"
-                  :title="t('admin.groups.modelRouting.removeRule')"
+                  :title="'删除规则'"
                 >
                   <Icon name="trash" size="sm" />
                 </button>
@@ -1043,7 +1043,7 @@
             class="mt-3 flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
           >
             <Icon name="plus" size="sm" />
-            {{ t('admin.groups.modelRouting.addRule') }}
+            {{ '添加路由规则' }}
           </button>
         </div>
 
@@ -1052,7 +1052,7 @@
       <template #footer>
         <div class="flex justify-end gap-3 pt-4">
           <button @click="closeEditModal" type="button" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button
             type="submit"
@@ -1081,7 +1081,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ submitting ? t('admin.groups.updating') : t('common.update') }}
+            {{ submitting ? '更新中...' : '更新' }}
           </button>
         </div>
       </template>
@@ -1090,10 +1090,10 @@
     <!-- Delete Confirmation Dialog -->
     <ConfirmDialog
       :show="showDeleteDialog"
-      :title="t('admin.groups.deleteGroup')"
+      :title="'删除分组'"
       :message="deleteConfirmMessage"
-      :confirm-text="t('common.delete')"
-      :cancel-text="t('common.cancel')"
+      :confirm-text="'删除'"
+      :cancel-text="'取消'"
       :danger="true"
       @confirm="confirmDelete"
       @cancel="showDeleteDialog = false"
@@ -1103,7 +1103,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { useOnboardingStore } from '@/stores/onboarding'
 import { adminAPI } from '@/api/admin'
@@ -1120,32 +1119,31 @@ import Select from '@/components/common/Select.vue'
 import PlatformIcon from '@/components/common/PlatformIcon.vue'
 import Icon from '@/components/icons/Icon.vue'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const onboardingStore = useOnboardingStore()
 
 const columns = computed<Column[]>(() => [
-  { key: 'name', label: t('admin.groups.columns.name'), sortable: true },
-  { key: 'platform', label: t('admin.groups.columns.platform'), sortable: true },
-  { key: 'billing_type', label: t('admin.groups.columns.billingType'), sortable: true },
-  { key: 'rate_multiplier', label: t('admin.groups.columns.rateMultiplier'), sortable: true },
-  { key: 'is_exclusive', label: t('admin.groups.columns.type'), sortable: true },
-  { key: 'account_count', label: t('admin.groups.columns.accounts'), sortable: true },
-  { key: 'status', label: t('admin.groups.columns.status'), sortable: true },
-  { key: 'actions', label: t('admin.groups.columns.actions'), sortable: false }
+  { key: 'name', label: '名称', sortable: true },
+  { key: 'platform', label: '平台', sortable: true },
+  { key: 'billing_type', label: '计费类型', sortable: true },
+  { key: 'rate_multiplier', label: '费率倍数', sortable: true },
+  { key: 'is_exclusive', label: '类型', sortable: true },
+  { key: 'account_count', label: '账号数', sortable: true },
+  { key: 'status', label: '状态', sortable: true },
+  { key: 'actions', label: '操作', sortable: false }
 ])
 
 // Filter options
 const statusOptions = computed(() => [
-  { value: '', label: t('admin.groups.allStatus') },
-  { value: 'active', label: t('admin.accounts.status.active') },
-  { value: 'inactive', label: t('admin.accounts.status.inactive') }
+  { value: '', label: '全部状态' },
+  { value: 'active', label: '正常' },
+  { value: 'inactive', label: '停用' }
 ])
 
 const exclusiveOptions = computed(() => [
-  { value: '', label: t('admin.groups.allGroups') },
-  { value: 'true', label: t('admin.groups.exclusive') },
-  { value: 'false', label: t('admin.groups.nonExclusive') }
+  { value: '', label: '全部分组' },
+  { value: 'true', label: '专属' },
+  { value: 'false', label: '公开' }
 ])
 
 const platformOptions = computed(() => [
@@ -1156,7 +1154,7 @@ const platformOptions = computed(() => [
 ])
 
 const platformFilterOptions = computed(() => [
-  { value: '', label: t('admin.groups.allPlatforms') },
+  { value: '', label: '全部平台' },
   { value: 'anthropic', label: 'Anthropic' },
   { value: 'openai', label: 'OpenAI' },
   { value: 'gemini', label: 'Gemini' },
@@ -1164,19 +1162,19 @@ const platformFilterOptions = computed(() => [
 ])
 
 const editStatusOptions = computed(() => [
-  { value: 'active', label: t('admin.accounts.status.active') },
-  { value: 'inactive', label: t('admin.accounts.status.inactive') }
+  { value: 'active', label: '正常' },
+  { value: 'inactive', label: '停用' }
 ])
 
 const subscriptionTypeOptions = computed(() => [
-  { value: 'standard', label: t('admin.groups.subscription.standard') },
-  { value: 'subscription', label: t('admin.groups.subscription.subscription') }
+  { value: 'standard', label: '标准（余额）' },
+  { value: 'subscription', label: '订阅（配额）' }
 ])
 
 // 降级分组选项（创建时）- 仅包含 anthropic 平台且未启用 claude_code_only 的分组
 const fallbackGroupOptions = computed(() => {
   const options: { value: number | null; label: string }[] = [
-    { value: null, label: t('admin.groups.claudeCode.noFallback') }
+    { value: null, label: '不降级（直接拒绝）' }
   ]
   const eligibleGroups = groups.value.filter(
     (g) => g.platform === 'anthropic' && !g.claude_code_only && g.status === 'active'
@@ -1190,7 +1188,7 @@ const fallbackGroupOptions = computed(() => {
 // 降级分组选项（编辑时）- 排除自身
 const fallbackGroupOptionsForEdit = computed(() => {
   const options: { value: number | null; label: string }[] = [
-    { value: null, label: t('admin.groups.claudeCode.noFallback') }
+    { value: null, label: '不降级（直接拒绝）' }
   ]
   const currentId = editingGroup.value?.id
   const eligibleGroups = groups.value.filter(
@@ -1424,9 +1422,9 @@ const deleteConfirmMessage = computed(() => {
     return ''
   }
   if (deletingGroup.value.subscription_type === 'subscription') {
-    return t('admin.groups.deleteConfirmSubscription', { name: deletingGroup.value.name })
+    return `确定要删除订阅分组 '${deletingGroup.value.name}' 吗？此操作会让所有绑定此订阅的用户的 API Key 失效，并删除所有相关的订阅记录。此操作无法撤销。`
   }
-  return t('admin.groups.deleteConfirm', { name: deletingGroup.value.name })
+  return `确定要删除分组 '${deletingGroup.value.name}' 吗？所有关联的 API 密钥将不再属于任何分组。`
 })
 
 const loadGroups = async () => {
@@ -1452,7 +1450,7 @@ const loadGroups = async () => {
     if (signal.aborted || error?.name === 'AbortError' || error?.code === 'ERR_CANCELED') {
       return
     }
-    appStore.showError(t('admin.groups.failedToLoad'))
+    appStore.showError('加载分组列表失败')
     console.error('Error loading groups:', error)
   } finally {
     if (abortController === currentController && !signal.aborted) {
@@ -1502,7 +1500,7 @@ const closeCreateModal = () => {
 
 const handleCreateGroup = async () => {
   if (!createForm.name.trim()) {
-    appStore.showError(t('admin.groups.nameRequired'))
+    appStore.showError('请输入分组名称')
     return
   }
   submitting.value = true
@@ -1513,7 +1511,7 @@ const handleCreateGroup = async () => {
       model_routing: convertRoutingRulesToApiFormat(createModelRoutingRules.value)
     }
     await adminAPI.groups.create(requestData)
-    appStore.showSuccess(t('admin.groups.groupCreated'))
+    appStore.showSuccess('分组创建成功')
     closeCreateModal()
     loadGroups()
     // Only advance tour if active, on submit step, and creation succeeded
@@ -1521,7 +1519,7 @@ const handleCreateGroup = async () => {
       onboardingStore.nextStep(500)
     }
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.groups.failedToCreate'))
+    appStore.showError(error.response?.data?.detail || '创建分组失败')
     console.error('Error creating group:', error)
     // Don't advance tour on error
   } finally {
@@ -1561,7 +1559,7 @@ const closeEditModal = () => {
 const handleUpdateGroup = async () => {
   if (!editingGroup.value) return
   if (!editForm.name.trim()) {
-    appStore.showError(t('admin.groups.nameRequired'))
+    appStore.showError('请输入分组名称')
     return
   }
 
@@ -1574,11 +1572,11 @@ const handleUpdateGroup = async () => {
       model_routing: convertRoutingRulesToApiFormat(editModelRoutingRules.value)
     }
     await adminAPI.groups.update(editingGroup.value.id, payload)
-    appStore.showSuccess(t('admin.groups.groupUpdated'))
+    appStore.showSuccess('分组更新成功')
     closeEditModal()
     loadGroups()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.groups.failedToUpdate'))
+    appStore.showError(error.response?.data?.detail || '更新分组失败')
     console.error('Error updating group:', error)
   } finally {
     submitting.value = false
@@ -1595,12 +1593,12 @@ const confirmDelete = async () => {
 
   try {
     await adminAPI.groups.delete(deletingGroup.value.id)
-    appStore.showSuccess(t('admin.groups.groupDeleted'))
+    appStore.showSuccess('分组删除成功')
     showDeleteDialog.value = false
     deletingGroup.value = null
     loadGroups()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.groups.failedToDelete'))
+    appStore.showError(error.response?.data?.detail || '删除分组失败')
     console.error('Error deleting group:', error)
   }
 }

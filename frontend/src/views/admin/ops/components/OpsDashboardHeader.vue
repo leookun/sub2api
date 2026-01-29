@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import Select from '@/components/common/Select.vue'
 import HelpTooltip from '@/components/common/HelpTooltip.vue'
 import BaseDialog from '@/components/common/BaseDialog.vue'
@@ -47,7 +46,6 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const { t } = useI18n()
 const adminSettingsStore = useAdminSettingsStore()
 
 const realtimeWindow = ref<RealtimeWindow>('1min')
@@ -107,7 +105,7 @@ function formatCustomTimeRangeLabel(startTime: string, endTime: string): string 
 const groups = ref<Array<{ id: number; name: string; platform: string }>>([])
 
 const platformOptions = computed(() => [
-  { value: '', label: t('common.all') },
+  { value: '', label: '全部' },
   { value: 'openai', label: 'OpenAI' },
   { value: 'anthropic', label: 'Anthropic' },
   { value: 'gemini', label: 'Gemini' },
@@ -115,28 +113,28 @@ const platformOptions = computed(() => [
 ])
 
 const timeRangeOptions = computed(() => [
-  { value: '5m', label: t('admin.ops.timeRange.5m') },
-  { value: '30m', label: t('admin.ops.timeRange.30m') },
-  { value: '1h', label: t('admin.ops.timeRange.1h') },
-  { value: '6h', label: t('admin.ops.timeRange.6h') },
-  { value: '24h', label: t('admin.ops.timeRange.24h') },
+  { value: '5m', label: '近5分钟' },
+  { value: '30m', label: '近30分钟' },
+  { value: '1h', label: '近1小时' },
+  { value: '6h', label: '近6小时' },
+  { value: '24h', label: '近24小时' },
   {
     value: 'custom',
     label: props.timeRange === 'custom' && props.customStartTime && props.customEndTime
-      ? `${t('admin.ops.timeRange.custom')} (${formatCustomTimeRangeLabel(props.customStartTime, props.customEndTime)})`
-      : t('admin.ops.timeRange.custom')
+      ? `${'自定义'} (${formatCustomTimeRangeLabel(props.customStartTime, props.customEndTime)})`
+      : '自定义'
   }
 ])
 
 const queryModeOptions = computed(() => [
-  { value: 'auto', label: t('admin.ops.queryMode.auto') },
-  { value: 'raw', label: t('admin.ops.queryMode.raw') },
-  { value: 'preagg', label: t('admin.ops.queryMode.preagg') }
+  { value: 'auto', label: 'Auto（自动）' },
+  { value: 'raw', label: 'Raw（不聚合）' },
+  { value: 'preagg', label: 'Preagg（聚合）' }
 ])
 
 const groupOptions = computed(() => {
   const filtered = props.platform ? groups.value.filter((g) => g.platform === props.platform) : groups.value
-  return [{ value: null, label: t('common.all') }, ...filtered.map((g) => ({ value: g.id, label: g.name }))]
+  return [{ value: null, label: '全部' }, ...filtered.map((g) => ({ value: g.id, label: g.name }))]
 })
 
 watch(
@@ -481,8 +479,8 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
   if (isSystemIdle.value) {
     report.push({
       type: 'info',
-      message: t('admin.ops.diagnosis.idle'),
-      impact: t('admin.ops.diagnosis.idleImpact')
+      message: '系统当前处于待机状态',
+      impact: '无活跃流量'
     })
     return report
   }
@@ -493,17 +491,17 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
     if (sm.db_ok === false) {
       report.push({
         type: 'critical',
-        message: t('admin.ops.diagnosis.dbDown'),
-        impact: t('admin.ops.diagnosis.dbDownImpact'),
-        action: t('admin.ops.diagnosis.dbDownAction')
+        message: '数据库连接失败',
+        impact: '所有数据库操作将失败',
+        action: '检查数据库服务状态、网络连接和连接配置'
       })
     }
     if (sm.redis_ok === false) {
       report.push({
         type: 'warning',
-        message: t('admin.ops.diagnosis.redisDown'),
-        impact: t('admin.ops.diagnosis.redisDownImpact'),
-        action: t('admin.ops.diagnosis.redisDownAction')
+        message: 'Redis连接失败',
+        impact: '缓存功能降级，性能可能下降',
+        action: '检查Redis服务状态和网络连接'
       })
     }
 
@@ -511,16 +509,16 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
     if (cpuPct > 90) {
       report.push({
         type: 'critical',
-        message: t('admin.ops.diagnosis.cpuCritical', { usage: cpuPct.toFixed(1) }),
-        impact: t('admin.ops.diagnosis.cpuCriticalImpact'),
-        action: t('admin.ops.diagnosis.cpuCriticalAction')
+        message: `CPU使用率严重过高 (${cpuPct.toFixed(1)}%)`,
+        impact: '系统响应变慢，可能影响所有请求',
+        action: '检查CPU密集型任务，考虑扩容或优化代码'
       })
     } else if (cpuPct > 80) {
       report.push({
         type: 'warning',
-        message: t('admin.ops.diagnosis.cpuHigh', { usage: cpuPct.toFixed(1) }),
-        impact: t('admin.ops.diagnosis.cpuHighImpact'),
-        action: t('admin.ops.diagnosis.cpuHighAction')
+        message: `CPU使用率偏高 (${cpuPct.toFixed(1)}%)`,
+        impact: '系统负载较高，需要关注',
+        action: '监控CPU趋势，准备扩容方案'
       })
     }
 
@@ -528,16 +526,16 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
     if (memPct > 90) {
       report.push({
         type: 'critical',
-        message: t('admin.ops.diagnosis.memoryCritical', { usage: memPct.toFixed(1) }),
-        impact: t('admin.ops.diagnosis.memoryCriticalImpact'),
-        action: t('admin.ops.diagnosis.memoryCriticalAction')
+        message: `内存使用率严重过高 (${memPct.toFixed(1)}%)`,
+        impact: '可能触发OOM，系统稳定性受威胁',
+        action: '检查内存泄漏，考虑增加内存或优化内存使用'
       })
     } else if (memPct > 85) {
       report.push({
         type: 'warning',
-        message: t('admin.ops.diagnosis.memoryHigh', { usage: memPct.toFixed(1) }),
-        impact: t('admin.ops.diagnosis.memoryHighImpact'),
-        action: t('admin.ops.diagnosis.memoryHighAction')
+        message: `内存使用率偏高 (${memPct.toFixed(1)}%)`,
+        impact: '内存压力较大，需要关注',
+        action: '监控内存趋势，检查是否有内存泄漏'
       })
     }
   }
@@ -546,9 +544,9 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
   if (ttftP99 > 500) {
     report.push({
       type: 'warning',
-      message: t('admin.ops.diagnosis.ttftHigh', { ttft: ttftP99.toFixed(0) }),
-      impact: t('admin.ops.diagnosis.ttftHighImpact'),
-      action: t('admin.ops.diagnosis.ttftHighAction')
+      message: `首 Token 时间偏高 (${ttftP99.toFixed(0)}ms)`,
+      impact: '用户感知时长增加',
+      action: '优化请求处理流程，减少前置逻辑耗时'
     })
   }
 
@@ -557,16 +555,16 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
   if (upstreamRatePct > 5) {
     report.push({
       type: 'critical',
-      message: t('admin.ops.diagnosis.upstreamCritical', { rate: upstreamRatePct.toFixed(2) }),
-      impact: t('admin.ops.diagnosis.upstreamCriticalImpact'),
-      action: t('admin.ops.diagnosis.upstreamCriticalAction')
+      message: `上游错误率严重偏高 (${upstreamRatePct.toFixed(2)}%)`,
+      impact: '可能影响大量用户请求',
+      action: '检查上游服务健康状态，启用降级策略'
     })
   } else if (upstreamRatePct > 2) {
     report.push({
       type: 'warning',
-      message: t('admin.ops.diagnosis.upstreamHigh', { rate: upstreamRatePct.toFixed(2) }),
-      impact: t('admin.ops.diagnosis.upstreamHighImpact'),
-      action: t('admin.ops.diagnosis.upstreamHighAction')
+      message: `上游错误率偏高 (${upstreamRatePct.toFixed(2)}%)`,
+      impact: '建议检查上游服务状态',
+      action: '联系上游服务团队，准备降级方案'
     })
   }
 
@@ -574,16 +572,16 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
   if (errorPct > 3) {
     report.push({
       type: 'critical',
-      message: t('admin.ops.diagnosis.errorHigh', { rate: errorPct.toFixed(2) }),
-      impact: t('admin.ops.diagnosis.errorHighImpact'),
-      action: t('admin.ops.diagnosis.errorHighAction')
+      message: `错误率过高 (${errorPct.toFixed(2)}%)`,
+      impact: '大量请求失败',
+      action: '查看错误日志，定位错误根因，紧急修复'
     })
   } else if (errorPct > 0.5) {
     report.push({
       type: 'warning',
-      message: t('admin.ops.diagnosis.errorElevated', { rate: errorPct.toFixed(2) }),
-      impact: t('admin.ops.diagnosis.errorElevatedImpact'),
-      action: t('admin.ops.diagnosis.errorElevatedAction')
+      message: `错误率偏高 (${errorPct.toFixed(2)}%)`,
+      impact: '建议检查错误日志',
+      action: '分析错误类型和分布，制定修复计划'
     })
   }
 
@@ -592,16 +590,16 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
   if (slaPct < 90) {
     report.push({
       type: 'critical',
-      message: t('admin.ops.diagnosis.slaCritical', { sla: slaPct.toFixed(2) }),
-      impact: t('admin.ops.diagnosis.slaCriticalImpact'),
-      action: t('admin.ops.diagnosis.slaCriticalAction')
+      message: `SLA 严重低于目标 (${slaPct.toFixed(2)}%)`,
+      impact: '用户体验严重受损',
+      action: '紧急排查错误原因，必要时采取限流保护'
     })
   } else if (slaPct < 98) {
     report.push({
       type: 'warning',
-      message: t('admin.ops.diagnosis.slaLow', { sla: slaPct.toFixed(2) }),
-      impact: t('admin.ops.diagnosis.slaLowImpact'),
-      action: t('admin.ops.diagnosis.slaLowAction')
+      message: `SLA 低于目标 (${slaPct.toFixed(2)}%)`,
+      impact: '需要关注服务质量',
+      action: '分析SLA下降原因，优化系统性能'
     })
   }
 
@@ -610,16 +608,16 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
     if (healthScoreValue.value < 60) {
       report.push({
         type: 'critical',
-        message: t('admin.ops.diagnosis.healthCritical', { score: healthScoreValue.value }),
-        impact: t('admin.ops.diagnosis.healthCriticalImpact'),
-        action: t('admin.ops.diagnosis.healthCriticalAction')
+        message: `综合健康评分过低 (${healthScoreValue.value})`,
+        impact: '多个指标可能同时异常，建议优先排查错误与资源使用情况',
+        action: '全面检查系统状态，优先处理critical级别问题'
       })
     } else if (healthScoreValue.value < 90) {
       report.push({
         type: 'warning',
-        message: t('admin.ops.diagnosis.healthLow', { score: healthScoreValue.value }),
-        impact: t('admin.ops.diagnosis.healthLowImpact'),
-        action: t('admin.ops.diagnosis.healthLowAction')
+        message: `综合健康评分偏低 (${healthScoreValue.value})`,
+        impact: '可能存在轻度波动，建议关注 SLA 与错误率',
+        action: '监控指标趋势，预防问题恶化'
       })
     }
   }
@@ -627,8 +625,8 @@ const diagnosisReport = computed<DiagnosisItem[]>(() => {
   if (report.length === 0) {
     report.push({
       type: 'info',
-      message: t('admin.ops.diagnosis.healthy'),
-      impact: t('admin.ops.diagnosis.healthyImpact')
+      message: '所有系统指标正常',
+      impact: '服务运行稳定'
     })
   }
 
@@ -703,8 +701,8 @@ const dbUsagePercent = computed<number | null>(() => {
 const dbMiddleLabel = computed(() => {
   if (systemMetrics.value?.db_ok === false) return 'FAIL'
   if (dbUsagePercent.value != null) return `${dbUsagePercent.value.toFixed(0)}%`
-  if (systemMetrics.value?.db_ok === true) return t('admin.ops.ok')
-  return t('admin.ops.noData')
+  if (systemMetrics.value?.db_ok === true) return '正常'
+  return '暂无数据'
 })
 
 const dbMiddleClass = computed(() => {
@@ -746,8 +744,8 @@ const redisUsagePercent = computed<number | null>(() => {
 const redisMiddleLabel = computed(() => {
   if (systemMetrics.value?.redis_ok === false) return 'FAIL'
   if (redisUsagePercent.value != null) return `${redisUsagePercent.value.toFixed(0)}%`
-  if (systemMetrics.value?.redis_ok === true) return t('admin.ops.ok')
-  return t('admin.ops.noData')
+  if (systemMetrics.value?.redis_ok === true) return '正常'
+  return '暂无数据'
 })
 
 const redisMiddleClass = computed(() => {
@@ -780,13 +778,13 @@ const goroutineStatus = computed<'ok' | 'warning' | 'critical' | 'unknown'>(() =
 const goroutineStatusLabel = computed(() => {
   switch (goroutineStatus.value) {
     case 'ok':
-      return t('admin.ops.ok')
+      return '正常'
     case 'warning':
-      return t('common.warning')
+      return '警告'
     case 'critical':
-      return t('common.critical')
+      return '严重'
     default:
-      return t('admin.ops.noData')
+      return '暂无数据'
   }
 })
 
@@ -827,11 +825,11 @@ const jobsWarnCount = computed(() => {
 const jobsStatusLabel = computed(() => {
   switch (jobsStatus.value) {
     case 'ok':
-      return t('admin.ops.ok')
+      return '正常'
     case 'warn':
-      return t('common.warning')
+      return '警告'
     default:
-      return t('admin.ops.noData')
+      return '暂无数据'
   }
 })
 
@@ -872,19 +870,19 @@ function handleToolbarRefresh() {
               d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
             />
           </svg>
-          {{ t('admin.ops.title') }}
+          {{ '运维监控' }}
         </h1>
 
         <div v-if="!props.fullscreen" class="mt-1 flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-          <span class="flex items-center gap-1.5" :title="props.loading ? t('admin.ops.loadingText') : t('admin.ops.ready')">
+          <span class="flex items-center gap-1.5" :title="props.loading ? '加载中...' : '就绪'">
             <span class="relative flex h-2 w-2">
               <span class="relative inline-flex h-2 w-2 rounded-full" :class="props.loading ? 'bg-gray-400' : 'bg-green-500'"></span>
             </span>
-            {{ props.loading ? t('admin.ops.loadingText') : t('admin.ops.ready') }}
+            {{ props.loading ? '加载中...' : '就绪' }}
           </span>
 
           <span>·</span>
-          <span>{{ t('common.refresh') }}: {{ props.lastUpdated ? props.lastUpdated.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\//g, '-') : t('common.unknown') }}</span>
+          <span>{{ '刷新' }}: {{ props.lastUpdated ? props.lastUpdated.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\//g, '-') : '未知' }}</span>
 
           <template v-if="props.autoRefreshEnabled && props.autoRefreshCountdown !== undefined">
             <span>·</span>
@@ -932,7 +930,7 @@ function handleToolbarRefresh() {
           type="button"
           class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-400 dark:hover:bg-dark-600"
           :disabled="loading"
-          :title="t('common.refresh')"
+          :title="'刷新'"
           @click="handleToolbarRefresh"
         >
           <svg class="h-4 w-4" :class="{ 'animate-spin': loading }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -952,13 +950,13 @@ function handleToolbarRefresh() {
           v-if="!props.fullscreen"
           type="button"
           class="flex h-8 items-center gap-1.5 rounded-lg bg-blue-100 px-3 text-xs font-bold text-blue-700 transition-colors hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50"
-          :title="t('admin.ops.alertRules.title')"
+          :title="'告警规则'"
           @click="emit('openAlertRules')"
         >
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
           </svg>
-          <span class="hidden sm:inline">{{ t('admin.ops.alertRules.manage') }}</span>
+          <span class="hidden sm:inline">{{ '预警规则' }}</span>
         </button>
 
         <!-- Settings Button (hidden in fullscreen) -->
@@ -966,14 +964,14 @@ function handleToolbarRefresh() {
           v-if="!props.fullscreen"
           type="button"
           class="flex h-8 items-center gap-1.5 rounded-lg bg-gray-100 px-3 text-xs font-bold text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
-          :title="t('admin.ops.settings.title')"
+          :title="'运维监控设置'"
           @click="emit('openSettings')"
         >
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <span class="hidden sm:inline">{{ t('common.settings') }}</span>
+          <span class="hidden sm:inline">{{ '设置' }}</span>
         </button>
 
         <!-- Enter Fullscreen Button (hidden in fullscreen mode) -->
@@ -981,7 +979,7 @@ function handleToolbarRefresh() {
           v-if="!props.fullscreen"
           type="button"
           class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
-          :title="t('admin.ops.fullscreen.enter')"
+          :title="'进入全屏'"
           @click="emit('enterFullscreen')"
         >
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1006,7 +1004,7 @@ function handleToolbarRefresh() {
               <div class="rounded-xl bg-white p-4 shadow-xl ring-1 ring-black/5 dark:bg-gray-800 dark:ring-white/10">
                 <h4 class="mb-3 border-b border-gray-100 pb-2 text-sm font-bold text-gray-900 dark:border-gray-700 dark:text-white flex items-center gap-2">
                   <Icon name="brain" size="sm" class="text-blue-500" />
-                  {{ t('admin.ops.diagnosis.title') }}
+                  {{ '智能诊断' }}
                 </h4>
 
                 <div class="space-y-3">
@@ -1046,7 +1044,7 @@ function handleToolbarRefresh() {
                 </div>
 
                 <div class="mt-3 border-t border-gray-100 pt-2 text-[10px] text-gray-400 dark:border-gray-700">
-                  {{ t('admin.ops.diagnosis.footer') }}
+                  {{ '基于当前指标的自动诊断建议' }}
                 </div>
               </div>
             </div>
@@ -1078,24 +1076,24 @@ function handleToolbarRefresh() {
 
               <div class="absolute flex flex-col items-center">
                 <span :class="[props.fullscreen ? 'text-5xl' : 'text-3xl', 'font-black', healthScoreClass]">
-                  {{ isSystemIdle ? t('admin.ops.idleStatus') : (overview.health_score ?? '--') }}
+                  {{ isSystemIdle ? '待机' : (overview.health_score ?? '--') }}
                 </span>
-                <span :class="[props.fullscreen ? 'text-xs' : 'text-[10px]', 'font-bold uppercase tracking-wider text-gray-400']">{{ t('admin.ops.health') }}</span>
+                <span :class="[props.fullscreen ? 'text-xs' : 'text-[10px]', 'font-bold uppercase tracking-wider text-gray-400']">{{ '健康' }}</span>
               </div>
             </div>
 
             <div class="mt-4 text-center" v-if="!props.fullscreen">
               <div class="flex items-center justify-center gap-1 text-xs font-medium text-gray-500">
-                {{ t('admin.ops.healthCondition') }}
-                <HelpTooltip :content="t('admin.ops.healthHelp')" />
+                {{ '健康状况' }}
+                <HelpTooltip :content="'基于 SLA、错误率和资源使用情况的系统整体健康评分'" />
               </div>
               <div class="mt-1 text-xs font-bold" :class="healthScoreClass">
                 {{
                   isSystemIdle
-                    ? t('admin.ops.idleStatus')
+                    ? '待机'
                     : typeof overview.health_score === 'number' && overview.health_score >= 90
-                      ? t('admin.ops.healthyStatus')
-                      : t('admin.ops.riskyStatus')
+                      ? '健康'
+                      : '风险'
                 }}
               </div>
             </div>
@@ -1109,8 +1107,8 @@ function handleToolbarRefresh() {
                   <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
                   <span class="relative inline-flex h-3 w-3 rounded-full bg-blue-500"></span>
                 </div>
-                <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.realtime.title') }}</h3>
-                <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.qps')" />
+                <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '实时信息' }}</h3>
+                <HelpTooltip v-if="!props.fullscreen" :content="'每秒查询数（QPS）和每秒Token数（TPS），实时显示系统吞吐量。'" />
               </div>
 
               <!-- Time Window Selector -->
@@ -1133,7 +1131,7 @@ function handleToolbarRefresh() {
             <div :class="props.fullscreen ? 'space-y-4' : 'space-y-3'">
               <!-- Row 1: Current -->
               <div>
-                <div :class="[props.fullscreen ? 'text-xs' : 'text-[10px]', 'font-bold uppercase text-gray-400']">{{ t('admin.ops.current') }}</div>
+                <div :class="[props.fullscreen ? 'text-xs' : 'text-[10px]', 'font-bold uppercase text-gray-400']">{{ '当前' }}</div>
                 <div class="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-2">
                   <div class="flex items-baseline gap-1.5">
                     <span :class="[props.fullscreen ? 'text-4xl' : 'text-xl sm:text-2xl', 'font-black text-gray-900 dark:text-white']">{{ displayRealTimeQps.toFixed(1) }}</span>
@@ -1141,7 +1139,7 @@ function handleToolbarRefresh() {
                   </div>
                   <div class="flex items-baseline gap-1.5">
                     <span :class="[props.fullscreen ? 'text-4xl' : 'text-xl sm:text-2xl', 'font-black text-gray-900 dark:text-white']">{{ displayRealTimeTps.toFixed(1) }}</span>
-                    <span :class="[props.fullscreen ? 'text-sm' : 'text-xs', 'font-bold text-gray-500']">{{ t('admin.ops.tps') }}</span>
+                    <span :class="[props.fullscreen ? 'text-sm' : 'text-xs', 'font-bold text-gray-500']">{{ 'TPS' }}</span>
                   </div>
                 </div>
               </div>
@@ -1150,7 +1148,7 @@ function handleToolbarRefresh() {
               <div class="grid grid-cols-2 gap-3">
                 <!-- Peak -->
                 <div>
-                  <div :class="[props.fullscreen ? 'text-xs' : 'text-[10px]', 'font-bold uppercase text-gray-400']">{{ t('admin.ops.peak') }}</div>
+                  <div :class="[props.fullscreen ? 'text-xs' : 'text-[10px]', 'font-bold uppercase text-gray-400']">{{ '峰值' }}</div>
                   <div :class="[props.fullscreen ? 'text-base' : 'text-sm', 'mt-1 space-y-0.5 font-medium text-gray-600 dark:text-gray-400']">
                     <div class="flex items-baseline gap-1.5">
                       <span class="font-black text-gray-900 dark:text-white">{{ realtimeQpsPeakLabel }}</span>
@@ -1158,14 +1156,14 @@ function handleToolbarRefresh() {
                     </div>
                     <div class="flex items-baseline gap-1.5">
                       <span class="font-black text-gray-900 dark:text-white">{{ realtimeTpsPeakLabel }}</span>
-                      <span class="text-xs">{{ t('admin.ops.tps') }}</span>
+                      <span class="text-xs">{{ 'TPS' }}</span>
                     </div>
                   </div>
                 </div>
 
                 <!-- Average -->
                 <div>
-                  <div :class="[props.fullscreen ? 'text-xs' : 'text-[10px]', 'font-bold uppercase text-gray-400']">{{ t('admin.ops.average') }}</div>
+                  <div :class="[props.fullscreen ? 'text-xs' : 'text-[10px]', 'font-bold uppercase text-gray-400']">{{ '平均' }}</div>
                   <div :class="[props.fullscreen ? 'text-base' : 'text-sm', 'mt-1 space-y-0.5 font-medium text-gray-600 dark:text-gray-400']">
                     <div class="flex items-baseline gap-1.5">
                       <span class="font-black text-gray-900 dark:text-white">{{ realtimeQpsAvgLabel }}</span>
@@ -1173,7 +1171,7 @@ function handleToolbarRefresh() {
                     </div>
                     <div class="flex items-baseline gap-1.5">
                       <span class="font-black text-gray-900 dark:text-white">{{ realtimeTpsAvgLabel }}</span>
-                      <span class="text-xs">{{ t('admin.ops.tps') }}</span>
+                      <span class="text-xs">{{ 'TPS' }}</span>
                     </div>
                   </div>
                 </div>
@@ -1212,33 +1210,33 @@ function handleToolbarRefresh() {
         <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-900" style="order: 1;">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
-              <span class="text-[10px] font-bold uppercase text-gray-400">{{ t('admin.ops.requestsTitle') }}</span>
-              <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.totalRequests')" />
+              <span class="text-[10px] font-bold uppercase text-gray-400">{{ '请求' }}</span>
+              <HelpTooltip v-if="!props.fullscreen" :content="'当前时间窗口内的总请求数和Token消耗量。'" />
             </div>
             <button
               v-if="!props.fullscreen"
               class="text-[10px] font-bold text-blue-500 hover:underline"
               type="button"
-              @click="openDetails({ title: t('admin.ops.requestDetails.title') })"
+              @click="openDetails({ title: '请求明细' })"
             >
-              {{ t('admin.ops.requestDetails.details') }}
+              {{ '明细' }}
             </button>
           </div>
           <div class="mt-2 space-y-2 text-xs">
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ t('admin.ops.requests') }}:</span>
+              <span class="text-gray-500">{{ '请求数' }}:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{ totalRequestsLabel }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ t('admin.ops.tokens') }}:</span>
+              <span class="text-gray-500">{{ 'Token数' }}:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{ totalTokensLabel }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ t('admin.ops.avgQps') }}:</span>
+              <span class="text-gray-500">{{ '平均 QPS' }}:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{ qpsAvgLabel }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ t('admin.ops.avgTps') }}:</span>
+              <span class="text-gray-500">{{ '平均 TPS' }}:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{ tpsAvgLabel }}</span>
             </div>
           </div>
@@ -1248,17 +1246,17 @@ function handleToolbarRefresh() {
         <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-900" style="order: 2;">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <span class="text-[10px] font-bold uppercase text-gray-400">{{ t('admin.ops.sla') }}</span>
-              <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.sla')" />
+              <span class="text-[10px] font-bold uppercase text-gray-400">{{ 'SLA（排除业务限制）' }}</span>
+              <HelpTooltip v-if="!props.fullscreen" :content="'服务等级协议达成率，排除业务限制（如余额不足、配额超限）的成功请求占比。'" />
               <span class="h-1.5 w-1.5 rounded-full" :class="getSLAThresholdLevel(slaPercent) === 'critical' ? 'bg-red-500' : getSLAThresholdLevel(slaPercent) === 'warning' ? 'bg-yellow-500' : 'bg-green-500'"></span>
             </div>
             <button
               v-if="!props.fullscreen"
               class="text-[10px] font-bold text-blue-500 hover:underline"
               type="button"
-              @click="openDetails({ title: t('admin.ops.requestDetails.title'), kind: 'error' })"
+              @click="openDetails({ title: '请求明细', kind: 'error' })"
             >
-              {{ t('admin.ops.requestDetails.details') }}
+              {{ '明细' }}
             </button>
           </div>
           <div class="mt-2 text-3xl font-black" :class="getThresholdColorClass(getSLAThresholdLevel(slaPercent))">
@@ -1269,7 +1267,7 @@ function handleToolbarRefresh() {
           </div>
           <div class="mt-3 text-xs">
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ t('admin.ops.exceptions') }}:</span>
+              <span class="text-gray-500">{{ '异常数' }}:</span>
               <span class="font-bold text-red-600 dark:text-red-400">{{ formatNumber((overview.request_count_sla ?? 0) - (overview.success_count ?? 0)) }}</span>
             </div>
           </div>
@@ -1279,16 +1277,16 @@ function handleToolbarRefresh() {
         <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-900" style="order: 4;">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
-              <span class="text-[10px] font-bold uppercase text-gray-400">{{ t('admin.ops.latencyDuration') }}</span>
-              <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.latency')" />
+              <span class="text-[10px] font-bold uppercase text-gray-400">{{ '请求时长' }}</span>
+              <HelpTooltip v-if="!props.fullscreen" :content="'请求时长统计，包括 p50、p90、p95、p99 等百分位数。'" />
             </div>
             <button
               v-if="!props.fullscreen"
               class="text-[10px] font-bold text-blue-500 hover:underline"
               type="button"
-              @click="openDetails({ title: t('admin.ops.latencyDuration'), sort: 'duration_desc' })"
+              @click="openDetails({ title: '请求时长', sort: 'duration_desc' })"
             >
-              {{ t('admin.ops.requestDetails.details') }}
+              {{ '明细' }}
             </button>
           </div>
           <div class="mt-2 flex items-baseline gap-2">
@@ -1331,15 +1329,15 @@ function handleToolbarRefresh() {
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
               <span class="text-[10px] font-bold uppercase text-gray-400">TTFT</span>
-              <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.ttft')" />
+              <HelpTooltip v-if="!props.fullscreen" :content="'首 Token 延迟（Time To First Token），衡量流式响应的首 Token 返回速度。'" />
             </div>
             <button
               v-if="!props.fullscreen"
               class="text-[10px] font-bold text-blue-500 hover:underline"
               type="button"
-              @click="openDetails({ title: t('admin.ops.ttftLabel'), sort: 'duration_desc' })"
+              @click="openDetails({ title: '首 Token 延迟（毫秒）', sort: 'duration_desc' })"
             >
-              {{ t('admin.ops.requestDetails.details') }}
+              {{ '明细' }}
             </button>
           </div>
           <div class="mt-2 flex items-baseline gap-2">
@@ -1381,11 +1379,11 @@ function handleToolbarRefresh() {
         <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-900" style="order: 3;">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
-              <span class="text-[10px] font-bold uppercase text-gray-400">{{ t('admin.ops.requestErrors') }}</span>
-              <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.errors')" />
+              <span class="text-[10px] font-bold uppercase text-gray-400">{{ '请求错误' }}</span>
+              <HelpTooltip v-if="!props.fullscreen" :content="'错误统计，包括总错误数、错误率和上游错误率。'" />
             </div>
             <button v-if="!props.fullscreen" class="text-[10px] font-bold text-blue-500 hover:underline" type="button" @click="openErrorDetails('request')">
-              {{ t('admin.ops.requestDetails.details') }}
+              {{ '明细' }}
             </button>
           </div>
           <div class="mt-2 text-3xl font-black" :class="getThresholdColorClass(getRequestErrorRateThresholdLevel(errorRatePercent))">
@@ -1393,11 +1391,11 @@ function handleToolbarRefresh() {
           </div>
           <div class="mt-3 space-y-1 text-xs">
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ t('admin.ops.errorCount') }}:</span>
+              <span class="text-gray-500">{{ '错误数' }}:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{ formatNumber(overview.error_count_sla ?? 0) }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ t('admin.ops.businessLimited') }}:</span>
+              <span class="text-gray-500">{{ '业务限制：' }}:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{ formatNumber(overview.business_limited_count ?? 0) }}</span>
             </div>
           </div>
@@ -1407,11 +1405,11 @@ function handleToolbarRefresh() {
         <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-900" style="order: 6;">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
-              <span class="text-[10px] font-bold uppercase text-gray-400">{{ t('admin.ops.upstreamErrors') }}</span>
-              <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.upstreamErrors')" />
+              <span class="text-[10px] font-bold uppercase text-gray-400">{{ '上游错误' }}</span>
+              <HelpTooltip v-if="!props.fullscreen" :content="'上游服务返回的错误，包括API提供商的错误响应（排除429/529限流错误）。'" />
             </div>
             <button v-if="!props.fullscreen" class="text-[10px] font-bold text-blue-500 hover:underline" type="button" @click="openErrorDetails('upstream')">
-              {{ t('admin.ops.requestDetails.details') }}
+              {{ '明细' }}
             </button>
           </div>
           <div class="mt-2 text-3xl font-black" :class="getThresholdColorClass(getUpstreamErrorRateThresholdLevel(upstreamErrorRatePercent))">
@@ -1419,7 +1417,7 @@ function handleToolbarRefresh() {
           </div>
           <div class="mt-3 space-y-1 text-xs">
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ t('admin.ops.errorCountExcl429529') }}:</span>
+              <span class="text-gray-500">{{ '错误数（排除429/529）' }}:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{ formatNumber(overview.upstream_error_count_excl_429_529 ?? 0) }}</span>
             </div>
             <div class="flex justify-between">
@@ -1438,21 +1436,21 @@ function handleToolbarRefresh() {
         <div class="rounded-xl bg-gray-50 p-3 dark:bg-dark-900">
           <div class="flex items-center gap-1">
             <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">CPU</div>
-            <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.cpu')" />
+            <HelpTooltip v-if="!props.fullscreen" :content="'CPU 使用率，显示系统处理器的负载情况。'" />
           </div>
           <div class="mt-1 text-lg font-black" :class="cpuPercentClass">
             {{ cpuPercentValue == null ? '-' : `${cpuPercentValue.toFixed(1)}%` }}
           </div>
           <div v-if="!props.fullscreen" class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">
-            {{ t('common.warning') }} 80% · {{ t('common.critical') }} 95%
+            {{ '警告' }} 80% · {{ '严重' }} 95%
           </div>
         </div>
 
         <!-- MEM -->
         <div class="rounded-xl bg-gray-50 p-3 dark:bg-dark-900">
           <div class="flex items-center gap-1">
-            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.memory') }}</div>
-            <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.memory')" />
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ '内存' }}</div>
+            <HelpTooltip v-if="!props.fullscreen" :content="'内存使用率，包括已使用和总可用内存。'" />
           </div>
           <div class="mt-1 text-lg font-black" :class="memPercentClass">
             {{ memPercentValue == null ? '-' : `${memPercentValue.toFixed(1)}%` }}
@@ -1469,17 +1467,17 @@ function handleToolbarRefresh() {
         <!-- DB -->
         <div class="rounded-xl bg-gray-50 p-3 dark:bg-dark-900">
           <div class="flex items-center gap-1">
-            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.db') }}</div>
-            <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.db')" />
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ '数据库' }}</div>
+            <HelpTooltip v-if="!props.fullscreen" :content="'数据库连接池状态，包括活跃连接、空闲连接和等待连接数。'" />
           </div>
           <div class="mt-1 text-lg font-black" :class="dbMiddleClass">
             {{ dbMiddleLabel }}
           </div>
           <div v-if="!props.fullscreen" class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">
-            {{ t('admin.ops.conns') }} {{ dbConnOpenValue ?? '-' }} / {{ dbMaxOpenConnsValue ?? '-' }}
-            · {{ t('admin.ops.active') }} {{ dbConnActiveValue ?? '-' }}
-            · {{ t('admin.ops.idle') }} {{ dbConnIdleValue ?? '-' }}
-            <span v-if="dbConnWaitingValue != null"> · {{ t('admin.ops.waiting') }} {{ dbConnWaitingValue }} </span>
+            {{ '连接' }} {{ dbConnOpenValue ?? '-' }} / {{ dbMaxOpenConnsValue ?? '-' }}
+            · {{ '活跃' }} {{ dbConnActiveValue ?? '-' }}
+            · {{ '空闲' }} {{ dbConnIdleValue ?? '-' }}
+            <span v-if="dbConnWaitingValue != null"> · {{ '等待' }} {{ dbConnWaitingValue }} </span>
           </div>
         </div>
 
@@ -1487,33 +1485,33 @@ function handleToolbarRefresh() {
         <div class="rounded-xl bg-gray-50 p-3 dark:bg-dark-900">
           <div class="flex items-center gap-1">
             <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Redis</div>
-            <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.redis')" />
+            <HelpTooltip v-if="!props.fullscreen" :content="'Redis 连接池状态，显示活跃和空闲的连接数。'" />
           </div>
           <div class="mt-1 text-lg font-black" :class="redisMiddleClass">
             {{ redisMiddleLabel }}
           </div>
           <div v-if="!props.fullscreen" class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">
-            {{ t('admin.ops.conns') }} {{ redisConnTotalValue ?? '-' }} / {{ redisPoolSizeValue ?? '-' }}
-            <span v-if="redisConnActiveValue != null"> · {{ t('admin.ops.active') }} {{ redisConnActiveValue }} </span>
-            <span v-if="redisConnIdleValue != null"> · {{ t('admin.ops.idle') }} {{ redisConnIdleValue }} </span>
+            {{ '连接' }} {{ redisConnTotalValue ?? '-' }} / {{ redisPoolSizeValue ?? '-' }}
+            <span v-if="redisConnActiveValue != null"> · {{ '活跃' }} {{ redisConnActiveValue }} </span>
+            <span v-if="redisConnIdleValue != null"> · {{ '空闲' }} {{ redisConnIdleValue }} </span>
           </div>
         </div>
 
         <!-- Goroutines -->
         <div class="rounded-xl bg-gray-50 p-3 dark:bg-dark-900">
           <div class="flex items-center gap-1">
-            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.goroutines') }}</div>
-            <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.goroutines')" />
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ '协程' }}</div>
+            <HelpTooltip v-if="!props.fullscreen" :content="'Go 运行时的协程数量（轻量级线程）。没有绝对"安全值"，建议以历史基线为准。经验参考：<2000 常见；2000-8000 需关注；>8000 且伴随队列上升时，优先排查阻塞/泄漏。'" />
           </div>
           <div class="mt-1 text-lg font-black" :class="goroutineStatusClass">
             {{ goroutineStatusLabel }}
           </div>
           <div v-if="!props.fullscreen" class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">
-            {{ t('admin.ops.current') }} <span class="font-mono">{{ goroutineCountValue ?? '-' }}</span>
-            · {{ t('common.warning') }} <span class="font-mono">{{ goroutinesWarnThreshold }}</span>
-            · {{ t('common.critical') }} <span class="font-mono">{{ goroutinesCriticalThreshold }}</span>
+            {{ '当前' }} <span class="font-mono">{{ goroutineCountValue ?? '-' }}</span>
+            · {{ '警告' }} <span class="font-mono">{{ goroutinesWarnThreshold }}</span>
+            · {{ '严重' }} <span class="font-mono">{{ goroutinesCriticalThreshold }}</span>
             <span v-if="systemMetrics?.concurrency_queue_depth != null">
-              · {{ t('admin.ops.queue') }} <span class="font-mono">{{ systemMetrics.concurrency_queue_depth }}</span>
+              · {{ '队列' }} <span class="font-mono">{{ systemMetrics.concurrency_queue_depth }}</span>
             </span>
           </div>
         </div>
@@ -1522,11 +1520,11 @@ function handleToolbarRefresh() {
         <div class="rounded-xl bg-gray-50 p-3 dark:bg-dark-900">
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-1">
-              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.jobs') }}</div>
-              <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.jobs')" />
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ '后台任务' }}</div>
+              <HelpTooltip v-if="!props.fullscreen" :content="'后台任务执行状态，包括最近运行时间、成功时间和错误信息。'" />
             </div>
             <button v-if="!props.fullscreen" class="text-[10px] font-bold text-blue-500 hover:underline" type="button" @click="openJobsDetails">
-              {{ t('admin.ops.requestDetails.details') }}
+              {{ '明细' }}
             </button>
           </div>
 
@@ -1535,16 +1533,16 @@ function handleToolbarRefresh() {
           </div>
 
           <div v-if="!props.fullscreen" class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">
-            {{ t('common.total') }} <span class="font-mono">{{ jobHeartbeats.length }}</span>
-            · {{ t('common.warning') }} <span class="font-mono">{{ jobsWarnCount }}</span>
+            {{ '总计' }} <span class="font-mono">{{ jobHeartbeats.length }}</span>
+            · {{ '警告' }} <span class="font-mono">{{ jobsWarnCount }}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <BaseDialog :show="showJobsDetails" :title="t('admin.ops.jobs')" width="wide" @close="showJobsDetails = false">
+    <BaseDialog :show="showJobsDetails" :title="'后台任务'" width="wide" @close="showJobsDetails = false">
       <div v-if="!jobHeartbeats.length" class="text-sm text-gray-500 dark:text-gray-400">
-        {{ t('admin.ops.noData') }}
+        {{ '暂无数据' }}
       </div>
       <div v-else class="space-y-3">
         <div
@@ -1562,13 +1560,13 @@ function handleToolbarRefresh() {
 
           <div class="mt-2 grid grid-cols-1 gap-2 text-xs text-gray-600 dark:text-gray-300 sm:grid-cols-2">
             <div>
-              {{ t('admin.ops.lastSuccess') }} <span class="font-mono">{{ formatTimeShort(hb.last_success_at) }}</span>
+              {{ '最近成功' }} <span class="font-mono">{{ formatTimeShort(hb.last_success_at) }}</span>
             </div>
             <div>
-              {{ t('admin.ops.lastError') }} <span class="font-mono">{{ formatTimeShort(hb.last_error_at) }}</span>
+              {{ '最近错误' }} <span class="font-mono">{{ formatTimeShort(hb.last_error_at) }}</span>
             </div>
             <div>
-              {{ t('admin.ops.result') }} <span class="font-mono">{{ hb.last_result || '-' }}</span>
+              {{ '结果' }} <span class="font-mono">{{ hb.last_result || '-' }}</span>
             </div>
           </div>
 
@@ -1583,11 +1581,11 @@ function handleToolbarRefresh() {
     </BaseDialog>
 
     <!-- Custom Time Range Dialog -->
-    <BaseDialog :show="showCustomTimeRangeDialog" :title="t('admin.ops.timeRange.custom')" width="narrow" @close="handleCustomTimeRangeCancel">
+    <BaseDialog :show="showCustomTimeRangeDialog" :title="'自定义'" width="narrow" @close="handleCustomTimeRangeCancel">
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            {{ t('admin.ops.customTimeRange.startTime') }}
+            {{ '开始时间' }}
           </label>
           <input
             v-model="customStartTimeInput"
@@ -1597,7 +1595,7 @@ function handleToolbarRefresh() {
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            {{ t('admin.ops.customTimeRange.endTime') }}
+            {{ '结束时间' }}
           </label>
           <input
             v-model="customEndTimeInput"
@@ -1611,14 +1609,14 @@ function handleToolbarRefresh() {
             class="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
             @click="handleCustomTimeRangeCancel"
           >
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button
             type="button"
             class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
             @click="handleCustomTimeRangeConfirm"
           >
-            {{ t('common.confirm') }}
+            {{ '确认' }}
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('admin.accounts.usageStatistics')"
+    :title="'使用统计'"
     width="extra-wide"
     @close="handleClose"
   >
@@ -20,7 +20,7 @@
           <div>
             <div class="font-semibold text-gray-900 dark:text-gray-100">{{ account.name }}</div>
             <div class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.last30DaysUsage') }}
+              {{ '近30天使用统计（日均基于实际使用天数）' }}
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@
           >
             <div class="mb-2 flex items-center justify-between">
               <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{
-                t('admin.accounts.stats.totalCost')
+                '30天总费用'
               }}</span>
               <div class="rounded-lg bg-emerald-100 p-1.5 dark:bg-emerald-900/30">
                 <svg
@@ -72,10 +72,10 @@
               ${{ formatCost(stats.summary.total_cost) }}
             </p>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.stats.accumulatedCost') }}
+              {{ '累计成本' }}
               <span class="text-gray-400 dark:text-gray-500">
-                ({{ t('usage.userBilled') }}: ${{ formatCost(stats.summary.total_user_cost) }} ·
-                {{ t('admin.accounts.stats.standardCost') }}: ${{
+                ({{ '用户扣费' }}: ${{ formatCost(stats.summary.total_user_cost) }} ·
+                {{ '标准计费' }}: ${{
                   formatCost(stats.summary.total_standard_cost)
                 }})
               </span>
@@ -88,7 +88,7 @@
           >
             <div class="mb-2 flex items-center justify-between">
               <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{
-                t('admin.accounts.stats.totalRequests')
+                '30天总请求'
               }}</span>
               <div class="rounded-lg bg-blue-100 p-1.5 dark:bg-blue-900/30">
                 <Icon name="bolt" size="sm" class="text-blue-600 dark:text-blue-400" :stroke-width="2" />
@@ -98,7 +98,7 @@
               {{ formatNumber(stats.summary.total_requests) }}
             </p>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.stats.totalCalls') }}
+              {{ '累计调用次数' }}
             </p>
           </div>
 
@@ -108,7 +108,7 @@
           >
             <div class="mb-2 flex items-center justify-between">
               <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{
-                t('admin.accounts.stats.avgDailyCost')
+                '日均费用'
               }}</span>
               <div class="rounded-lg bg-amber-100 p-1.5 dark:bg-amber-900/30">
                 <Icon
@@ -124,12 +124,10 @@
             </p>
              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
               {{
-                t('admin.accounts.stats.basedOnActualDays', {
-                  days: stats.summary.actual_days_used
-                })
+                `基于 ${stats.summary.actual_days_used} 天实际使用`
               }}
               <span class="text-gray-400 dark:text-gray-500">
-                ({{ t('usage.userBilled') }}: ${{ formatCost(stats.summary.avg_daily_user_cost) }})
+                ({{ '用户扣费' }}: ${{ formatCost(stats.summary.avg_daily_user_cost) }})
               </span>
             </p>
           </div>
@@ -140,7 +138,7 @@
           >
             <div class="mb-2 flex items-center justify-between">
               <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{
-                t('admin.accounts.stats.avgDailyRequests')
+                '日均请求'
               }}</span>
               <div class="rounded-lg bg-purple-100 p-1.5 dark:bg-purple-900/30">
                 <svg
@@ -162,7 +160,7 @@
               {{ formatNumber(Math.round(stats.summary.avg_daily_requests)) }}
             </p>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.stats.avgDailyUsage') }}
+              {{ '平均每日调用' }}
             </p>
           </div>
         </div>
@@ -188,25 +186,25 @@
                 </svg>
               </div>
               <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
-                t('admin.accounts.stats.todayOverview')
+                '今日概览'
               }}</span>
             </div>
             <div class="space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.accountBilled') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ '账号计费' }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white"
                   >${{ formatCost(stats.summary.today?.cost || 0) }}</span
                 >
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.userBilled') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ '用户扣费' }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white"
                   >${{ formatCost(stats.summary.today?.user_cost || 0) }}</span
                 >
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.requests')
+                  '请求'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   formatNumber(stats.summary.today?.requests || 0)
@@ -214,7 +212,7 @@
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.tokens')
+                  'Token'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   formatTokens(stats.summary.today?.tokens || 0)
@@ -235,33 +233,33 @@
                 />
               </div>
               <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
-                t('admin.accounts.stats.highestCostDay')
+                '最高费用日'
               }}</span>
             </div>
             <div class="space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.date')
+                  '日期'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   stats.summary.highest_cost_day?.label || '-'
                 }}</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.accountBilled') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ '账号计费' }}</span>
                 <span class="text-sm font-semibold text-orange-600 dark:text-orange-400"
                   >${{ formatCost(stats.summary.highest_cost_day?.cost || 0) }}</span
                 >
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.userBilled') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ '用户扣费' }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white"
                   >${{ formatCost(stats.summary.highest_cost_day?.user_cost || 0) }}</span
                 >
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.requests')
+                  '请求'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   formatNumber(stats.summary.highest_cost_day?.requests || 0)
@@ -282,13 +280,13 @@
                 />
               </div>
               <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
-                t('admin.accounts.stats.highestRequestDay')
+                '最高请求日'
               }}</span>
             </div>
             <div class="space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.date')
+                  '日期'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   stats.summary.highest_request_day?.label || '-'
@@ -296,20 +294,20 @@
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.requests')
+                  '请求'
                 }}</span>
                 <span class="text-sm font-semibold text-indigo-600 dark:text-indigo-400">{{
                   formatNumber(stats.summary.highest_request_day?.requests || 0)
                 }}</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.accountBilled') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ '账号计费' }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white"
                   >${{ formatCost(stats.summary.highest_request_day?.cost || 0) }}</span
                 >
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.userBilled') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ '用户扣费' }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white"
                   >${{ formatCost(stats.summary.highest_request_day?.user_cost || 0) }}</span
                 >
@@ -327,13 +325,13 @@
                 <Icon name="cube" size="sm" class="text-teal-600 dark:text-teal-400" :stroke-width="2" />
               </div>
               <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
-                t('admin.accounts.stats.accumulatedTokens')
+                '累计 Token'
               }}</span>
             </div>
             <div class="space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.totalTokens')
+                  '30天总计'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   formatTokens(stats.summary.total_tokens)
@@ -341,7 +339,7 @@
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.dailyAvgTokens')
+                  '日均 Token'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   formatTokens(Math.round(stats.summary.avg_daily_tokens))
@@ -357,13 +355,13 @@
                 <Icon name="bolt" size="sm" class="text-rose-600 dark:text-rose-400" :stroke-width="2" />
               </div>
               <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
-                t('admin.accounts.stats.performance')
+                '性能'
               }}</span>
             </div>
             <div class="space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.avgResponseTime')
+                  '平均响应'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   formatDuration(stats.summary.avg_duration_ms)
@@ -371,7 +369,7 @@
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.daysActive')
+                  '活跃天数'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white"
                   >{{ stats.summary.actual_days_used }} / {{ stats.summary.days }}</span
@@ -392,13 +390,13 @@
                 />
               </div>
               <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
-                t('admin.accounts.stats.recentActivity')
+                '最近统计'
               }}</span>
             </div>
             <div class="space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.todayRequests')
+                  '今日请求'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   formatNumber(stats.summary.today?.requests || 0)
@@ -406,20 +404,20 @@
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                  t('admin.accounts.stats.todayTokens')
+                  '今日 Token'
                 }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
                   formatTokens(stats.summary.today?.tokens || 0)
                 }}</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.accountBilled') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ '账号计费' }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white"
                   >${{ formatCost(stats.summary.today?.cost || 0) }}</span
                 >
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.userBilled') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ '用户扣费' }}</span>
                 <span class="text-sm font-semibold text-gray-900 dark:text-white"
                   >${{ formatCost(stats.summary.today?.user_cost || 0) }}</span
                 >
@@ -431,7 +429,7 @@
         <!-- Usage Trend Chart -->
         <div class="card p-4">
           <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
-            {{ t('admin.accounts.stats.usageTrend') }}
+            {{ '30天费用与请求趋势' }}
           </h3>
           <div class="h-64">
             <Line v-if="trendChartData" :data="trendChartData" :options="lineChartOptions" />
@@ -439,7 +437,7 @@
               v-else
               class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400"
             >
-              {{ t('admin.dashboard.noDataAvailable') }}
+              {{ '暂无数据' }}
             </div>
           </div>
         </div>
@@ -454,7 +452,7 @@
         class="flex flex-col items-center justify-center py-12 text-gray-500 dark:text-gray-400"
       >
         <Icon name="chartBar" size="xl" class="mb-4 h-12 w-12" :stroke-width="1.5" />
-        <p class="text-sm">{{ t('admin.accounts.stats.noData') }}</p>
+        <p class="text-sm">{{ '该账号暂无使用数据' }}</p>
       </div>
     </div>
 
@@ -464,7 +462,7 @@
           @click="handleClose"
           class="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-300 dark:hover:bg-dark-500"
         >
-          {{ t('common.close') }}
+          {{ '关闭' }}
         </button>
       </div>
     </template>
@@ -473,7 +471,6 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -503,8 +500,6 @@ ChartJS.register(
   Legend,
   Filler
 )
-
-const { t } = useI18n()
 
 const props = defineProps<{
   show: boolean
@@ -537,7 +532,7 @@ const trendChartData = computed(() => {
     labels: stats.value.history.map((h) => h.label),
     datasets: [
       {
-        label: t('usage.accountBilled') + ' (USD)',
+        label: '账号计费' + ' (USD)',
         data: stats.value.history.map((h) => h.actual_cost),
         borderColor: '#3b82f6',
         backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -546,7 +541,7 @@ const trendChartData = computed(() => {
         yAxisID: 'y'
       },
       {
-        label: t('usage.userBilled') + ' (USD)',
+        label: '用户扣费' + ' (USD)',
         data: stats.value.history.map((h) => h.user_cost),
         borderColor: '#10b981',
         backgroundColor: 'rgba(16, 185, 129, 0.08)',
@@ -556,7 +551,7 @@ const trendChartData = computed(() => {
         yAxisID: 'y'
       },
       {
-        label: t('admin.accounts.stats.requests'),
+        label: '请求',
         data: stats.value.history.map((h) => h.requests),
         borderColor: '#f97316',
         backgroundColor: 'rgba(249, 115, 22, 0.1)',
@@ -632,7 +627,7 @@ const lineChartOptions = computed(() => ({
       },
       title: {
         display: true,
-        text: t('usage.accountBilled') + ' (USD)',
+        text: '账号计费' + ' (USD)',
         color: '#3b82f6',
         font: {
           size: 11
@@ -655,7 +650,7 @@ const lineChartOptions = computed(() => ({
       },
       title: {
         display: true,
-        text: t('admin.accounts.stats.requests'),
+        text: '请求',
         color: '#f97316',
         font: {
           size: 11

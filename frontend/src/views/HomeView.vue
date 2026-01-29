@@ -58,7 +58,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-dark-400 dark:hover:bg-dark-800 dark:hover:text-white"
-            :title="t('home.viewDocs')"
+            :title="'查看文档'"
           >
             <Icon name="book" size="md" />
           </a>
@@ -67,7 +67,7 @@
           <button
             @click="toggleTheme"
             class="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-dark-400 dark:hover:bg-dark-800 dark:hover:text-white"
-            :title="isDark ? t('home.switchToLight') : t('home.switchToDark')"
+            :title="isDark ? '切换到浅色模式' : '切换到深色模式'"
           >
             <Icon v-if="isDark" name="sun" size="md" />
             <Icon v-else name="moon" size="md" />
@@ -84,7 +84,7 @@
             >
               {{ userInitial }}
             </span>
-            <span class="text-xs font-medium text-white">{{ t('home.dashboard') }}</span>
+            <span class="text-xs font-medium text-white">{{ '控制台' }}</span>
             <svg
               class="h-3 w-3 text-gray-400"
               fill="none"
@@ -104,7 +104,7 @@
             to="/login"
             class="inline-flex items-center rounded-full bg-gray-900 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
-            {{ t('home.login') }}
+            {{ '登录' }}
           </router-link>
         </div>
       </nav>
@@ -132,7 +132,7 @@
                 :to="isAuthenticated ? dashboardPath : '/login'"
                 class="btn btn-primary px-8 py-3 text-base shadow-lg shadow-primary-500/30"
               >
-                {{ isAuthenticated ? t('home.goToDashboard') : t('home.getStarted') }}
+                {{ isAuthenticated ? '进入控制台' : '开始使用' }}
                 <Icon name="arrowRight" size="md" class="ml-2" :stroke-width="2" />
               </router-link>
             </div>
@@ -183,7 +183,7 @@
           >
             <Icon name="swap" size="sm" class="text-primary-500" />
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
-              t('home.tags.subscriptionToApi')
+              '订阅转 API'
             }}</span>
           </div>
           <div
@@ -191,7 +191,7 @@
           >
             <Icon name="shield" size="sm" class="text-primary-500" />
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
-              t('home.tags.stickySession')
+              '粘性会话'
             }}</span>
           </div>
           <div
@@ -199,7 +199,7 @@
           >
             <Icon name="chart" size="sm" class="text-primary-500" />
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
-              t('home.tags.realtimeBilling')
+              '实时计费'
             }}</span>
           </div>
         </div>
@@ -216,10 +216,10 @@
               <Icon name="server" size="lg" class="text-white" />
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('home.features.unifiedGateway') }}
+              {{ '统一 API 网关' }}
             </h3>
             <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
-              {{ t('home.features.unifiedGatewayDesc') }}
+              {{ '将 Claude 订阅转换为 API 接口，通过标准 /v1/messages 接口访问 AI 能力。' }}
             </p>
           </div>
 
@@ -245,10 +245,10 @@
               </svg>
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('home.features.multiAccount') }}
+              {{ '多账号池' }}
             </h3>
             <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
-              {{ t('home.features.multiAccountDesc') }}
+              {{ '智能负载均衡管理多个上游账号，支持 OAuth 和 API Key 认证。' }}
             </p>
           </div>
 
@@ -274,10 +274,10 @@
               </svg>
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('home.features.balanceQuota') }}
+              {{ '余额与配额' }}
             </h3>
             <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
-              {{ t('home.features.balanceQuotaDesc') }}
+              {{ '基于 Token 的精确计费和用量追踪，支持配额管理和兑换码充值。' }}
             </p>
           </div>
         </div>
@@ -285,10 +285,10 @@
         <!-- Supported Providers -->
         <div class="mb-8 text-center">
           <h2 class="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-            {{ t('home.providers.title') }}
+            {{ '支持的服务商' }}
           </h2>
           <p class="text-sm text-gray-600 dark:text-dark-400">
-            {{ t('home.providers.description') }}
+            {{ 'AI 服务的统一 API 接口' }}
           </p>
         </div>
 
@@ -302,10 +302,10 @@
             >
               <span class="text-xs font-bold text-white">C</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.claude') }}</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ 'Claude' }}</span>
             <span
               class="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-medium text-primary-600 dark:bg-primary-900/30 dark:text-primary-400"
-              >{{ t('home.providers.supported') }}</span
+              >{{ '已支持' }}</span
             >
           </div>
           <!-- GPT - Supported -->
@@ -320,7 +320,7 @@
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">GPT</span>
             <span
               class="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-medium text-primary-600 dark:bg-primary-900/30 dark:text-primary-400"
-              >{{ t('home.providers.supported') }}</span
+              >{{ '已支持' }}</span
             >
           </div>
           <!-- Gemini - Supported -->
@@ -332,10 +332,10 @@
             >
               <span class="text-xs font-bold text-white">G</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.gemini') }}</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ 'Gemini' }}</span>
             <span
               class="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-medium text-primary-600 dark:bg-primary-900/30 dark:text-primary-400"
-              >{{ t('home.providers.supported') }}</span
+              >{{ '已支持' }}</span
             >
           </div>
           <!-- Antigravity - Supported -->
@@ -347,10 +347,10 @@
             >
               <span class="text-xs font-bold text-white">A</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.antigravity') }}</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ 'Antigravity' }}</span>
             <span
               class="rounded bg-primary-100 px-1.5 py-0.5 text-[10px] font-medium text-primary-600 dark:bg-primary-900/30 dark:text-primary-400"
-              >{{ t('home.providers.supported') }}</span
+              >{{ '已支持' }}</span
             >
           </div>
           <!-- More - Coming Soon -->
@@ -362,10 +362,10 @@
             >
               <span class="text-xs font-bold text-white">+</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.more') }}</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ '更多' }}</span>
             <span
               class="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:bg-dark-700 dark:text-dark-400"
-              >{{ t('home.providers.soon') }}</span
+              >{{ '即将推出' }}</span
             >
           </div>
         </div>
@@ -378,7 +378,7 @@
         class="mx-auto flex max-w-6xl flex-col items-center justify-center gap-4 text-center sm:flex-row sm:text-left"
       >
         <p class="text-sm text-gray-500 dark:text-dark-400">
-          &copy; {{ currentYear }} {{ siteName }}. {{ t('home.footer.allRightsReserved') }}
+          &copy; {{ currentYear }} {{ siteName }}. {{ '保留所有权利。' }}
         </p>
         <div class="flex items-center gap-4">
           <a
@@ -388,7 +388,7 @@
             rel="noopener noreferrer"
             class="text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-dark-400 dark:hover:text-white"
           >
-            {{ t('home.docs') }}
+            {{ '文档' }}
           </a>
           <a
             :href="githubUrl"
@@ -406,12 +406,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAuthStore, useAppStore } from '@/stores'
 import LocaleSwitcher from '@/components/common/LocaleSwitcher.vue'
 import Icon from '@/components/icons/Icon.vue'
-
-const { t } = useI18n()
 
 const authStore = useAuthStore()
 const appStore = useAppStore()

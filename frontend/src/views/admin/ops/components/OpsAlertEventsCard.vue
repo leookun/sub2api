@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import Select from '@/components/common/Select.vue'
 import BaseDialog from '@/components/common/BaseDialog.vue'
@@ -9,7 +8,6 @@ import { opsAPI, type AlertEventsQuery } from '@/api/admin/ops'
 import type { AlertEvent } from '../types'
 import { formatDateTime } from '../utils/opsFormatters'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const PAGE_SIZE = 10
@@ -28,32 +26,32 @@ const historyLoading = ref(false)
 const history = ref<AlertEvent[]>([])
 const historyRange = ref('7d')
 const historyRangeOptions = computed(() => [
-  { value: '7d', label: t('admin.ops.timeRange.7d') },
-  { value: '30d', label: t('admin.ops.timeRange.30d') }
+  { value: '7d', label: '近7天' },
+  { value: '30d', label: '近30天' }
 ])
 
 const silenceDuration = ref('1h')
 const silenceDurationOptions = computed(() => [
-  { value: '1h', label: t('admin.ops.timeRange.1h') },
-  { value: '24h', label: t('admin.ops.timeRange.24h') },
-  { value: '7d', label: t('admin.ops.timeRange.7d') }
+  { value: '1h', label: '近1小时' },
+  { value: '24h', label: '近24小时' },
+  { value: '7d', label: '近7天' }
 ])
 
 // Filters
 const timeRange = ref('24h')
 const timeRangeOptions = computed(() => [
-  { value: '5m', label: t('admin.ops.timeRange.5m') },
-  { value: '30m', label: t('admin.ops.timeRange.30m') },
-  { value: '1h', label: t('admin.ops.timeRange.1h') },
-  { value: '6h', label: t('admin.ops.timeRange.6h') },
-  { value: '24h', label: t('admin.ops.timeRange.24h') },
-  { value: '7d', label: t('admin.ops.timeRange.7d') },
-  { value: '30d', label: t('admin.ops.timeRange.30d') }
+  { value: '5m', label: '近5分钟' },
+  { value: '30m', label: '近30分钟' },
+  { value: '1h', label: '近1小时' },
+  { value: '6h', label: '近6小时' },
+  { value: '24h', label: '近24小时' },
+  { value: '7d', label: '近7天' },
+  { value: '30d', label: '近30天' }
 ])
 
 const severity = ref<string>('')
 const severityOptions = computed(() => [
-  { value: '', label: t('common.all') },
+  { value: '', label: '全部' },
   { value: 'P0', label: 'P0' },
   { value: 'P1', label: 'P1' },
   { value: 'P2', label: 'P2' },
@@ -62,17 +60,17 @@ const severityOptions = computed(() => [
 
 const status = ref<string>('')
 const statusOptions = computed(() => [
-  { value: '', label: t('common.all') },
-  { value: 'firing', label: t('admin.ops.alertEvents.status.firing') },
-  { value: 'resolved', label: t('admin.ops.alertEvents.status.resolved') },
-  { value: 'manual_resolved', label: t('admin.ops.alertEvents.status.manualResolved') }
+  { value: '', label: '全部' },
+  { value: 'firing', label: '告警中' },
+  { value: 'resolved', label: '已恢复' },
+  { value: 'manual_resolved', label: '手动已解决' }
 ])
 
 const emailSent = ref<string>('')
 const emailSentOptions = computed(() => [
-  { value: '', label: t('common.all') },
-  { value: 'true', label: t('admin.ops.alertEvents.table.emailSent') },
-  { value: 'false', label: t('admin.ops.alertEvents.table.emailIgnored') }
+  { value: '', label: '全部' },
+  { value: 'true', label: '已发送' },
+  { value: 'false', label: '已忽略' }
 ])
 
 function buildQuery(overrides: Partial<AlertEventsQuery> = {}): AlertEventsQuery {
@@ -95,7 +93,7 @@ async function loadFirstPage() {
     hasMore.value = data.length === PAGE_SIZE
   } catch (err: any) {
     console.error('[OpsAlertEventsCard] Failed to load alert events', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.alertEvents.loadFailed'))
+    appStore.showError(err?.response?.data?.detail || '加载告警事件失败')
     events.value = []
     hasMore.value = false
   } finally {
@@ -166,15 +164,15 @@ function formatDurationLabel(event: AlertEvent): string {
     if (!Number.isNaN(resolvedAt.getTime())) {
       const ms = resolvedAt.getTime() - firedAt.getTime()
       const prefix = status === 'manual_resolved'
-        ? t('admin.ops.alertEvents.status.manualResolved')
-        : t('admin.ops.alertEvents.status.resolved')
+        ? '手动已解决'
+        : '已恢复'
       return `${prefix} ${formatDurationMs(ms)}`
     }
   }
 
   const now = Date.now()
   const ms = now - firedAt.getTime()
-  return `${t('admin.ops.alertEvents.status.firing')} ${formatDurationMs(ms)}`
+  return `${'告警中'} ${formatDurationMs(ms)}`
 }
 
 function formatDimensionsSummary(event: AlertEvent): string {
@@ -205,7 +203,7 @@ async function openDetail(row: AlertEvent) {
     selected.value = detail
   } catch (err: any) {
     console.error('[OpsAlertEventsCard] Failed to load alert detail', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.alertEvents.detail.loadFailed'))
+    appStore.showError(err?.response?.data?.detail || '加载告警详情失败')
   } finally {
     detailLoading.value = false
   }
@@ -281,10 +279,10 @@ async function silenceAlert() {
       reason: `silence from UI (${silenceDuration.value})`
     })
 
-    appStore.showSuccess(t('admin.ops.alertEvents.detail.silenceSuccess'))
+    appStore.showSuccess('已静默该告警')
   } catch (err: any) {
     console.error('[OpsAlertEventsCard] Failed to silence alert', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.alertEvents.detail.silenceFailed'))
+    appStore.showError(err?.response?.data?.detail || '静默失败')
   } finally {
     detailActionLoading.value = false
   }
@@ -296,7 +294,7 @@ async function manualResolve() {
   detailActionLoading.value = true
   try {
     await opsAPI.updateAlertEventStatus(selected.value.id, 'manual_resolved')
-    appStore.showSuccess(t('admin.ops.alertEvents.detail.manualResolvedSuccess'))
+    appStore.showSuccess('已标记为手动解决')
 
     // Refresh detail + first page to reflect new status
     const detail = await opsAPI.getAlertEvent(selected.value.id)
@@ -305,7 +303,7 @@ async function manualResolve() {
     await loadHistory()
   } catch (err: any) {
     console.error('[OpsAlertEventsCard] Failed to resolve alert', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.alertEvents.detail.manualResolvedFailed'))
+    appStore.showError(err?.response?.data?.detail || '标记为手动解决失败')
   } finally {
     detailActionLoading.value = false
   }
@@ -345,9 +343,9 @@ function statusBadgeClass(status: string | undefined): string {
 function formatStatusLabel(status: string | undefined): string {
   const s = String(status || '').trim().toLowerCase()
   if (!s) return '-'
-  if (s === 'firing') return t('admin.ops.alertEvents.status.firing')
-  if (s === 'resolved') return t('admin.ops.alertEvents.status.resolved')
-  if (s === 'manual_resolved') return t('admin.ops.alertEvents.status.manualResolved')
+  if (s === 'firing') return '告警中'
+  if (s === 'resolved') return '已恢复'
+  if (s === 'manual_resolved') return '手动已解决'
   return s.toUpperCase()
 }
 
@@ -358,8 +356,8 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
   <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5 dark:bg-dark-800 dark:ring-dark-700">
     <div class="mb-4 flex items-start justify-between gap-4">
       <div>
-        <h3 class="text-sm font-bold text-gray-900 dark:text-white">{{ t('admin.ops.alertEvents.title') }}</h3>
-        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertEvents.description') }}</p>
+        <h3 class="text-sm font-bold text-gray-900 dark:text-white">{{ '告警事件' }}</h3>
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ '最近的告警触发/恢复记录（仅邮件通知）' }}</p>
       </div>
 
       <div class="flex items-center gap-2">
@@ -375,7 +373,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
           <svg class="h-3.5 w-3.5" :class="{ 'animate-spin': loading }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          {{ t('common.refresh') }}
+          {{ '刷新' }}
         </button>
       </div>
     </div>
@@ -385,11 +383,11 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
-      {{ t('admin.ops.alertEvents.loading') }}
+      {{ '加载中...' }}
     </div>
 
     <div v-else-if="empty" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-sm text-gray-500 dark:border-dark-700 dark:text-gray-400">
-      {{ t('admin.ops.alertEvents.empty') }}
+      {{ '暂无告警事件' }}
     </div>
 
     <div v-else class="overflow-hidden rounded-xl border border-gray-200 dark:border-dark-700">
@@ -398,28 +396,28 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
           <thead class="sticky top-0 z-10 bg-gray-50 dark:bg-dark-900">
             <tr>
               <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {{ t('admin.ops.alertEvents.table.time') }}
+                {{ '时间' }}
               </th>
               <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {{ t('admin.ops.alertEvents.table.severity') }}
+                {{ '级别' }}
               </th>
               <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {{ t('admin.ops.alertEvents.table.platform') }}
+                {{ '平台' }}
               </th>
               <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {{ t('admin.ops.alertEvents.table.ruleId') }}
+                {{ '规则ID' }}
               </th>
               <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {{ t('admin.ops.alertEvents.table.title') }}
+                {{ '标题' }}
               </th>
               <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {{ t('admin.ops.alertEvents.table.duration') }}
+                {{ '持续时间' }}
               </th>
               <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {{ t('admin.ops.alertEvents.table.dimensions') }}
+                {{ '维度' }}
               </th>
               <th class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {{ t('admin.ops.alertEvents.table.email') }}
+                {{ '邮件已发送' }}
               </th>
             </tr>
           </thead>
@@ -465,7 +463,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
               <td class="whitespace-nowrap px-4 py-3 text-right text-xs">
                 <span
                   class="inline-flex items-center justify-end gap-1.5"
-                  :title="row.email_sent ? t('admin.ops.alertEvents.table.emailSent') : t('admin.ops.alertEvents.table.emailIgnored')"
+                  :title="row.email_sent ? '已发送' : '已忽略'"
                 >
                   <Icon
                     v-if="row.email_sent"
@@ -480,7 +478,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
                     class="text-gray-400 dark:text-gray-500"
                   />
                   <span class="text-[11px] font-bold text-gray-600 dark:text-gray-300">
-                    {{ row.email_sent ? t('admin.ops.alertEvents.table.emailSent') : t('admin.ops.alertEvents.table.emailIgnored') }}
+                    {{ row.email_sent ? '已发送' : '已忽略' }}
                   </span>
                 </span>
               </td>
@@ -492,7 +490,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          {{ t('admin.ops.alertEvents.loading') }}
+          {{ '加载中...' }}
         </div>
         <div v-else-if="!hasMore && events.length > 0" class="py-3 text-center text-xs text-gray-400">
           -
@@ -502,17 +500,17 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
 
     <BaseDialog
       :show="showDetail"
-      :title="t('admin.ops.alertEvents.detail.title')"
+      :title="'告警详情'"
       width="wide"
       :close-on-click-outside="true"
       @close="closeDetail"
     >
       <div v-if="detailLoading" class="flex items-center justify-center py-10 text-sm text-gray-500 dark:text-gray-400">
-        {{ t('admin.ops.alertEvents.detail.loading') }}
+        {{ '加载详情中...' }}
       </div>
 
       <div v-else-if="!selected" class="py-10 text-center text-sm text-gray-500 dark:text-gray-400">
-        {{ t('admin.ops.alertEvents.detail.empty') }}
+        {{ '暂无详情' }}
       </div>
 
       <div v-else class="space-y-5">
@@ -537,7 +535,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
 
             <div class="flex flex-wrap gap-2">
               <div class="flex items-center gap-2 rounded-lg bg-white px-2 py-1 ring-1 ring-gray-200 dark:bg-dark-800 dark:ring-dark-700">
-                <span class="text-[11px] font-bold text-gray-600 dark:text-gray-300">{{ t('admin.ops.alertEvents.detail.silence') }}</span>
+                <span class="text-[11px] font-bold text-gray-600 dark:text-gray-300">{{ '忽略此告警' }}</span>
                 <Select
                   :model-value="silenceDuration"
                   :options="silenceDurationOptions"
@@ -552,7 +550,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
 
               <button type="button" class="btn btn-secondary btn-sm" :disabled="detailActionLoading" @click="manualResolve">
                 <Icon name="checkCircle" size="sm" />
-                {{ t('admin.ops.alertEvents.detail.manualResolve') }}
+                {{ '标记为已解决' }}
               </button>
             </div>
           </div>
@@ -560,15 +558,15 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
 
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-              <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.alertEvents.detail.firedAt') }}</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '触发时间' }}</div>
               <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">{{ formatDateTime(selected.fired_at || selected.created_at) }}</div>
             </div>
             <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-              <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.alertEvents.detail.resolvedAt') }}</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '解决时间' }}</div>
               <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">{{ selected.resolved_at ? formatDateTime(selected.resolved_at) : '-' }}</div>
             </div>
             <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-              <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.alertEvents.detail.ruleId') }}</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '规则 ID' }}</div>
               <div class="mt-1 flex flex-wrap items-center gap-2">
                 <div class="font-mono text-sm font-bold text-gray-900 dark:text-white">#{{ selected.rule_id }}</div>
                 <a
@@ -576,19 +574,19 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
                   :href="`/admin/ops?open_alert_rules=1&alert_rule_id=${selected.rule_id}`"
                 >
                   <Icon name="externalLink" size="xs" />
-                  {{ t('admin.ops.alertEvents.detail.viewRule') }}
+                  {{ '查看规则' }}
                 </a>
                 <a
                   class="inline-flex items-center gap-1 rounded-md bg-white px-2 py-1 text-[11px] font-bold text-gray-700 ring-1 ring-gray-200 hover:bg-gray-50 dark:bg-dark-800 dark:text-gray-200 dark:ring-dark-700 dark:hover:bg-dark-700"
                   :href="`/admin/ops?platform=${encodeURIComponent(getDimensionString(selected,'platform')||'')}&group_id=${selected.dimensions?.group_id || ''}&error_type=request&open_error_details=1`"
                 >
                   <Icon name="externalLink" size="xs" />
-                  {{ t('admin.ops.alertEvents.detail.viewLogs') }}
+                  {{ '查看相关日志' }}
                 </a>
               </div>
             </div>
             <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-              <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.alertEvents.detail.dimensions') }}</div>
+              <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '维度信息' }}</div>
               <div class="mt-1 text-sm text-gray-900 dark:text-white">
                 <div v-if="getDimensionString(selected, 'platform')">platform={{ getDimensionString(selected, 'platform') }}</div>
                 <div v-if="selected.dimensions?.group_id">group_id={{ selected.dimensions.group_id }}</div>
@@ -601,25 +599,25 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
         <div class="rounded-xl border border-gray-200 bg-white p-4 dark:border-dark-700 dark:bg-dark-800">
           <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <div class="text-sm font-bold text-gray-900 dark:text-white">{{ t('admin.ops.alertEvents.detail.historyTitle') }}</div>
-              <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertEvents.detail.historyHint') }}</div>
+              <div class="text-sm font-bold text-gray-900 dark:text-white">{{ '历史记录' }}</div>
+              <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{{ '同一规则 + 相同维度的最近事件' }}</div>
             </div>
             <Select :model-value="historyRange" :options="historyRangeOptions" class="w-[140px]" @change="historyRange = String($event || '7d')" />
           </div>
 
           <div v-if="historyLoading" class="py-6 text-center text-xs text-gray-500 dark:text-gray-400">
-            {{ t('admin.ops.alertEvents.detail.historyLoading') }}
+            {{ '加载历史中...' }}
           </div>
           <div v-else-if="history.length === 0" class="py-6 text-center text-xs text-gray-500 dark:text-gray-400">
-            {{ t('admin.ops.alertEvents.detail.historyEmpty') }}
+            {{ '暂无历史记录' }}
           </div>
           <div v-else class="overflow-hidden rounded-lg border border-gray-100 dark:border-dark-700">
             <table class="min-w-full divide-y divide-gray-100 dark:divide-dark-700">
               <thead class="bg-gray-50 dark:bg-dark-900">
                 <tr>
-                  <th class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertEvents.table.time') }}</th>
-                  <th class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertEvents.table.status') }}</th>
-                  <th class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertEvents.table.metric') }}</th>
+                  <th class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{{ '时间' }}</th>
+                  <th class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{{ '状态' }}</th>
+                  <th class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">{{ '指标 / 阈值' }}</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100 dark:divide-dark-700">

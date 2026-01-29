@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 import Select from '@/components/common/Select.vue'
 import OpsErrorLogTable from './OpsErrorLogTable.vue'
@@ -20,9 +19,6 @@ const emit = defineEmits<{
   (e: 'openErrorDetail', errorId: number): void
 }>()
 
-const { t } = useI18n()
-
-
 const loading = ref(false)
 const rows = ref<OpsErrorLog[]>([])
 const total = ref(0)
@@ -37,45 +33,45 @@ const viewMode = ref<'errors' | 'excluded' | 'all'>('errors')
 
 
 const modalTitle = computed(() => {
-  return props.errorType === 'upstream' ? t('admin.ops.errorDetails.upstreamErrors') : t('admin.ops.errorDetails.requestErrors')
+  return props.errorType === 'upstream' ? '上游错误' : '请求错误'
 })
 
 const statusCodeSelectOptions = computed(() => {
   const codes = [400, 401, 403, 404, 409, 422, 429, 500, 502, 503, 504, 529]
   return [
-    { value: null, label: t('common.all') },
+    { value: null, label: '全部' },
     ...codes.map((c) => ({ value: c, label: String(c) })),
-    { value: 'other', label: t('admin.ops.errorDetails.statusCodeOther') || 'Other' }
+    { value: 'other', label: '其他' || 'Other' }
   ]
 })
 
 const ownerSelectOptions = computed(() => {
   return [
-    { value: '', label: t('common.all') },
-    { value: 'provider', label: t('admin.ops.errorDetails.owner.provider') || 'provider' },
-    { value: 'client', label: t('admin.ops.errorDetails.owner.client') || 'client' },
-    { value: 'platform', label: t('admin.ops.errorDetails.owner.platform') || 'platform' }
+    { value: '', label: '全部' },
+    { value: 'provider', label: '服务商' || 'provider' },
+    { value: 'client', label: '客户端' || 'client' },
+    { value: 'platform', label: '平台' || 'platform' }
   ]
 })
 
 
 const viewModeSelectOptions = computed(() => {
   return [
-    { value: 'errors', label: t('admin.ops.errorDetails.viewErrors') || 'errors' },
-    { value: 'excluded', label: t('admin.ops.errorDetails.viewExcluded') || 'excluded' },
-    { value: 'all', label: t('common.all') }
+    { value: 'errors', label: '错误' || 'errors' },
+    { value: 'excluded', label: '排除项' || 'excluded' },
+    { value: 'all', label: '全部' }
   ]
 })
 
 const phaseSelectOptions = computed(() => {
   const options = [
-    { value: '', label: t('common.all') },
-    { value: 'request', label: t('admin.ops.errorDetails.phase.request') || 'request' },
-    { value: 'auth', label: t('admin.ops.errorDetails.phase.auth') || 'auth' },
-    { value: 'routing', label: t('admin.ops.errorDetails.phase.routing') || 'routing' },
-    { value: 'upstream', label: t('admin.ops.errorDetails.phase.upstream') || 'upstream' },
-    { value: 'network', label: t('admin.ops.errorDetails.phase.network') || 'network' },
-    { value: 'internal', label: t('admin.ops.errorDetails.phase.internal') || 'internal' }
+    { value: '', label: '全部' },
+    { value: 'request', label: '请求' || 'request' },
+    { value: 'auth', label: '认证' || 'auth' },
+    { value: 'routing', label: '路由' || 'routing' },
+    { value: 'upstream', label: '上游' || 'upstream' },
+    { value: 'network', label: '网络' || 'network' },
+    { value: 'internal', label: '内部' || 'internal' }
   ]
   return options
 })
@@ -208,7 +204,7 @@ watch(
                 v-model="q"
                 type="text"
                 class="w-full rounded-lg border-gray-200 bg-gray-50/50 py-1.5 pl-9 pr-3 text-xs font-medium text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/10 dark:border-dark-700 dark:bg-dark-900 dark:text-gray-300 dark:focus:bg-dark-800"
-                :placeholder="t('admin.ops.errorDetails.searchPlaceholder')"
+                :placeholder="'搜索 request_id / client_request_id / message'"
               />
             </div>
           </div>
@@ -233,7 +229,7 @@ watch(
 
           <div class="flex items-center justify-end">
             <button type="button" class="rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600" @click="resetFilters">
-              {{ t('common.reset') }}
+              {{ '重置' }}
             </button>
           </div>
         </div>
@@ -242,7 +238,7 @@ watch(
       <!-- Body -->
       <div class="flex min-h-0 flex-1 flex-col">
         <div class="mb-2 flex-shrink-0 text-xs text-gray-500 dark:text-gray-400">
-          {{ t('admin.ops.errorDetails.total') }} {{ total }}
+          {{ '总计：' }} {{ total }}
         </div>
 
           <OpsErrorLogTable

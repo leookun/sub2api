@@ -32,7 +32,7 @@
               ref="searchInputRef"
               v-model="searchQuery"
               type="text"
-              :placeholder="t('admin.proxies.searchProxies')"
+              :placeholder="'搜索代理...'"
               class="select-search-input"
               @click.stop
             />
@@ -43,7 +43,7 @@
             @click.stop="handleBatchTest"
             :disabled="batchTesting"
             class="batch-test-btn"
-            :title="t('admin.proxies.batchTest')"
+            :title="'批量测试'"
           >
             <svg v-if="batchTesting" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle
@@ -71,7 +71,7 @@
             @click="selectOption(null)"
             :class="['select-option', modelValue === null && 'select-option-selected']"
           >
-            <span class="select-option-label">{{ t('admin.accounts.noProxy') }}</span>
+            <span class="select-option-label">{{ '无代理' }}</span>
             <Icon v-if="modelValue === null" name="check" size="sm" class="text-primary-500" />
           </div>
 
@@ -109,7 +109,7 @@
                     v-else
                     class="inline-flex flex-shrink-0 items-center rounded bg-red-100 px-1.5 py-0.5 text-xs text-red-700 dark:bg-red-900/30 dark:text-red-400"
                   >
-                    {{ t('admin.proxies.testFailed') }}
+                    {{ '失败' }}
                   </span>
                 </template>
               </div>
@@ -124,7 +124,7 @@
               @click.stop="handleTestProxy(proxy)"
               :disabled="testingProxyIds.has(proxy.id)"
               class="test-btn"
-              :title="t('admin.proxies.testConnection')"
+              :title="'测试连接'"
             >
               <svg
                 v-if="testingProxyIds.has(proxy.id)"
@@ -159,7 +159,7 @@
 
           <!-- Empty state -->
           <div v-if="filteredProxies.length === 0 && searchQuery" class="select-empty">
-            {{ t('common.noOptionsFound') }}
+            {{ '无匹配选项' }}
           </div>
         </div>
       </div>
@@ -169,12 +169,9 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { adminAPI } from '@/api/admin'
 import Icon from '@/components/icons/Icon.vue'
 import type { Proxy } from '@/types'
-
-const { t } = useI18n()
 
 interface ProxyTestResult {
   success: boolean
@@ -217,7 +214,7 @@ const selectedProxy = computed(() => {
 
 const selectedLabel = computed(() => {
   if (!selectedProxy.value) {
-    return t('admin.accounts.noProxy')
+    return '无代理'
   }
   const proxy = selectedProxy.value
   return `${proxy.name} (${proxy.protocol}://${proxy.host}:${proxy.port})`

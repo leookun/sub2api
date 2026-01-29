@@ -53,12 +53,12 @@ export function useClipboard() {
 
     if (success) {
       copied.value = true
-      appStore.showSuccess(successMessage || t('common.copiedToClipboard'))
+      appStore.showSuccess(successMessage || '已复制到剪贴板')
       setTimeout(() => {
         copied.value = false
       }, 2000)
     } else {
-      appStore.showError(t('common.copyFailed'))
+      appStore.showError('复制失败')
     }
 
     return success

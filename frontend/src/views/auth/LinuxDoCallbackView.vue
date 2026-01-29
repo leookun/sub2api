@@ -3,10 +3,10 @@
     <div class="space-y-6">
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ t('auth.linuxdo.callbackTitle') }}
+          {{ '正在完成登录' }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ isProcessing ? t('auth.linuxdo.callbackProcessing') : t('auth.linuxdo.callbackHint') }}
+          {{ isProcessing ? '正在验证登录信息，请稍候...' : '如果页面未自动跳转，请返回登录页重试。' }}
         </p>
       </div>
 
@@ -24,7 +24,7 @@
                 {{ errorMessage }}
               </p>
               <router-link to="/login" class="btn btn-primary">
-                {{ t('auth.linuxdo.backToLogin') }}
+                {{ '返回登录' }}
               </router-link>
             </div>
           </div>
@@ -37,15 +37,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { AuthLayout } from '@/components/layout'
 import Icon from '@/components/icons/Icon.vue'
 import { useAuthStore, useAppStore } from '@/stores'
 
 const route = useRoute()
 const router = useRouter()
-const { t } = useI18n()
-
 const authStore = useAuthStore()
 const appStore = useAppStore()
 
@@ -85,7 +82,7 @@ onMounted(async () => {
   }
 
   if (!token) {
-    errorMessage.value = t('auth.linuxdo.callbackMissingToken')
+    errorMessage.value = '登录信息缺失，请返回重试。'
     appStore.showError(errorMessage.value)
     isProcessing.value = false
     return
@@ -93,11 +90,11 @@ onMounted(async () => {
 
   try {
     await authStore.setToken(token)
-    appStore.showSuccess(t('auth.loginSuccess'))
+    appStore.showSuccess('登录成功！欢迎回来。')
     await router.replace(redirect)
   } catch (e: unknown) {
     const err = e as { message?: string; response?: { data?: { detail?: string } } }
-    errorMessage.value = err.response?.data?.detail || err.message || t('auth.loginFailed')
+    errorMessage.value = err.response?.data?.detail || err.message || '登录失败，请检查您的凭据后重试。'
     appStore.showError(errorMessage.value)
     isProcessing.value = false
   }

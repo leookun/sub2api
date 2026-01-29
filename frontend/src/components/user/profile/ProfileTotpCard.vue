@@ -2,10 +2,10 @@
   <div class="card">
     <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
       <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-        {{ t('profile.totp.title') }}
+        {{ '双因素认证 (2FA)' }}
       </h2>
       <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-        {{ t('profile.totp.description') }}
+        {{ '使用 Google Authenticator 等应用增强账户安全' }}
       </p>
     </div>
     <div class="px-6 py-6">
@@ -23,10 +23,10 @@
         </div>
         <div>
           <p class="font-medium text-gray-700 dark:text-gray-300">
-            {{ t('profile.totp.featureDisabled') }}
+            {{ '功能未开放' }}
           </p>
           <p class="text-sm text-gray-500 dark:text-gray-400">
-            {{ t('profile.totp.featureDisabledHint') }}
+            {{ '管理员尚未开放双因素认证功能' }}
           </p>
         </div>
       </div>
@@ -41,10 +41,10 @@
           </div>
           <div>
             <p class="font-medium text-gray-900 dark:text-white">
-              {{ t('profile.totp.enabled') }}
+              {{ '已启用' }}
             </p>
             <p v-if="status.enabled_at" class="text-sm text-gray-500 dark:text-gray-400">
-              {{ t('profile.totp.enabledAt') }}: {{ formatDate(status.enabled_at) }}
+              {{ '启用时间' }}: {{ formatDate(status.enabled_at) }}
             </p>
           </div>
         </div>
@@ -53,7 +53,7 @@
           class="btn btn-outline-danger"
           @click="showDisableDialog = true"
         >
-          {{ t('profile.totp.disable') }}
+          {{ '禁用' }}
         </button>
       </div>
 
@@ -67,10 +67,10 @@
           </div>
           <div>
             <p class="font-medium text-gray-700 dark:text-gray-300">
-              {{ t('profile.totp.notEnabled') }}
+              {{ '未启用' }}
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-400">
-              {{ t('profile.totp.notEnabledHint') }}
+              {{ '启用双因素认证可以增强账户安全性' }}
             </p>
           </div>
         </div>
@@ -79,7 +79,7 @@
           class="btn btn-primary"
           @click="showSetupModal = true"
         >
-          {{ t('profile.totp.enable') }}
+          {{ '启用' }}
         </button>
       </div>
     </div>
@@ -102,13 +102,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { totpAPI } from '@/api'
 import type { TotpStatus } from '@/types'
 import TotpSetupModal from './TotpSetupModal.vue'
 import TotpDisableDialog from './TotpDisableDialog.vue'
-
-const { t } = useI18n()
 
 const loading = ref(true)
 const status = ref<TotpStatus | null>(null)

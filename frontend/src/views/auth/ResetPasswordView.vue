@@ -4,10 +4,10 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ t('auth.resetPasswordTitle') }}
+          {{ '设置新密码' }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ t('auth.resetPasswordHint') }}
+          {{ '请在下方输入您的新密码。' }}
         </p>
       </div>
 
@@ -20,10 +20,10 @@
             </div>
             <div>
               <h3 class="text-lg font-semibold text-red-800 dark:text-red-200">
-                {{ t('auth.invalidResetLink') }}
+                {{ '无效的重置链接' }}
               </h3>
               <p class="mt-2 text-sm text-red-700 dark:text-red-300">
-                {{ t('auth.invalidResetLinkHint') }}
+                {{ '此密码重置链接无效或已过期。请重新请求一个新链接。' }}
               </p>
             </div>
           </div>
@@ -34,7 +34,7 @@
             to="/forgot-password"
             class="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
-            {{ t('auth.requestNewResetLink') }}
+            {{ '请求新的重置链接' }}
           </router-link>
         </div>
       </div>
@@ -48,10 +48,10 @@
             </div>
             <div>
               <h3 class="text-lg font-semibold text-green-800 dark:text-green-200">
-                {{ t('auth.passwordResetSuccess') }}
+                {{ '密码重置成功' }}
               </h3>
               <p class="mt-2 text-sm text-green-700 dark:text-green-300">
-                {{ t('auth.passwordResetSuccessHint') }}
+                {{ '您的密码已重置。现在可以使用新密码登录。' }}
               </p>
             </div>
           </div>
@@ -63,7 +63,7 @@
             class="btn btn-primary inline-flex items-center gap-2"
           >
             <Icon name="login" size="md" />
-            {{ t('auth.signIn') }}
+            {{ '登录' }}
           </router-link>
         </div>
       </div>
@@ -73,7 +73,7 @@
         <!-- Email (readonly) -->
         <div>
           <label for="email" class="input-label">
-            {{ t('auth.emailLabel') }}
+            {{ '邮箱' }}
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -93,7 +93,7 @@
         <!-- New Password Input -->
         <div>
           <label for="password" class="input-label">
-            {{ t('auth.newPassword') }}
+            {{ '新密码' }}
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -108,7 +108,7 @@
               :disabled="isLoading"
               class="input pl-11 pr-11"
               :class="{ 'input-error': errors.password }"
-              :placeholder="t('auth.newPasswordPlaceholder')"
+              :placeholder="'输入新密码'"
             />
             <button
               type="button"
@@ -127,7 +127,7 @@
         <!-- Confirm Password Input -->
         <div>
           <label for="confirmPassword" class="input-label">
-            {{ t('auth.confirmPassword') }}
+            {{ '确认密码' }}
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -142,7 +142,7 @@
               :disabled="isLoading"
               class="input pl-11 pr-11"
               :class="{ 'input-error': errors.confirmPassword }"
-              :placeholder="t('auth.confirmPasswordPlaceholder')"
+              :placeholder="'再次输入新密码'"
             />
             <button
               type="button"
@@ -202,7 +202,7 @@
             ></path>
           </svg>
           <Icon v-else name="checkCircle" size="md" class="mr-2" />
-          {{ isLoading ? t('auth.resettingPassword') : t('auth.resetPassword') }}
+          {{ isLoading ? '重置中...' : '重置密码' }}
         </button>
       </form>
     </div>
@@ -210,12 +210,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ t('auth.rememberedPassword') }}
+        {{ '想起密码了？' }}
         <router-link
           to="/login"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ t('auth.signIn') }}
+          {{ '登录' }}
         </router-link>
       </p>
     </template>
@@ -225,13 +225,10 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { AuthLayout } from '@/components/layout'
 import Icon from '@/components/icons/Icon.vue'
 import { useAppStore } from '@/stores'
 import { resetPassword } from '@/api/auth'
-
-const { t } = useI18n()
 
 // ==================== Router & Stores ====================
 
@@ -281,19 +278,19 @@ function validateForm(): boolean {
 
   // Password validation
   if (!formData.password) {
-    errors.password = t('auth.passwordRequired')
+    errors.password = '请输入密码'
     isValid = false
   } else if (formData.password.length < 6) {
-    errors.password = t('auth.passwordMinLength')
+    errors.password = '密码至少需要 6 个字符'
     isValid = false
   }
 
   // Confirm password validation
   if (!formData.confirmPassword) {
-    errors.confirmPassword = t('auth.confirmPasswordRequired')
+    errors.confirmPassword = '请确认您的密码'
     isValid = false
   } else if (formData.password !== formData.confirmPassword) {
-    errors.confirmPassword = t('auth.passwordsDoNotMatch')
+    errors.confirmPassword = '两次输入的密码不一致'
     isValid = false
   }
 
@@ -319,19 +316,19 @@ async function handleSubmit(): Promise<void> {
     })
 
     isSuccess.value = true
-    appStore.showSuccess(t('auth.passwordResetSuccess'))
+    appStore.showSuccess('密码重置成功')
   } catch (error: unknown) {
     const err = error as { message?: string; response?: { data?: { detail?: string; code?: string } } }
 
     // Check for invalid/expired token error
     if (err.response?.data?.code === 'INVALID_RESET_TOKEN') {
-      errorMessage.value = t('auth.invalidOrExpiredToken')
+      errorMessage.value = '密码重置链接无效或已过期。请重新请求一个新链接。'
     } else if (err.response?.data?.detail) {
       errorMessage.value = err.response.data.detail
     } else if (err.message) {
       errorMessage.value = err.message
     } else {
-      errorMessage.value = t('auth.resetPasswordFailed')
+      errorMessage.value = '重置密码失败，请重试。'
     }
 
     appStore.showError(errorMessage.value)

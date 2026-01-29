@@ -1,5 +1,4 @@
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { GeminiOAuthCapabilities } from '@/api/admin/gemini'
@@ -19,8 +18,6 @@ export interface GeminiTokenInfo {
 
 export function useGeminiOAuth() {
   const appStore = useAppStore()
-  const { t } = useI18n()
-
   const authUrl = ref('')
   const sessionId = ref('')
   const state = ref('')
@@ -62,7 +59,7 @@ export function useGeminiOAuth() {
       state.value = response.state
       return true
     } catch (err: any) {
-      error.value = err.response?.data?.detail || t('admin.accounts.oauth.gemini.failedToGenerateUrl')
+      error.value = err.response?.data?.detail || '生成 Gemini 授权链接失败'
       appStore.showError(error.value)
       return false
     } finally {
@@ -80,7 +77,7 @@ export function useGeminiOAuth() {
   }): Promise<GeminiTokenInfo | null> => {
     const code = params.code?.trim()
     if (!code || !params.sessionId || !params.state) {
-      error.value = t('admin.accounts.oauth.gemini.missingExchangeParams')
+      error.value = '缺少 code / session_id / state'
       return null
     }
 
@@ -104,9 +101,9 @@ export function useGeminiOAuth() {
       // Check for specific missing project_id error
       const errorMessage = err.message || err.response?.data?.message || ''
       if (errorMessage.includes('missing project_id')) {
-        error.value = t('admin.accounts.oauth.gemini.missingProjectId')
+        error.value = 'GCP Project ID 获取失败：您的 Google 账号未关联有效的 GCP 项目。请前往 Google Cloud Console 激活 GCP 并绑定信用卡，或在授权时手动填写 Project ID。'
       } else {
-        error.value = errorMessage || t('admin.accounts.oauth.gemini.failedToExchangeCode')
+        error.value = errorMessage || 'Gemini 授权码兑换失败'
       }
       appStore.showError(error.value)
       return null

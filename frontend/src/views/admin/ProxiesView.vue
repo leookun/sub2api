@@ -16,7 +16,7 @@
               <input
                 v-model="searchQuery"
                 type="text"
-                :placeholder="t('admin.proxies.searchProxies')"
+                :placeholder="'搜索代理...'"
                 class="input pl-10"
                 @input="handleSearch"
               />
@@ -27,7 +27,7 @@
               <Select
                 v-model="filters.protocol"
                 :options="protocolOptions"
-                :placeholder="t('admin.proxies.allProtocols')"
+                :placeholder="'全部协议'"
                 @change="loadProxies"
               />
             </div>
@@ -35,7 +35,7 @@
               <Select
                 v-model="filters.status"
                 :options="statusOptions"
-                :placeholder="t('admin.proxies.allStatus')"
+                :placeholder="'全部状态'"
                 @change="loadProxies"
               />
             </div>
@@ -47,7 +47,7 @@
               @click="loadProxies"
               :disabled="loading"
               class="btn btn-secondary"
-              :title="t('common.refresh')"
+              :title="'刷新'"
             >
               <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
             </button>
@@ -55,23 +55,23 @@
               @click="handleBatchTest"
               :disabled="batchTesting || loading"
               class="btn btn-secondary"
-              :title="t('admin.proxies.testConnection')"
+              :title="'测试连接'"
             >
               <Icon name="play" size="md" class="mr-2" />
-              {{ t('admin.proxies.testConnection') }}
+              {{ '测试连接' }}
             </button>
             <button
               @click="openBatchDelete"
               :disabled="selectedCount === 0"
               class="btn btn-danger"
-              :title="t('admin.proxies.batchDeleteAction')"
+              :title="'删除'"
             >
               <Icon name="trash" size="md" class="mr-2" />
-              {{ t('admin.proxies.batchDeleteAction') }}
+              {{ '删除' }}
             </button>
             <button @click="showCreateModal = true" class="btn btn-primary">
               <Icon name="plus" size="md" class="mr-2" />
-              {{ t('admin.proxies.createProxy') }}
+              {{ '添加代理' }}
             </button>
           </div>
         </div>
@@ -139,13 +139,13 @@
               class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-primary-700 hover:bg-gray-200 dark:bg-dark-600 dark:text-primary-300 dark:hover:bg-dark-500"
               @click="openAccountsModal(row)"
             >
-              {{ t('admin.groups.accountsCount', { count: value || 0 }) }}
+              {{ `${value || 0} 个账号` }}
             </button>
             <span
               v-else
               class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-dark-600 dark:text-gray-300"
             >
-              {{ t('admin.groups.accountsCount', { count: 0 }) }}
+              {{ `${0} 个账号` }}
             </span>
           </template>
 
@@ -155,7 +155,7 @@
               class="badge badge-danger"
               :title="row.latency_message || undefined"
             >
-              {{ t('admin.proxies.latencyFailed') }}
+              {{ '链接失败' }}
             </span>
             <span
               v-else-if="typeof row.latency_ms === 'number'"
@@ -200,30 +200,30 @@
                   ></path>
                 </svg>
                 <Icon v-else name="checkCircle" size="sm" />
-                <span class="text-xs">{{ t('admin.proxies.testConnection') }}</span>
+                <span class="text-xs">{{ '测试连接' }}</span>
               </button>
               <button
                 @click="handleEdit(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ t('common.edit') }}</span>
+                <span class="text-xs">{{ '编辑' }}</span>
               </button>
               <button
                 @click="handleDelete(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
               >
                 <Icon name="trash" size="sm" />
-                <span class="text-xs">{{ t('common.delete') }}</span>
+                <span class="text-xs">{{ '删除' }}</span>
               </button>
             </div>
           </template>
 
           <template #empty>
             <EmptyState
-              :title="t('admin.proxies.noProxiesYet')"
-              :description="t('admin.proxies.createFirstProxy')"
-              :action-text="t('admin.proxies.createProxy')"
+              :title="'暂无代理'"
+              :description="'添加您的第一个代理以开始使用。'"
+              :action-text="'添加代理'"
               @action="showCreateModal = true"
             />
           </template>
@@ -245,7 +245,7 @@
     <!-- Create Proxy Modal -->
     <BaseDialog
       :show="showCreateModal"
-      :title="t('admin.proxies.createProxy')"
+      :title="'添加代理'"
       width="normal"
       @close="closeCreateModal"
     >
@@ -262,7 +262,7 @@
           ]"
         >
           <Icon name="plus" size="sm" class="mr-1.5 inline" />
-          {{ t('admin.proxies.standardAdd') }}
+          {{ '标准添加' }}
         </button>
         <button
           type="button"
@@ -287,7 +287,7 @@
               d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"
             />
           </svg>
-          {{ t('admin.proxies.batchAdd') }}
+          {{ '快捷添加' }}
         </button>
       </div>
 
@@ -299,59 +299,59 @@
         class="space-y-5"
       >
         <div>
-          <label class="input-label">{{ t('admin.proxies.name') }}</label>
+          <label class="input-label">{{ '名称' }}</label>
           <input
             v-model="createForm.name"
             type="text"
             required
             class="input"
-            :placeholder="t('admin.proxies.enterProxyName')"
+            :placeholder="'请输入代理名称'"
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.proxies.protocol') }}</label>
+          <label class="input-label">{{ '协议' }}</label>
           <Select v-model="createForm.protocol" :options="protocolSelectOptions" />
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="input-label">{{ t('admin.proxies.host') }}</label>
+            <label class="input-label">{{ '主机' }}</label>
             <input
               v-model="createForm.host"
               type="text"
               required
-              :placeholder="t('admin.proxies.form.hostPlaceholder')"
+              :placeholder="'请输入主机地址'"
               class="input"
             />
           </div>
           <div>
-            <label class="input-label">{{ t('admin.proxies.port') }}</label>
+            <label class="input-label">{{ '端口' }}</label>
             <input
               v-model.number="createForm.port"
               type="number"
               required
               min="1"
               max="65535"
-              :placeholder="t('admin.proxies.form.portPlaceholder')"
+              :placeholder="'请输入端口'"
               class="input"
             />
           </div>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.proxies.username') }}</label>
+          <label class="input-label">{{ '用户名（可选）' }}</label>
           <input
             v-model="createForm.username"
             type="text"
             class="input"
-            :placeholder="t('admin.proxies.optionalAuth')"
+            :placeholder="'可选认证信息'"
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.proxies.password') }}</label>
+          <label class="input-label">{{ '密码（可选）' }}</label>
           <input
             v-model="createForm.password"
             type="password"
             class="input"
-            :placeholder="t('admin.proxies.optionalAuth')"
+            :placeholder="'可选认证信息'"
           />
         </div>
 
@@ -360,16 +360,19 @@
       <!-- Batch Add Form -->
       <div v-else class="space-y-5">
         <div>
-          <label class="input-label">{{ t('admin.proxies.batchInput') }}</label>
+          <label class="input-label">{{ '代理列表' }}</label>
           <textarea
             v-model="batchInput"
             rows="10"
             class="input font-mono text-sm"
-            :placeholder="t('admin.proxies.batchInputPlaceholder')"
+            :placeholder=""每行输入一个代理，支持以下格式：
+socks5://user:pass{'@'}192.168.1.1:1080
+http://192.168.1.1:8080
+https://user:pass{'@'}proxy.example.com:443""
             @input="parseBatchInput"
           ></textarea>
           <p class="input-hint mt-2">
-            {{ t('admin.proxies.batchInputHint') }}
+            {{ "支持 http、https、socks5 协议，格式：协议://[用户名:密码{'@'}]主机:端口" }}
           </p>
         </div>
 
@@ -379,7 +382,7 @@
               <div class="flex items-center gap-1.5">
               <Icon name="checkCircle" size="sm" :stroke-width="2" class="text-primary-500" />
               <span class="text-gray-700 dark:text-gray-300">
-                {{ t('admin.proxies.parsedCount', { count: batchParseResult.valid }) }}
+                {{ `有效 ${batchParseResult.valid} 个` }}
               </span>
             </div>
             <div v-if="batchParseResult.invalid > 0" class="flex items-center gap-1.5">
@@ -390,7 +393,7 @@
                 class="text-amber-500"
               />
               <span class="text-amber-600 dark:text-amber-400">
-                {{ t('admin.proxies.invalidCount', { count: batchParseResult.invalid }) }}
+                {{ `无效 ${batchParseResult.invalid} 个` }}
               </span>
             </div>
             <div v-if="batchParseResult.duplicate > 0" class="flex items-center gap-1.5">
@@ -408,7 +411,7 @@
                 />
               </svg>
               <span class="text-gray-500 dark:text-gray-400">
-                {{ t('admin.proxies.duplicateCount', { count: batchParseResult.duplicate }) }}
+                {{ `重复 ${batchParseResult.duplicate} 个` }}
               </span>
             </div>
           </div>
@@ -419,7 +422,7 @@
       <template #footer>
         <div class="flex justify-end gap-3">
           <button @click="closeCreateModal" type="button" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button
             v-if="createMode === 'standard'"
@@ -448,7 +451,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ submitting ? t('admin.proxies.creating') : t('common.create') }}
+            {{ submitting ? '创建中...' : '创建' }}
           </button>
           <button
             v-else
@@ -479,8 +482,8 @@
             </svg>
             {{
               submitting
-                ? t('admin.proxies.importing')
-                : t('admin.proxies.importProxies', { count: batchParseResult.valid })
+                ? '导入中...'
+                : `导入 ${batchParseResult.valid} 个代理`
             }}
           </button>
         </div>
@@ -490,7 +493,7 @@
     <!-- Edit Proxy Modal -->
     <BaseDialog
       :show="showEditModal"
-      :title="t('admin.proxies.editProxy')"
+      :title="'编辑代理'"
       width="normal"
       @close="closeEditModal"
     >
@@ -501,20 +504,20 @@
         class="space-y-5"
       >
         <div>
-          <label class="input-label">{{ t('admin.proxies.name') }}</label>
+          <label class="input-label">{{ '名称' }}</label>
           <input v-model="editForm.name" type="text" required class="input" />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.proxies.protocol') }}</label>
+          <label class="input-label">{{ '协议' }}</label>
           <Select v-model="editForm.protocol" :options="protocolSelectOptions" />
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="input-label">{{ t('admin.proxies.host') }}</label>
+            <label class="input-label">{{ '主机' }}</label>
             <input v-model="editForm.host" type="text" required class="input" />
           </div>
           <div>
-            <label class="input-label">{{ t('admin.proxies.port') }}</label>
+            <label class="input-label">{{ '端口' }}</label>
             <input
               v-model.number="editForm.port"
               type="number"
@@ -526,20 +529,20 @@
           </div>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.proxies.username') }}</label>
+          <label class="input-label">{{ '用户名（可选）' }}</label>
           <input v-model="editForm.username" type="text" class="input" />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.proxies.password') }}</label>
+          <label class="input-label">{{ '密码（可选）' }}</label>
           <input
             v-model="editForm.password"
             type="password"
-            :placeholder="t('admin.proxies.leaveEmptyToKeep')"
+            :placeholder="'留空保持不变'"
             class="input"
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.proxies.status') }}</label>
+          <label class="input-label">{{ '状态' }}</label>
           <Select v-model="editForm.status" :options="editStatusOptions" />
         </div>
 
@@ -548,7 +551,7 @@
       <template #footer>
         <div class="flex justify-end gap-3">
           <button @click="closeEditModal" type="button" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button
             v-if="editingProxy"
@@ -577,7 +580,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ submitting ? t('admin.proxies.updating') : t('common.update') }}
+            {{ submitting ? '更新中...' : '更新' }}
           </button>
         </div>
       </template>
@@ -586,10 +589,10 @@
     <!-- Delete Confirmation Dialog -->
     <ConfirmDialog
       :show="showDeleteDialog"
-      :title="t('admin.proxies.deleteProxy')"
-      :message="t('admin.proxies.deleteConfirm', { name: deletingProxy?.name })"
-      :confirm-text="t('common.delete')"
-      :cancel-text="t('common.cancel')"
+      :title="'删除代理'"
+      :message="`确定要删除代理 '${deletingProxy?.name}' 吗？使用此代理的账号将被移除代理设置。`"
+      :confirm-text="'删除'"
+      :cancel-text="'取消'"
       :danger="true"
       @confirm="confirmDelete"
       @cancel="showDeleteDialog = false"
@@ -598,10 +601,10 @@
     <!-- Batch Delete Confirmation Dialog -->
     <ConfirmDialog
       :show="showBatchDeleteDialog"
-      :title="t('admin.proxies.batchDelete')"
-      :message="t('admin.proxies.batchDeleteConfirm', { count: selectedCount })"
-      :confirm-text="t('common.delete')"
-      :cancel-text="t('common.cancel')"
+      :title="'批量删除'"
+      :message="`确定删除选中的 ${selectedCount} 个代理吗？已被账号使用的将自动跳过。`"
+      :confirm-text="'删除'"
+      :cancel-text="'取消'"
       :danger="true"
       @confirm="confirmBatchDelete"
       @cancel="showBatchDeleteDialog = false"
@@ -610,24 +613,24 @@
     <!-- Proxy Accounts Dialog -->
     <BaseDialog
       :show="showAccountsModal"
-      :title="t('admin.proxies.accountsTitle', { name: accountsProxy?.name || '' })"
+      :title="'使用该IP的账号'"
       width="normal"
       @close="closeAccountsModal"
     >
       <div v-if="accountsLoading" class="flex items-center justify-center py-8 text-sm text-gray-500">
         <Icon name="refresh" size="md" class="mr-2 animate-spin" />
-        {{ t('common.loading') }}
+        {{ '加载中...' }}
       </div>
       <div v-else-if="proxyAccounts.length === 0" class="py-6 text-center text-sm text-gray-500">
-        {{ t('admin.proxies.accountsEmpty') }}
+        {{ '暂无账号使用此代理' }}
       </div>
       <div v-else class="max-h-80 overflow-auto">
         <table class="min-w-full divide-y divide-gray-200 text-sm dark:divide-dark-700">
           <thead class="bg-gray-50 text-xs uppercase text-gray-500 dark:bg-dark-800 dark:text-dark-400">
             <tr>
-              <th class="px-4 py-2 text-left">{{ t('admin.proxies.accountName') }}</th>
-              <th class="px-4 py-2 text-left">{{ t('admin.accounts.columns.platformType') }}</th>
-              <th class="px-4 py-2 text-left">{{ t('admin.proxies.accountNotes') }}</th>
+              <th class="px-4 py-2 text-left">{{ '账号名称' }}</th>
+              <th class="px-4 py-2 text-left">{{ '平台/类型' }}</th>
+              <th class="px-4 py-2 text-left">{{ '备注' }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white dark:divide-dark-700 dark:bg-dark-900">
@@ -646,7 +649,7 @@
       <template #footer>
         <div class="flex justify-end">
           <button @click="closeAccountsModal" class="btn btn-secondary">
-            {{ t('common.close') }}
+            {{ '关闭' }}
           </button>
         </div>
       </template>
@@ -656,7 +659,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { Proxy, ProxyAccountSummary, ProxyProtocol } from '@/types'
@@ -672,24 +674,23 @@ import Select from '@/components/common/Select.vue'
 import Icon from '@/components/icons/Icon.vue'
 import PlatformTypeBadge from '@/components/common/PlatformTypeBadge.vue'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const columns = computed<Column[]>(() => [
   { key: 'select', label: '', sortable: false },
-  { key: 'name', label: t('admin.proxies.columns.name'), sortable: true },
-  { key: 'protocol', label: t('admin.proxies.columns.protocol'), sortable: true },
-  { key: 'address', label: t('admin.proxies.columns.address'), sortable: false },
-  { key: 'location', label: t('admin.proxies.columns.location'), sortable: false },
-  { key: 'account_count', label: t('admin.proxies.columns.accounts'), sortable: true },
-  { key: 'latency', label: t('admin.proxies.columns.latency'), sortable: false },
-  { key: 'status', label: t('admin.proxies.columns.status'), sortable: true },
-  { key: 'actions', label: t('admin.proxies.columns.actions'), sortable: false }
+  { key: 'name', label: '名称', sortable: true },
+  { key: 'protocol', label: '协议', sortable: true },
+  { key: 'address', label: '地址', sortable: false },
+  { key: 'location', label: '地理位置', sortable: false },
+  { key: 'account_count', label: '账号数', sortable: true },
+  { key: 'latency', label: '延迟', sortable: false },
+  { key: 'status', label: '状态', sortable: true },
+  { key: 'actions', label: '操作', sortable: false }
 ])
 
 // Filter options
 const protocolOptions = computed(() => [
-  { value: '', label: t('admin.proxies.allProtocols') },
+  { value: '', label: '全部协议' },
   { value: 'http', label: 'HTTP' },
   { value: 'https', label: 'HTTPS' },
   { value: 'socks5', label: 'SOCKS5' },
@@ -697,9 +698,9 @@ const protocolOptions = computed(() => [
 ])
 
 const statusOptions = computed(() => [
-  { value: '', label: t('admin.proxies.allStatus') },
-  { value: 'active', label: t('admin.accounts.status.active') },
-  { value: 'inactive', label: t('admin.accounts.status.inactive') }
+  { value: '', label: '全部状态' },
+  { value: 'active', label: '正常' },
+  { value: 'inactive', label: '停用' }
 ])
 
 // Form options
@@ -711,8 +712,8 @@ const protocolSelectOptions = computed(() => [
 ])
 
 const editStatusOptions = computed(() => [
-  { value: 'active', label: t('admin.accounts.status.active') },
-  { value: 'inactive', label: t('admin.accounts.status.inactive') }
+  { value: 'active', label: '正常' },
+  { value: 'inactive', label: '停用' }
 ])
 
 const proxies = ref<Proxy[]>([])
@@ -841,7 +842,7 @@ const loadProxies = async () => {
     if (isAbortError(error)) {
       return
     }
-    appStore.showError(t('admin.proxies.failedToLoad'))
+    appStore.showError('加载代理列表失败')
     console.error('Error loading proxies:', error)
   } finally {
     if (abortController === currentAbortController) {
@@ -962,15 +963,15 @@ const handleBatchCreate = async () => {
     const skipped = result.skipped || 0
 
     if (created > 0) {
-      appStore.showSuccess(t('admin.proxies.batchImportSuccess', { created, skipped }))
+      appStore.showSuccess(`成功导入 {created} 个代理，跳过 {skipped} 个重复`)
     } else {
-      appStore.showInfo(t('admin.proxies.batchImportAllSkipped', { skipped }))
+      appStore.showInfo(`全部 {skipped} 个代理已存在，跳过导入`)
     }
 
     closeCreateModal()
     loadProxies()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.proxies.failedToImport'))
+    appStore.showError(error.response?.data?.detail || '批量导入失败')
     console.error('Error batch creating proxies:', error)
   } finally {
     submitting.value = false
@@ -979,15 +980,15 @@ const handleBatchCreate = async () => {
 
 const handleCreateProxy = async () => {
   if (!createForm.name.trim()) {
-    appStore.showError(t('admin.proxies.nameRequired'))
+    appStore.showError('请输入代理名称')
     return
   }
   if (!createForm.host.trim()) {
-    appStore.showError(t('admin.proxies.hostRequired'))
+    appStore.showError('请输入主机地址')
     return
   }
   if (createForm.port < 1 || createForm.port > 65535) {
-    appStore.showError(t('admin.proxies.portInvalid'))
+    appStore.showError('端口必须在 1-65535 之间')
     return
   }
   submitting.value = true
@@ -1000,11 +1001,11 @@ const handleCreateProxy = async () => {
       username: createForm.username.trim() || null,
       password: createForm.password.trim() || null
     })
-    appStore.showSuccess(t('admin.proxies.proxyCreated'))
+    appStore.showSuccess('代理添加成功')
     closeCreateModal()
     loadProxies()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.proxies.failedToCreate'))
+    appStore.showError(error.response?.data?.detail || '创建代理失败')
     console.error('Error creating proxy:', error)
   } finally {
     submitting.value = false
@@ -1031,15 +1032,15 @@ const closeEditModal = () => {
 const handleUpdateProxy = async () => {
   if (!editingProxy.value) return
   if (!editForm.name.trim()) {
-    appStore.showError(t('admin.proxies.nameRequired'))
+    appStore.showError('请输入代理名称')
     return
   }
   if (!editForm.host.trim()) {
-    appStore.showError(t('admin.proxies.hostRequired'))
+    appStore.showError('请输入主机地址')
     return
   }
   if (editForm.port < 1 || editForm.port > 65535) {
-    appStore.showError(t('admin.proxies.portInvalid'))
+    appStore.showError('端口必须在 1-65535 之间')
     return
   }
 
@@ -1061,11 +1062,11 @@ const handleUpdateProxy = async () => {
     }
 
     await adminAPI.proxies.update(editingProxy.value.id, updateData)
-    appStore.showSuccess(t('admin.proxies.proxyUpdated'))
+    appStore.showSuccess('代理更新成功')
     closeEditModal()
     loadProxies()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.proxies.failedToUpdate'))
+    appStore.showError(error.response?.data?.detail || '更新代理失败')
     console.error('Error updating proxy:', error)
   } finally {
     submitting.value = false
@@ -1133,16 +1134,16 @@ const runProxyTest = async (proxyId: number, notify: boolean) => {
     if (notify) {
       if (result.success) {
         const message = result.latency_ms
-          ? t('admin.proxies.proxyWorkingWithLatency', { latency: result.latency_ms })
-          : t('admin.proxies.proxyWorking')
+          ? `代理连接正常，延迟 ${result.latency_ms}ms`
+          : '代理连接正常'
         appStore.showSuccess(message)
       } else {
-        appStore.showError(result.message || t('admin.proxies.proxyTestFailed'))
+        appStore.showError(result.message || '代理测试失败')
       }
     }
     return result
   } catch (error: any) {
-    const message = error.response?.data?.detail || t('admin.proxies.failedToTest')
+    const message = error.response?.data?.detail || '测试代理失败'
     applyLatencyResult(proxyId, { success: false, message })
     if (notify) {
       appStore.showError(message)
@@ -1213,15 +1214,15 @@ const handleBatchTest = async () => {
     }
 
     if (ids.length === 0) {
-      appStore.showInfo(t('admin.proxies.batchTestEmpty'))
+      appStore.showInfo('暂无可测试的代理')
       return
     }
 
     await runBatchProxyTests(ids)
-    appStore.showSuccess(t('admin.proxies.batchTestDone', { count: ids.length }))
+    appStore.showSuccess(`批量测试完成，共测试 ${ids.length} 个代理`)
     loadProxies()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.proxies.batchTestFailed'))
+    appStore.showError(error.response?.data?.detail || '批量测试失败')
     console.error('Error batch testing proxies:', error)
   } finally {
     batchTesting.value = false
@@ -1230,7 +1231,7 @@ const handleBatchTest = async () => {
 
 const handleDelete = (proxy: Proxy) => {
   if ((proxy.account_count || 0) > 0) {
-    appStore.showError(t('admin.proxies.deleteBlockedInUse'))
+    appStore.showError('该代理已有账号使用，无法删除')
     return
   }
   deletingProxy.value = proxy
@@ -1249,7 +1250,7 @@ const confirmDelete = async () => {
 
   try {
     await adminAPI.proxies.delete(deletingProxy.value.id)
-    appStore.showSuccess(t('admin.proxies.proxyDeleted'))
+    appStore.showSuccess('代理删除成功')
     showDeleteDialog.value = false
     if (selectedProxyIds.value.has(deletingProxy.value.id)) {
       const next = new Set(selectedProxyIds.value)
@@ -1259,7 +1260,7 @@ const confirmDelete = async () => {
     deletingProxy.value = null
     loadProxies()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.proxies.failedToDelete'))
+    appStore.showError(error.response?.data?.detail || '删除代理失败')
     console.error('Error deleting proxy:', error)
   }
 }
@@ -1277,16 +1278,16 @@ const confirmBatchDelete = async () => {
     const skipped = result.skipped?.length || 0
 
     if (deleted > 0) {
-      appStore.showSuccess(t('admin.proxies.batchDeleteDone', { deleted, skipped }))
+      appStore.showSuccess(`已删除 {deleted} 个代理，跳过 {skipped} 个`)
     } else if (skipped > 0) {
-      appStore.showInfo(t('admin.proxies.batchDeleteSkipped', { skipped }))
+      appStore.showInfo(`已跳过 {skipped} 个代理`)
     }
 
     selectedProxyIds.value = new Set()
     showBatchDeleteDialog.value = false
     loadProxies()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.proxies.batchDeleteFailed'))
+    appStore.showError(error.response?.data?.detail || '批量删除失败')
     console.error('Error batch deleting proxies:', error)
   }
 }
@@ -1300,7 +1301,7 @@ const openAccountsModal = async (proxy: Proxy) => {
   try {
     proxyAccounts.value = await adminAPI.proxies.getProxyAccounts(proxy.id)
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.proxies.accountsFailed'))
+    appStore.showError(error.response?.data?.detail || '获取账号列表失败')
     console.error('Error loading proxy accounts:', error)
   } finally {
     accountsLoading.value = false

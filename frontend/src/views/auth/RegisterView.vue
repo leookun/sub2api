@@ -4,10 +4,10 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ t('auth.createAccount') }}
+          {{ '创建账户' }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ t('auth.signUpToStart', { siteName }) }}
+          {{ `注册以开始使用 {siteName}` }}
         </p>
       </div>
 
@@ -24,7 +24,7 @@
             <Icon name="exclamationCircle" size="md" class="text-amber-500" />
           </div>
           <p class="text-sm text-amber-700 dark:text-amber-400">
-            {{ t('auth.registrationDisabled') }}
+            {{ '注册功能暂时关闭，请联系管理员。' }}
           </p>
         </div>
       </div>
@@ -34,7 +34,7 @@
         <!-- Email Input -->
         <div>
           <label for="email" class="input-label">
-            {{ t('auth.emailLabel') }}
+            {{ '邮箱' }}
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -50,7 +50,7 @@
               :disabled="isLoading"
               class="input pl-11"
               :class="{ 'input-error': errors.email }"
-              :placeholder="t('auth.emailPlaceholder')"
+              :placeholder="'请输入邮箱'"
             />
           </div>
           <p v-if="errors.email" class="input-error-text">
@@ -61,7 +61,7 @@
         <!-- Password Input -->
         <div>
           <label for="password" class="input-label">
-            {{ t('auth.passwordLabel') }}
+            {{ '密码' }}
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -76,7 +76,7 @@
               :disabled="isLoading"
               class="input pl-11 pr-11"
               :class="{ 'input-error': errors.password }"
-              :placeholder="t('auth.createPasswordPlaceholder')"
+              :placeholder="'创建一个安全的密码'"
             />
             <button
               type="button"
@@ -91,15 +91,15 @@
             {{ errors.password }}
           </p>
           <p v-else class="input-hint">
-            {{ t('auth.passwordHint') }}
+            {{ '至少 6 个字符' }}
           </p>
         </div>
 
         <!-- Promo Code Input (Optional) -->
         <div v-if="promoCodeEnabled">
           <label for="promo_code" class="input-label">
-            {{ t('auth.promoCodeLabel') }}
-            <span class="ml-1 text-xs font-normal text-gray-400 dark:text-dark-500">({{ t('common.optional') }})</span>
+            {{ '优惠码' }}
+            <span class="ml-1 text-xs font-normal text-gray-400 dark:text-dark-500">({{ '可选' }})</span>
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -115,7 +115,7 @@
                 'border-green-500 focus:border-green-500 focus:ring-green-500': promoValidation.valid,
                 'border-red-500 focus:border-red-500 focus:ring-red-500': promoValidation.invalid
               }"
-              :placeholder="t('auth.promoCodePlaceholder')"
+              :placeholder="'输入优惠码（可选）'"
               @input="handlePromoCodeInput"
             />
             <!-- Validation indicator -->
@@ -137,7 +137,7 @@
             <div v-if="promoValidation.valid" class="mt-2 flex items-center gap-2 rounded-lg bg-green-50 px-3 py-2 dark:bg-green-900/20">
               <Icon name="gift" size="sm" class="text-green-600 dark:text-green-400" />
               <span class="text-sm text-green-700 dark:text-green-400">
-                {{ t('auth.promoCodeValid', { amount: promoValidation.bonusAmount?.toFixed(2) }) }}
+                {{ `有效！注册后将获得 $${promoValidation.bonusAmount?.toFixed(2)} 赠送余额` }}
               </span>
             </div>
             <p v-else-if="promoValidation.invalid" class="input-error-text">
@@ -206,10 +206,10 @@
           <Icon v-else name="userPlus" size="md" class="mr-2" />
           {{
             isLoading
-              ? t('auth.processing')
+              ? '处理中...'
               : emailVerifyEnabled
-                ? t('auth.continue')
-                : t('auth.createAccount')
+                ? '继续'
+                : '创建账户'
           }}
         </button>
       </form>
@@ -218,12 +218,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ t('auth.alreadyHaveAccount') }}
+        {{ '已有账户？' }}
         <router-link
           to="/login"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ t('auth.signIn') }}
+          {{ '登录' }}
         </router-link>
       </p>
     </template>
@@ -233,15 +233,12 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { AuthLayout } from '@/components/layout'
 import LinuxDoOAuthSection from '@/components/auth/LinuxDoOAuthSection.vue'
 import Icon from '@/components/icons/Icon.vue'
 import TurnstileWidget from '@/components/TurnstileWidget.vue'
 import { useAuthStore, useAppStore } from '@/stores'
 import { getPublicSettings, validatePromoCode } from '@/api/auth'
-
-const { t } = useI18n()
 
 // ==================== Router & Stores ====================
 
@@ -377,7 +374,7 @@ async function validatePromoCodeDebounced(code: string): Promise<void> {
     console.error('Failed to validate promo code:', error)
     promoValidation.valid = false
     promoValidation.invalid = true
-    promoValidation.message = t('auth.promoCodeInvalid')
+    promoValidation.message = '无效的优惠码'
   } finally {
     promoValidating.value = false
   }
@@ -386,17 +383,17 @@ async function validatePromoCodeDebounced(code: string): Promise<void> {
 function getPromoErrorMessage(errorCode?: string): string {
   switch (errorCode) {
     case 'PROMO_CODE_NOT_FOUND':
-      return t('auth.promoCodeNotFound')
+      return '优惠码不存在'
     case 'PROMO_CODE_EXPIRED':
-      return t('auth.promoCodeExpired')
+      return '此优惠码已过期'
     case 'PROMO_CODE_DISABLED':
-      return t('auth.promoCodeDisabled')
+      return '此优惠码已被禁用'
     case 'PROMO_CODE_MAX_USED':
-      return t('auth.promoCodeMaxUsed')
+      return '此优惠码已达到使用上限'
     case 'PROMO_CODE_ALREADY_USED':
-      return t('auth.promoCodeAlreadyUsed')
+      return '您已使用过此优惠码'
     default:
-      return t('auth.promoCodeInvalid')
+      return '无效的优惠码'
   }
 }
 
@@ -409,12 +406,12 @@ function onTurnstileVerify(token: string): void {
 
 function onTurnstileExpire(): void {
   turnstileToken.value = ''
-  errors.turnstile = t('auth.turnstileExpired')
+  errors.turnstile = '验证已过期，请重试'
 }
 
 function onTurnstileError(): void {
   turnstileToken.value = ''
-  errors.turnstile = t('auth.turnstileFailed')
+  errors.turnstile = '验证失败，请重试'
 }
 
 // ==================== Validation ====================
@@ -434,25 +431,25 @@ function validateForm(): boolean {
 
   // Email validation
   if (!formData.email.trim()) {
-    errors.email = t('auth.emailRequired')
+    errors.email = '请输入邮箱'
     isValid = false
   } else if (!validateEmail(formData.email)) {
-    errors.email = t('auth.invalidEmail')
+    errors.email = '请输入有效的邮箱地址'
     isValid = false
   }
 
   // Password validation
   if (!formData.password) {
-    errors.password = t('auth.passwordRequired')
+    errors.password = '请输入密码'
     isValid = false
   } else if (formData.password.length < 6) {
-    errors.password = t('auth.passwordMinLength')
+    errors.password = '密码至少需要 6 个字符'
     isValid = false
   }
 
   // Turnstile validation
   if (turnstileEnabled.value && !turnstileToken.value) {
-    errors.turnstile = t('auth.completeVerification')
+    errors.turnstile = '请完成验证'
     isValid = false
   }
 
@@ -474,12 +471,12 @@ async function handleRegister(): Promise<void> {
   if (formData.promo_code.trim()) {
     // If promo code is being validated, wait
     if (promoValidating.value) {
-      errorMessage.value = t('auth.promoCodeValidating')
+      errorMessage.value = '优惠码正在验证中，请稍候'
       return
     }
     // If promo code is invalid, block submission
     if (promoValidation.invalid) {
-      errorMessage.value = t('auth.promoCodeInvalidCannotRegister')
+      errorMessage.value = '优惠码无效，请检查后重试或清空优惠码'
       return
     }
   }
@@ -514,7 +511,7 @@ async function handleRegister(): Promise<void> {
     })
 
     // Show success toast
-    appStore.showSuccess(t('auth.accountCreatedSuccess', { siteName: siteName.value }))
+    appStore.showSuccess(`账户创建成功！欢迎使用 ${siteName.value}。`)
 
     // Redirect to dashboard
     await router.push('/dashboard')
@@ -533,7 +530,7 @@ async function handleRegister(): Promise<void> {
     } else if (err.message) {
       errorMessage.value = err.message
     } else {
-      errorMessage.value = t('auth.registrationFailed')
+      errorMessage.value = '注册失败，请重试。'
     }
 
     // Also show error toast

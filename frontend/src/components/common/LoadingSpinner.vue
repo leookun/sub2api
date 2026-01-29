@@ -2,18 +2,14 @@
   <div
     :class="['spinner', sizeClasses, colorClass]"
     role="status"
-    :aria-label="t('common.loading')"
+    :aria-label="'加载中...'"
   >
-    <span class="sr-only">{{ t('common.loading') }}</span>
+    <span class="sr-only">{{ '加载中...' }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-
-const { t } = useI18n()
-
 type SpinnerSize = 'sm' | 'md' | 'lg' | 'xl'
 type SpinnerColor = 'primary' | 'secondary' | 'white' | 'gray'
 

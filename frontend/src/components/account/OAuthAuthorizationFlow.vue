@@ -23,7 +23,7 @@
                 class="text-blue-600 focus:ring-blue-500"
               />
               <span class="text-sm text-blue-900 dark:text-blue-200">{{
-                t('admin.accounts.oauth.manualAuth')
+                '手动授权'
               }}</span>
             </label>
             <label class="flex cursor-pointer items-center gap-2">
@@ -34,7 +34,7 @@
                 class="text-blue-600 focus:ring-blue-500"
               />
               <span class="text-sm text-blue-900 dark:text-blue-200">{{
-                t('admin.accounts.oauth.cookieAutoAuth')
+                'Cookie 自动授权'
               }}</span>
             </label>
           </div>
@@ -46,7 +46,7 @@
             class="rounded-lg border border-blue-300 bg-white/80 p-4 dark:border-blue-600 dark:bg-gray-800/80"
           >
             <p class="mb-3 text-sm text-blue-700 dark:text-blue-300">
-              {{ t('admin.accounts.oauth.cookieAutoAuthDesc') }}
+              {{ '使用 claude.ai sessionKey 自动完成 OAuth 授权，无需手动打开浏览器。' }}
             </p>
 
             <!-- sessionKey Input -->
@@ -55,12 +55,12 @@
                 class="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300"
               >
                 <Icon name="key" size="sm" class="text-blue-500" />
-                {{ t('admin.accounts.oauth.sessionKey') }}
+                {{ 'sessionKey' }}
                 <span
                   v-if="parsedKeyCount > 1 && allowMultiple"
                   class="rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white"
                 >
-                  {{ t('admin.accounts.oauth.keysCount', { count: parsedKeyCount }) }}
+                  {{ `${parsedKeyCount} 个密钥` }}
                 </span>
                 <button
                   v-if="showHelp"
@@ -89,15 +89,17 @@
                 class="input w-full resize-y font-mono text-sm"
                 :placeholder="
                   allowMultiple
-                    ? t('admin.accounts.oauth.sessionKeyPlaceholder')
-                    : t('admin.accounts.oauth.sessionKeyPlaceholderSingle')
+                    ? '每行一个 sessionKey，例如：
+sk-ant-sid01-xxxxx...
+sk-ant-sid01-yyyyy...'
+                    : 'sk-ant-sid01-xxxxx...'
                 "
               ></textarea>
               <p
                 v-if="parsedKeyCount > 1 && allowMultiple"
                 class="mt-1 text-xs text-blue-600 dark:text-blue-400"
               >
-                {{ t('admin.accounts.oauth.batchCreateAccounts', { count: parsedKeyCount }) }}
+                {{ `将批量创建 ${parsedKeyCount} 个账号` }}
               </p>
             </div>
 
@@ -107,21 +109,21 @@
               class="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-700 dark:bg-amber-900/30"
             >
               <h5 class="mb-2 font-semibold text-amber-800 dark:text-amber-200">
-                {{ t('admin.accounts.oauth.howToGetSessionKey') }}
+                {{ '如何获取 sessionKey' }}
               </h5>
               <ol
                 class="list-inside list-decimal space-y-1 text-xs text-amber-700 dark:text-amber-300"
               >
-                <li>{{ t('admin.accounts.oauth.step1') }}</li>
-                <li>{{ t('admin.accounts.oauth.step2') }}</li>
-                <li>{{ t('admin.accounts.oauth.step3') }}</li>
-                <li>{{ t('admin.accounts.oauth.step4') }}</li>
-                <li>{{ t('admin.accounts.oauth.step5') }}</li>
-                <li>{{ t('admin.accounts.oauth.step6') }}</li>
+                <li>{{ '在浏览器中登录 claude.ai' }}</li>
+                <li>{{ '按 F12 打开开发者工具' }}</li>
+                <li>{{ '切换到 Application 标签' }}</li>
+                <li>{{ '找到 Cookies → https://claude.ai' }}</li>
+                <li>{{ '找到 sessionKey 所在行' }}</li>
+                <li>{{ '复制 Value 列的值' }}</li>
               </ol>
               <p
                 class="mt-2 text-xs text-amber-600 dark:text-amber-400"
-                v-text="t('admin.accounts.oauth.sessionKeyFormat')"
+                v-text="'sessionKey 通常以 sk-ant-sid01- 开头'"
               ></p>
             </div>
 
@@ -165,8 +167,8 @@
               <Icon v-else name="sparkles" size="sm" class="mr-2" />
               {{
                 loading
-                  ? t('admin.accounts.oauth.authorizing')
-                  : t('admin.accounts.oauth.startAutoAuth')
+                  ? '授权中...'
+                  : '开始自动授权'
               }}
             </button>
           </div>
@@ -194,7 +196,7 @@
                 </p>
                 <div v-if="showProjectId && platform === 'gemini'" class="mb-3">
                   <label class="input-label flex items-center gap-2">
-                    {{ t('admin.accounts.oauth.gemini.projectIdLabel') }}
+                    {{ 'Project ID（可选）' }}
                     <a
                       href="https://console.cloud.google.com/"
                       target="_blank"
@@ -204,17 +206,17 @@
                       <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
                       </svg>
-                      {{ t('admin.accounts.oauth.gemini.howToGetProjectId') }}
+                      {{ '如何获取' }}
                     </a>
                   </label>
                   <input
                     v-model="projectId"
                     type="text"
                     class="input w-full font-mono text-sm"
-                    :placeholder="t('admin.accounts.oauth.gemini.projectIdPlaceholder')"
+                    :placeholder="'例如：my-gcp-project 或 cloud-ai-companion-xxxxx'"
                   />
                   <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.accounts.oauth.gemini.projectIdHint') }}
+                    {{ '留空则在兑换授权码后自动探测；若自动探测失败，可填写后重新生成授权链接再授权。' }}
                   </p>
                 </div>
                 <button
@@ -245,7 +247,7 @@
                     ></path>
                   </svg>
                   <Icon v-else name="link" size="sm" class="mr-2" />
-                  {{ loading ? t('admin.accounts.oauth.generating') : oauthGenerateAuthUrl }}
+                  {{ loading ? '生成中...' : oauthGenerateAuthUrl }}
                 </button>
                 <div v-else class="space-y-3">
                   <div class="flex items-center gap-2">
@@ -290,7 +292,7 @@
                     @click="handleRegenerate"
                   >
                     <Icon name="refresh" size="xs" class="mr-1 inline" />
-                    {{ t('admin.accounts.oauth.regenerate') }}
+                    {{ '重新生成' }}
                   </button>
                 </div>
               </div>
@@ -331,7 +333,7 @@
                 >
                   <p
                     class="text-xs text-yellow-800 dark:text-yellow-300"
-                    v-text="t('admin.accounts.oauth.proxyWarning')"
+                    v-text="'注意：如果您配置了代理，请确保浏览器使用相同的代理访问授权页面。'"
                   ></p>
                 </div>
               </div>
@@ -385,8 +387,8 @@
                         :stroke-width="2"
                       />
                       <div class="text-sm text-amber-800 dark:text-amber-300">
-                        <p class="font-semibold">{{ $t('admin.accounts.oauth.gemini.stateWarningTitle') }}</p>
-                        <p class="mt-1">{{ $t('admin.accounts.oauth.gemini.stateWarningDesc') }}</p>
+                        <p class="font-semibold">{{ $'提示' }}</p>
+                        <p class="mt-1">{{ $'建议粘贴完整回调链接（包含 code 和 state）。' }}</p>
                       </div>
                     </div>
                   </div>
@@ -412,7 +414,6 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useClipboard } from '@/composables/useClipboard'
 import Icon from '@/components/icons/Icon.vue'
 import type { AddMethod, AuthInputMethod } from '@/composables/useAccountOAuth'
@@ -453,8 +454,6 @@ const emit = defineEmits<{
   'update:inputMethod': [method: AuthInputMethod]
 }>()
 
-const { t } = useI18n()
-
 const isOpenAI = computed(() => props.platform === 'openai')
 
 // Get translation key based on platform
@@ -478,8 +477,8 @@ const oauthAuthCode = computed(() => t(getOAuthKey('authCode')))
 const oauthAuthCodePlaceholder = computed(() => t(getOAuthKey('authCodePlaceholder')))
 const oauthAuthCodeHint = computed(() => t(getOAuthKey('authCodeHint')))
 const oauthImportantNotice = computed(() => {
-  if (props.platform === 'openai') return t('admin.accounts.oauth.openai.importantNotice')
-  if (props.platform === 'antigravity') return t('admin.accounts.oauth.antigravity.importantNotice')
+  if (props.platform === 'openai') return '重要提示：授权后页面可能会加载较长时间，请耐心等待。当浏览器地址栏变为 http://localhost... 开头时，表示授权已完成。'
+  if (props.platform === 'antigravity') return '重要提示：授权后页面可能会加载较长时间，请耐心等待。当浏览器地址栏变为 http://localhost... 开头时，表示授权已完成。'
   return ''
 })
 

@@ -16,7 +16,7 @@
           </h2>
           <div class="mt-1 flex items-center gap-2">
             <span :class="['badge', user?.role === 'admin' ? 'badge-primary' : 'badge-gray']">
-              {{ user?.role === 'admin' ? t('profile.administrator') : t('profile.user') }}
+              {{ user?.role === 'admin' ? '管理员' : '用户' }}
             </span>
             <span
               :class="['badge', user?.status === 'active' ? 'badge-success' : 'badge-danger']"
@@ -46,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import Icon from '@/components/icons/Icon.vue'
 import type { User } from '@/types'
 
@@ -54,5 +53,4 @@ defineProps<{
   user: User | null
 }>()
 
-const { t } = useI18n()
 </script>

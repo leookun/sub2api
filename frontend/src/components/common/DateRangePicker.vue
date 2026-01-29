@@ -39,7 +39,7 @@
         <!-- Custom date range inputs -->
         <div class="date-picker-custom">
           <div class="date-picker-field">
-            <label class="date-picker-label">{{ t('dates.startDate') }}</label>
+            <label class="date-picker-label">{{ '开始日期' }}</label>
             <input
               type="date"
               v-model="localStartDate"
@@ -52,7 +52,7 @@
             <Icon name="arrowRight" size="sm" class="text-gray-400" />
           </div>
           <div class="date-picker-field">
-            <label class="date-picker-label">{{ t('dates.endDate') }}</label>
+            <label class="date-picker-label">{{ '结束日期' }}</label>
             <input
               type="date"
               v-model="localEndDate"
@@ -67,7 +67,7 @@
         <!-- Apply button -->
         <div class="date-picker-actions">
           <button @click="apply" class="date-picker-apply">
-            {{ t('dates.apply') }}
+            {{ '应用' }}
           </button>
         </div>
       </div>
@@ -77,7 +77,6 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import Icon from '@/components/icons/Icon.vue'
 
 interface DatePreset {
@@ -99,8 +98,6 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
-
-const { t, locale } = useI18n()
 
 const isOpen = ref(false)
 const containerRef = ref<HTMLElement | null>(null)
@@ -219,7 +216,7 @@ const displayValue = computed(() => {
     return `${formatDate(localStartDate.value)} - ${formatDate(localEndDate.value)}`
   }
 
-  return t('dates.selectDateRange')
+  return '选择日期范围'
 })
 
 const formatDate = (dateStr: string): string => {

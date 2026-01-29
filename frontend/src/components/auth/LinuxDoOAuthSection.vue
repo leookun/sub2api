@@ -26,13 +26,13 @@
           ></path>
         </g>
       </svg>
-      {{ t('auth.linuxdo.signIn') }}
+      {{ '使用 Linux.do 登录' }}
     </button>
 
     <div class="flex items-center gap-3">
       <div class="h-px flex-1 bg-gray-200 dark:bg-dark-700"></div>
       <span class="text-xs text-gray-500 dark:text-dark-400">
-        {{ t('auth.linuxdo.orContinue') }}
+        {{ '或使用邮箱密码继续' }}
       </span>
       <div class="h-px flex-1 bg-gray-200 dark:bg-dark-700"></div>
     </div>
@@ -41,15 +41,11 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-
 defineProps<{
   disabled?: boolean
 }>()
 
 const route = useRoute()
-const { t } = useI18n()
-
 function startLogin(): void {
   const redirectTo = (route.query.redirect as string) || '/dashboard'
   const apiBase = (import.meta.env.VITE_API_BASE_URL as string | undefined) || '/api/v1'

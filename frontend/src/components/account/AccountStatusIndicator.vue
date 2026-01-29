@@ -2,13 +2,13 @@
   <div class="flex items-center gap-2">
     <!-- Rate Limit Display (429) - Two-line layout -->
     <div v-if="isRateLimited" class="flex flex-col items-center gap-1">
-      <span class="badge text-xs badge-warning">{{ t('admin.accounts.status.rateLimited') }}</span>
+      <span class="badge text-xs badge-warning">{{ '限流中' }}</span>
       <span class="text-[11px] text-gray-400 dark:text-gray-500">{{ rateLimitCountdown }}</span>
     </div>
 
     <!-- Overload Display (529) - Two-line layout -->
     <div v-else-if="isOverloaded" class="flex flex-col items-center gap-1">
-      <span class="badge text-xs badge-danger">{{ t('admin.accounts.status.overloaded') }}</span>
+      <span class="badge text-xs badge-danger">{{ '过载中' }}</span>
       <span class="text-[11px] text-gray-400 dark:text-gray-500">{{ overloadCountdown }}</span>
     </div>
 
@@ -18,7 +18,7 @@
         v-if="isTempUnschedulable"
         type="button"
         :class="['badge text-xs', statusClass, 'cursor-pointer']"
-        :title="t('admin.accounts.status.viewTempUnschedDetails')"
+        :title="'查看临时不可调度详情'"
         @click="handleTempUnschedClick"
       >
         {{ statusText }}
@@ -61,11 +61,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import type { Account } from '@/types'
 import { formatCountdownWithSuffix } from '@/utils/format'
-
-const { t } = useI18n()
 
 const props = defineProps<{
   account: Account
@@ -134,13 +131,13 @@ const statusClass = computed(() => {
 // Computed: status text
 const statusText = computed(() => {
   if (hasError.value) {
-    return t('admin.accounts.status.error')
+    return '错误'
   }
   if (isTempUnschedulable.value) {
-    return t('admin.accounts.status.tempUnschedulable')
+    return '临时不可调度'
   }
   if (!props.account.schedulable) {
-    return t('admin.accounts.status.paused')
+    return '暂停'
   }
   return t(`admin.accounts.status.${props.account.status}`)
 })

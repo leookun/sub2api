@@ -12,10 +12,10 @@
             </svg>
           </div>
           <h3 class="mt-4 text-center text-xl font-semibold text-gray-900 dark:text-white">
-            {{ t('profile.totp.disableTitle') }}
+            {{ '禁用双因素认证' }}
           </h3>
           <p class="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
-            {{ t('profile.totp.disableWarning') }}
+            {{ '禁用后，登录时将不再需要验证码。这可能会降低您的账户安全性。' }}
           </p>
         </div>
 
@@ -27,7 +27,7 @@
         <form v-else @submit.prevent="handleDisable" class="space-y-4">
           <!-- Email verification -->
           <div v-if="verificationMethod === 'email'">
-            <label class="input-label">{{ t('profile.totp.emailCode') }}</label>
+            <label class="input-label">{{ '邮箱验证码' }}</label>
             <div class="flex gap-2">
               <input
                 v-model="form.emailCode"
@@ -35,7 +35,7 @@
                 maxlength="6"
                 inputmode="numeric"
                 class="input flex-1"
-                :placeholder="t('profile.totp.enterEmailCode')"
+                :placeholder="'请输入 6 位验证码'"
               />
               <button
                 type="button"
@@ -43,7 +43,7 @@
                 :disabled="sendingCode || codeCooldown > 0"
                 @click="handleSendCode"
               >
-                {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? t('common.sending') : t('profile.totp.sendCode')) }}
+                {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? t('common.sending') : '发送验证码') }}
               </button>
             </div>
           </div>
@@ -51,7 +51,7 @@
           <!-- Password verification -->
           <div v-else>
             <label for="password" class="input-label">
-              {{ t('profile.currentPassword') }}
+              {{ '当前密码' }}
             </label>
             <input
               id="password"
@@ -59,7 +59,7 @@
               type="password"
               autocomplete="current-password"
               class="input"
-              :placeholder="t('profile.totp.enterPassword')"
+              :placeholder="'请输入当前密码确认'"
             />
           </div>
 
@@ -71,14 +71,14 @@
           <!-- Actions -->
           <div class="flex justify-end gap-3 pt-4">
             <button type="button" class="btn btn-secondary" @click="$emit('close')">
-              {{ t('common.cancel') }}
+              {{ '取消' }}
             </button>
             <button
               type="submit"
               class="btn btn-danger"
               :disabled="loading || !canSubmit"
             >
-              {{ loading ? t('common.processing') : t('profile.totp.confirmDisable') }}
+              {{ loading ? '处理中...' : '确认禁用' }}
             </button>
           </div>
         </form>
@@ -89,7 +89,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { totpAPI } from '@/api'
 
@@ -98,7 +97,6 @@ const emit = defineEmits<{
   success: []
 }>()
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const methodLoading = ref(true)
@@ -125,7 +123,7 @@ const loadVerificationMethod = async () => {
     const method = await totpAPI.getVerificationMethod()
     verificationMethod.value = method.method
   } catch (err: any) {
-    appStore.showError(err.response?.data?.message || t('common.error'))
+    appStore.showError(err.response?.data?.message || '错误')
     emit('close')
   } finally {
     methodLoading.value = false
@@ -136,7 +134,7 @@ const handleSendCode = async () => {
   sendingCode.value = true
   try {
     await totpAPI.sendVerifyCode()
-    appStore.showSuccess(t('profile.totp.codeSent'))
+    appStore.showSuccess('验证码已发送到您的邮箱')
     // Start cooldown
     codeCooldown.value = 60
     const timer = setInterval(() => {
@@ -146,7 +144,7 @@ const handleSendCode = async () => {
       }
     }, 1000)
   } catch (err: any) {
-    appStore.showError(err.response?.data?.message || t('profile.totp.sendCodeFailed'))
+    appStore.showError(err.response?.data?.message || '发送验证码失败')
   } finally {
     sendingCode.value = false
   }
@@ -164,10 +162,10 @@ const handleDisable = async () => {
       : { password: form.value.password }
 
     await totpAPI.disable(request)
-    appStore.showSuccess(t('profile.totp.disableSuccess'))
+    appStore.showSuccess('双因素认证已禁用')
     emit('success')
   } catch (err: any) {
-    error.value = err.response?.data?.message || t('profile.totp.disableFailed')
+    error.value = err.response?.data?.message || '禁用失败，请检查密码是否正确'
   } finally {
     loading.value = false
   }

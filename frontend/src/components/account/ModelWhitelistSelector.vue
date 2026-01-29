@@ -26,7 +26,7 @@
           </span>
         </div>
         <div class="mt-2 flex items-center justify-between border-t border-gray-200 pt-2 dark:border-dark-600">
-          <span class="text-xs text-gray-400">{{ t('admin.accounts.modelCount', { count: modelValue.length }) }}</span>
+          <span class="text-xs text-gray-400">{{ `${modelValue.length} 个模型` }}</span>
           <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
@@ -42,7 +42,7 @@
             v-model="searchQuery"
             type="text"
             class="input w-full text-sm"
-            :placeholder="t('admin.accounts.searchModels')"
+            :placeholder="'搜索模型...'"
             @click.stop
           />
         </div>
@@ -70,7 +70,7 @@
             <span class="truncate text-gray-900 dark:text-white">{{ model.value }}</span>
           </button>
           <div v-if="filteredModels.length === 0" class="px-3 py-4 text-center text-sm text-gray-500">
-            {{ t('admin.accounts.noMatchingModels') }}
+            {{ '没有匹配的模型' }}
           </div>
         </div>
       </div>
@@ -83,26 +83,26 @@
         @click="fillRelated"
         class="rounded-lg border border-blue-200 px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/30"
       >
-        {{ t('admin.accounts.fillRelatedModels') }}
+        {{ '填入相关模型' }}
       </button>
       <button
         type="button"
         @click="clearAll"
         class="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30"
       >
-        {{ t('admin.accounts.clearAllModels') }}
+        {{ '清除所有模型' }}
       </button>
     </div>
 
     <!-- Custom Model Input -->
     <div class="mb-3">
-      <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('admin.accounts.customModelName') }}</label>
+      <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">{{ '自定义模型名称' }}</label>
       <div class="flex gap-2">
         <input
           v-model="customModel"
           type="text"
           class="input flex-1"
-          :placeholder="t('admin.accounts.enterCustomModelName')"
+          :placeholder="'输入自定义模型名称'"
           @keydown.enter.prevent="handleEnter"
           @compositionstart="isComposing = true"
           @compositionend="isComposing = false"
@@ -112,7 +112,7 @@
           @click="addCustom"
           class="rounded-lg bg-primary-50 px-4 py-2 text-sm font-medium text-primary-600 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50"
         >
-          {{ t('admin.accounts.addModel') }}
+          {{ '填入' }}
         </button>
       </div>
     </div>
@@ -121,13 +121,10 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import ModelIcon from '@/components/common/ModelIcon.vue'
 import Icon from '@/components/icons/Icon.vue'
 import { allModels, getModelsByPlatform } from '@/composables/useModelWhitelist'
-
-const { t } = useI18n()
 
 const props = defineProps<{
   modelValue: string[]
@@ -174,7 +171,7 @@ const addCustom = () => {
   const model = customModel.value.trim()
   if (!model) return
   if (props.modelValue.includes(model)) {
-    appStore.showInfo(t('admin.accounts.modelExists'))
+    appStore.showInfo('该模型已存在')
     return
   }
   emit('update:modelValue', [...props.modelValue, model])

@@ -6,7 +6,7 @@
       <div class="space-y-4">
         <div class="card p-4">
           <div class="flex items-center gap-4">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('admin.dashboard.granularity') }}:</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ '粒度' }}:</span>
             <div class="w-28">
               <Select v-model="granularity" :options="granularityOptions" @change="loadChartData" />
             </div>
@@ -34,7 +34,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { saveAs } from 'file-saver'
 import { useAppStore } from '@/stores/app'; import { adminAPI } from '@/api/admin'; import { adminUsageAPI } from '@/api/admin/usage'
 import AppLayout from '@/components/layout/AppLayout.vue'; import Pagination from '@/components/common/Pagination.vue'; import Select from '@/components/common/Select.vue'
@@ -44,7 +43,6 @@ import UsageCleanupDialog from '@/components/admin/usage/UsageCleanupDialog.vue'
 import ModelDistributionChart from '@/components/charts/ModelDistributionChart.vue'; import TokenUsageTrend from '@/components/charts/TokenUsageTrend.vue'
 import type { AdminUsageLog, TrendDataPoint, ModelStat } from '@/types'; import type { AdminUsageStatsResponse, AdminUsageQueryParams } from '@/api/admin/usage'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const usageStats = ref<AdminUsageStatsResponse | null>(null); const usageLogs = ref<AdminUsageLog[]>([]); const loading = ref(false); const exporting = ref(false)
 const trendData = ref<TrendDataPoint[]>([]); const modelStats = ref<ModelStat[]>([]); const chartsLoading = ref(false); const granularity = ref<'day' | 'hour'>('day')
@@ -52,7 +50,7 @@ let abortController: AbortController | null = null; let exportAbortController: A
 const exportProgress = reactive({ show: false, progress: 0, current: 0, total: 0, estimatedTime: '' })
 const cleanupDialogVisible = ref(false)
 
-const granularityOptions = computed(() => [{ value: 'day', label: t('admin.dashboard.day') }, { value: 'hour', label: t('admin.dashboard.hour') }])
+const granularityOptions = computed(() => [{ value: 'day', label: '按天' }, { value: 'hour', label: '按小时' }])
 // Use local timezone to avoid UTC timezone issues
 const formatLD = (d: Date) => {
   const year = d.getFullYear()
@@ -103,16 +101,16 @@ const exportToExcel = async () => {
     if(!c.signal.aborted) {
       const XLSX = await import('xlsx')
       const headers = [
-        t('usage.time'), t('admin.usage.user'), t('usage.apiKeyFilter'),
-        t('admin.usage.account'), t('usage.model'), t('admin.usage.group'),
-        t('usage.type'),
-        t('admin.usage.inputTokens'), t('admin.usage.outputTokens'),
-        t('admin.usage.cacheReadTokens'), t('admin.usage.cacheCreationTokens'),
-        t('admin.usage.inputCost'), t('admin.usage.outputCost'),
-        t('admin.usage.cacheReadCost'), t('admin.usage.cacheCreationCost'),
-        t('usage.rate'), t('usage.accountMultiplier'), t('usage.original'), t('usage.userBilled'), t('usage.accountBilled'),
-        t('usage.firstToken'), t('usage.duration'),
-        t('admin.usage.requestId'), t('usage.userAgent'), t('admin.usage.ipAddress')
+        '时间', '用户', 'API 密钥',
+        '账户', '模型', '分组',
+        '类型',
+        '输入 Token', '输出 Token',
+        '缓存读取 Token', '缓存创建 Token',
+        '输入成本', '输出成本',
+        '缓存读取成本', '缓存创建成本',
+        '倍率', '账号倍率', '原始', '用户扣费', '账号计费',
+        '首 Token', '耗时',
+        '请求ID', 'User-Agent', 'IP'
       ]
       const rows = all.map(log => [
         log.created_at,
@@ -121,7 +119,7 @@ const exportToExcel = async () => {
         log.account?.name || '',
         log.model,
         log.group?.name || '',
-        log.stream ? t('usage.stream') : t('usage.sync'),
+        log.stream ? '流式' : '同步',
         log.input_tokens,
         log.output_tokens,
         log.cache_read_tokens,
@@ -145,7 +143,7 @@ const exportToExcel = async () => {
       const wb = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(wb, ws, 'Usage')
       saveAs(new Blob([XLSX.write(wb, { bookType: 'xlsx', type: 'array' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), `usage_${filters.value.start_date}_to_${filters.value.end_date}.xlsx`)
-      appStore.showSuccess(t('usage.exportSuccess'))
+      appStore.showSuccess('使用数据导出成功')
     }
   } catch (error) { console.error('Failed to export:', error); appStore.showError('Export Failed') }
   finally { if(exportAbortController === c) { exportAbortController = null; exporting.value = false; exportProgress.show = false } }

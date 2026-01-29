@@ -9,17 +9,17 @@
         :disabled="page === 1"
         class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-200 dark:hover:bg-dark-600"
       >
-        {{ t('pagination.previous') }}
+        {{ '上一页' }}
       </button>
       <span class="text-sm text-gray-700 dark:text-gray-300">
-        {{ t('pagination.pageOf', { page, total: totalPages }) }}
+        {{ `第 {page} / ${totalPages} 页` }}
       </span>
       <button
         @click="goToPage(page + 1)"
         :disabled="page === totalPages"
         class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-200 dark:hover:bg-dark-600"
       >
-        {{ t('pagination.next') }}
+        {{ '下一页' }}
       </button>
     </div>
 
@@ -27,19 +27,19 @@
       <!-- Desktop pagination info -->
       <div class="flex items-center space-x-4">
         <p class="text-sm text-gray-700 dark:text-gray-300">
-          {{ t('pagination.showing') }}
+          {{ '显示' }}
           <span class="font-medium">{{ fromItem }}</span>
-          {{ t('pagination.to') }}
+          {{ '至' }}
           <span class="font-medium">{{ toItem }}</span>
-          {{ t('pagination.of') }}
+          {{ '共' }}
           <span class="font-medium">{{ total }}</span>
-          {{ t('pagination.results') }}
+          {{ '条结果' }}
         </p>
 
         <!-- Page size selector -->
         <div v-if="showPageSizeSelector" class="flex items-center space-x-2">
           <span class="text-sm text-gray-700 dark:text-gray-300"
-            >{{ t('pagination.perPage') }}:</span
+            >{{ '每页' }}:</span
           >
           <div class="page-size-select w-20">
             <Select
@@ -51,18 +51,18 @@
         </div>
 
         <div v-if="showJump" class="flex items-center space-x-2">
-          <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('pagination.jumpTo') }}</span>
+          <span class="text-sm text-gray-700 dark:text-gray-300">{{ '跳转页' }}</span>
           <input
             v-model="jumpPage"
             type="number"
             min="1"
             :max="totalPages"
             class="input w-20 text-sm"
-            :placeholder="t('pagination.jumpPlaceholder')"
+            :placeholder="'页码'"
             @keyup.enter="submitJump"
           />
           <button type="button" class="btn btn-ghost btn-sm" @click="submitJump">
-            {{ t('pagination.jumpAction') }}
+            {{ '跳转' }}
           </button>
         </div>
       </div>
@@ -77,7 +77,7 @@
           @click="goToPage(page - 1)"
           :disabled="page === 1"
           class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-400 dark:hover:bg-dark-600"
-          :aria-label="t('pagination.previous')"
+          :aria-label="'上一页'"
         >
           <Icon name="chevronLeft" size="md" />
         </button>
@@ -96,7 +96,7 @@
             typeof pageNum !== 'number' && 'cursor-default'
           ]"
           :aria-label="
-            typeof pageNum === 'number' ? t('pagination.goToPage', { page: pageNum }) : undefined
+            typeof pageNum === 'number' ? `跳转到第 ${pageNum} 页` : undefined
           "
           :aria-current="pageNum === page ? 'page' : undefined"
         >
@@ -108,7 +108,7 @@
           @click="goToPage(page + 1)"
           :disabled="page === totalPages"
           class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-400 dark:hover:bg-dark-600"
-          :aria-label="t('pagination.next')"
+          :aria-label="'下一页'"
         >
           <Icon name="chevronRight" size="md" />
         </button>
@@ -119,11 +119,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import Icon from '@/components/icons/Icon.vue'
 import Select from './Select.vue'
-
-const { t } = useI18n()
 
 interface Props {
   total: number

@@ -5,17 +5,15 @@
       <Icon name="refresh" size="md" :class="[loading ? 'animate-spin' : '']" />
     </button>
     <slot name="after"></slot>
-    <button @click="$emit('sync')" class="btn btn-secondary">{{ t('admin.accounts.syncFromCrs') }}</button>
-    <button @click="$emit('create')" class="btn btn-primary">{{ t('admin.accounts.createAccount') }}</button>
+    <button @click="$emit('sync')" class="btn btn-secondary">{{ '从 CRS 同步' }}</button>
+    <button @click="$emit('create')" class="btn btn-primary">{{ '添加账号' }}</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import Icon from '@/components/icons/Icon.vue'
 
 defineProps(['loading'])
 defineEmits(['refresh', 'sync', 'create'])
 
-const { t } = useI18n()
 </script>

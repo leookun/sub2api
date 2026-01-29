@@ -7,13 +7,13 @@
             @click="loadCodes"
             :disabled="loading"
             class="btn btn-secondary"
-            :title="t('common.refresh')"
+            :title="'刷新'"
           >
             <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
           </button>
           <button @click="showCreateDialog = true" class="btn btn-primary">
             <Icon name="plus" size="md" class="mr-1" />
-            {{ t('admin.promo.createCode') }}
+            {{ '创建优惠码' }}
           </button>
         </div>
       </template>
@@ -24,7 +24,7 @@
             <input
               v-model="searchQuery"
               type="text"
-              :placeholder="t('admin.promo.searchCodes')"
+              :placeholder="'搜索优惠码...'"
               class="input"
               @input="handleSearch"
             />
@@ -53,7 +53,7 @@
                     ? 'text-green-500'
                     : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                 ]"
-                :title="copiedCode === value ? t('admin.promo.copied') : t('keys.copyToClipboard')"
+                :title="copiedCode === value ? '已复制！' : '复制到剪贴板'"
               >
                 <Icon v-if="copiedCode !== value" name="copy" size="sm" :stroke-width="2" />
                 <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +93,7 @@
 
           <template #cell-expires_at="{ value }">
             <span class="text-sm text-gray-500 dark:text-dark-400">
-              {{ value ? formatDateTime(value) : t('admin.promo.neverExpires') }}
+              {{ value ? formatDateTime(value) : '永不过期' }}
             </span>
           </template>
 
@@ -108,28 +108,28 @@
               <button
                 @click="copyRegisterLink(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400"
-                :title="t('admin.promo.copyRegisterLink')"
+                :title="'复制注册链接'"
               >
                 <Icon name="link" size="sm" />
               </button>
               <button
                 @click="handleViewUsages(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400"
-                :title="t('admin.promo.viewUsages')"
+                :title="'查看使用记录'"
               >
                 <Icon name="eye" size="sm" />
               </button>
               <button
                 @click="handleEdit(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-dark-600 dark:hover:text-gray-300"
-                :title="t('common.edit')"
+                :title="'编辑'"
               >
                 <Icon name="edit" size="sm" />
               </button>
               <button
                 @click="handleDelete(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
-                :title="t('common.delete')"
+                :title="'删除'"
               >
                 <Icon name="trash" size="sm" />
               </button>
@@ -153,25 +153,25 @@
     <!-- Create Dialog -->
     <BaseDialog
       :show="showCreateDialog"
-      :title="t('admin.promo.createCode')"
+      :title="'创建优惠码'"
       width="normal"
       @close="showCreateDialog = false"
     >
       <form id="create-promo-form" @submit.prevent="handleCreate" class="space-y-4">
         <div>
           <label class="input-label">
-            {{ t('admin.promo.code') }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ t('admin.promo.autoGenerate') }})</span>
+            {{ '优惠码' }}
+            <span class="ml-1 text-xs font-normal text-gray-400">({{ '留空自动生成' }})</span>
           </label>
           <input
             v-model="createForm.code"
             type="text"
             class="input font-mono uppercase"
-            :placeholder="t('admin.promo.codePlaceholder')"
+            :placeholder="'输入优惠码或留空'"
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.promo.bonusAmount') }}</label>
+          <label class="input-label">{{ '赠送金额 ($)' }}</label>
           <input
             v-model.number="createForm.bonus_amount"
             type="number"
@@ -183,8 +183,8 @@
         </div>
         <div>
           <label class="input-label">
-            {{ t('admin.promo.maxUses') }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ t('admin.promo.zeroUnlimited') }})</span>
+            {{ '最大使用次数' }}
+            <span class="ml-1 text-xs font-normal text-gray-400">({{ '0 = 无限制' }})</span>
           </label>
           <input
             v-model.number="createForm.max_uses"
@@ -195,8 +195,8 @@
         </div>
         <div>
           <label class="input-label">
-            {{ t('admin.promo.expiresAt') }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ t('common.optional') }})</span>
+            {{ '过期时间' }}
+            <span class="ml-1 text-xs font-normal text-gray-400">({{ '可选' }})</span>
           </label>
           <input
             v-model="createForm.expires_at_str"
@@ -206,24 +206,24 @@
         </div>
         <div>
           <label class="input-label">
-            {{ t('admin.promo.notes') }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ t('common.optional') }})</span>
+            {{ '备注' }}
+            <span class="ml-1 text-xs font-normal text-gray-400">({{ '可选' }})</span>
           </label>
           <textarea
             v-model="createForm.notes"
             rows="2"
             class="input"
-            :placeholder="t('admin.promo.notesPlaceholder')"
+            :placeholder="'可选备注信息'"
           ></textarea>
         </div>
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
           <button type="button" @click="showCreateDialog = false" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button type="submit" form="create-promo-form" :disabled="creating" class="btn btn-primary">
-            {{ creating ? t('common.creating') : t('common.create') }}
+            {{ creating ? t('common.creating') : '创建' }}
           </button>
         </div>
       </template>
@@ -232,13 +232,13 @@
     <!-- Edit Dialog -->
     <BaseDialog
       :show="showEditDialog"
-      :title="t('admin.promo.editCode')"
+      :title="'编辑优惠码'"
       width="normal"
       @close="closeEditDialog"
     >
       <form id="edit-promo-form" @submit.prevent="handleUpdate" class="space-y-4">
         <div>
-          <label class="input-label">{{ t('admin.promo.code') }}</label>
+          <label class="input-label">{{ '优惠码' }}</label>
           <input
             v-model="editForm.code"
             type="text"
@@ -246,7 +246,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.promo.bonusAmount') }}</label>
+          <label class="input-label">{{ '赠送金额 ($)' }}</label>
           <input
             v-model.number="editForm.bonus_amount"
             type="number"
@@ -258,8 +258,8 @@
         </div>
         <div>
           <label class="input-label">
-            {{ t('admin.promo.maxUses') }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ t('admin.promo.zeroUnlimited') }})</span>
+            {{ '最大使用次数' }}
+            <span class="ml-1 text-xs font-normal text-gray-400">({{ '0 = 无限制' }})</span>
           </label>
           <input
             v-model.number="editForm.max_uses"
@@ -269,13 +269,13 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.promo.status') }}</label>
+          <label class="input-label">{{ '状态' }}</label>
           <Select v-model="editForm.status" :options="statusOptions" />
         </div>
         <div>
           <label class="input-label">
-            {{ t('admin.promo.expiresAt') }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ t('common.optional') }})</span>
+            {{ '过期时间' }}
+            <span class="ml-1 text-xs font-normal text-gray-400">({{ '可选' }})</span>
           </label>
           <input
             v-model="editForm.expires_at_str"
@@ -285,8 +285,8 @@
         </div>
         <div>
           <label class="input-label">
-            {{ t('admin.promo.notes') }}
-            <span class="ml-1 text-xs font-normal text-gray-400">({{ t('common.optional') }})</span>
+            {{ '备注' }}
+            <span class="ml-1 text-xs font-normal text-gray-400">({{ '可选' }})</span>
           </label>
           <textarea
             v-model="editForm.notes"
@@ -298,10 +298,10 @@
       <template #footer>
         <div class="flex justify-end gap-3">
           <button type="button" @click="closeEditDialog" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button type="submit" form="edit-promo-form" :disabled="updating" class="btn btn-primary">
-            {{ updating ? t('common.saving') : t('common.save') }}
+            {{ updating ? '保存中...' : '保存' }}
           </button>
         </div>
       </template>
@@ -310,7 +310,7 @@
     <!-- Usages Dialog -->
     <BaseDialog
       :show="showUsagesDialog"
-      :title="t('admin.promo.usageRecords')"
+      :title="'使用记录'"
       width="wide"
       @close="showUsagesDialog = false"
     >
@@ -318,7 +318,7 @@
         <Icon name="refresh" size="lg" class="animate-spin text-gray-400" />
       </div>
       <div v-else-if="usages.length === 0" class="py-8 text-center text-gray-500 dark:text-gray-400">
-        {{ t('admin.promo.noUsages') }}
+        {{ '暂无使用记录' }}
       </div>
       <div v-else class="space-y-3">
         <div
@@ -332,7 +332,7 @@
             </div>
             <div>
               <p class="text-sm font-medium text-gray-900 dark:text-white">
-                {{ usage.user?.email || t('admin.promo.userPrefix', { id: usage.user_id }) }}
+                {{ usage.user?.email || `用户 #${usage.user_id}` }}
               </p>
               <p class="text-xs text-gray-500 dark:text-gray-400">
                 {{ formatDateTime(usage.used_at) }}
@@ -360,7 +360,7 @@
       <template #footer>
         <div class="flex justify-end">
           <button type="button" @click="showUsagesDialog = false" class="btn btn-secondary">
-            {{ t('common.close') }}
+            {{ '关闭' }}
           </button>
         </div>
       </template>
@@ -369,10 +369,10 @@
     <!-- Delete Confirmation Dialog -->
     <ConfirmDialog
       :show="showDeleteDialog"
-      :title="t('admin.promo.deleteCode')"
-      :message="t('admin.promo.deleteCodeConfirm')"
-      :confirm-text="t('common.delete')"
-      :cancel-text="t('common.cancel')"
+      :title="'删除优惠码'"
+      :message="'确定要删除此优惠码吗？此操作无法撤销。'"
+      :confirm-text="'删除'"
+      :cancel-text="'取消'"
       danger
       @confirm="confirmDelete"
       @cancel="showDeleteDialog = false"
@@ -382,7 +382,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { useClipboard } from '@/composables/useClipboard'
 import { adminAPI } from '@/api/admin'
@@ -398,7 +397,6 @@ import BaseDialog from '@/components/common/BaseDialog.vue'
 import Select from '@/components/common/Select.vue'
 import Icon from '@/components/icons/Icon.vue'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const { copyToClipboard: clipboardCopy } = useClipboard()
 
@@ -457,24 +455,24 @@ const editForm = reactive({
 
 // Options
 const filterStatusOptions = computed(() => [
-  { value: '', label: t('admin.promo.allStatus') },
-  { value: 'active', label: t('admin.promo.statusActive') },
-  { value: 'disabled', label: t('admin.promo.statusDisabled') }
+  { value: '', label: '全部状态' },
+  { value: 'active', label: '启用' },
+  { value: 'disabled', label: '禁用' }
 ])
 
 const statusOptions = computed(() => [
-  { value: 'active', label: t('admin.promo.statusActive') },
-  { value: 'disabled', label: t('admin.promo.statusDisabled') }
+  { value: 'active', label: '启用' },
+  { value: 'disabled', label: '禁用' }
 ])
 
 const columns = computed<Column[]>(() => [
-  { key: 'code', label: t('admin.promo.columns.code') },
-  { key: 'bonus_amount', label: t('admin.promo.columns.bonusAmount'), sortable: true },
-  { key: 'usage', label: t('admin.promo.columns.usage') },
-  { key: 'status', label: t('admin.promo.columns.status'), sortable: true },
-  { key: 'expires_at', label: t('admin.promo.columns.expiresAt'), sortable: true },
-  { key: 'created_at', label: t('admin.promo.columns.createdAt'), sortable: true },
-  { key: 'actions', label: t('admin.promo.columns.actions') }
+  { key: 'code', label: '优惠码' },
+  { key: 'bonus_amount', label: '赠送金额', sortable: true },
+  { key: 'usage', label: '使用量' },
+  { key: 'status', label: '状态', sortable: true },
+  { key: 'expires_at', label: '过期时间', sortable: true },
+  { key: 'created_at', label: '创建时间', sortable: true },
+  { key: 'actions', label: '操作' }
 ])
 
 // Helpers
@@ -490,12 +488,12 @@ const getStatusClass = (status: string, row: PromoCode) => {
 
 const getStatusLabel = (status: string, row: PromoCode) => {
   if (row.expires_at && new Date(row.expires_at) < new Date()) {
-    return t('admin.promo.statusExpired')
+    return '已过期'
   }
   if (row.max_uses > 0 && row.used_count >= row.max_uses) {
-    return t('admin.promo.statusMaxUsed')
+    return '已用完'
   }
-  return status === 'active' ? t('admin.promo.statusActive') : t('admin.promo.statusDisabled')
+  return status === 'active' ? '启用' : '禁用'
 }
 
 // API calls
@@ -524,7 +522,7 @@ const loadCodes = async () => {
     pagination.total = response.total
   } catch (error: any) {
     if (currentController.signal.aborted || error?.name === 'AbortError') return
-    appStore.showError(t('admin.promo.failedToLoad'))
+    appStore.showError('加载优惠码失败')
     console.error('Error loading promo codes:', error)
   } finally {
     if (abortController === currentController && !currentController.signal.aborted) {
@@ -555,7 +553,7 @@ const handlePageSizeChange = (pageSize: number) => {
 }
 
 const copyToClipboard = async (text: string) => {
-  const success = await clipboardCopy(text, t('admin.promo.copied'))
+  const success = await clipboardCopy(text, '已复制！')
   if (success) {
     copiedCode.value = text
     setTimeout(() => {
@@ -575,12 +573,12 @@ const handleCreate = async () => {
       expires_at: createForm.expires_at_str ? Math.floor(new Date(createForm.expires_at_str).getTime() / 1000) : undefined,
       notes: createForm.notes || undefined
     })
-    appStore.showSuccess(t('admin.promo.codeCreated'))
+    appStore.showSuccess('优惠码创建成功')
     showCreateDialog.value = false
     resetCreateForm()
     loadCodes()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.promo.failedToCreate'))
+    appStore.showError(error.response?.data?.detail || '创建优惠码失败')
   } finally {
     creating.value = false
   }
@@ -624,11 +622,11 @@ const handleUpdate = async () => {
       expires_at: editForm.expires_at_str ? Math.floor(new Date(editForm.expires_at_str).getTime() / 1000) : 0,
       notes: editForm.notes
     })
-    appStore.showSuccess(t('admin.promo.codeUpdated'))
+    appStore.showSuccess('优惠码更新成功')
     closeEditDialog()
     loadCodes()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.promo.failedToUpdate'))
+    appStore.showError(error.response?.data?.detail || '更新优惠码失败')
   } finally {
     updating.value = false
   }
@@ -641,7 +639,7 @@ const copyRegisterLink = async (code: PromoCode) => {
 
   try {
     await navigator.clipboard.writeText(registerLink)
-    appStore.showSuccess(t('admin.promo.registerLinkCopied'))
+    appStore.showSuccess('注册链接已复制到剪贴板')
   } catch (error) {
     // Fallback for older browsers
     const textArea = document.createElement('textarea')
@@ -650,7 +648,7 @@ const copyRegisterLink = async (code: PromoCode) => {
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)
-    appStore.showSuccess(t('admin.promo.registerLinkCopied'))
+    appStore.showSuccess('注册链接已复制到剪贴板')
   }
 }
 
@@ -665,12 +663,12 @@ const confirmDelete = async () => {
 
   try {
     await adminAPI.promo.delete(deletingCode.value.id)
-    appStore.showSuccess(t('admin.promo.codeDeleted'))
+    appStore.showSuccess('优惠码删除成功')
     showDeleteDialog.value = false
     deletingCode.value = null
     loadCodes()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.promo.failedToDelete'))
+    appStore.showError(error.response?.data?.detail || '删除优惠码失败')
   }
 }
 
@@ -696,7 +694,7 @@ const loadUsages = async () => {
     usages.value = response.items
     usagesTotal.value = response.total
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.promo.failedToLoadUsages'))
+    appStore.showError(error.response?.data?.detail || '加载使用记录失败')
   } finally {
     usagesLoading.value = false
   }

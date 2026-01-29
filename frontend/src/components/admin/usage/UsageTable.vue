@@ -30,7 +30,7 @@
 
         <template #cell-stream="{ row }">
           <span class="inline-flex items-center rounded px-2 py-0.5 text-xs font-medium" :class="row.stream ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'">
-            {{ row.stream ? t('usage.stream') : t('usage.sync') }}
+            {{ row.stream ? '流式' : '同步' }}
           </span>
         </template>
 
@@ -40,7 +40,7 @@
             <svg class="h-4 w-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <span class="font-medium text-gray-900 dark:text-white">{{ row.image_count }}{{ t('usage.imageUnit') }}</span>
+            <span class="font-medium text-gray-900 dark:text-white">{{ row.image_count }}{{ '张' }}</span>
             <span class="text-gray-400">({{ row.image_size || '2K' }})</span>
           </div>
           <!-- Token 请求 -->
@@ -124,7 +124,7 @@
           <span v-else class="text-sm text-gray-400 dark:text-gray-500">-</span>
         </template>
 
-        <template #empty><EmptyState :message="t('usage.noRecords')" /></template>
+        <template #empty><EmptyState :message="'未找到使用记录，请尝试调整筛选条件。'" /></template>
       </DataTable>
     </div>
   </div>
@@ -142,26 +142,26 @@
       <div class="whitespace-nowrap rounded-lg border border-gray-700 bg-gray-900 px-3 py-2.5 text-xs text-white shadow-xl dark:border-gray-600 dark:bg-gray-800">
         <div class="space-y-1.5">
           <div>
-            <div class="text-xs font-semibold text-gray-300 mb-1">{{ t('usage.tokenDetails') }}</div>
+            <div class="text-xs font-semibold text-gray-300 mb-1">{{ 'Token 明细' }}</div>
             <div v-if="tokenTooltipData && tokenTooltipData.input_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.inputTokens') }}</span>
+              <span class="text-gray-400">{{ '输入 Token' }}</span>
               <span class="font-medium text-white">{{ tokenTooltipData.input_tokens.toLocaleString() }}</span>
             </div>
             <div v-if="tokenTooltipData && tokenTooltipData.output_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.outputTokens') }}</span>
+              <span class="text-gray-400">{{ '输出 Token' }}</span>
               <span class="font-medium text-white">{{ tokenTooltipData.output_tokens.toLocaleString() }}</span>
             </div>
             <div v-if="tokenTooltipData && tokenTooltipData.cache_creation_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.cacheCreationTokens') }}</span>
+              <span class="text-gray-400">{{ '缓存创建 Token' }}</span>
               <span class="font-medium text-white">{{ tokenTooltipData.cache_creation_tokens.toLocaleString() }}</span>
             </div>
             <div v-if="tokenTooltipData && tokenTooltipData.cache_read_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.cacheReadTokens') }}</span>
+              <span class="text-gray-400">{{ '缓存读取 Token' }}</span>
               <span class="font-medium text-white">{{ tokenTooltipData.cache_read_tokens.toLocaleString() }}</span>
             </div>
           </div>
           <div class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5">
-            <span class="text-gray-400">{{ t('usage.totalTokens') }}</span>
+            <span class="text-gray-400">{{ '总 Token' }}</span>
             <span class="font-semibold text-blue-400">{{ ((tokenTooltipData?.input_tokens || 0) + (tokenTooltipData?.output_tokens || 0) + (tokenTooltipData?.cache_creation_tokens || 0) + (tokenTooltipData?.cache_read_tokens || 0)).toLocaleString() }}</span>
           </div>
         </div>
@@ -184,43 +184,43 @@
         <div class="space-y-1.5">
           <!-- Cost Breakdown -->
           <div class="mb-2 border-b border-gray-700 pb-1.5">
-            <div class="text-xs font-semibold text-gray-300 mb-1">{{ t('usage.costDetails') }}</div>
+            <div class="text-xs font-semibold text-gray-300 mb-1">{{ '成本明细' }}</div>
             <div v-if="tooltipData && tooltipData.input_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.inputCost') }}</span>
+              <span class="text-gray-400">{{ '输入成本' }}</span>
               <span class="font-medium text-white">${{ tooltipData.input_cost.toFixed(6) }}</span>
             </div>
             <div v-if="tooltipData && tooltipData.output_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.outputCost') }}</span>
+              <span class="text-gray-400">{{ '输出成本' }}</span>
               <span class="font-medium text-white">${{ tooltipData.output_cost.toFixed(6) }}</span>
             </div>
             <div v-if="tooltipData && tooltipData.cache_creation_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.cacheCreationCost') }}</span>
+              <span class="text-gray-400">{{ '缓存创建成本' }}</span>
               <span class="font-medium text-white">${{ tooltipData.cache_creation_cost.toFixed(6) }}</span>
             </div>
             <div v-if="tooltipData && tooltipData.cache_read_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.cacheReadCost') }}</span>
+              <span class="text-gray-400">{{ '缓存读取成本' }}</span>
               <span class="font-medium text-white">${{ tooltipData.cache_read_cost.toFixed(6) }}</span>
             </div>
           </div>
           <!-- Rate and Summary -->
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ t('usage.rate') }}</span>
+            <span class="text-gray-400">{{ '倍率' }}</span>
             <span class="font-semibold text-blue-400">{{ (tooltipData?.rate_multiplier || 1).toFixed(2) }}x</span>
           </div>
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ t('usage.accountMultiplier') }}</span>
+            <span class="text-gray-400">{{ '账号倍率' }}</span>
             <span class="font-semibold text-blue-400">{{ (tooltipData?.account_rate_multiplier ?? 1).toFixed(2) }}x</span>
           </div>
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ t('usage.original') }}</span>
+            <span class="text-gray-400">{{ '原始' }}</span>
             <span class="font-medium text-white">${{ tooltipData?.total_cost?.toFixed(6) || '0.000000' }}</span>
           </div>
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ t('usage.userBilled') }}</span>
+            <span class="text-gray-400">{{ '用户扣费' }}</span>
             <span class="font-semibold text-green-400">${{ tooltipData?.actual_cost?.toFixed(6) || '0.000000' }}</span>
           </div>
           <div class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5">
-            <span class="text-gray-400">{{ t('usage.accountBilled') }}</span>
+            <span class="text-gray-400">{{ '账号计费' }}</span>
             <span class="font-semibold text-green-400">
               ${{ (((tooltipData?.total_cost || 0) * (tooltipData?.account_rate_multiplier ?? 1)) || 0).toFixed(6) }}
             </span>
@@ -234,7 +234,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { formatDateTime } from '@/utils/format'
 import DataTable from '@/components/common/DataTable.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
@@ -242,8 +241,6 @@ import Icon from '@/components/icons/Icon.vue'
 import type { AdminUsageLog } from '@/types'
 
 defineProps(['data', 'loading'])
-const { t } = useI18n()
-
 // Tooltip state - cost
 const tooltipVisible = ref(false)
 const tooltipPosition = ref({ x: 0, y: 0 })
@@ -255,19 +252,19 @@ const tokenTooltipPosition = ref({ x: 0, y: 0 })
 const tokenTooltipData = ref<AdminUsageLog | null>(null)
 
 const cols = computed(() => [
-  { key: 'user', label: t('admin.usage.user'), sortable: false },
-  { key: 'api_key', label: t('usage.apiKeyFilter'), sortable: false },
-  { key: 'account', label: t('admin.usage.account'), sortable: false },
-  { key: 'model', label: t('usage.model'), sortable: true },
-  { key: 'group', label: t('admin.usage.group'), sortable: false },
-  { key: 'stream', label: t('usage.type'), sortable: false },
-  { key: 'tokens', label: t('usage.tokens'), sortable: false },
-  { key: 'cost', label: t('usage.cost'), sortable: false },
-  { key: 'first_token', label: t('usage.firstToken'), sortable: false },
-  { key: 'duration', label: t('usage.duration'), sortable: false },
-  { key: 'created_at', label: t('usage.time'), sortable: true },
-  { key: 'user_agent', label: t('usage.userAgent'), sortable: false },
-  { key: 'ip_address', label: t('admin.usage.ipAddress'), sortable: false }
+  { key: 'user', label: '用户', sortable: false },
+  { key: 'api_key', label: 'API 密钥', sortable: false },
+  { key: 'account', label: '账户', sortable: false },
+  { key: 'model', label: '模型', sortable: true },
+  { key: 'group', label: '分组', sortable: false },
+  { key: 'stream', label: '类型', sortable: false },
+  { key: 'tokens', label: 'Token', sortable: false },
+  { key: 'cost', label: '费用', sortable: false },
+  { key: 'first_token', label: '首 Token', sortable: false },
+  { key: 'duration', label: '耗时', sortable: false },
+  { key: 'created_at', label: '时间', sortable: true },
+  { key: 'user_agent', label: 'User-Agent', sortable: false },
+  { key: 'ip_address', label: 'IP', sortable: false }
 ])
 
 const formatCacheTokens = (tokens: number): string => {

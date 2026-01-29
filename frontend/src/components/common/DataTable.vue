@@ -24,7 +24,7 @@
               class="mb-4 h-12 w-12 text-gray-400 dark:text-dark-500"
             />
             <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-              {{ t('empty.noData') }}
+              {{ '暂无数据' }}
             </p>
           </div>
         </slot>
@@ -140,7 +140,7 @@
                   class="mb-4 h-12 w-12 text-gray-400 dark:text-dark-500"
                 />
                 <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                  {{ t('empty.noData') }}
+                  {{ '暂无数据' }}
                 </p>
               </div>
             </slot>
@@ -175,11 +175,8 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
-import { useI18n } from 'vue-i18n'
 import type { Column } from './types'
 import Icon from '@/components/icons/Icon.vue'
-
-const { t } = useI18n()
 
 const emit = defineEmits<{
   sort: [key: string, order: 'asc' | 'desc']

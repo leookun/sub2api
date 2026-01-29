@@ -7,13 +7,13 @@
           @click="loadApiKeys"
           :disabled="loading"
           class="btn btn-secondary"
-          :title="t('common.refresh')"
+          :title="'刷新'"
         >
           <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
         </button>
         <button @click="showCreateModal = true" class="btn btn-primary" data-tour="keys-create-btn">
           <Icon name="plus" size="md" class="mr-2" />
-          {{ t('keys.createKey') }}
+          {{ '创建密钥' }}
         </button>
       </div>
       </template>
@@ -33,7 +33,7 @@
                     ? 'text-green-500'
                     : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                 "
-                :title="copiedKeyId === row.id ? t('keys.copied') : t('keys.copyToClipboard')"
+                :title="copiedKeyId === row.id ? '已复制！' : '复制到剪贴板'"
               >
                 <Icon
                   v-if="copiedKeyId === row.id"
@@ -54,7 +54,7 @@
                 name="shield"
                 size="sm"
                 class="text-blue-500"
-                :title="t('keys.ipRestrictionEnabled')"
+                :title="'已配置 IP 限制'"
               />
             </div>
           </template>
@@ -65,7 +65,7 @@
                 :ref="(el) => setGroupButtonRef(row.id, el)"
                 @click="openGroupSelector(row)"
                 class="-mx-2 -my-1 flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-dark-700"
-                :title="t('keys.clickToChangeGroup')"
+                :title="'点击更换分组'"
               >
                 <GroupBadge
                   v-if="row.group"
@@ -75,7 +75,7 @@
                   :rate-multiplier="row.group.rate_multiplier"
                 />
                 <span v-else class="text-sm text-gray-400 dark:text-dark-500">{{
-                  t('keys.noGroup')
+                  '无分组'
                 }}</span>
                 <svg
                   class="h-3.5 w-3.5 text-gray-400 opacity-0 transition-opacity group-hover/dropdown:opacity-100"
@@ -97,13 +97,13 @@
           <template #cell-usage="{ row }">
             <div class="text-sm">
               <div class="flex items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400">{{ t('keys.today') }}:</span>
+                <span class="text-gray-500 dark:text-gray-400">{{ '今日' }}:</span>
                 <span class="font-medium text-gray-900 dark:text-white">
                   ${{ (usageStats[row.id]?.today_actual_cost ?? 0).toFixed(4) }}
                 </span>
               </div>
               <div class="mt-0.5 flex items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400">{{ t('keys.total') }}:</span>
+                <span class="text-gray-500 dark:text-gray-400">{{ '累计' }}:</span>
                 <span class="font-medium text-gray-900 dark:text-white">
                   ${{ (usageStats[row.id]?.total_actual_cost ?? 0).toFixed(4) }}
                 </span>
@@ -129,7 +129,7 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400"
               >
                 <Icon name="terminal" size="sm" />
-                <span class="text-xs">{{ t('keys.useKey') }}</span>
+                <span class="text-xs">{{ '使用密钥' }}</span>
               </button>
               <!-- Import to CC Switch Button -->
               <button
@@ -138,7 +138,7 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400"
               >
                 <Icon name="upload" size="sm" />
-                <span class="text-xs">{{ t('keys.importToCcSwitch') }}</span>
+                <span class="text-xs">{{ '导入到 CCS' }}</span>
               </button>
               <!-- Toggle Status Button -->
               <button
@@ -152,7 +152,7 @@
               >
                 <Icon v-if="row.status === 'active'" name="ban" size="sm" />
                 <Icon v-else name="checkCircle" size="sm" />
-                <span class="text-xs">{{ row.status === 'active' ? t('keys.disable') : t('keys.enable') }}</span>
+                <span class="text-xs">{{ row.status === 'active' ? '禁用' : '启用' }}</span>
               </button>
               <!-- Edit Button -->
               <button
@@ -160,7 +160,7 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ t('common.edit') }}</span>
+                <span class="text-xs">{{ '编辑' }}</span>
               </button>
               <!-- Delete Button -->
               <button
@@ -168,16 +168,16 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
               >
                 <Icon name="trash" size="sm" />
-                <span class="text-xs">{{ t('common.delete') }}</span>
+                <span class="text-xs">{{ '删除' }}</span>
               </button>
             </div>
           </template>
 
           <template #empty>
             <EmptyState
-              :title="t('keys.noKeysYet')"
-              :description="t('keys.createFirstKey')"
-              :action-text="t('keys.createKey')"
+              :title="'暂无 API 密钥'"
+              :description="'创建您的第一个 API 密钥以开始使用 API。'"
+              :action-text="'创建密钥'"
               @action="showCreateModal = true"
             />
           </template>
@@ -199,29 +199,29 @@
     <!-- Create/Edit Modal -->
     <BaseDialog
       :show="showCreateModal || showEditModal"
-      :title="showEditModal ? t('keys.editKey') : t('keys.createKey')"
+      :title="showEditModal ? '编辑密钥' : '创建密钥'"
       width="normal"
       @close="closeModals"
     >
       <form id="key-form" @submit.prevent="handleSubmit" class="space-y-5">
         <div>
-          <label class="input-label">{{ t('keys.nameLabel') }}</label>
+          <label class="input-label">{{ '名称' }}</label>
           <input
             v-model="formData.name"
             type="text"
             required
             class="input"
-            :placeholder="t('keys.namePlaceholder')"
+            :placeholder="'我的 API 密钥'"
             data-tour="key-form-name"
           />
         </div>
 
         <div>
-          <label class="input-label">{{ t('keys.groupLabel') }}</label>
+          <label class="input-label">{{ '分组' }}</label>
           <Select
             v-model="formData.group_id"
             :options="groupOptions"
-            :placeholder="t('keys.selectGroup')"
+            :placeholder="'选择分组'"
             data-tour="key-form-group"
           >
             <template #selected="{ option }">
@@ -232,7 +232,7 @@
                 :subscription-type="(option as unknown as GroupOption).subscriptionType"
                 :rate-multiplier="(option as unknown as GroupOption).rate"
               />
-              <span v-else class="text-gray-400">{{ t('keys.selectGroup') }}</span>
+              <span v-else class="text-gray-400">{{ '选择分组' }}</span>
             </template>
             <template #option="{ option, selected }">
               <GroupOptionItem
@@ -250,7 +250,7 @@
         <!-- Custom Key Section (only for create) -->
         <div v-if="!showEditModal" class="space-y-3">
           <div class="flex items-center justify-between">
-            <label class="input-label mb-0">{{ t('keys.customKeyLabel') }}</label>
+            <label class="input-label mb-0">{{ '自定义密钥' }}</label>
             <button
               type="button"
               @click="formData.use_custom_key = !formData.use_custom_key"
@@ -272,27 +272,27 @@
               v-model="formData.custom_key"
               type="text"
               class="input font-mono"
-              :placeholder="t('keys.customKeyPlaceholder')"
+              :placeholder="'输入自定义密钥（至少16个字符）'"
               :class="{ 'border-red-500 dark:border-red-500': customKeyError }"
             />
             <p v-if="customKeyError" class="mt-1 text-sm text-red-500">{{ customKeyError }}</p>
-            <p v-else class="input-hint">{{ t('keys.customKeyHint') }}</p>
+            <p v-else class="input-hint">{{ '仅允许字母、数字、下划线和连字符，最少16个字符。' }}</p>
           </div>
         </div>
 
         <div v-if="showEditModal">
-          <label class="input-label">{{ t('keys.statusLabel') }}</label>
+          <label class="input-label">{{ '状态' }}</label>
           <Select
             v-model="formData.status"
             :options="statusOptions"
-            :placeholder="t('keys.selectStatus')"
+            :placeholder="'选择状态'"
           />
         </div>
 
         <!-- IP Restriction Section -->
         <div class="space-y-3">
           <div class="flex items-center justify-between">
-            <label class="input-label mb-0">{{ t('keys.ipRestriction') }}</label>
+            <label class="input-label mb-0">{{ 'IP 限制' }}</label>
             <button
               type="button"
               @click="formData.enable_ip_restriction = !formData.enable_ip_restriction"
@@ -312,25 +312,27 @@
 
           <div v-if="formData.enable_ip_restriction" class="space-y-4 pt-2">
             <div>
-              <label class="input-label">{{ t('keys.ipWhitelist') }}</label>
+              <label class="input-label">{{ 'IP 白名单' }}</label>
               <textarea
                 v-model="formData.ip_whitelist"
                 rows="3"
                 class="input font-mono text-sm"
-                :placeholder="t('keys.ipWhitelistPlaceholder')"
+                :placeholder="'192.168.1.100
+10.0.0.0/8'"
               />
-              <p class="input-hint">{{ t('keys.ipWhitelistHint') }}</p>
+              <p class="input-hint">{{ '每行一个 IP 或 CIDR，设置后仅允许这些 IP 使用此密钥' }}</p>
             </div>
 
             <div>
-              <label class="input-label">{{ t('keys.ipBlacklist') }}</label>
+              <label class="input-label">{{ 'IP 黑名单' }}</label>
               <textarea
                 v-model="formData.ip_blacklist"
                 rows="3"
                 class="input font-mono text-sm"
-                :placeholder="t('keys.ipBlacklistPlaceholder')"
+                :placeholder="'1.2.3.4
+5.6.0.0/16'"
               />
-              <p class="input-hint">{{ t('keys.ipBlacklistHint') }}</p>
+              <p class="input-hint">{{ '每行一个 IP 或 CIDR，这些 IP 将被禁止使用此密钥' }}</p>
             </div>
           </div>
         </div>
@@ -338,7 +340,7 @@
       <template #footer>
         <div class="flex justify-end gap-3">
           <button @click="closeModals" type="button" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button
             form="key-form"
@@ -369,10 +371,10 @@
             </svg>
             {{
               submitting
-                ? t('keys.saving')
+                ? '保存中...'
                 : showEditModal
-                  ? t('common.update')
-                  : t('common.create')
+                  ? '更新'
+                  : '创建'
             }}
           </button>
         </div>
@@ -382,10 +384,10 @@
     <!-- Delete Confirmation Dialog -->
     <ConfirmDialog
       :show="showDeleteDialog"
-      :title="t('keys.deleteKey')"
-      :message="t('keys.deleteConfirmMessage', { name: selectedKey?.name })"
-      :confirm-text="t('common.delete')"
-      :cancel-text="t('common.cancel')"
+      :title="'删除密钥'"
+      :message="`确定要删除 '${selectedKey?.name}' 吗？此操作无法撤销。`"
+      :confirm-text="'删除'"
+      :cancel-text="'取消'"
       :danger="true"
       @confirm="handleDelete"
       @cancel="showDeleteDialog = false"
@@ -403,13 +405,13 @@
     <!-- CCS Client Selection Dialog for Antigravity -->
     <BaseDialog
       :show="showCcsClientSelect"
-      :title="t('keys.ccsClientSelect.title')"
+      :title="'选择客户端'"
       width="narrow"
       @close="closeCcsClientSelect"
     >
       <div class="space-y-4">
         <p class="text-sm text-gray-600 dark:text-gray-400">
-          {{ t('keys.ccsClientSelect.description') }}
+          {{ '请选择您要导入到 CC-Switch 的客户端类型：' }}
 	        </p>
 	        <div class="grid grid-cols-2 gap-3">
 	          <button
@@ -418,10 +420,10 @@
 	          >
 	            <Icon name="terminal" size="xl" class="text-gray-600 dark:text-gray-400" />
 	            <span class="font-medium text-gray-900 dark:text-white">{{
-	              t('keys.ccsClientSelect.claudeCode')
+	              'Claude Code'
 	            }}</span>
 	            <span class="text-xs text-gray-500 dark:text-gray-400">{{
-	              t('keys.ccsClientSelect.claudeCodeDesc')
+	              '导入为 Claude Code 配置'
 	            }}</span>
 	          </button>
 	          <button
@@ -430,10 +432,10 @@
 	          >
 	            <Icon name="sparkles" size="xl" class="text-gray-600 dark:text-gray-400" />
 	            <span class="font-medium text-gray-900 dark:text-white">{{
-	              t('keys.ccsClientSelect.geminiCli')
+	              'Gemini CLI'
 	            }}</span>
 	            <span class="text-xs text-gray-500 dark:text-gray-400">{{
-	              t('keys.ccsClientSelect.geminiCliDesc')
+	              '导入为 Gemini CLI 配置'
 	            }}</span>
 	          </button>
 	        </div>
@@ -441,7 +443,7 @@
       <template #footer>
         <div class="flex justify-end">
           <button @click="closeCcsClientSelect" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
         </div>
       </template>
@@ -490,12 +492,10 @@
 
 <script setup lang="ts">
 	import { ref, computed, onMounted, onUnmounted, type ComponentPublicInstance } from 'vue'
-	import { useI18n } from 'vue-i18n'
 	import { useAppStore } from '@/stores/app'
 	import { useOnboardingStore } from '@/stores/onboarding'
 	import { useClipboard } from '@/composables/useClipboard'
 
-const { t } = useI18n()
 import { keysAPI, authAPI, usageAPI, userGroupsAPI } from '@/api'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import TablePageLayout from '@/components/layout/TablePageLayout.vue'
@@ -528,13 +528,13 @@ const onboardingStore = useOnboardingStore()
 const { copyToClipboard: clipboardCopy } = useClipboard()
 
 const columns = computed<Column[]>(() => [
-  { key: 'name', label: t('common.name'), sortable: true },
-  { key: 'key', label: t('keys.apiKey'), sortable: false },
-  { key: 'group', label: t('keys.group'), sortable: false },
-  { key: 'usage', label: t('keys.usage'), sortable: false },
-  { key: 'status', label: t('common.status'), sortable: true },
-  { key: 'created_at', label: t('keys.created'), sortable: true },
-  { key: 'actions', label: t('common.actions'), sortable: false }
+  { key: 'name', label: '名称', sortable: true },
+  { key: 'key', label: 'API 密钥', sortable: false },
+  { key: 'group', label: '分组', sortable: false },
+  { key: 'usage', label: '用量', sortable: false },
+  { key: 'status', label: '状态', sortable: true },
+  { key: 'created_at', label: '创建时间', sortable: true },
+  { key: 'actions', label: '操作', sortable: false }
 ])
 
 const apiKeys = ref<ApiKey[]>([])
@@ -597,18 +597,18 @@ const customKeyError = computed(() => {
   }
   const key = formData.value.custom_key
   if (key.length < 16) {
-    return t('keys.customKeyTooShort')
+    return '自定义密钥至少需要16个字符'
   }
   // 检查字符：只允许字母、数字、下划线、连字符
   if (!/^[a-zA-Z0-9_-]+$/.test(key)) {
-    return t('keys.customKeyInvalidChars')
+    return '自定义密钥只能包含字母、数字、下划线和连字符'
   }
   return ''
 })
 
 const statusOptions = computed(() => [
-  { value: 'active', label: t('common.active') },
-  { value: 'inactive', label: t('common.inactive') }
+  { value: 'active', label: '启用' },
+  { value: 'inactive', label: '禁用' }
 ])
 
 // Convert groups to Select options format with rate multiplier and subscription type
@@ -629,7 +629,7 @@ const maskKey = (key: string): string => {
 }
 
 const copyToClipboard = async (text: string, keyId: number) => {
-  const success = await clipboardCopy(text, t('keys.copied'))
+  const success = await clipboardCopy(text, '已复制！')
   if (success) {
     copiedKeyId.value = keyId
     setTimeout(() => {
@@ -676,7 +676,7 @@ const loadApiKeys = async () => {
     if (isAbortError(error)) {
       return
     }
-    appStore.showError(t('keys.failedToLoad'))
+    appStore.showError('加载 API 密钥失败')
   } finally {
     if (abortController === controller) {
       loading.value = false
@@ -742,11 +742,11 @@ const toggleKeyStatus = async (key: ApiKey) => {
   try {
     await keysAPI.toggleStatus(key.id, newStatus)
     appStore.showSuccess(
-      newStatus === 'active' ? t('keys.keyEnabledSuccess') : t('keys.keyDisabledSuccess')
+      newStatus === 'active' ? 'API 密钥已启用' : 'API 密钥已禁用'
     )
     loadApiKeys()
   } catch (error) {
-    appStore.showError(t('keys.failedToUpdateStatus'))
+    appStore.showError('更新 API 密钥状态失败')
   }
 }
 
@@ -774,10 +774,10 @@ const changeGroup = async (key: ApiKey, newGroupId: number | null) => {
 
   try {
     await keysAPI.update(key.id, { group_id: newGroupId })
-    appStore.showSuccess(t('keys.groupChangedSuccess'))
+    appStore.showSuccess('分组更换成功')
     loadApiKeys()
   } catch (error) {
-    appStore.showError(t('keys.failedToChangeGroup'))
+    appStore.showError('更换分组失败')
   }
 }
 
@@ -798,14 +798,14 @@ const confirmDelete = (key: ApiKey) => {
 const handleSubmit = async () => {
   // Validate group_id is required
   if (formData.value.group_id === null) {
-    appStore.showError(t('keys.groupRequired'))
+    appStore.showError('请选择分组')
     return
   }
 
   // Validate custom key if enabled
   if (!showEditModal.value && formData.value.use_custom_key) {
     if (!formData.value.custom_key) {
-      appStore.showError(t('keys.customKeyRequired'))
+      appStore.showError('请输入自定义密钥')
       return
     }
     if (customKeyError.value) {
@@ -830,11 +830,11 @@ const handleSubmit = async () => {
         ip_whitelist: ipWhitelist,
         ip_blacklist: ipBlacklist
       })
-      appStore.showSuccess(t('keys.keyUpdatedSuccess'))
+      appStore.showSuccess('API 密钥更新成功')
     } else {
       const customKey = formData.value.use_custom_key ? formData.value.custom_key : undefined
       await keysAPI.create(formData.value.name, formData.value.group_id, customKey, ipWhitelist, ipBlacklist)
-      appStore.showSuccess(t('keys.keyCreatedSuccess'))
+      appStore.showSuccess('API 密钥创建成功')
       // Only advance tour if active, on submit step, and creation succeeded
       if (onboardingStore.isCurrentStep('[data-tour="key-form-submit"]')) {
         onboardingStore.nextStep(500)
@@ -843,7 +843,7 @@ const handleSubmit = async () => {
     closeModals()
     loadApiKeys()
   } catch (error: any) {
-    const errorMsg = error.response?.data?.detail || t('keys.failedToSave')
+    const errorMsg = error.response?.data?.detail || '保存 API 密钥失败'
     appStore.showError(errorMsg)
     // Don't advance tour on error
   } finally {
@@ -861,12 +861,12 @@ const handleDelete = async () => {
 
   try {
     await keysAPI.delete(selectedKey.value.id)
-    appStore.showSuccess(t('keys.keyDeletedSuccess'))
+    appStore.showSuccess('API 密钥删除成功')
     showDeleteDialog.value = false
     loadApiKeys()
   } catch (error: any) {
     // 优先使用后端返回的错误消息，提供更具体的错误信息给用户
-    const errorMsg = error?.message || t('keys.failedToDelete')
+    const errorMsg = error?.message || '删除 API 密钥失败'
     appStore.showError(errorMsg)
   }
 }
@@ -964,11 +964,11 @@ const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
     setTimeout(() => {
       if (document.hasFocus()) {
         // Still focused means the protocol handler likely failed
-        appStore.showError(t('keys.ccSwitchNotInstalled'))
+        appStore.showError('CC-Switch 未安装或协议处理程序未注册。请先安装 CC-Switch 或手动复制 API 密钥。')
       }
     }, 100)
   } catch (error) {
-    appStore.showError(t('keys.ccSwitchNotInstalled'))
+    appStore.showError('CC-Switch 未安装或协议处理程序未注册。请先安装 CC-Switch 或手动复制 API 密钥。')
   }
 }
 

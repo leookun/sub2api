@@ -124,7 +124,7 @@
           <span
             class="pointer-events-none absolute left-0 top-full z-50 mt-1 w-80 whitespace-normal break-words rounded bg-gray-900 px-3 py-2 text-xs leading-relaxed text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-gray-700"
           >
-            {{ t('admin.accounts.ineligibleWarning') }}
+            {{ '该账号无 Antigravity 使用权限，但仍能进行 API 转发。继续使用请自行承担风险。' }}
           </span>
         </span>
       </div>
@@ -148,7 +148,7 @@
         <!-- Gemini 3 Pro -->
         <UsageProgressBar
           v-if="antigravity3ProUsageFromAPI !== null"
-          :label="t('admin.accounts.usageWindow.gemini3Pro')"
+          :label="'G3P'"
           :utilization="antigravity3ProUsageFromAPI.utilization"
           :resets-at="antigravity3ProUsageFromAPI.resetTime"
           color="indigo"
@@ -157,7 +157,7 @@
         <!-- Gemini 3 Flash -->
         <UsageProgressBar
           v-if="antigravity3FlashUsageFromAPI !== null"
-          :label="t('admin.accounts.usageWindow.gemini3Flash')"
+          :label="'G3F'"
           :utilization="antigravity3FlashUsageFromAPI.utilization"
           :resets-at="antigravity3FlashUsageFromAPI.resetTime"
           color="emerald"
@@ -166,7 +166,7 @@
         <!-- Gemini 3 Image -->
         <UsageProgressBar
           v-if="antigravity3ImageUsageFromAPI !== null"
-          :label="t('admin.accounts.usageWindow.gemini3Image')"
+          :label="'G3I'"
           :utilization="antigravity3ImageUsageFromAPI.utilization"
           :resets-at="antigravity3ImageUsageFromAPI.resetTime"
           color="purple"
@@ -175,7 +175,7 @@
         <!-- Claude 4.5 -->
         <UsageProgressBar
           v-if="antigravityClaude45UsageFromAPI !== null"
-          :label="t('admin.accounts.usageWindow.claude45')"
+          :label="'C4.5'"
           :utilization="antigravityClaude45UsageFromAPI.utilization"
           :resets-at="antigravityClaude45UsageFromAPI.resetTime"
           color="amber"
@@ -214,14 +214,14 @@
           <span
             class="pointer-events-none absolute left-0 top-full z-50 mt-1 w-80 whitespace-normal break-words rounded bg-gray-900 px-3 py-2 text-xs leading-relaxed text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-gray-700"
           >
-            <div class="font-semibold mb-1">{{ t('admin.accounts.gemini.quotaPolicy.title') }}</div>
-            <div class="mb-2 text-gray-300">{{ t('admin.accounts.gemini.quotaPolicy.note') }}</div>
+            <div class="font-semibold mb-1">{{ 'Gemini 配额与限流政策（参考）' }}</div>
+            <div class="mb-2 text-gray-300">{{ '注意：Gemini 官方未提供用量查询接口。此处显示的“每日配额”是由系统根据账号等级模拟计算的估算值，仅供调度参考，请以 Google 官方实际报错为准。' }}</div>
             <div class="space-y-1">
               <div><strong>{{ geminiQuotaPolicyChannel }}:</strong></div>
               <div class="pl-2">• {{ geminiQuotaPolicyLimits }}</div>
               <div class="mt-2">
                 <a :href="geminiQuotaPolicyDocsUrl" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">
-                  {{ t('admin.accounts.gemini.quotaPolicy.columns.docs') }} →
+                  {{ '官方文档' }} →
                 </a>
               </div>
             </div>
@@ -253,12 +253,12 @@
             :color="bar.color"
           />
           <p class="mt-1 text-[9px] leading-tight text-gray-400 dark:text-gray-500 italic">
-            * {{ t('admin.accounts.gemini.quotaPolicy.simulatedNote') || 'Simulated quota' }}
+            * {{ '本地模拟配额，仅供参考' || 'Simulated quota' }}
           </p>
         </div>
         <!-- AI Studio Client OAuth: show unlimited flow (no usage tracking) -->
         <div v-else class="text-xs text-gray-400">
-          {{ t('admin.accounts.gemini.rateLimit.unlimited') }}
+          {{ '无限流' }}
         </div>
       </div>
     </template>
@@ -279,7 +279,6 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { adminAPI } from '@/api/admin'
 import type { Account, AccountUsageInfo, GeminiCredentials, WindowStats } from '@/types'
 import UsageProgressBar from './UsageProgressBar.vue'
@@ -288,8 +287,6 @@ import AccountQuotaInfo from './AccountQuotaInfo.vue'
 const props = defineProps<{
   account: Account
 }>()
-
-const { t } = useI18n()
 
 const loading = ref(false)
 const error = ref<string | null>(null)
@@ -675,12 +672,12 @@ const geminiTierClass = computed(() => {
 // Gemini 配额政策信息
 const geminiQuotaPolicyChannel = computed(() => {
   if (geminiOAuthType.value === 'google_one') {
-    return t('admin.accounts.gemini.quotaPolicy.rows.googleOne.channel')
+    return 'Google One OAuth（个人版 / Code Assist for Individuals）'
   }
   if (isGeminiCodeAssist.value) {
-    return t('admin.accounts.gemini.quotaPolicy.rows.gcp.channel')
+    return 'GCP Code Assist OAuth（企业版）'
   }
-  return t('admin.accounts.gemini.quotaPolicy.rows.aiStudio.channel')
+  return 'AI Studio API Key / OAuth'
 })
 
 const geminiQuotaPolicyLimits = computed(() => {
@@ -688,26 +685,26 @@ const geminiQuotaPolicyLimits = computed(() => {
 
   if (geminiOAuthType.value === 'google_one') {
     if (tierLower === 'google_ai_ultra' || geminiUserLevel.value === 'ultra') {
-      return t('admin.accounts.gemini.quotaPolicy.rows.googleOne.limitsUltra')
+      return '共享池：2000 RPD / 120 RPM（不分模型）'
     }
     if (tierLower === 'google_ai_pro' || geminiUserLevel.value === 'pro') {
-      return t('admin.accounts.gemini.quotaPolicy.rows.googleOne.limitsPro')
+      return '共享池：1500 RPD / 120 RPM（不分模型）'
     }
-    return t('admin.accounts.gemini.quotaPolicy.rows.googleOne.limitsFree')
+    return '共享池：1000 RPD / 60 RPM（不分模型）'
   }
 
   if (isGeminiCodeAssist.value) {
     if (tierLower === 'gcp_enterprise' || geminiUserLevel.value === 'enterprise') {
-      return t('admin.accounts.gemini.quotaPolicy.rows.gcp.limitsEnterprise')
+      return '共享池：2000 RPD / 120 RPM（不分模型）'
     }
-    return t('admin.accounts.gemini.quotaPolicy.rows.gcp.limitsStandard')
+    return '共享池：1500 RPD / 120 RPM（不分模型）'
   }
 
   // AI Studio (API Key / custom OAuth)
   if (tierLower === 'aistudio_paid' || geminiUserLevel.value === 'paid') {
-    return t('admin.accounts.gemini.quotaPolicy.rows.aiStudio.limitsPaid')
+    return 'RPD 不限；RPM 1000（Pro）/ 2000（Flash）（按模型配额）'
   }
-  return t('admin.accounts.gemini.quotaPolicy.rows.aiStudio.limitsFree')
+  return 'RPD 50；RPM 2（Pro）/ 15（Flash）'
 })
 
 const geminiQuotaPolicyDocsUrl = computed(() => {
@@ -787,11 +784,11 @@ const geminiUsageBars = computed(() => {
 const antigravityTierLabel = computed(() => {
   switch (antigravityTier.value) {
     case 'free-tier':
-      return t('admin.accounts.tier.free')
+      return 'Free'
     case 'g1-pro-tier':
-      return t('admin.accounts.tier.pro')
+      return 'Pro'
     case 'g1-ultra-tier':
-      return t('admin.accounts.tier.ultra')
+      return 'Ultra'
     default:
       return null
   }
@@ -832,7 +829,7 @@ const loadUsage = async () => {
   try {
     usageInfo.value = await adminAPI.accounts.getUsage(props.account.id)
   } catch (e: any) {
-    error.value = t('common.error')
+    error.value = '错误'
     console.error('Failed to load usage:', e)
   } finally {
     loading.value = false

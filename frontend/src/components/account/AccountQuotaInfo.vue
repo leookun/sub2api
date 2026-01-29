@@ -10,7 +10,7 @@
     <!-- Usage status: unlimited flow or rate limit -->
     <div class="text-xs text-gray-400 dark:text-gray-500">
       <span v-if="!isRateLimited">
-        {{ t('admin.accounts.gemini.rateLimit.unlimited') }}
+        {{ '无限流' }}
       </span>
       <span
         v-else
@@ -21,7 +21,7 @@
             : 'text-amber-600 dark:text-amber-400'
         ]"
       >
-        {{ t('admin.accounts.gemini.rateLimit.limited', { time: resetCountdown }) }}
+        {{ `限流 ${resetCountdown}` }}
       </span>
     </div>
   </div>
@@ -29,14 +29,11 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import type { Account, GeminiCredentials } from '@/types'
 
 const props = defineProps<{
   account: Account
 }>()
-
-const { t } = useI18n()
 
 const now = ref(new Date())
 let timer: ReturnType<typeof setInterval> | null = null
@@ -145,7 +142,7 @@ const resetCountdown = computed(() => {
   if (Number.isNaN(resetTime)) return '-'
 
   const diffMs = resetTime - now.value.getTime()
-  if (diffMs <= 0) return t('admin.accounts.gemini.rateLimit.now')
+  if (diffMs <= 0) return '现在'
 
   const diffSeconds = Math.floor(diffMs / 1000)
   const diffMinutes = Math.floor(diffSeconds / 60)

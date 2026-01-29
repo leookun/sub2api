@@ -3,7 +3,6 @@ import { driver, type Driver, type DriveStep } from 'driver.js'
 import 'driver.js/dist/driver.css'
 import { useAuthStore as useUserStore } from '@/stores/auth'
 import { useOnboardingStore } from '@/stores/onboarding'
-import { useI18n } from 'vue-i18n'
 import { getAdminSteps, getUserSteps } from '@/components/Guide/steps'
 
 export interface OnboardingOptions {
@@ -12,7 +11,6 @@ export interface OnboardingOptions {
 }
 
 export function useOnboardingTour(options: OnboardingOptions) {
-  const { t } = useI18n()
   const userStore = useUserStore()
   const onboardingStore = useOnboardingStore()
   const storageVersion = 'v4_interactive' // Bump version for new tour type
@@ -118,9 +116,9 @@ export function useOnboardingTour(options: OnboardingOptions) {
       allowClose: false, // 禁止点击遮罩关闭
       stagePadding: 4,
       popoverClass: 'theme-tour-popover',
-      nextBtnText: t('common.next'),
-      prevBtnText: t('common.back'),
-      doneBtnText: t('common.confirm'),
+      nextBtnText: '下一步',
+      prevBtnText: '返回',
+      doneBtnText: '确认',
 
       // 导航处理
       onNextClick: async (_el, _step, { config, state }) => {
@@ -229,7 +227,7 @@ export function useOnboardingTour(options: OnboardingOptions) {
             shortcut1.appendChild(kbd1)
             shortcut1.appendChild(kbd2)
             shortcut1.appendChild(
-              document.createTextNode(` ${t('onboarding.navigation.flipPage')}`),
+              document.createTextNode(` ${'翻页'}`),
             )
 
             const shortcut2 = document.createElement('span')
@@ -238,7 +236,7 @@ export function useOnboardingTour(options: OnboardingOptions) {
             kbd3.textContent = 'ESC'
             shortcut2.appendChild(kbd3)
             shortcut2.appendChild(
-              document.createTextNode(` ${t('onboarding.navigation.exit')}`),
+              document.createTextNode(` ${'退出'}`),
             )
 
             shortcutsEl.appendChild(shortcut1)

@@ -4,10 +4,10 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ t('auth.welcomeBack') }}
+          {{ '欢迎回来' }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ t('auth.signInToAccount') }}
+          {{ '登录您的账户以继续' }}
         </p>
       </div>
 
@@ -19,7 +19,7 @@
         <!-- Email Input -->
         <div>
           <label for="email" class="input-label">
-            {{ t('auth.emailLabel') }}
+            {{ '邮箱' }}
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -35,7 +35,7 @@
               :disabled="isLoading"
               class="input pl-11"
               :class="{ 'input-error': errors.email }"
-              :placeholder="t('auth.emailPlaceholder')"
+              :placeholder="'请输入邮箱'"
             />
           </div>
           <p v-if="errors.email" class="input-error-text">
@@ -46,7 +46,7 @@
         <!-- Password Input -->
         <div>
           <label for="password" class="input-label">
-            {{ t('auth.passwordLabel') }}
+            {{ '密码' }}
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -61,7 +61,7 @@
               :disabled="isLoading"
               class="input pl-11 pr-11"
               :class="{ 'input-error': errors.password }"
-              :placeholder="t('auth.passwordPlaceholder')"
+              :placeholder="'请输入密码'"
             />
             <button
               type="button"
@@ -82,7 +82,7 @@
               to="/forgot-password"
               class="text-sm font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
             >
-              {{ t('auth.forgotPassword') }}
+              {{ '忘记密码？' }}
             </router-link>
           </div>
         </div>
@@ -145,7 +145,7 @@
             ></path>
           </svg>
           <Icon v-else name="login" size="md" class="mr-2" />
-          {{ isLoading ? t('auth.signingIn') : t('auth.signIn') }}
+          {{ isLoading ? '登录中...' : '登录' }}
         </button>
       </form>
     </div>
@@ -153,12 +153,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ t('auth.dontHaveAccount') }}
+        {{ '还没有账户？' }}
         <router-link
           to="/register"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ t('auth.signUp') }}
+          {{ '注册' }}
         </router-link>
       </p>
     </template>
@@ -178,7 +178,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { AuthLayout } from '@/components/layout'
 import LinuxDoOAuthSection from '@/components/auth/LinuxDoOAuthSection.vue'
 import TotpLoginModal from '@/components/auth/TotpLoginModal.vue'
@@ -187,8 +186,6 @@ import TurnstileWidget from '@/components/TurnstileWidget.vue'
 import { useAuthStore, useAppStore } from '@/stores'
 import { getPublicSettings, isTotp2FARequired } from '@/api/auth'
 import type { TotpLoginResponse } from '@/types'
-
-const { t } = useI18n()
 
 // ==================== Router & Stores ====================
 
@@ -235,7 +232,7 @@ onMounted(async () => {
   const expiredFlag = sessionStorage.getItem('auth_expired')
   if (expiredFlag) {
     sessionStorage.removeItem('auth_expired')
-    const message = t('auth.reloginRequired')
+    const message = '会话已过期，请重新登录。'
     errorMessage.value = message
     appStore.showWarning(message)
   }
@@ -260,12 +257,12 @@ function onTurnstileVerify(token: string): void {
 
 function onTurnstileExpire(): void {
   turnstileToken.value = ''
-  errors.turnstile = t('auth.turnstileExpired')
+  errors.turnstile = '验证已过期，请重试'
 }
 
 function onTurnstileError(): void {
   turnstileToken.value = ''
-  errors.turnstile = t('auth.turnstileFailed')
+  errors.turnstile = '验证失败，请重试'
 }
 
 // ==================== Validation ====================
@@ -280,25 +277,25 @@ function validateForm(): boolean {
 
   // Email validation
   if (!formData.email.trim()) {
-    errors.email = t('auth.emailRequired')
+    errors.email = '请输入邮箱'
     isValid = false
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-    errors.email = t('auth.invalidEmail')
+    errors.email = '请输入有效的邮箱地址'
     isValid = false
   }
 
   // Password validation
   if (!formData.password) {
-    errors.password = t('auth.passwordRequired')
+    errors.password = '请输入密码'
     isValid = false
   } else if (formData.password.length < 6) {
-    errors.password = t('auth.passwordMinLength')
+    errors.password = '密码至少需要 6 个字符'
     isValid = false
   }
 
   // Turnstile validation
   if (turnstileEnabled.value && !turnstileToken.value) {
-    errors.turnstile = t('auth.completeVerification')
+    errors.turnstile = '请完成验证'
     isValid = false
   }
 
@@ -337,7 +334,7 @@ async function handleLogin(): Promise<void> {
     }
 
     // Show success toast
-    appStore.showSuccess(t('auth.loginSuccess'))
+    appStore.showSuccess('登录成功！欢迎回来。')
 
     // Redirect to dashboard or intended route
     const redirectTo = (router.currentRoute.value.query.redirect as string) || '/dashboard'
@@ -357,7 +354,7 @@ async function handleLogin(): Promise<void> {
     } else if (err.message) {
       errorMessage.value = err.message
     } else {
-      errorMessage.value = t('auth.loginFailed')
+      errorMessage.value = '登录失败，请检查您的凭据后重试。'
     }
 
     // Also show error toast
@@ -379,14 +376,14 @@ async function handle2FAVerify(code: string): Promise<void> {
 
     // Close modal and show success
     show2FAModal.value = false
-    appStore.showSuccess(t('auth.loginSuccess'))
+    appStore.showSuccess('登录成功！欢迎回来。')
 
     // Redirect to dashboard or intended route
     const redirectTo = (router.currentRoute.value.query.redirect as string) || '/dashboard'
     await router.push(redirectTo)
   } catch (error: unknown) {
     const err = error as { message?: string; response?: { data?: { message?: string } } }
-    const message = err.response?.data?.message || err.message || t('profile.totp.loginFailed')
+    const message = err.response?.data?.message || err.message || '验证失败，请重试'
 
     if (totpModalRef.value) {
       totpModalRef.value.setError(message)

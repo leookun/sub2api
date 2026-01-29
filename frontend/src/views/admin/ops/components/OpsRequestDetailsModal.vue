@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 import Pagination from '@/components/common/Pagination.vue'
 import { useClipboard } from '@/composables/useClipboard'
@@ -30,7 +29,6 @@ const emit = defineEmits<{
   (e: 'openErrorDetail', errorId: number): void
 }>()
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const { copyToClipboard } = useClipboard()
 
@@ -44,8 +42,8 @@ const close = () => emit('update:modelValue', false)
 
 const rangeLabel = computed(() => {
   const minutes = parseTimeRangeMinutes(props.timeRange)
-  if (minutes >= 60) return t('admin.ops.requestDetails.rangeHours', { n: Math.round(minutes / 60) })
-  return t('admin.ops.requestDetails.rangeMinutes', { n: minutes })
+  if (minutes >= 60) return `${Math.round(minutes / 60)} 小时`
+  return `${minutes} 分钟`
 })
 
 function buildTimeParams(): Pick<OpsRequestDetailsParams, 'start_time' | 'end_time'> {
@@ -82,7 +80,7 @@ const fetchData = async () => {
     total.value = res.total || 0
   } catch (e: any) {
     console.error('[OpsRequestDetailsModal] Failed to fetch request details', e)
-    appStore.showError(e?.message || t('admin.ops.requestDetails.failedToLoad'))
+    appStore.showError(e?.message || '加载请求明细失败')
     items.value = []
     total.value = 0
   } finally {
@@ -130,10 +128,10 @@ function handlePageSizeChange(next: number) {
 }
 
 async function handleCopyRequestId(requestId: string) {
-  const ok = await copyToClipboard(requestId, t('admin.ops.requestDetails.requestIdCopied'))
+  const ok = await copyToClipboard(requestId, '请求ID已复制')
   if (ok) return
   // `useClipboard` already shows toast on failure; this keeps UX consistent with older ops modal.
-  appStore.showWarning(t('admin.ops.requestDetails.copyFailed'))
+  appStore.showWarning('复制失败')
 }
 
 function openErrorDetail(errorId: number | null | undefined) {
@@ -149,19 +147,19 @@ const kindBadgeClass = (kind: string) => {
 </script>
 
 <template>
-  <BaseDialog :show="modelValue" :title="props.preset.title || t('admin.ops.requestDetails.title')" width="full" @close="close">
+  <BaseDialog :show="modelValue" :title="props.preset.title || '请求明细'" width="full" @close="close">
     <template #default>
       <div class="flex h-full min-h-0 flex-col">
         <div class="mb-4 flex flex-shrink-0 items-center justify-between">
           <div class="text-xs text-gray-500 dark:text-gray-400">
-            {{ t('admin.ops.requestDetails.rangeLabel', { range: rangeLabel }) }}
+            {{ `窗口：${rangeLabel}` }}
           </div>
           <button
             type="button"
             class="btn btn-secondary btn-sm"
             @click="fetchData"
           >
-            {{ t('common.refresh') }}
+            {{ '刷新' }}
           </button>
         </div>
 
@@ -176,15 +174,15 @@ const kindBadgeClass = (kind: string) => {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ t('common.loading') }}</span>
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ '加载中...' }}</span>
           </div>
         </div>
 
         <!-- Table -->
         <div v-else class="flex min-h-0 flex-1 flex-col">
           <div v-if="items.length === 0" class="rounded-xl border border-dashed border-gray-200 p-10 text-center dark:border-dark-700">
-            <div class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.requestDetails.empty') }}</div>
-            <div class="mt-1 text-xs text-gray-400">{{ t('admin.ops.requestDetails.emptyHint') }}</div>
+            <div class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ '该窗口内暂无请求。' }}</div>
+            <div class="mt-1 text-xs text-gray-400">{{ '可尝试调整时间范围或取消部分筛选。' }}</div>
           </div>
 
           <div v-else class="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-dark-700">
@@ -193,28 +191,28 @@ const kindBadgeClass = (kind: string) => {
                 <thead class="sticky top-0 z-10 bg-gray-50 dark:bg-dark-900">
                 <tr>
                   <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    {{ t('admin.ops.requestDetails.table.time') }}
+                    {{ '时间' }}
                   </th>
                   <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    {{ t('admin.ops.requestDetails.table.kind') }}
+                    {{ '类型' }}
                   </th>
                   <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    {{ t('admin.ops.requestDetails.table.platform') }}
+                    {{ '平台' }}
                   </th>
                   <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    {{ t('admin.ops.requestDetails.table.model') }}
+                    {{ '模型' }}
                   </th>
                   <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    {{ t('admin.ops.requestDetails.table.duration') }}
+                    {{ '耗时' }}
                   </th>
                   <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    {{ t('admin.ops.requestDetails.table.status') }}
+                    {{ '状态码' }}
                   </th>
                   <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    {{ t('admin.ops.requestDetails.table.requestId') }}
+                    {{ '请求ID' }}
                   </th>
                   <th class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    {{ t('admin.ops.requestDetails.table.actions') }}
+                    {{ '操作' }}
                   </th>
                 </tr>
               </thead>
@@ -225,7 +223,7 @@ const kindBadgeClass = (kind: string) => {
                   </td>
                   <td class="whitespace-nowrap px-4 py-3">
                     <span class="rounded-full px-2 py-1 text-[10px] font-bold" :class="kindBadgeClass(row.kind)">
-                      {{ row.kind === 'error' ? t('admin.ops.requestDetails.kind.error') : t('admin.ops.requestDetails.kind.success') }}
+                      {{ row.kind === 'error' ? '失败' : '成功' }}
                     </span>
                   </td>
                   <td class="whitespace-nowrap px-4 py-3 text-xs font-medium text-gray-700 dark:text-gray-200">
@@ -249,7 +247,7 @@ const kindBadgeClass = (kind: string) => {
                         class="rounded-md bg-gray-100 px-2 py-1 text-[10px] font-bold text-gray-600 hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
                         @click="handleCopyRequestId(row.request_id)"
                       >
-                        {{ t('admin.ops.requestDetails.copy') }}
+                        {{ '复制' }}
                       </button>
                     </div>
                     <span v-else class="text-xs text-gray-400">-</span>
@@ -260,7 +258,7 @@ const kindBadgeClass = (kind: string) => {
                       class="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 dark:hover:bg-red-900/30"
                       @click="openErrorDetail(row.error_id)"
                     >
-                      {{ t('admin.ops.requestDetails.viewError') }}
+                      {{ '查看错误' }}
                     </button>
                     <span v-else class="text-xs text-gray-400">-</span>
                   </td>

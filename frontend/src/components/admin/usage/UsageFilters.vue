@@ -6,12 +6,12 @@
       <div class="flex flex-1 flex-wrap items-end gap-4">
         <!-- User Search -->
         <div ref="userSearchRef" class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[240px]">
-          <label class="input-label">{{ t('admin.usage.userFilter') }}</label>
+          <label class="input-label">{{ '用户' }}</label>
           <input
             v-model="userKeyword"
             type="text"
             class="input pr-8"
-            :placeholder="t('admin.usage.searchUserPlaceholder')"
+            :placeholder="'按邮箱搜索用户...'"
             @input="debounceUserSearch"
             @focus="showUserDropdown = true"
           />
@@ -43,12 +43,12 @@
 
         <!-- API Key Search -->
         <div ref="apiKeySearchRef" class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[240px]">
-          <label class="input-label">{{ t('usage.apiKeyFilter') }}</label>
+          <label class="input-label">{{ 'API 密钥' }}</label>
           <input
             v-model="apiKeyKeyword"
             type="text"
             class="input pr-8"
-            :placeholder="t('admin.usage.searchApiKeyPlaceholder')"
+            :placeholder="'按名称搜索 API 密钥...'"
             @input="debounceApiKeySearch"
             @focus="onApiKeyFocus"
           />
@@ -80,18 +80,18 @@
 
         <!-- Model Filter -->
         <div class="w-full sm:w-auto sm:min-w-[220px]">
-          <label class="input-label">{{ t('usage.model') }}</label>
+          <label class="input-label">{{ '模型' }}</label>
           <Select v-model="filters.model" :options="modelOptions" searchable @change="emitChange" />
         </div>
 
         <!-- Account Filter -->
         <div ref="accountSearchRef" class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[220px]">
-          <label class="input-label">{{ t('admin.usage.account') }}</label>
+          <label class="input-label">{{ '账户' }}</label>
           <input
             v-model="accountKeyword"
             type="text"
             class="input pr-8"
-            :placeholder="t('admin.usage.searchAccountPlaceholder')"
+            :placeholder="'按名称搜索账号...'"
             @input="debounceAccountSearch"
             @focus="showAccountDropdown = true"
           />
@@ -123,25 +123,25 @@
 
         <!-- Stream Type Filter -->
         <div class="w-full sm:w-auto sm:min-w-[180px]">
-          <label class="input-label">{{ t('usage.type') }}</label>
+          <label class="input-label">{{ '类型' }}</label>
           <Select v-model="filters.stream" :options="streamTypeOptions" @change="emitChange" />
         </div>
 
         <!-- Billing Type Filter -->
         <div class="w-full sm:w-auto sm:min-w-[200px]">
-          <label class="input-label">{{ t('admin.usage.billingType') }}</label>
+          <label class="input-label">{{ '计费类型' }}</label>
           <Select v-model="filters.billing_type" :options="billingTypeOptions" @change="emitChange" />
         </div>
 
         <!-- Group Filter -->
         <div class="w-full sm:w-auto sm:min-w-[200px]">
-          <label class="input-label">{{ t('admin.usage.group') }}</label>
+          <label class="input-label">{{ '分组' }}</label>
           <Select v-model="filters.group_id" :options="groupOptions" searchable @change="emitChange" />
         </div>
 
         <!-- Date Range Filter -->
         <div class="w-full sm:w-auto [&_.date-picker-trigger]:w-full">
-          <label class="input-label">{{ t('usage.timeRange') }}</label>
+          <label class="input-label">{{ '时间范围' }}</label>
           <DateRangePicker
             :start-date="startDate"
             :end-date="endDate"
@@ -155,13 +155,13 @@
       <!-- Right: actions -->
       <div v-if="showActions" class="flex w-full flex-wrap items-center justify-end gap-3 sm:w-auto">
         <button type="button" @click="$emit('reset')" class="btn btn-secondary">
-          {{ t('common.reset') }}
+          {{ '重置' }}
         </button>
         <button type="button" @click="$emit('cleanup')" class="btn btn-danger">
-          {{ t('admin.usage.cleanup.button') }}
+          {{ '清理' }}
         </button>
         <button type="button" @click="$emit('export')" :disabled="exporting" class="btn btn-primary">
-          {{ t('usage.exportExcel') }}
+          {{ '导出 Excel' }}
         </button>
       </div>
     </div>
@@ -170,7 +170,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, toRef, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { adminAPI } from '@/api/admin'
 import Select, { type SelectOption } from '@/components/common/Select.vue'
 import DateRangePicker from '@/components/common/DateRangePicker.vue'
@@ -199,7 +198,6 @@ const emit = defineEmits([
   'cleanup'
 ])
 
-const { t } = useI18n()
 const filters = toRef(props, 'modelValue')
 
 const userSearchRef = ref<HTMLElement | null>(null)
@@ -225,19 +223,19 @@ const accountResults = ref<SimpleAccount[]>([])
 const showAccountDropdown = ref(false)
 let accountSearchTimeout: ReturnType<typeof setTimeout> | null = null
 
-const modelOptions = ref<SelectOption[]>([{ value: null, label: t('admin.usage.allModels') }])
-const groupOptions = ref<SelectOption[]>([{ value: null, label: t('admin.usage.allGroups') }])
+const modelOptions = ref<SelectOption[]>([{ value: null, label: '全部模型' }])
+const groupOptions = ref<SelectOption[]>([{ value: null, label: '全部分组' }])
 
 const streamTypeOptions = ref<SelectOption[]>([
-  { value: null, label: t('admin.usage.allTypes') },
-  { value: true, label: t('usage.stream') },
-  { value: false, label: t('usage.sync') }
+  { value: null, label: '全部类型' },
+  { value: true, label: '流式' },
+  { value: false, label: '同步' }
 ])
 
 const billingTypeOptions = ref<SelectOption[]>([
-  { value: null, label: t('admin.usage.allBillingTypes') },
-  { value: 0, label: t('admin.usage.billingTypeBalance') },
-  { value: 1, label: t('admin.usage.billingTypeSubscription') }
+  { value: null, label: '全部计费类型' },
+  { value: 0, label: '钱包余额' },
+  { value: 1, label: '订阅套餐' }
 ])
 
 const emitChange = () => emit('change')

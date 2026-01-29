@@ -9,12 +9,12 @@
           >
             <Icon name="creditCard" size="xl" class="text-white" />
           </div>
-          <p class="text-sm font-medium text-primary-100">{{ t('redeem.currentBalance') }}</p>
+          <p class="text-sm font-medium text-primary-100">{{ '当前余额' }}</p>
           <p class="mt-2 text-4xl font-bold text-white">
             ${{ user?.balance?.toFixed(2) || '0.00' }}
           </p>
           <p class="mt-2 text-sm text-primary-100">
-            {{ t('redeem.concurrency') }}: {{ user?.concurrency || 0 }} {{ t('redeem.requests') }}
+            {{ '并发数' }}: {{ user?.concurrency || 0 }} {{ '请求' }}
           </p>
         </div>
       </div>
@@ -25,7 +25,7 @@
           <form @submit.prevent="handleRedeem" class="space-y-5">
             <div>
               <label for="code" class="input-label">
-                {{ t('redeem.redeemCodeLabel') }}
+                {{ '兑换码' }}
               </label>
               <div class="relative mt-1">
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
@@ -36,13 +36,13 @@
                   v-model="redeemCode"
                   type="text"
                   required
-                  :placeholder="t('redeem.redeemCodePlaceholder')"
+                  :placeholder="'请输入兑换码'"
                   :disabled="submitting"
                   class="input py-3 pl-12 text-lg"
                 />
               </div>
               <p class="input-hint">
-                {{ t('redeem.redeemCodeHint') }}
+                {{ '兑换码区分大小写' }}
               </p>
             </div>
 
@@ -72,7 +72,7 @@
                 ></path>
               </svg>
               <Icon v-else name="checkCircle" size="md" class="mr-2" />
-              {{ submitting ? t('redeem.redeeming') : t('redeem.redeemButton') }}
+              {{ submitting ? '兑换中...' : '兑换' }}
             </button>
           </form>
         </div>
@@ -93,35 +93,35 @@
               </div>
               <div class="flex-1">
                 <h3 class="text-sm font-semibold text-emerald-800 dark:text-emerald-300">
-                  {{ t('redeem.redeemSuccess') }}
+                  {{ '兑换成功！' }}
                 </h3>
                 <div class="mt-2 text-sm text-emerald-700 dark:text-emerald-400">
                   <p>{{ redeemResult.message }}</p>
                   <div class="mt-3 space-y-1">
                     <p v-if="redeemResult.type === 'balance'" class="font-medium">
-                      {{ t('redeem.added') }}: ${{ redeemResult.value.toFixed(2) }}
+                      {{ '已添加' }}: ${{ redeemResult.value.toFixed(2) }}
                     </p>
                     <p v-else-if="redeemResult.type === 'concurrency'" class="font-medium">
-                      {{ t('redeem.added') }}: {{ redeemResult.value }}
-                      {{ t('redeem.concurrentRequests') }}
+                      {{ '已添加' }}: {{ redeemResult.value }}
+                      {{ '并发请求' }}
                     </p>
                     <p v-else-if="redeemResult.type === 'subscription'" class="font-medium">
-                      {{ t('redeem.subscriptionAssigned') }}
+                      {{ '订阅已分配' }}
                       <span v-if="redeemResult.group_name"> - {{ redeemResult.group_name }}</span>
                       <span v-if="redeemResult.validity_days">
                         ({{
-                          t('redeem.subscriptionDays', { days: redeemResult.validity_days })
+                          `${redeemResult.validity_days} 天`
                         }})</span
                       >
                     </p>
                     <p v-if="redeemResult.new_balance !== undefined">
-                      {{ t('redeem.newBalance') }}:
+                      {{ '新余额' }}:
                       <span class="font-semibold">${{ redeemResult.new_balance.toFixed(2) }}</span>
                     </p>
                     <p v-if="redeemResult.new_concurrency !== undefined">
-                      {{ t('redeem.newConcurrency') }}:
+                      {{ '新并发数' }}:
                       <span class="font-semibold"
-                        >{{ redeemResult.new_concurrency }} {{ t('redeem.requests') }}</span
+                        >{{ redeemResult.new_concurrency }} {{ '请求' }}</span
                       >
                     </p>
                   </div>
@@ -151,7 +151,7 @@
               </div>
               <div class="flex-1">
                 <h3 class="text-sm font-semibold text-red-800 dark:text-red-300">
-                  {{ t('redeem.redeemFailed') }}
+                  {{ '兑换失败' }}
                 </h3>
                 <p class="mt-2 text-sm text-red-700 dark:text-red-400">
                   {{ errorMessage }}
@@ -175,15 +175,15 @@
             </div>
             <div class="flex-1">
               <h3 class="text-sm font-semibold text-primary-800 dark:text-primary-300">
-                {{ t('redeem.aboutCodes') }}
+                {{ '关于兑换码' }}
               </h3>
               <ul
                 class="mt-2 list-inside list-disc space-y-1 text-sm text-primary-700 dark:text-primary-400"
               >
-                <li>{{ t('redeem.codeRule1') }}</li>
-                <li>{{ t('redeem.codeRule2') }}</li>
+                <li>{{ '每个兑换码只能使用一次' }}</li>
+                <li>{{ '兑换码可以增加余额、并发数或试用权限' }}</li>
                 <li>
-                  {{ t('redeem.codeRule3') }}
+                  {{ '如有兑换问题，请联系客服' }}
                   <span
                     v-if="contactInfo"
                     class="ml-1.5 inline-flex items-center rounded-md bg-primary-200/50 px-2 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-800/40 dark:text-primary-200"
@@ -191,7 +191,7 @@
                     {{ contactInfo }}
                   </span>
                 </li>
-                <li>{{ t('redeem.codeRule4') }}</li>
+                <li>{{ '余额和并发数即时更新' }}</li>
               </ul>
             </div>
           </div>
@@ -202,7 +202,7 @@
       <div class="card">
         <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-            {{ t('redeem.recentActivity') }}
+            {{ '最近活动' }}
           </h2>
         </div>
         <div class="p-6">
@@ -310,7 +310,7 @@
                   {{ item.code.slice(0, 8) }}...
                 </p>
                 <p v-else class="text-xs text-gray-400 dark:text-dark-500">
-                  {{ t('redeem.adminAdjustment') }}
+                  {{ '管理员调整' }}
                 </p>
               </div>
             </div>
@@ -324,7 +324,7 @@
               <Icon name="clock" size="xl" class="text-gray-400 dark:text-dark-500" />
             </div>
             <p class="text-sm text-gray-500 dark:text-dark-400">
-              {{ t('redeem.historyWillAppear') }}
+              {{ '您的兑换历史将显示在这里' }}
             </p>
           </div>
         </div>
@@ -335,7 +335,6 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { useAppStore } from '@/stores/app'
 import { useSubscriptionStore } from '@/stores/subscriptions'
@@ -344,7 +343,6 @@ import AppLayout from '@/components/layout/AppLayout.vue'
 import Icon from '@/components/icons/Icon.vue'
 import { formatDateTime } from '@/utils/format'
 
-const { t } = useI18n()
 const authStore = useAuthStore()
 const appStore = useAppStore()
 const subscriptionStore = useSubscriptionStore()
@@ -384,17 +382,17 @@ const isAdminAdjustment = (type: string) => {
 
 const getHistoryItemTitle = (item: RedeemHistoryItem) => {
   if (item.type === 'balance') {
-    return t('redeem.balanceAddedRedeem')
+    return '余额充值（兑换）'
   } else if (item.type === 'admin_balance') {
-    return item.value >= 0 ? t('redeem.balanceAddedAdmin') : t('redeem.balanceDeductedAdmin')
+    return item.value >= 0 ? '余额充值（管理员）' : '余额扣除（管理员）'
   } else if (item.type === 'concurrency') {
-    return t('redeem.concurrencyAddedRedeem')
+    return '并发增加（兑换）'
   } else if (item.type === 'admin_concurrency') {
-    return item.value >= 0 ? t('redeem.concurrencyAddedAdmin') : t('redeem.concurrencyReducedAdmin')
+    return item.value >= 0 ? '并发增加（管理员）' : '并发减少（管理员）'
   } else if (item.type === 'subscription') {
-    return t('redeem.subscriptionAssigned')
+    return '订阅已分配'
   }
-  return t('common.unknown')
+  return '未知'
 }
 
 const formatHistoryValue = (item: RedeemHistoryItem) => {
@@ -405,10 +403,10 @@ const formatHistoryValue = (item: RedeemHistoryItem) => {
     // 订阅类型显示有效天数和分组名称
     const days = item.validity_days || Math.round(item.value)
     const groupName = item.group?.name || ''
-    return groupName ? `${days}${t('redeem.days')} - ${groupName}` : `${days}${t('redeem.days')}`
+    return groupName ? `${days}${'天'} - ${groupName}` : `${days}${'天'}`
   } else {
     const sign = item.value >= 0 ? '+' : ''
-    return `${sign}${item.value} ${t('redeem.requests')}`
+    return `${sign}${item.value} ${'请求'}`
   }
 }
 
@@ -425,7 +423,7 @@ const fetchHistory = async () => {
 
 const handleRedeem = async () => {
   if (!redeemCode.value.trim()) {
-    appStore.showError(t('redeem.pleaseEnterCode'))
+    appStore.showError('请输入兑换码')
     return
   }
 
@@ -447,7 +445,7 @@ const handleRedeem = async () => {
         await subscriptionStore.fetchActiveSubscriptions(true) // force refresh
       } catch (error) {
         console.error('Failed to refresh subscriptions after redeem:', error)
-        appStore.showWarning(t('redeem.subscriptionRefreshFailed'))
+        appStore.showWarning('兑换成功，但订阅状态刷新失败。')
       }
     }
 
@@ -458,11 +456,11 @@ const handleRedeem = async () => {
     await fetchHistory()
 
     // Show success toast
-    appStore.showSuccess(t('redeem.codeRedeemSuccess'))
+    appStore.showSuccess('兑换成功！')
   } catch (error: any) {
-    errorMessage.value = error.response?.data?.detail || t('redeem.failedToRedeem')
+    errorMessage.value = error.response?.data?.detail || '兑换失败，请检查兑换码后重试。'
 
-    appStore.showError(t('redeem.redeemFailed'))
+    appStore.showError('兑换失败')
   } finally {
     submitting.value = false
   }

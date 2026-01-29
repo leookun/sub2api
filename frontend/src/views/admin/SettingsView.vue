@@ -12,10 +12,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.adminApiKey.title') }}
+              {{ '管理员 API Key' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.adminApiKey.description') }}
+              {{ '用于外部系统集成的全局 API Key，拥有完整的管理员权限' }}
             </p>
           </div>
           <div class="space-y-4 p-6">
@@ -30,7 +30,7 @@
                   class="mt-0.5 flex-shrink-0 text-amber-500"
                 />
                 <p class="ml-3 text-sm text-amber-700 dark:text-amber-300">
-                  {{ t('admin.settings.adminApiKey.securityWarning') }}
+                  {{ '警告：此密钥拥有完整的管理员权限，请妥善保管。' }}
                 </p>
               </div>
             </div>
@@ -38,13 +38,13 @@
             <!-- Loading State -->
             <div v-if="adminApiKeyLoading" class="flex items-center gap-2 text-gray-500">
               <div class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"></div>
-              {{ t('common.loading') }}
+              {{ '加载中...' }}
             </div>
 
             <!-- No Key Configured -->
             <div v-else-if="!adminApiKeyExists" class="flex items-center justify-between">
               <span class="text-gray-500 dark:text-gray-400">
-                {{ t('admin.settings.adminApiKey.notConfigured') }}
+                {{ '尚未配置管理员 API Key' }}
               </span>
               <button
                 type="button"
@@ -74,8 +74,8 @@
                 </svg>
                 {{
                   adminApiKeyOperating
-                    ? t('admin.settings.adminApiKey.creating')
-                    : t('admin.settings.adminApiKey.create')
+                    ? '创建中...'
+                    : '创建密钥'
                 }}
               </button>
             </div>
@@ -85,7 +85,7 @@
               <div class="flex items-center justify-between">
                 <div>
                   <label class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.adminApiKey.currentKey') }}
+                    {{ '当前密钥' }}
                   </label>
                   <code
                     class="rounded bg-gray-100 px-2 py-1 font-mono text-sm text-gray-900 dark:bg-dark-700 dark:text-gray-100"
@@ -102,8 +102,8 @@
                   >
                     {{
                       adminApiKeyOperating
-                        ? t('admin.settings.adminApiKey.regenerating')
-                        : t('admin.settings.adminApiKey.regenerate')
+                        ? '生成中...'
+                        : '重新生成'
                     }}
                   </button>
                   <button
@@ -112,7 +112,7 @@
                     :disabled="adminApiKeyOperating"
                     class="btn btn-secondary btn-sm text-red-600 hover:text-red-700 dark:text-red-400"
                   >
-                    {{ t('admin.settings.adminApiKey.delete') }}
+                    {{ '删除' }}
                   </button>
                 </div>
               </div>
@@ -123,7 +123,7 @@
                 class="space-y-3 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20"
               >
                 <p class="text-sm font-medium text-green-700 dark:text-green-300">
-                  {{ t('admin.settings.adminApiKey.keyWarning') }}
+                  {{ '此密钥仅显示一次，请立即复制保存。' }}
                 </p>
                 <div class="flex items-center gap-2">
                   <code
@@ -136,11 +136,11 @@
                     @click="copyNewKey"
                     class="btn btn-primary btn-sm flex-shrink-0"
                   >
-                    {{ t('admin.settings.adminApiKey.copyKey') }}
+                    {{ '复制密钥' }}
                   </button>
                 </div>
                 <p class="text-xs text-green-600 dark:text-green-400">
-                  {{ t('admin.settings.adminApiKey.usage') }}
+                  {{ '使用方法：在请求头中添加 x-api-key: <your-admin-api-key>' }}
                 </p>
               </div>
             </div>
@@ -151,17 +151,17 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.streamTimeout.title') }}
+              {{ '流超时处理' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.streamTimeout.description') }}
+              {{ '配置上游响应超时时的账户处理策略，避免问题账户持续被选中' }}
             </p>
           </div>
           <div class="space-y-5 p-6">
             <!-- Loading State -->
             <div v-if="streamTimeoutLoading" class="flex items-center gap-2 text-gray-500">
               <div class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"></div>
-              {{ t('common.loading') }}
+              {{ '加载中...' }}
             </div>
 
             <template v-else>
@@ -169,10 +169,10 @@
               <div class="flex items-center justify-between">
                 <div>
                   <label class="font-medium text-gray-900 dark:text-white">{{
-                    t('admin.settings.streamTimeout.enabled')
+                    '启用流超时处理'
                   }}</label>
                   <p class="text-sm text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.streamTimeout.enabledHint') }}
+                    {{ '当上游响应超时时，自动处理问题账户' }}
                   </p>
                 </div>
                 <Toggle v-model="streamTimeoutForm.enabled" />
@@ -186,22 +186,22 @@
                 <!-- Action -->
                 <div>
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.streamTimeout.action') }}
+                    {{ '处理方式' }}
                   </label>
                   <select v-model="streamTimeoutForm.action" class="input w-64">
-                    <option value="temp_unsched">{{ t('admin.settings.streamTimeout.actionTempUnsched') }}</option>
-                    <option value="error">{{ t('admin.settings.streamTimeout.actionError') }}</option>
-                    <option value="none">{{ t('admin.settings.streamTimeout.actionNone') }}</option>
+                    <option value="temp_unsched">{{ '临时不可调度' }}</option>
+                    <option value="error">{{ '标记为错误状态' }}</option>
+                    <option value="none">{{ '不处理' }}</option>
                   </select>
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.streamTimeout.actionHint') }}
+                    {{ '超时后对账户执行的操作' }}
                   </p>
                 </div>
 
                 <!-- Temp Unsched Minutes (only show when action is temp_unsched) -->
                 <div v-if="streamTimeoutForm.action === 'temp_unsched'">
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.streamTimeout.tempUnschedMinutes') }}
+                    {{ '暂停时长（分钟）' }}
                   </label>
                   <input
                     v-model.number="streamTimeoutForm.temp_unsched_minutes"
@@ -211,14 +211,14 @@
                     class="input w-32"
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.streamTimeout.tempUnschedMinutesHint') }}
+                    {{ '临时不可调度的持续时间（1-60分钟）' }}
                   </p>
                 </div>
 
                 <!-- Threshold Count -->
                 <div>
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.streamTimeout.thresholdCount') }}
+                    {{ '触发阈值（次数）' }}
                   </label>
                   <input
                     v-model.number="streamTimeoutForm.threshold_count"
@@ -228,14 +228,14 @@
                     class="input w-32"
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.streamTimeout.thresholdCountHint') }}
+                    {{ '累计超时多少次后触发处理（1-10次）' }}
                   </p>
                 </div>
 
                 <!-- Threshold Window Minutes -->
                 <div>
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.streamTimeout.thresholdWindowMinutes') }}
+                    {{ '阈值窗口（分钟）' }}
                   </label>
                   <input
                     v-model.number="streamTimeoutForm.threshold_window_minutes"
@@ -245,7 +245,7 @@
                     class="input w-32"
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.streamTimeout.thresholdWindowMinutesHint') }}
+                    {{ '超时计数的时间窗口（1-60分钟）' }}
                   </p>
                 </div>
               </div>
@@ -278,7 +278,7 @@
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  {{ streamTimeoutSaving ? t('common.saving') : t('common.save') }}
+                  {{ streamTimeoutSaving ? '保存中...' : '保存' }}
                 </button>
               </div>
             </template>
@@ -289,10 +289,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.registration.title') }}
+              {{ '注册设置' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.registration.description') }}
+              {{ '控制用户注册和验证' }}
             </p>
           </div>
           <div class="space-y-5 p-6">
@@ -300,10 +300,10 @@
             <div class="flex items-center justify-between">
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.registration.enableRegistration')
+                  '开放注册'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.registration.enableRegistrationHint') }}
+                  {{ '允许新用户注册' }}
                 </p>
               </div>
               <Toggle v-model="form.registration_enabled" />
@@ -315,10 +315,10 @@
             >
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.registration.emailVerification')
+                  '邮箱验证'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.registration.emailVerificationHint') }}
+                  {{ '新用户注册时需要验证邮箱' }}
                 </p>
               </div>
               <Toggle v-model="form.email_verify_enabled" />
@@ -330,10 +330,10 @@
             >
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.registration.promoCode')
+                  '优惠码'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.registration.promoCodeHint') }}
+                  {{ '允许用户在注册时使用优惠码' }}
                 </p>
               </div>
               <Toggle v-model="form.promo_code_enabled" />
@@ -346,10 +346,10 @@
             >
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.registration.passwordReset')
+                  '忘记密码'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.registration.passwordResetHint') }}
+                  {{ '允许用户通过邮箱重置密码' }}
                 </p>
               </div>
               <Toggle v-model="form.password_reset_enabled" />
@@ -361,17 +361,17 @@
             >
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.registration.totp')
+                  '双因素认证 (2FA)'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.registration.totpHint') }}
+                  {{ '允许用户使用 Google Authenticator 等应用进行二次验证' }}
                 </p>
                 <!-- Warning when encryption key not configured -->
                 <p
                   v-if="!form.totp_encryption_key_configured"
                   class="mt-2 text-sm text-amber-600 dark:text-amber-400"
                 >
-                  {{ t('admin.settings.registration.totpKeyNotConfigured') }}
+                  {{ '请先在环境变量中配置 TOTP_ENCRYPTION_KEY。使用命令 openssl rand -hex 32 生成密钥。' }}
                 </p>
               </div>
               <Toggle
@@ -386,10 +386,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.turnstile.title') }}
+              {{ 'Cloudflare Turnstile' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.turnstile.description') }}
+              {{ '登录和注册的机器人防护' }}
             </p>
           </div>
           <div class="space-y-5 p-6">
@@ -397,10 +397,10 @@
             <div class="flex items-center justify-between">
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.turnstile.enableTurnstile')
+                  '启用 Turnstile'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.turnstile.enableTurnstileHint') }}
+                  {{ '需要 Cloudflare Turnstile 验证' }}
                 </p>
               </div>
               <Toggle v-model="form.turnstile_enabled" />
@@ -414,7 +414,7 @@
               <div class="grid grid-cols-1 gap-6">
                 <div>
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.turnstile.siteKey') }}
+                    {{ '站点密钥' }}
                   </label>
                   <input
                     v-model="form.turnstile_site_key"
@@ -423,18 +423,18 @@
                     placeholder="0x4AAAAAAA..."
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.turnstile.siteKeyHint') }}
+                    {{ '从 Cloudflare Dashboard 获取' }}
                     <a
                       href="https://dash.cloudflare.com/"
                       target="_blank"
                       class="text-primary-600 hover:text-primary-500"
-                      >{{ t('admin.settings.turnstile.cloudflareDashboard') }}</a
+                      >{{ 'Cloudflare Dashboard' }}</a
                     >
                   </p>
                 </div>
                 <div>
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.turnstile.secretKey') }}
+                    {{ '私密密钥' }}
                   </label>
                   <input
                     v-model="form.turnstile_secret_key"
@@ -445,8 +445,8 @@
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
                     {{
                       form.turnstile_secret_key_configured
-                        ? t('admin.settings.turnstile.secretKeyConfiguredHint')
-                        : t('admin.settings.turnstile.secretKeyHint')
+                        ? '密钥已配置，留空以保留当前值。'
+                        : '服务端验证密钥（请保密）'
                     }}
                   </p>
                 </div>
@@ -459,20 +459,20 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.linuxdo.title') }}
+              {{ 'LinuxDo Connect 登录' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.linuxdo.description') }}
+              {{ '配置 LinuxDo Connect OAuth，用于 Sub2API 用户登录' }}
             </p>
           </div>
           <div class="space-y-5 p-6">
             <div class="flex items-center justify-between">
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.linuxdo.enable')
+                  '启用 LinuxDo 登录'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.linuxdo.enableHint') }}
+                  {{ '在登录/注册页面显示 LinuxDo 登录入口' }}
                 </p>
               </div>
               <Toggle v-model="form.linuxdo_connect_enabled" />
@@ -485,22 +485,22 @@
               <div class="grid grid-cols-1 gap-6">
                 <div>
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.linuxdo.clientId') }}
+                    {{ 'Client ID' }}
                   </label>
                   <input
                     v-model="form.linuxdo_connect_client_id"
                     type="text"
                     class="input font-mono text-sm"
-                    :placeholder="t('admin.settings.linuxdo.clientIdPlaceholder')"
+                    :placeholder="'例如：hprJ5pC3...'"
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.linuxdo.clientIdHint') }}
+                    {{ '从 Connect.Linux.Do 后台获取' }}
                   </p>
                 </div>
 
                 <div>
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.linuxdo.clientSecret') }}
+                    {{ 'Client Secret' }}
                   </label>
                   <input
                     v-model="form.linuxdo_connect_client_secret"
@@ -508,28 +508,28 @@
                     class="input font-mono text-sm"
                     :placeholder="
                       form.linuxdo_connect_client_secret_configured
-                        ? t('admin.settings.linuxdo.clientSecretConfiguredPlaceholder')
-                        : t('admin.settings.linuxdo.clientSecretPlaceholder')
+                        ? '********'
+                        : '********'
                     "
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
                     {{
                       form.linuxdo_connect_client_secret_configured
-                        ? t('admin.settings.linuxdo.clientSecretConfiguredHint')
-                        : t('admin.settings.linuxdo.clientSecretHint')
+                        ? '密钥已配置，留空以保留当前值。'
+                        : '用于后端交换 token（请保密）'
                     }}
                   </p>
                 </div>
 
                 <div>
                   <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ t('admin.settings.linuxdo.redirectUrl') }}
+                    {{ '回调地址（Redirect URL）' }}
                   </label>
                   <input
                     v-model="form.linuxdo_connect_redirect_url"
                     type="url"
                     class="input font-mono text-sm"
-                    :placeholder="t('admin.settings.linuxdo.redirectUrlPlaceholder')"
+                    :placeholder="'https://your-domain.com/api/v1/auth/oauth/linuxdo/callback'"
                   />
                   <div class="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
                     <button
@@ -537,7 +537,7 @@
                       class="btn btn-secondary btn-sm w-fit"
                       @click="setAndCopyLinuxdoRedirectUrl"
                     >
-                      {{ t('admin.settings.linuxdo.quickSetCopy') }}
+                      {{ '使用当前站点生成并复制' }}
                     </button>
                     <code
                       v-if="linuxdoRedirectUrlSuggestion"
@@ -547,7 +547,7 @@
                     </code>
                   </div>
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.linuxdo.redirectUrlHint') }}
+                    {{ '需与 Connect.Linux.Do 中配置的回调地址一致（必须是 http(s) 完整 URL）' }}
                   </p>
                 </div>
               </div>
@@ -559,17 +559,17 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.defaults.title') }}
+              {{ '用户默认设置' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.defaults.description') }}
+              {{ '新用户的默认值' }}
             </p>
           </div>
           <div class="p-6">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.defaults.defaultBalance') }}
+                  {{ '默认余额' }}
                 </label>
                 <input
                   v-model.number="form.default_balance"
@@ -580,12 +580,12 @@
                   placeholder="0.00"
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.defaults.defaultBalanceHint') }}
+                  {{ '新用户的初始余额' }}
                 </p>
               </div>
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.defaults.defaultConcurrency') }}
+                  {{ '默认并发数' }}
                 </label>
                 <input
                   v-model.number="form.default_concurrency"
@@ -595,7 +595,7 @@
                   placeholder="1"
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.defaults.defaultConcurrencyHint') }}
+                  {{ '新用户的最大并发请求数' }}
                 </p>
               </div>
             </div>
@@ -606,40 +606,40 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.site.title') }}
+              {{ '站点设置' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.site.description') }}
+              {{ '自定义站点品牌' }}
             </p>
           </div>
           <div class="space-y-6 p-6">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.site.siteName') }}
+                  {{ '站点名称' }}
                 </label>
                 <input
                   v-model="form.site_name"
                   type="text"
                   class="input"
-                  :placeholder="t('admin.settings.site.siteNamePlaceholder')"
+                  :placeholder="'Sub2API'"
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.site.siteNameHint') }}
+                  {{ '显示在邮件和页面标题中' }}
                 </p>
               </div>
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.site.siteSubtitle') }}
+                  {{ '站点副标题' }}
                 </label>
                 <input
                   v-model="form.site_subtitle"
                   type="text"
                   class="input"
-                  :placeholder="t('admin.settings.site.siteSubtitlePlaceholder')"
+                  :placeholder="'订阅转 API 转换平台'"
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.site.siteSubtitleHint') }}
+                  {{ '显示在登录和注册页面' }}
                 </p>
               </div>
             </div>
@@ -647,55 +647,55 @@
             <!-- API Base URL -->
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ t('admin.settings.site.apiBaseUrl') }}
+                {{ 'API 端点地址' }}
               </label>
               <input
                 v-model="form.api_base_url"
                 type="text"
                 class="input font-mono text-sm"
-                :placeholder="t('admin.settings.site.apiBaseUrlPlaceholder')"
+                :placeholder="'https://api.example.com'"
               />
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.settings.site.apiBaseUrlHint') }}
+                {{ '用于"使用密钥"和"导入到 CC Switch"功能，留空则使用当前站点地址' }}
               </p>
             </div>
 
             <!-- Contact Info -->
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ t('admin.settings.site.contactInfo') }}
+                {{ '客服联系方式' }}
               </label>
               <input
                 v-model="form.contact_info"
                 type="text"
                 class="input"
-                :placeholder="t('admin.settings.site.contactInfoPlaceholder')"
+                :placeholder="'例如：QQ: 123456789'"
               />
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.settings.site.contactInfoHint') }}
+                {{ '填写客服联系方式，将展示在兑换页面、个人资料等位置' }}
               </p>
             </div>
 
             <!-- Doc URL -->
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ t('admin.settings.site.docUrl') }}
+                {{ '文档链接' }}
               </label>
               <input
                 v-model="form.doc_url"
                 type="url"
                 class="input font-mono text-sm"
-                :placeholder="t('admin.settings.site.docUrlPlaceholder')"
+                :placeholder="'https://docs.example.com'"
               />
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.settings.site.docUrlHint') }}
+                {{ '文档网站的链接。留空则隐藏文档链接。' }}
               </p>
             </div>
 
             <!-- Site Logo Upload -->
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ t('admin.settings.site.siteLogo') }}
+                {{ '站点Logo' }}
               </label>
               <div class="flex items-start gap-6">
                 <!-- Logo Preview -->
@@ -737,7 +737,7 @@
                         @change="handleLogoUpload"
                       />
                       <Icon name="upload" size="sm" class="mr-1.5" :stroke-width="2" />
-                      {{ t('admin.settings.site.uploadImage') }}
+                      {{ '上传图片' }}
                     </label>
                     <button
                       v-if="form.site_logo"
@@ -746,11 +746,11 @@
                       class="btn btn-secondary btn-sm text-red-600 hover:text-red-700 dark:text-red-400"
                     >
                       <Icon name="trash" size="sm" class="mr-1.5" :stroke-width="2" />
-                      {{ t('admin.settings.site.remove') }}
+                      {{ '移除' }}
                     </button>
                   </div>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
-                    {{ t('admin.settings.site.logoHint') }}
+                    {{ 'PNG、JPG 或 SVG 格式，最大 300KB。建议：80x80px 正方形图片。' }}
                   </p>
                   <p v-if="logoError" class="text-xs text-red-500">{{ logoError }}</p>
                 </div>
@@ -760,20 +760,20 @@
             <!-- Home Content -->
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ t('admin.settings.site.homeContent') }}
+                {{ '首页内容' }}
               </label>
               <textarea
                 v-model="form.home_content"
                 rows="6"
                 class="input font-mono text-sm"
-                :placeholder="t('admin.settings.site.homeContentPlaceholder')"
+                :placeholder="'在此输入首页内容，支持 Markdown & HTML 代码。如果输入的是一个链接，则会使用该链接作为 iframe 的 src 属性。'"
               ></textarea>
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.settings.site.homeContentHint') }}
+                {{ '自定义首页内容，支持 Markdown/HTML。如果输入的是链接（以 http:// 或 https:// 开头），则会使用该链接作为 iframe 的 src 属性，这允许你设置任意网页作为首页。设置后首页的状态信息将不再显示。' }}
               </p>
               <!-- iframe CSP Warning -->
               <p class="mt-2 text-xs text-amber-600 dark:text-amber-400">
-                {{ t('admin.settings.site.homeContentIframeWarning') }}
+                {{ '⚠️ iframe 模式提示：部分网站设置了 X-Frame-Options 或 CSP 安全策略，禁止被嵌入到 iframe 中。如果页面显示空白或报错，请确认目标网站允许被嵌入，或考虑使用 HTML 模式自行构建页面内容。' }}
               </p>
             </div>
 
@@ -783,10 +783,10 @@
             >
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.site.hideCcsImportButton')
+                  '隐藏 CCS 导入按钮'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.site.hideCcsImportButtonHint') }}
+                  {{ '启用后将在 API Keys 页面隐藏"导入 CCS"按钮' }}
                 </p>
               </div>
               <Toggle v-model="form.hide_ccs_import_button" />
@@ -801,10 +801,10 @@
           >
             <div>
               <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-                {{ t('admin.settings.smtp.title') }}
+                {{ 'SMTP 设置' }}
               </h2>
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                {{ t('admin.settings.smtp.description') }}
+                {{ '配置用于发送验证码的邮件服务' }}
               </p>
             </div>
             <button
@@ -830,8 +830,8 @@
               </svg>
               {{
                 testingSmtp
-                  ? t('admin.settings.smtp.testing')
-                  : t('admin.settings.smtp.testConnection')
+                  ? '测试中...'
+                  : '测试连接'
               }}
             </button>
           </div>
@@ -839,18 +839,18 @@
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.smtp.host') }}
+                  {{ 'SMTP 主机' }}
                 </label>
                 <input
                   v-model="form.smtp_host"
                   type="text"
                   class="input"
-                  :placeholder="t('admin.settings.smtp.hostPlaceholder')"
+                  :placeholder="'smtp.gmail.com'"
                 />
               </div>
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.smtp.port') }}
+                  {{ 'SMTP 端口' }}
                 </label>
                 <input
                   v-model.number="form.smtp_port"
@@ -858,23 +858,23 @@
                   min="1"
                   max="65535"
                   class="input"
-                  :placeholder="t('admin.settings.smtp.portPlaceholder')"
+                  :placeholder="'587'"
                 />
               </div>
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.smtp.username') }}
+                  {{ 'SMTP 用户名' }}
                 </label>
                 <input
                   v-model="form.smtp_username"
                   type="text"
                   class="input"
-                  :placeholder="t('admin.settings.smtp.usernamePlaceholder')"
+                  :placeholder=""your-email{'@'}gmail.com""
                 />
               </div>
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.smtp.password') }}
+                  {{ 'SMTP 密码' }}
                 </label>
                 <input
                   v-model="form.smtp_password"
@@ -882,38 +882,38 @@
                   class="input"
                   :placeholder="
                     form.smtp_password_configured
-                      ? t('admin.settings.smtp.passwordConfiguredPlaceholder')
-                      : t('admin.settings.smtp.passwordPlaceholder')
+                      ? '********'
+                      : '********'
                   "
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
                   {{
                     form.smtp_password_configured
-                      ? t('admin.settings.smtp.passwordConfiguredHint')
-                      : t('admin.settings.smtp.passwordHint')
+                      ? '密码已配置，留空以保留当前值。'
+                      : '留空以保留现有密码'
                   }}
                 </p>
               </div>
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.smtp.fromEmail') }}
+                  {{ '发件人邮箱' }}
                 </label>
                 <input
                   v-model="form.smtp_from_email"
                   type="email"
                   class="input"
-                  :placeholder="t('admin.settings.smtp.fromEmailPlaceholder')"
+                  :placeholder=""noreply{'@'}example.com""
                 />
               </div>
               <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.smtp.fromName') }}
+                  {{ '发件人名称' }}
                 </label>
                 <input
                   v-model="form.smtp_from_name"
                   type="text"
                   class="input"
-                  :placeholder="t('admin.settings.smtp.fromNamePlaceholder')"
+                  :placeholder="'Sub2API'"
                 />
               </div>
             </div>
@@ -924,10 +924,10 @@
             >
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.smtp.useTls')
+                  '使用 TLS'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.smtp.useTlsHint') }}
+                  {{ '为 SMTP 连接启用 TLS 加密' }}
                 </p>
               </div>
               <Toggle v-model="form.smtp_use_tls" />
@@ -939,10 +939,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.purchase.title') }}
+              {{ '购买订阅页面' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.purchase.description') }}
+              {{ '在侧边栏展示“购买订阅”入口，并在页面内通过 iframe 打开指定链接' }}
             </p>
           </div>
           <div class="space-y-6 p-6">
@@ -950,10 +950,10 @@
             <div class="flex items-center justify-between">
               <div>
                 <label class="font-medium text-gray-900 dark:text-white">{{
-                  t('admin.settings.purchase.enabled')
+                  '显示购买订阅入口'
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ t('admin.settings.purchase.enabledHint') }}
+                  {{ '仅在标准模式（非简单模式）下展示' }}
                 </p>
               </div>
               <Toggle v-model="form.purchase_subscription_enabled" />
@@ -962,19 +962,19 @@
             <!-- URL -->
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ t('admin.settings.purchase.url') }}
+                {{ '购买页面 URL' }}
               </label>
               <input
                 v-model="form.purchase_subscription_url"
                 type="url"
                 class="input font-mono text-sm"
-                :placeholder="t('admin.settings.purchase.urlPlaceholder')"
+                :placeholder="'https://example.com/purchase'"
               />
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.settings.purchase.urlHint') }}
+                {{ '必须是完整的 http(s) 链接' }}
               </p>
               <p class="mt-2 text-xs text-amber-600 dark:text-amber-400">
-                {{ t('admin.settings.purchase.iframeWarning') }}
+                {{ '⚠️ iframe 提示：部分网站会通过 X-Frame-Options 或 CSP（frame-ancestors）禁止被 iframe 嵌入，出现空白时可引导用户使用“新窗口打开”。' }}
               </p>
             </div>
           </div>
@@ -984,23 +984,23 @@
         <div v-if="form.email_verify_enabled" class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.settings.testEmail.title') }}
+              {{ '发送测试邮件' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ t('admin.settings.testEmail.description') }}
+              {{ '发送测试邮件以验证 SMTP 配置' }}
             </p>
           </div>
           <div class="p-6">
             <div class="flex items-end gap-4">
               <div class="flex-1">
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.settings.testEmail.recipientEmail') }}
+                  {{ '收件人邮箱' }}
                 </label>
                 <input
                   v-model="testEmailAddress"
                   type="email"
                   class="input"
-                  :placeholder="t('admin.settings.testEmail.recipientEmailPlaceholder')"
+                  :placeholder=""test{'@'}example.com""
                 />
               </div>
               <button
@@ -1031,8 +1031,8 @@
                 </svg>
                 {{
                   sendingTestEmail
-                    ? t('admin.settings.testEmail.sending')
-                    : t('admin.settings.testEmail.sendTestEmail')
+                    ? '发送中...'
+                    : '发送测试邮件'
                 }}
               </button>
             </div>
@@ -1057,7 +1057,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ saving ? t('admin.settings.saving') : t('admin.settings.saveSettings') }}
+            {{ saving ? '保存中...' : '保存设置' }}
           </button>
         </div>
       </form>
@@ -1067,7 +1067,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { adminAPI } from '@/api'
 import type { SystemSettings, UpdateSettingsRequest } from '@/api/admin/settings'
 import AppLayout from '@/components/layout/AppLayout.vue'
@@ -1076,7 +1075,6 @@ import Toggle from '@/components/common/Toggle.vue'
 import { useClipboard } from '@/composables/useClipboard'
 import { useAppStore } from '@/stores'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const { copyToClipboard } = useClipboard()
 
@@ -1178,7 +1176,7 @@ async function setAndCopyLinuxdoRedirectUrl() {
   if (!url) return
 
   form.linuxdo_connect_redirect_url = url
-  await copyToClipboard(url, t('admin.settings.linuxdo.redirectUrlSetAndCopied'))
+  await copyToClipboard(url, '已使用当前站点生成回调地址并复制到剪贴板')
 }
 
 function handleLogoUpload(event: Event) {
@@ -1191,16 +1189,14 @@ function handleLogoUpload(event: Event) {
   // Check file size (300KB = 307200 bytes)
   const maxSize = 300 * 1024
   if (file.size > maxSize) {
-    logoError.value = t('admin.settings.site.logoSizeError', {
-      size: (file.size / 1024).toFixed(1)
-    })
+    logoError.value = `图片大小超过 300KB 限制（${(file.size / 1024).toFixed(1)}KB）`
     input.value = ''
     return
   }
 
   // Check file type
   if (!file.type.startsWith('image/')) {
-    logoError.value = t('admin.settings.site.logoTypeError')
+    logoError.value = '请选择图片文件'
     input.value = ''
     return
   }
@@ -1211,7 +1207,7 @@ function handleLogoUpload(event: Event) {
     form.site_logo = e.target?.result as string
   }
   reader.onerror = () => {
-    logoError.value = t('admin.settings.site.logoReadError')
+    logoError.value = '读取图片文件失败'
   }
   reader.readAsDataURL(file)
 
@@ -1229,7 +1225,7 @@ async function loadSettings() {
     form.linuxdo_connect_client_secret = ''
   } catch (error: any) {
     appStore.showError(
-      t('admin.settings.failedToLoad') + ': ' + (error.message || t('common.unknownError'))
+      '加载设置失败' + ': ' + (error.message || '发生未知错误')
     )
   } finally {
     loading.value = false
@@ -1286,10 +1282,10 @@ async function saveSettings() {
     form.linuxdo_connect_client_secret = ''
     // Refresh cached public settings so sidebar/header update immediately
     await appStore.fetchPublicSettings(true)
-    appStore.showSuccess(t('admin.settings.settingsSaved'))
+    appStore.showSuccess('设置保存成功')
   } catch (error: any) {
     appStore.showError(
-      t('admin.settings.failedToSave') + ': ' + (error.message || t('common.unknownError'))
+      '保存设置失败' + ': ' + (error.message || '发生未知错误')
     )
   } finally {
     saving.value = false
@@ -1307,10 +1303,10 @@ async function testSmtpConnection() {
       smtp_use_tls: form.smtp_use_tls
     })
     // API returns { message: "..." } on success, errors are thrown as exceptions
-    appStore.showSuccess(result.message || t('admin.settings.smtpConnectionSuccess'))
+    appStore.showSuccess(result.message || 'SMTP 连接成功')
   } catch (error: any) {
     appStore.showError(
-      t('admin.settings.failedToTestSmtp') + ': ' + (error.message || t('common.unknownError'))
+      'SMTP 连接测试失败' + ': ' + (error.message || '发生未知错误')
     )
   } finally {
     testingSmtp.value = false
@@ -1319,7 +1315,7 @@ async function testSmtpConnection() {
 
 async function sendTestEmail() {
   if (!testEmailAddress.value) {
-    appStore.showError(t('admin.settings.testEmail.enterRecipientHint'))
+    appStore.showError('请输入收件人邮箱地址')
     return
   }
 
@@ -1336,10 +1332,10 @@ async function sendTestEmail() {
       smtp_use_tls: form.smtp_use_tls
     })
     // API returns { message: "..." } on success, errors are thrown as exceptions
-    appStore.showSuccess(result.message || t('admin.settings.testEmailSent'))
+    appStore.showSuccess(result.message || '测试邮件发送成功')
   } catch (error: any) {
     appStore.showError(
-      t('admin.settings.failedToSendTestEmail') + ': ' + (error.message || t('common.unknownError'))
+      '发送测试邮件失败' + ': ' + (error.message || '发生未知错误')
     )
   } finally {
     sendingTestEmail.value = false
@@ -1367,30 +1363,30 @@ async function createAdminApiKey() {
     newAdminApiKey.value = result.key
     adminApiKeyExists.value = true
     adminApiKeyMasked.value = result.key.substring(0, 10) + '...' + result.key.slice(-4)
-    appStore.showSuccess(t('admin.settings.adminApiKey.keyGenerated'))
+    appStore.showSuccess('新的管理员 API Key 已生成')
   } catch (error: any) {
-    appStore.showError(error.message || t('common.error'))
+    appStore.showError(error.message || '错误')
   } finally {
     adminApiKeyOperating.value = false
   }
 }
 
 async function regenerateAdminApiKey() {
-  if (!confirm(t('admin.settings.adminApiKey.regenerateConfirm'))) return
+  if (!confirm('确定要重新生成吗？当前密钥将立即失效。')) return
   await createAdminApiKey()
 }
 
 async function deleteAdminApiKey() {
-  if (!confirm(t('admin.settings.adminApiKey.deleteConfirm'))) return
+  if (!confirm('确定要删除管理员 API Key 吗？外部集成将停止工作。')) return
   adminApiKeyOperating.value = true
   try {
     await adminAPI.settings.deleteAdminApiKey()
     adminApiKeyExists.value = false
     adminApiKeyMasked.value = ''
     newAdminApiKey.value = ''
-    appStore.showSuccess(t('admin.settings.adminApiKey.keyDeleted'))
+    appStore.showSuccess('管理员 API Key 已删除')
   } catch (error: any) {
-    appStore.showError(error.message || t('common.error'))
+    appStore.showError(error.message || '错误')
   } finally {
     adminApiKeyOperating.value = false
   }
@@ -1400,10 +1396,10 @@ function copyNewKey() {
   navigator.clipboard
     .writeText(newAdminApiKey.value)
     .then(() => {
-      appStore.showSuccess(t('admin.settings.adminApiKey.keyCopied'))
+      appStore.showSuccess('密钥已复制到剪贴板')
     })
     .catch(() => {
-      appStore.showError(t('common.copyFailed'))
+      appStore.showError('复制失败')
     })
 }
 
@@ -1431,10 +1427,10 @@ async function saveStreamTimeoutSettings() {
       threshold_window_minutes: streamTimeoutForm.threshold_window_minutes
     })
     Object.assign(streamTimeoutForm, updated)
-    appStore.showSuccess(t('admin.settings.streamTimeout.saved'))
+    appStore.showSuccess('流超时设置保存成功')
   } catch (error: any) {
     appStore.showError(
-      t('admin.settings.streamTimeout.saveFailed') + ': ' + (error.message || t('common.unknownError'))
+      '保存流超时设置失败' + ': ' + (error.message || '发生未知错误')
     )
   } finally {
     streamTimeoutSaving.value = false

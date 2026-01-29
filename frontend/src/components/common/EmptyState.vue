@@ -53,11 +53,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import type { Component } from 'vue'
 import Icon from '@/components/icons/Icon.vue'
-
-const { t } = useI18n()
 
 interface Props {
   icon?: Component | string
@@ -74,7 +71,7 @@ const props = withDefaults(defineProps<Props>(), {
   actionIcon: true
 })
 
-const displayTitle = computed(() => props.title || t('common.noData'))
+const displayTitle = computed(() => props.title || '暂无数据')
 
 defineEmits(['action'])
 </script>

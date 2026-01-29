@@ -18,7 +18,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import type { SubscriptionType, GroupPlatform } from '@/types'
 import PlatformIcon from './PlatformIcon.vue'
 
@@ -37,8 +36,6 @@ const props = withDefaults(defineProps<Props>(), {
   daysRemaining: null
 })
 
-const { t } = useI18n()
-
 const isSubscription = computed(() => props.subscriptionType === 'subscription')
 
 // 是否显示右侧标签
@@ -56,12 +53,12 @@ const labelText = computed(() => {
     // 如果有剩余天数，显示天数
     if (props.daysRemaining !== null && props.daysRemaining !== undefined) {
       if (props.daysRemaining <= 0) {
-        return t('admin.users.expired')
+        return '已过期'
       }
-      return t('admin.users.daysRemaining', { days: props.daysRemaining })
+      return `${props.daysRemaining}天`
     }
     // 否则显示"订阅"
-    return t('groups.subscription')
+    return '订阅'
   }
   return props.rateMultiplier !== undefined ? `${props.rateMultiplier}x` : ''
 })

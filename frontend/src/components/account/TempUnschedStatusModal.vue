@@ -1,7 +1,7 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('admin.accounts.tempUnschedulable.statusTitle')"
+    :title="'临时不可调度状态'"
     width="normal"
     @close="handleClose"
   >
@@ -25,13 +25,13 @@
       </div>
 
       <div v-else-if="!isActive" class="rounded-lg border border-gray-200 p-4 text-sm text-gray-500 dark:border-dark-600 dark:text-gray-400">
-        {{ t('admin.accounts.tempUnschedulable.notActive') }}
+        {{ '当前账号未处于临时不可调度状态。' }}
       </div>
 
       <div v-else class="space-y-4">
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ t('admin.accounts.tempUnschedulable.accountName') }}
+            {{ '账号' }}
           </p>
           <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
             {{ account?.name || '-' }}
@@ -41,7 +41,7 @@
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.tempUnschedulable.triggeredAt') }}
+              {{ '触发时间' }}
             </p>
             <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
               {{ triggeredAtText }}
@@ -49,7 +49,7 @@
           </div>
           <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.tempUnschedulable.until') }}
+              {{ '解除时间' }}
             </p>
             <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
               {{ untilText }}
@@ -57,7 +57,7 @@
           </div>
           <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.tempUnschedulable.remaining') }}
+              {{ '剩余时间' }}
             </p>
             <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
               {{ remainingText }}
@@ -65,7 +65,7 @@
           </div>
           <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.tempUnschedulable.errorCode') }}
+              {{ '错误码' }}
             </p>
             <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
               {{ state?.status_code || '-' }}
@@ -73,7 +73,7 @@
           </div>
           <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.tempUnschedulable.matchedKeyword') }}
+              {{ '匹配关键词' }}
             </p>
             <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
               {{ state?.matched_keyword || '-' }}
@@ -81,7 +81,7 @@
           </div>
           <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.tempUnschedulable.ruleOrder') }}
+              {{ '规则序号' }}
             </p>
             <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
               {{ ruleIndexDisplay }}
@@ -91,7 +91,7 @@
 
         <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ t('admin.accounts.tempUnschedulable.errorMessage') }}
+            {{ '错误详情' }}
           </p>
           <div class="mt-2 rounded bg-gray-50 p-2 text-xs text-gray-700 dark:bg-dark-700 dark:text-gray-300">
             {{ state?.error_message || '-' }}
@@ -103,7 +103,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ t('common.close') }}
+          {{ '关闭' }}
         </button>
         <button
           type="button"
@@ -131,7 +131,7 @@
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          {{ t('admin.accounts.tempUnschedulable.reset') }}
+          {{ '重置状态' }}
         </button>
       </div>
     </template>
@@ -140,7 +140,6 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { Account, TempUnschedulableStatus } from '@/types'
@@ -157,7 +156,6 @@ const emit = defineEmits<{
   reset: []
 }>()
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const loading = ref(false)
@@ -190,18 +188,18 @@ const remainingText = computed(() => {
   if (!state.value) return '-'
   const remainingMs = state.value.until_unix * 1000 - Date.now()
   if (remainingMs <= 0) {
-    return t('admin.accounts.tempUnschedulable.expired')
+    return '已到期'
   }
   const minutes = Math.ceil(remainingMs / 60000)
   if (minutes < 60) {
-    return t('admin.accounts.tempUnschedulable.remainingMinutes', { minutes })
+    return `约 {minutes} 分钟`
   }
   const hours = Math.floor(minutes / 60)
   const rest = minutes % 60
   if (rest === 0) {
-    return t('admin.accounts.tempUnschedulable.remainingHours', { hours })
+    return `约 {hours} 小时`
   }
-  return t('admin.accounts.tempUnschedulable.remainingHoursMinutes', { hours, minutes: rest })
+  return `约 {hours} 小时 ${rest} 分钟`
 })
 
 const loadStatus = async () => {
@@ -210,7 +208,7 @@ const loadStatus = async () => {
   try {
     status.value = await adminAPI.accounts.getTempUnschedulableStatus(props.account.id)
   } catch (error: any) {
-    appStore.showError(error?.message || t('admin.accounts.tempUnschedulable.failedToLoad'))
+    appStore.showError(error?.message || '加载临时不可调度状态失败')
     status.value = null
   } finally {
     loading.value = false
@@ -226,11 +224,11 @@ const handleReset = async () => {
   resetting.value = true
   try {
     await adminAPI.accounts.resetTempUnschedulable(props.account.id)
-    appStore.showSuccess(t('admin.accounts.tempUnschedulable.resetSuccess'))
+    appStore.showSuccess('临时不可调度已重置')
     emit('reset')
     handleClose()
   } catch (error: any) {
-    appStore.showError(error?.message || t('admin.accounts.tempUnschedulable.resetFailed'))
+    appStore.showError(error?.message || '重置临时不可调度失败')
   } finally {
     resetting.value = false
   }

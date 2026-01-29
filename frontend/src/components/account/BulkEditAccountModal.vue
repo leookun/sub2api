@@ -1,7 +1,7 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('admin.accounts.bulkEdit.title')"
+    :title="'批量编辑账号'"
     width="wide"
     @close="handleClose"
   >
@@ -17,7 +17,7 @@
               d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          {{ t('admin.accounts.bulkEdit.selectionInfo', { count: accountIds.length }) }}
+          {{ `已选择 ${accountIds.length} 个账号。只更新您勾选或填写的字段，未勾选的字段保持不变。` }}
         </p>
       </div>
 
@@ -29,7 +29,7 @@
             class="input-label mb-0"
             for="bulk-edit-base-url-enabled"
           >
-            {{ t('admin.accounts.baseUrl') }}
+            {{ 'Base URL' }}
           </label>
           <input
             v-model="enableBaseUrl"
@@ -46,11 +46,11 @@
           :disabled="!enableBaseUrl"
           class="input"
           :class="!enableBaseUrl && 'cursor-not-allowed opacity-50'"
-          :placeholder="t('admin.accounts.bulkEdit.baseUrlPlaceholder')"
+          :placeholder="'https://api.anthropic.com 或 https://api.openai.com'"
           aria-labelledby="bulk-edit-base-url-label"
         />
         <p class="input-hint">
-          {{ t('admin.accounts.bulkEdit.baseUrlNotice') }}
+          {{ '仅适用于 API Key 账号，留空则不修改' }}
         </p>
       </div>
 
@@ -62,7 +62,7 @@
             class="input-label mb-0"
             for="bulk-edit-model-restriction-enabled"
           >
-            {{ t('admin.accounts.modelRestriction') }}
+            {{ '模型限制（可选）' }}
           </label>
           <input
             v-model="enableModelRestriction"
@@ -104,7 +104,7 @@
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              {{ t('admin.accounts.modelWhitelist') }}
+              {{ '模型白名单' }}
             </button>
             <button
               type="button"
@@ -129,7 +129,7 @@
                   d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
                 />
               </svg>
-              {{ t('admin.accounts.modelMapping') }}
+              {{ '模型映射' }}
             </button>
           </div>
 
@@ -150,7 +150,7 @@
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                {{ t('admin.accounts.selectAllowedModels') }}
+                {{ '选择允许的模型。留空则支持所有模型。' }}
               </p>
             </div>
 
@@ -177,9 +177,9 @@
             </div>
 
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.selectedModels', { count: allowedModels.length }) }}
+              {{ `已选择 ${allowedModels.length} 个模型` }}
               <span v-if="allowedModels.length === 0">{{
-                t('admin.accounts.supportsAllModels')
+                '（支持所有模型）'
               }}</span>
             </p>
           </div>
@@ -201,7 +201,7 @@
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                {{ t('admin.accounts.mapRequestModels') }}
+                {{ '将请求模型映射到实际模型。左边是请求的模型，右边是发送到 API 的实际模型。' }}
               </p>
             </div>
 
@@ -216,7 +216,7 @@
                   v-model="mapping.from"
                   type="text"
                   class="input flex-1"
-                  :placeholder="t('admin.accounts.requestModel')"
+                  :placeholder="'请求模型'"
                 />
                 <svg
                   class="h-4 w-4 flex-shrink-0 text-gray-400"
@@ -235,7 +235,7 @@
                   v-model="mapping.to"
                   type="text"
                   class="input flex-1"
-                  :placeholder="t('admin.accounts.actualModel')"
+                  :placeholder="'实际模型'"
                 />
                 <button
                   type="button"
@@ -272,7 +272,7 @@
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              {{ t('admin.accounts.addMapping') }}
+              {{ '添加映射' }}
             </button>
 
             <!-- Quick Add Buttons -->
@@ -300,10 +300,10 @@
               class="input-label mb-0"
               for="bulk-edit-custom-error-codes-enabled"
             >
-              {{ t('admin.accounts.customErrorCodes') }}
+              {{ '自定义错误码' }}
             </label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.customErrorCodesHint') }}
+              {{ '仅对选中的错误码停止调度' }}
             </p>
           </div>
           <input
@@ -319,7 +319,7 @@
           <div class="rounded-lg bg-amber-50 p-3 dark:bg-amber-900/20">
             <p class="text-xs text-amber-700 dark:text-amber-400">
               <Icon name="exclamationTriangle" size="sm" class="mr-1 inline" :stroke-width="2" />
-              {{ t('admin.accounts.customErrorCodesWarning') }}
+              {{ '仅选中的错误码会停止调度，其他错误将返回 500。' }}
             </p>
           </div>
 
@@ -350,7 +350,7 @@
               min="100"
               max="599"
               class="input flex-1"
-              :placeholder="t('admin.accounts.enterErrorCode')"
+              :placeholder="'输入错误码 (100-599)'"
               aria-labelledby="bulk-edit-custom-error-codes-label"
               @keyup.enter="addCustomErrorCode"
             />
@@ -383,7 +383,7 @@
               </button>
             </span>
             <span v-if="selectedErrorCodes.length === 0" class="text-xs text-gray-400">
-              {{ t('admin.accounts.noneSelectedUsesDefault') }}
+              {{ '未选择（使用默认策略）' }}
             </span>
           </div>
         </div>
@@ -398,10 +398,10 @@
               class="input-label mb-0"
               for="bulk-edit-intercept-warmup-enabled"
             >
-              {{ t('admin.accounts.interceptWarmupRequests') }}
+              {{ '拦截预热请求' }}
             </label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.interceptWarmupRequestsDesc') }}
+              {{ '启用后，标题生成等预热请求将返回 mock 响应，不消耗上游 token' }}
             </p>
           </div>
           <input
@@ -439,7 +439,7 @@
             class="input-label mb-0"
             for="bulk-edit-proxy-enabled"
           >
-            {{ t('admin.accounts.proxy') }}
+            {{ '代理' }}
           </label>
           <input
             v-model="enableProxy"
@@ -467,7 +467,7 @@
               class="input-label mb-0"
               for="bulk-edit-concurrency-enabled"
             >
-              {{ t('admin.accounts.concurrency') }}
+              {{ '并发数' }}
             </label>
             <input
               v-model="enableConcurrency"
@@ -495,7 +495,7 @@
               class="input-label mb-0"
               for="bulk-edit-priority-enabled"
             >
-              {{ t('admin.accounts.priority') }}
+              {{ '优先级' }}
             </label>
             <input
               v-model="enablePriority"
@@ -523,7 +523,7 @@
               class="input-label mb-0"
               for="bulk-edit-rate-multiplier-enabled"
             >
-              {{ t('admin.accounts.billingRateMultiplier') }}
+              {{ '账号计费倍率' }}
             </label>
             <input
               v-model="enableRateMultiplier"
@@ -544,7 +544,7 @@
             :class="!enableRateMultiplier && 'cursor-not-allowed opacity-50'"
             aria-labelledby="bulk-edit-rate-multiplier-label"
           />
-          <p class="input-hint">{{ t('admin.accounts.billingRateMultiplierHint') }}</p>
+          <p class="input-hint">{{ '>=0，0 表示该账号计费为 0；仅影响账号计费口径' }}</p>
         </div>
       </div>
 
@@ -556,7 +556,7 @@
             class="input-label mb-0"
             for="bulk-edit-status-enabled"
           >
-            {{ t('common.status') }}
+            {{ '状态' }}
           </label>
           <input
             v-model="enableStatus"
@@ -583,7 +583,7 @@
             class="input-label mb-0"
             for="bulk-edit-groups-enabled"
           >
-            {{ t('nav.groups') }}
+            {{ '分组管理' }}
           </label>
           <input
             v-model="enableGroups"
@@ -606,7 +606,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ t('common.cancel') }}
+          {{ '取消' }}
         </button>
         <button
           type="submit"
@@ -635,7 +635,7 @@
             />
           </svg>
           {{
-            submitting ? t('admin.accounts.bulkEdit.updating') : t('admin.accounts.bulkEdit.submit')
+            submitting ? '更新中...' : '批量更新'
           }}
         </button>
       </div>
@@ -645,7 +645,6 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { Proxy, AdminGroup } from '@/types'
@@ -668,7 +667,6 @@ const emit = defineEmits<{
   updated: []
 }>()
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 // Model mapping type
@@ -784,8 +782,8 @@ const commonErrorCodes = [
 ]
 
 const statusOptions = computed(() => [
-  { value: 'active', label: t('common.active') },
-  { value: 'inactive', label: t('common.inactive') }
+  { value: 'active', label: '启用' },
+  { value: 'inactive', label: '禁用' }
 ])
 
 // Model mapping helpers
@@ -800,7 +798,7 @@ const removeModelMapping = (index: number) => {
 const addPresetMapping = (from: string, to: string) => {
   const exists = modelMappings.value.some((m) => m.from === from)
   if (exists) {
-    appStore.showInfo(t('admin.accounts.mappingExists', { model: from }))
+    appStore.showInfo(`模型 ${from} 的映射已存在`)
     return
   }
   modelMappings.value.push({ from, to })
@@ -812,11 +810,11 @@ const toggleErrorCode = (code: number) => {
   if (index === -1) {
     // Adding code - check for 429/529 warning
     if (code === 429) {
-      if (!confirm(t('admin.accounts.customErrorCodes429Warning'))) {
+      if (!confirm('429 已有内置的限流处理机制。添加到自定义错误码后，将直接停止调度而非临时限流。确定要添加吗？')) {
         return
       }
     } else if (code === 529) {
-      if (!confirm(t('admin.accounts.customErrorCodes529Warning'))) {
+      if (!confirm('529 已有内置的过载处理机制。添加到自定义错误码后，将直接停止调度而非临时标记过载。确定要添加吗？')) {
         return
       }
     }
@@ -829,20 +827,20 @@ const toggleErrorCode = (code: number) => {
 const addCustomErrorCode = () => {
   const code = customErrorCodeInput.value
   if (code === null || code < 100 || code > 599) {
-    appStore.showError(t('admin.accounts.invalidErrorCode'))
+    appStore.showError('请输入有效的 HTTP 错误码 (100-599)')
     return
   }
   if (selectedErrorCodes.value.includes(code)) {
-    appStore.showInfo(t('admin.accounts.errorCodeExists'))
+    appStore.showInfo('该错误码已被选中')
     return
   }
   // Check for 429/529 warning
   if (code === 429) {
-    if (!confirm(t('admin.accounts.customErrorCodes429Warning'))) {
+    if (!confirm('429 已有内置的限流处理机制。添加到自定义错误码后，将直接停止调度而非临时限流。确定要添加吗？')) {
       return
     }
   } else if (code === 529) {
-    if (!confirm(t('admin.accounts.customErrorCodes529Warning'))) {
+    if (!confirm('529 已有内置的过载处理机制。添加到自定义错误码后，将直接停止调度而非临时标记过载。确定要添加吗？')) {
       return
     }
   }
@@ -947,7 +945,7 @@ const handleClose = () => {
 
 const handleSubmit = async () => {
   if (props.accountIds.length === 0) {
-    appStore.showError(t('admin.accounts.bulkEdit.noSelection'))
+    appStore.showError('请选择要编辑的账号')
     return
   }
 
@@ -964,13 +962,13 @@ const handleSubmit = async () => {
     enableGroups.value
 
   if (!hasAnyFieldEnabled) {
-    appStore.showError(t('admin.accounts.bulkEdit.noFieldsSelected'))
+    appStore.showError('请至少选择一个要更新的字段')
     return
   }
 
   const updates = buildUpdatePayload()
   if (!updates) {
-    appStore.showError(t('admin.accounts.bulkEdit.noFieldsSelected'))
+    appStore.showError('请至少选择一个要更新的字段')
     return
   }
 
@@ -982,11 +980,11 @@ const handleSubmit = async () => {
     const failed = res.failed || 0
 
     if (success > 0 && failed === 0) {
-      appStore.showSuccess(t('admin.accounts.bulkEdit.success', { count: success }))
+      appStore.showSuccess(`成功更新 ${success} 个账号`)
     } else if (success > 0) {
-      appStore.showError(t('admin.accounts.bulkEdit.partialSuccess', { success, failed }))
+      appStore.showError(`部分更新成功：成功 {success} 个，失败 {failed} 个`)
     } else {
-      appStore.showError(t('admin.accounts.bulkEdit.failed'))
+      appStore.showError('批量更新失败')
     }
 
     if (success > 0) {
@@ -994,7 +992,7 @@ const handleSubmit = async () => {
       handleClose()
     }
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.accounts.bulkEdit.failed'))
+    appStore.showError(error.response?.data?.detail || '批量更新失败')
     console.error('Error bulk updating accounts:', error)
   } finally {
     submitting.value = false

@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { opsAPI } from '@/api/admin/ops'
 import type { EmailNotificationConfig, AlertSeverity } from '../types'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 import Select from '@/components/common/Select.vue'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const loading = ref(false)
@@ -22,10 +20,10 @@ const alertRecipientError = ref('')
 const reportRecipientError = ref('')
 
 const severityOptions: Array<{ value: AlertSeverity | ''; label: string }> = [
-  { value: '', label: t('admin.ops.email.minSeverityAll') },
-  { value: 'critical', label: t('common.critical') },
-  { value: 'warning', label: t('common.warning') },
-  { value: 'info', label: t('common.info') }
+  { value: '', label: '全部级别' },
+  { value: 'critical', label: '严重' },
+  { value: 'warning', label: '警告' },
+  { value: 'info', label: '提示' }
 ]
 
 async function loadConfig() {
@@ -35,7 +33,7 @@ async function loadConfig() {
     config.value = data
   } catch (err: any) {
     console.error('[OpsEmailNotificationCard] Failed to load config', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.email.loadFailed'))
+    appStore.showError(err?.response?.data?.detail || '加载邮件通知配置失败')
   } finally {
     loading.value = false
   }
@@ -44,17 +42,17 @@ async function loadConfig() {
 async function saveConfig() {
   if (!draft.value) return
   if (!editorValidation.value.valid) {
-    appStore.showError(editorValidation.value.errors[0] || t('admin.ops.email.validation.invalid'))
+    appStore.showError(editorValidation.value.errors[0] || '邮件通知配置不合法')
     return
   }
   saving.value = true
   try {
     config.value = await opsAPI.updateEmailNotificationConfig(draft.value)
     showEditor.value = false
-    appStore.showSuccess(t('admin.ops.email.saveSuccess'))
+    appStore.showSuccess('邮件通知配置已保存')
   } catch (err: any) {
     console.error('[OpsEmailNotificationCard] Failed to save config', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.email.saveFailed'))
+    appStore.showError(err?.response?.data?.detail || '保存邮件通知配置失败')
   } finally {
     saving.value = false
   }
@@ -80,8 +78,8 @@ function isNonNegativeNumber(value: unknown): boolean {
 
 function validateCronField(enabled: boolean, cron: string): string | null {
   if (!enabled) return null
-  if (!cron || !cron.trim()) return t('admin.ops.email.validation.cronRequired')
-  if (cron.trim().split(/\s+/).length < 5) return t('admin.ops.email.validation.cronFormat')
+  if (!cron || !cron.trim()) return '启用定时任务时必须填写 Cron 表达式'
+  if (cron.trim().split(/\s+/).length < 5) return 'Cron 表达式格式可能不正确（至少应包含 5 段）'
   return null
 }
 
@@ -90,26 +88,26 @@ const editorValidation = computed(() => {
   if (!draft.value) return { valid: true, errors }
 
   if (draft.value.alert.enabled && draft.value.alert.recipients.length === 0) {
-    errors.push(t('admin.ops.email.validation.alertRecipientsRequired'))
+    errors.push('已启用告警邮件，但未配置任何收件人')
   }
   if (draft.value.report.enabled && draft.value.report.recipients.length === 0) {
-    errors.push(t('admin.ops.email.validation.reportRecipientsRequired'))
+    errors.push('已启用报告邮件，但未配置任何收件人')
   }
 
   const invalidAlertRecipients = draft.value.alert.recipients.filter((e) => !isValidEmailAddress(e))
-  if (invalidAlertRecipients.length > 0) errors.push(t('admin.ops.email.validation.invalidRecipients'))
+  if (invalidAlertRecipients.length > 0) errors.push('存在不合法的收件人邮箱')
 
   const invalidReportRecipients = draft.value.report.recipients.filter((e) => !isValidEmailAddress(e))
-  if (invalidReportRecipients.length > 0) errors.push(t('admin.ops.email.validation.invalidRecipients'))
+  if (invalidReportRecipients.length > 0) errors.push('存在不合法的收件人邮箱')
 
   if (!isNonNegativeNumber(draft.value.alert.rate_limit_per_hour)) {
-    errors.push(t('admin.ops.email.validation.rateLimitRange'))
+    errors.push('每小时限额必须为 ≥ 0 的数字')
   }
   if (
     !isNonNegativeNumber(draft.value.alert.batching_window_seconds) ||
     draft.value.alert.batching_window_seconds > 86400
   ) {
-    errors.push(t('admin.ops.email.validation.batchWindowRange'))
+    errors.push('合并窗口必须在 0 到 86400 秒之间')
   }
 
   const dailyErr = validateCronField(
@@ -134,12 +132,12 @@ const editorValidation = computed(() => {
   if (accErr) errors.push(accErr)
 
   if (!isNonNegativeNumber(draft.value.report.error_digest_min_count)) {
-    errors.push(t('admin.ops.email.validation.digestMinCountRange'))
+    errors.push('错误摘要最小数量必须为 ≥ 0 的数字')
   }
 
   const thr = draft.value.report.account_health_error_rate_threshold
   if (!(typeof thr === 'number' && Number.isFinite(thr) && thr >= 0 && thr <= 100)) {
-    errors.push(t('admin.ops.email.validation.accountHealthThresholdRange'))
+    errors.push('账号健康错误率阈值必须在 0 到 100 之间')
   }
 
   return { valid: errors.length === 0, errors }
@@ -151,7 +149,7 @@ function addRecipient(target: 'alert' | 'report') {
   if (!raw) return
 
   if (!isValidEmailAddress(raw)) {
-    const msg = t('common.invalidEmail')
+    const msg = '请输入有效的邮箱地址'
     if (target === 'alert') alertRecipientError.value = msg
     else reportRecipientError.value = msg
     return
@@ -184,8 +182,8 @@ onMounted(() => {
   <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5 dark:bg-dark-800 dark:ring-dark-700">
     <div class="mb-4 flex items-start justify-between gap-4">
       <div>
-        <h3 class="text-sm font-bold text-gray-900 dark:text-white">{{ t('admin.ops.email.title') }}</h3>
-        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.email.description') }}</p>
+        <h3 class="text-sm font-bold text-gray-900 dark:text-white">{{ '邮件通知配置' }}</h3>
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ '配置告警/报告邮件通知（存储在数据库中）。' }}</p>
       </div>
       <div class="flex items-center gap-2">
         <button
@@ -196,55 +194,55 @@ onMounted(() => {
           <svg class="h-3.5 w-3.5" :class="{ 'animate-spin': loading }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          {{ t('common.refresh') }}
+          {{ '刷新' }}
         </button>
-        <button class="btn btn-sm btn-secondary" :disabled="!config" @click="openEditor">{{ t('common.edit') }}</button>
+        <button class="btn btn-sm btn-secondary" :disabled="!config" @click="openEditor">{{ '编辑' }}</button>
       </div>
     </div>
 
     <div v-if="!config" class="text-sm text-gray-500 dark:text-gray-400">
-      <span v-if="loading">{{ t('admin.ops.email.loading') }}</span>
-      <span v-else>{{ t('admin.ops.email.noData') }}</span>
+      <span v-if="loading">{{ '加载中...' }}</span>
+      <span v-else>{{ '暂无邮件通知配置' }}</span>
     </div>
 
     <div v-else class="space-y-6">
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
-        <h4 class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">{{ t('admin.ops.email.alertTitle') }}</h4>
+        <h4 class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">{{ '告警邮件' }}</h4>
         <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ t('common.enabled') }}:
+            {{ '已启用' }}:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">
-              {{ config.alert.enabled ? t('common.enabled') : t('common.disabled') }}
+              {{ config.alert.enabled ? '已启用' : '已禁用' }}
             </span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ t('admin.ops.email.recipients') }}:
+            {{ '收件人' }}:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">{{ config.alert.recipients.length }}</span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ t('admin.ops.email.minSeverity') }}:
+            {{ '最低级别' }}:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">{{
-              config.alert.min_severity || t('admin.ops.email.minSeverityAll')
+              config.alert.min_severity || '全部级别'
             }}</span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ t('admin.ops.email.rateLimitPerHour') }}:
+            {{ '每小时限额' }}:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">{{ config.alert.rate_limit_per_hour }}</span>
           </div>
         </div>
       </div>
 
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
-        <h4 class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">{{ t('admin.ops.email.reportTitle') }}</h4>
+        <h4 class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">{{ '报告邮件' }}</h4>
         <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ t('common.enabled') }}:
+            {{ '已启用' }}:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">
-              {{ config.report.enabled ? t('common.enabled') : t('common.disabled') }}
+              {{ config.report.enabled ? '已启用' : '已禁用' }}
             </span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ t('admin.ops.email.recipients') }}:
+            {{ '收件人' }}:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">{{ config.report.recipients.length }}</span>
           </div>
         </div>
@@ -252,45 +250,45 @@ onMounted(() => {
     </div>
   </div>
 
-  <BaseDialog :show="showEditor" :title="t('admin.ops.email.title')" width="extra-wide" @close="showEditor = false">
+  <BaseDialog :show="showEditor" :title="'邮件通知配置'" width="extra-wide" @close="showEditor = false">
     <div v-if="draft" class="space-y-6">
       <div
         v-if="!editorValidation.valid"
         class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 dark:border-amber-900/50 dark:bg-amber-900/20 dark:text-amber-200"
       >
-        <div class="font-bold">{{ t('admin.ops.email.validation.title') }}</div>
+        <div class="font-bold">{{ '请先修正以下问题' }}</div>
         <ul class="mt-1 list-disc space-y-1 pl-4">
           <li v-for="msg in editorValidation.errors" :key="msg">{{ msg }}</li>
         </ul>
       </div>
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
-        <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">{{ t('admin.ops.email.alertTitle') }}</h4>
+        <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">{{ '告警邮件' }}</h4>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('common.enabled') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '已启用' }}</div>
             <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
               <input v-model="draft.alert.enabled" type="checkbox" class="h-4 w-4 rounded border-gray-300" />
-              <span>{{ draft.alert.enabled ? t('common.enabled') : t('common.disabled') }}</span>
+              <span>{{ draft.alert.enabled ? '已启用' : '已禁用' }}</span>
             </label>
           </div>
 
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.minSeverity') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '最低级别' }}</div>
             <Select v-model="draft.alert.min_severity" :options="severityOptions" />
           </div>
 
           <div class="md:col-span-2">
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.recipients') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '收件人' }}</div>
             <div class="flex gap-2">
               <input
                 v-model="alertRecipientInput"
                 type="email"
                 class="input"
-                :placeholder="t('admin.ops.email.recipients')"
+                :placeholder="'收件人'"
                 @keydown.enter.prevent="addRecipient('alert')"
               />
               <button class="btn btn-secondary whitespace-nowrap" type="button" @click="addRecipient('alert')">
-                {{ t('common.add') }}
+                {{ '添加' }}
               </button>
             </div>
             <p v-if="alertRecipientError" class="mt-1 text-xs text-red-600 dark:text-red-400">{{ alertRecipientError }}</p>
@@ -310,52 +308,52 @@ onMounted(() => {
                 </button>
               </span>
             </div>
-            <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.email.recipientsHint') }}</div>
+            <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ '若为空，系统可能会回退使用第一个管理员邮箱。' }}</div>
           </div>
 
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.rateLimitPerHour') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '每小时限额' }}</div>
             <input v-model.number="draft.alert.rate_limit_per_hour" type="number" min="0" max="100000" class="input" />
           </div>
 
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.batchWindowSeconds') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '合并窗口（秒）' }}</div>
             <input v-model.number="draft.alert.batching_window_seconds" type="number" min="0" max="86400" class="input" />
           </div>
 
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.includeResolved') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '包含恢复通知' }}</div>
             <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
               <input v-model="draft.alert.include_resolved_alerts" type="checkbox" class="h-4 w-4 rounded border-gray-300" />
-              <span>{{ draft.alert.include_resolved_alerts ? t('common.enabled') : t('common.disabled') }}</span>
+              <span>{{ draft.alert.include_resolved_alerts ? '已启用' : '已禁用' }}</span>
             </label>
           </div>
         </div>
       </div>
 
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
-        <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">{{ t('admin.ops.email.reportTitle') }}</h4>
+        <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">{{ '报告邮件' }}</h4>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('common.enabled') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '已启用' }}</div>
             <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
               <input v-model="draft.report.enabled" type="checkbox" class="h-4 w-4 rounded border-gray-300" />
-              <span>{{ draft.report.enabled ? t('common.enabled') : t('common.disabled') }}</span>
+              <span>{{ draft.report.enabled ? '已启用' : '已禁用' }}</span>
             </label>
           </div>
 
           <div class="md:col-span-2">
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.recipients') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '收件人' }}</div>
             <div class="flex gap-2">
               <input
                 v-model="reportRecipientInput"
                 type="email"
                 class="input"
-                :placeholder="t('admin.ops.email.recipients')"
+                :placeholder="'收件人'"
                 @keydown.enter.prevent="addRecipient('report')"
               />
               <button class="btn btn-secondary whitespace-nowrap" type="button" @click="addRecipient('report')">
-                {{ t('common.add') }}
+                {{ '添加' }}
               </button>
             </div>
             <p v-if="reportRecipientError" class="mt-1 text-xs text-red-600 dark:text-red-400">{{ reportRecipientError }}</p>
@@ -380,60 +378,60 @@ onMounted(() => {
           <div class="md:col-span-2">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.dailySummary') }}</div>
+                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '每日摘要' }}</div>
                 <div class="flex items-center gap-2">
                   <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                     <input v-model="draft.report.daily_summary_enabled" type="checkbox" class="h-4 w-4 rounded border-gray-300" />
                   </label>
-                  <input v-model="draft.report.daily_summary_schedule" type="text" class="input" :placeholder="t('admin.ops.email.cronPlaceholder')" />
+                  <input v-model="draft.report.daily_summary_schedule" type="text" class="input" :placeholder="'Cron 表达式'" />
                 </div>
               </div>
               <div>
-                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.weeklySummary') }}</div>
+                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '每周摘要' }}</div>
                 <div class="flex items-center gap-2">
                   <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                     <input v-model="draft.report.weekly_summary_enabled" type="checkbox" class="h-4 w-4 rounded border-gray-300" />
                   </label>
-                  <input v-model="draft.report.weekly_summary_schedule" type="text" class="input" :placeholder="t('admin.ops.email.cronPlaceholder')" />
+                  <input v-model="draft.report.weekly_summary_schedule" type="text" class="input" :placeholder="'Cron 表达式'" />
                 </div>
               </div>
               <div>
-                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.errorDigest') }}</div>
+                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '错误摘要' }}</div>
                 <div class="flex items-center gap-2">
                   <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                     <input v-model="draft.report.error_digest_enabled" type="checkbox" class="h-4 w-4 rounded border-gray-300" />
                   </label>
-                  <input v-model="draft.report.error_digest_schedule" type="text" class="input" :placeholder="t('admin.ops.email.cronPlaceholder')" />
+                  <input v-model="draft.report.error_digest_schedule" type="text" class="input" :placeholder="'Cron 表达式'" />
                 </div>
               </div>
               <div>
-                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.errorDigestMinCount') }}</div>
+                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '错误摘要最小数量' }}</div>
                 <input v-model.number="draft.report.error_digest_min_count" type="number" min="0" max="1000000" class="input" />
               </div>
               <div>
-                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.accountHealth') }}</div>
+                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '账号健康报告' }}</div>
                 <div class="flex items-center gap-2">
                   <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                     <input v-model="draft.report.account_health_enabled" type="checkbox" class="h-4 w-4 rounded border-gray-300" />
                   </label>
-                  <input v-model="draft.report.account_health_schedule" type="text" class="input" :placeholder="t('admin.ops.email.cronPlaceholder')" />
+                  <input v-model="draft.report.account_health_schedule" type="text" class="input" :placeholder="'Cron 表达式'" />
                 </div>
               </div>
               <div>
-                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.email.accountHealthThreshold') }}</div>
+                <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ '错误率阈值（%）' }}</div>
                 <input v-model.number="draft.report.account_health_error_rate_threshold" type="number" min="0" max="100" step="0.1" class="input" />
               </div>
             </div>
-            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.email.reportHint') }}</div>
+            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">{{ '发送时间使用 Cron 语法；留空将使用默认值。' }}</div>
           </div>
         </div>
       </div>
     </div>
     <template #footer>
       <div class="flex justify-end gap-2">
-        <button class="btn btn-secondary" @click="showEditor = false">{{ t('common.cancel') }}</button>
+        <button class="btn btn-secondary" @click="showEditor = false">{{ '取消' }}</button>
         <button class="btn btn-primary" :disabled="saving || !editorValidation.valid" @click="saveConfig">
-          {{ saving ? t('common.saving') : t('common.save') }}
+          {{ saving ? '保存中...' : '保存' }}
         </button>
       </div>
     </template>

@@ -1,7 +1,7 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('admin.accounts.createAccount')"
+    :title="'添加账号'"
     width="normal"
     @close="handleClose"
   >
@@ -18,7 +18,7 @@
             1
           </div>
           <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">{{
-            t('admin.accounts.oauth.authMethod')
+            '授权方式'
           }}</span>
         </div>
         <div class="h-0.5 w-8 bg-gray-300 dark:bg-dark-600" />
@@ -46,30 +46,30 @@
       class="space-y-5"
     >
       <div>
-        <label class="input-label">{{ t('admin.accounts.accountName') }}</label>
+        <label class="input-label">{{ '账号名称' }}</label>
         <input
           v-model="form.name"
           type="text"
           required
           class="input"
-          :placeholder="t('admin.accounts.enterAccountName')"
+          :placeholder="'请输入账号名称'"
           data-tour="account-form-name"
         />
       </div>
       <div>
-        <label class="input-label">{{ t('admin.accounts.notes') }}</label>
+        <label class="input-label">{{ '备注' }}</label>
         <textarea
           v-model="form.notes"
           rows="3"
           class="input"
-          :placeholder="t('admin.accounts.notesPlaceholder')"
+          :placeholder="'请输入备注'"
         ></textarea>
-        <p class="input-hint">{{ t('admin.accounts.notesHint') }}</p>
+        <p class="input-hint">{{ '备注可选' }}</p>
       </div>
 
       <!-- Platform Selection - Segmented Control Style -->
       <div>
-        <label class="input-label">{{ t('admin.accounts.platform') }}</label>
+        <label class="input-label">{{ '平台' }}</label>
         <div class="mt-2 flex rounded-lg bg-gray-100 p-1 dark:bg-dark-700" data-tour="account-form-platform">
           <button
             type="button"
@@ -152,7 +152,7 @@
 
       <!-- Account Type Selection (Anthropic) -->
       <div v-if="form.platform === 'anthropic'">
-        <label class="input-label">{{ t('admin.accounts.accountType') }}</label>
+        <label class="input-label">{{ '账号类型' }}</label>
         <div class="mt-2 grid grid-cols-2 gap-3" data-tour="account-form-type">
           <button
             type="button"
@@ -176,10 +176,10 @@
             </div>
             <div>
               <span class="block text-sm font-medium text-gray-900 dark:text-white">{{
-                t('admin.accounts.claudeCode')
+                'Claude Code'
               }}</span>
               <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                t('admin.accounts.oauthSetupToken')
+                'OAuth / Setup Token'
               }}</span>
             </div>
           </button>
@@ -206,10 +206,10 @@
             </div>
             <div>
               <span class="block text-sm font-medium text-gray-900 dark:text-white">{{
-                t('admin.accounts.claudeConsole')
+                'Claude Console'
               }}</span>
               <span class="text-xs text-gray-500 dark:text-gray-400">{{
-                t('admin.accounts.apiKey')
+                'API Key'
               }}</span>
             </div>
           </button>
@@ -218,7 +218,7 @@
 
       <!-- Account Type Selection (OpenAI) -->
       <div v-if="form.platform === 'openai'">
-        <label class="input-label">{{ t('admin.accounts.accountType') }}</label>
+        <label class="input-label">{{ '账号类型' }}</label>
         <div class="mt-2 grid grid-cols-2 gap-3" data-tour="account-form-type">
           <button
             type="button"
@@ -242,7 +242,7 @@
             </div>
             <div>
               <span class="block text-sm font-medium text-gray-900 dark:text-white">OAuth</span>
-              <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('admin.accounts.types.chatgptOauth') }}</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400">{{ 'ChatGPT OAuth' }}</span>
             </div>
           </button>
 
@@ -268,7 +268,7 @@
             </div>
             <div>
               <span class="block text-sm font-medium text-gray-900 dark:text-white">API Key</span>
-              <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('admin.accounts.types.responsesApi') }}</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400">{{ 'Responses API' }}</span>
             </div>
           </button>
         </div>
@@ -277,7 +277,7 @@
       <!-- Account Type Selection (Gemini) -->
       <div v-if="form.platform === 'gemini'">
         <div class="flex items-center justify-between">
-          <label class="input-label">{{ t('admin.accounts.accountType') }}</label>
+          <label class="input-label">{{ '账号类型' }}</label>
           <button
             type="button"
             @click="showGeminiHelpDialog = true"
@@ -286,7 +286,7 @@
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
             </svg>
-            {{ t('admin.accounts.gemini.helpButton') }}
+            {{ '使用帮助' }}
           </button>
         </div>
         <div class="mt-2 grid grid-cols-2 gap-3" data-tour="account-form-type">
@@ -312,10 +312,10 @@
             </div>
             <div>
               <span class="block text-sm font-medium text-gray-900 dark:text-white">
-                {{ t('admin.accounts.gemini.accountType.oauthTitle') }}
+                {{ 'OAuth 授权（Gemini）' }}
               </span>
               <span class="text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.gemini.accountType.oauthDesc') }}
+                {{ '使用 Google 账号授权，并选择 OAuth 子类型。' }}
               </span>
             </div>
           </button>
@@ -354,10 +354,10 @@
             </div>
             <div>
               <span class="block text-sm font-medium text-gray-900 dark:text-white">
-                {{ t('admin.accounts.gemini.accountType.apiKeyTitle') }}
+                {{ 'API 密钥（AI Studio）' }}
               </span>
               <span class="text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.gemini.accountType.apiKeyDesc') }}
+                {{ '最快接入方式，使用 AIza API Key。' }}
               </span>
             </div>
           </button>
@@ -367,7 +367,7 @@
           v-if="accountCategory === 'apikey'"
           class="mt-3 rounded-lg border border-purple-200 bg-purple-50 px-3 py-2 text-xs text-purple-800 dark:border-purple-800/40 dark:bg-purple-900/20 dark:text-purple-200"
         >
-          <p>{{ t('admin.accounts.gemini.accountType.apiKeyNote') }}</p>
+          <p>{{ '适合轻量测试。免费层限流严格，数据可能用于训练。' }}</p>
           <div class="mt-2 flex flex-wrap gap-2">
             <a
               :href="geminiHelpLinks.apiKey"
@@ -375,14 +375,14 @@
               target="_blank"
               rel="noreferrer"
             >
-              {{ t('admin.accounts.gemini.accountType.apiKeyLink') }}
+              {{ '获取 API Key' }}
             </a>
           </div>
         </div>
 
         <!-- OAuth Type Selection (only show when oauth-based is selected) -->
         <div v-if="accountCategory === 'oauth-based'" class="mt-4">
-          <label class="input-label">{{ t('admin.accounts.oauth.gemini.oauthTypeLabel') }}</label>
+          <label class="input-label">{{ 'OAuth 类型' }}</label>
           <div class="mt-2 grid grid-cols-2 gap-3">
             <!-- Google One OAuth -->
             <button
@@ -463,7 +463,7 @@
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {{ t('admin.accounts.gemini.oauthType.gcpProjectLink') }}
+                    {{ '创建项目' }}
                   </a>
                 </div>
                 <div class="mt-2 flex flex-wrap gap-1">
@@ -540,24 +540,24 @@
               </div>
               <div class="min-w-0">
                 <span class="block text-sm font-medium text-gray-900 dark:text-white">
-                  {{ t('admin.accounts.gemini.oauthType.customTitle') }}
+                  {{ '自定义授权（AI Studio OAuth）' }}
                 </span>
                 <span class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.oauthType.customDesc') }}
+                  {{ '使用管理员预设的 OAuth 客户端，适合组织管理。' }}
                 </span>
                 <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.oauthType.customRequirement') }}
+                  {{ '需管理员配置 Client ID 并加入测试用户白名单。' }}
                 </div>
                 <div class="mt-2 flex flex-wrap gap-1">
                   <span
                     class="rounded bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-300"
                   >
-                    {{ t('admin.accounts.gemini.oauthType.badges.orgManaged') }}
+                    {{ '组织管理' }}
                   </span>
                   <span
                     class="rounded bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-300"
                   >
-                    {{ t('admin.accounts.gemini.oauthType.badges.adminRequired') }}
+                    {{ '需要管理员' }}
                   </span>
                 </div>
               </div>
@@ -565,7 +565,7 @@
                 v-if="!geminiAIStudioOAuthEnabled"
                 class="ml-auto shrink-0 rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
               >
-                {{ t('admin.accounts.oauth.gemini.aiStudioNotConfiguredShort') }}
+                {{ '未配置' }}
               </span>
             </button>
 
@@ -573,23 +573,23 @@
               v-if="!geminiAIStudioOAuthEnabled"
               class="pointer-events-none absolute right-0 top-full z-50 mt-2 w-80 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800 opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:border-amber-700 dark:bg-amber-900/40 dark:text-amber-200"
             >
-              {{ t('admin.accounts.oauth.gemini.aiStudioNotConfiguredTip') }}
+              {{ 'AI Studio OAuth 未配置：请先设置 GEMINI_OAUTH_CLIENT_ID / GEMINI_OAUTH_CLIENT_SECRET，并在 Google OAuth Client 添加 Redirect URI：http://localhost:1455/auth/callback（Consent Screen scopes 需包含 https://www.googleapis.com/auth/generative-language.retriever）' }}
             </div>
           </div>
         </div>
 
         <!-- Tier selection (used as fallback when auto-detection is unavailable/fails) -->
         <div class="mt-4">
-          <label class="input-label">{{ t('admin.accounts.gemini.tier.label') }}</label>
+          <label class="input-label">{{ '账号等级' }}</label>
           <div class="mt-2">
             <select
               v-if="geminiOAuthType === 'google_one'"
               v-model="geminiTierGoogleOne"
               class="input"
             >
-              <option value="google_one_free">{{ t('admin.accounts.gemini.tier.googleOne.free') }}</option>
-              <option value="google_ai_pro">{{ t('admin.accounts.gemini.tier.googleOne.pro') }}</option>
-              <option value="google_ai_ultra">{{ t('admin.accounts.gemini.tier.googleOne.ultra') }}</option>
+              <option value="google_one_free">{{ 'Google One Free' }}</option>
+              <option value="google_ai_pro">{{ 'Google One Pro' }}</option>
+              <option value="google_ai_ultra">{{ 'Google One Ultra' }}</option>
             </select>
 
             <select
@@ -597,8 +597,8 @@
               v-model="geminiTierGcp"
               class="input"
             >
-              <option value="gcp_standard">{{ t('admin.accounts.gemini.tier.gcp.standard') }}</option>
-              <option value="gcp_enterprise">{{ t('admin.accounts.gemini.tier.gcp.enterprise') }}</option>
+              <option value="gcp_standard">{{ 'GCP Standard' }}</option>
+              <option value="gcp_enterprise">{{ 'GCP Enterprise' }}</option>
             </select>
 
             <select
@@ -606,17 +606,17 @@
               v-model="geminiTierAIStudio"
               class="input"
             >
-              <option value="aistudio_free">{{ t('admin.accounts.gemini.tier.aiStudio.free') }}</option>
-              <option value="aistudio_paid">{{ t('admin.accounts.gemini.tier.aiStudio.paid') }}</option>
+              <option value="aistudio_free">{{ 'Google AI Free' }}</option>
+              <option value="aistudio_paid">{{ 'Google AI Pay-as-you-go' }}</option>
             </select>
           </div>
-          <p class="input-hint">{{ t('admin.accounts.gemini.tier.hint') }}</p>
+          <p class="input-hint">{{ '提示：系统会优先尝试自动识别账号等级；若自动识别不可用或失败，则使用你选择的等级作为回退（本地模拟配额）。' }}</p>
         </div>
       </div>
 
       <!-- Account Type Selection (Antigravity - OAuth only) -->
       <div v-if="form.platform === 'antigravity'">
-        <label class="input-label">{{ t('admin.accounts.accountType') }}</label>
+        <label class="input-label">{{ '账号类型' }}</label>
         <div class="mt-2">
           <div
             class="flex items-center gap-3 rounded-lg border-2 border-purple-500 bg-purple-50 p-3 dark:bg-purple-900/20"
@@ -626,7 +626,7 @@
             </div>
             <div>
               <span class="block text-sm font-medium text-gray-900 dark:text-white">OAuth</span>
-              <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('admin.accounts.types.antigravityOauth') }}</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400">{{ 'Antigravity OAuth' }}</span>
             </div>
           </div>
         </div>
@@ -634,7 +634,7 @@
 
       <!-- Add Method (only for Anthropic OAuth-based type) -->
       <div v-if="form.platform === 'anthropic' && isOAuthFlow">
-        <label class="input-label">{{ t('admin.accounts.addMethod') }}</label>
+        <label class="input-label">{{ '添加方式' }}</label>
         <div class="mt-2 flex gap-4">
           <label class="flex cursor-pointer items-center">
             <input
@@ -643,7 +643,7 @@
               value="oauth"
               class="mr-2 text-primary-600 focus:ring-primary-500"
             />
-            <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('admin.accounts.types.oauth') }}</span>
+            <span class="text-sm text-gray-700 dark:text-gray-300">{{ 'OAuth' }}</span>
           </label>
           <label class="flex cursor-pointer items-center">
             <input
@@ -653,7 +653,7 @@
               class="mr-2 text-primary-600 focus:ring-primary-500"
             />
             <span class="text-sm text-gray-700 dark:text-gray-300">{{
-              t('admin.accounts.setupTokenLongLived')
+              'Setup Token（长期有效）'
             }}</span>
           </label>
         </div>
@@ -662,7 +662,7 @@
       <!-- API Key input (only for apikey type) -->
       <div v-if="form.type === 'apikey'" class="space-y-4">
         <div>
-          <label class="input-label">{{ t('admin.accounts.baseUrl') }}</label>
+          <label class="input-label">{{ 'Base URL' }}</label>
           <input
             v-model="apiKeyBaseUrl"
             type="text"
@@ -678,7 +678,7 @@
           <p class="input-hint">{{ baseUrlHint }}</p>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.accounts.apiKeyRequired') }}</label>
+          <label class="input-label">{{ 'API Key *' }}</label>
           <input
             v-model="apiKeyValue"
             type="password"
@@ -697,17 +697,17 @@
 
         <!-- Gemini API Key tier selection -->
         <div v-if="form.platform === 'gemini'">
-          <label class="input-label">{{ t('admin.accounts.gemini.tier.label') }}</label>
+          <label class="input-label">{{ '账号等级' }}</label>
           <select v-model="geminiTierAIStudio" class="input">
-            <option value="aistudio_free">{{ t('admin.accounts.gemini.tier.aiStudio.free') }}</option>
-            <option value="aistudio_paid">{{ t('admin.accounts.gemini.tier.aiStudio.paid') }}</option>
+            <option value="aistudio_free">{{ 'Google AI Free' }}</option>
+            <option value="aistudio_paid">{{ 'Google AI Pay-as-you-go' }}</option>
           </select>
-          <p class="input-hint">{{ t('admin.accounts.gemini.tier.aiStudioHint') }}</p>
+          <p class="input-hint">{{ 'AI Studio 的配额是按模型分别限流（Pro/Flash 独立）。若已绑卡（按量付费），请选 Pay-as-you-go。' }}</p>
         </div>
 
         <!-- Model Restriction Section (不适用于 Gemini) -->
         <div v-if="form.platform !== 'gemini'" class="border-t border-gray-200 pt-4 dark:border-dark-600">
-          <label class="input-label">{{ t('admin.accounts.modelRestriction') }}</label>
+          <label class="input-label">{{ '模型限制（可选）' }}</label>
 
           <!-- Mode Toggle -->
           <div class="mb-4 flex gap-2">
@@ -734,7 +734,7 @@
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              {{ t('admin.accounts.modelWhitelist') }}
+              {{ '模型白名单' }}
             </button>
             <button
               type="button"
@@ -759,7 +759,7 @@
                   d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
                 />
               </svg>
-              {{ t('admin.accounts.modelMapping') }}
+              {{ '模型映射' }}
             </button>
           </div>
 
@@ -767,9 +767,9 @@
           <div v-if="modelRestrictionMode === 'whitelist'">
             <ModelWhitelistSelector v-model="allowedModels" :platform="form.platform" />
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.selectedModels', { count: allowedModels.length }) }}
+              {{ `已选择 ${allowedModels.length} 个模型` }}
               <span v-if="allowedModels.length === 0">{{
-                t('admin.accounts.supportsAllModels')
+                '（支持所有模型）'
               }}</span>
             </p>
           </div>
@@ -791,7 +791,7 @@
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                {{ t('admin.accounts.mapRequestModels') }}
+                {{ '将请求模型映射到实际模型。左边是请求的模型，右边是发送到 API 的实际模型。' }}
               </p>
             </div>
 
@@ -806,7 +806,7 @@
                   v-model="mapping.from"
                   type="text"
                   class="input flex-1"
-                  :placeholder="t('admin.accounts.requestModel')"
+                  :placeholder="'请求模型'"
                 />
                 <svg
                   class="h-4 w-4 flex-shrink-0 text-gray-400"
@@ -825,7 +825,7 @@
                   v-model="mapping.to"
                   type="text"
                   class="input flex-1"
-                  :placeholder="t('admin.accounts.actualModel')"
+                  :placeholder="'实际模型'"
                 />
                 <button
                   type="button"
@@ -862,7 +862,7 @@
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              {{ t('admin.accounts.addMapping') }}
+              {{ '添加映射' }}
             </button>
 
             <!-- Quick Add Buttons -->
@@ -887,9 +887,9 @@
         >
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.customErrorCodes') }}</label>
+              <label class="input-label mb-0">{{ '自定义错误码' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.customErrorCodesHint') }}
+                {{ '仅对选中的错误码停止调度' }}
               </p>
             </div>
             <button
@@ -913,7 +913,7 @@
             <div class="rounded-lg bg-amber-50 p-3 dark:bg-amber-900/20">
               <p class="text-xs text-amber-700 dark:text-amber-400">
                 <Icon name="exclamationTriangle" size="sm" class="mr-1 inline" :stroke-width="2" />
-                {{ t('admin.accounts.customErrorCodesWarning') }}
+                {{ '仅选中的错误码会停止调度，其他错误将返回 500。' }}
               </p>
             </div>
 
@@ -943,7 +943,7 @@
                 min="100"
                 max="599"
                 class="input flex-1"
-                :placeholder="t('admin.accounts.enterErrorCode')"
+                :placeholder="'输入错误码 (100-599)'"
                 @keyup.enter="addCustomErrorCode"
               />
               <button type="button" @click="addCustomErrorCode" class="btn btn-secondary px-3">
@@ -975,7 +975,7 @@
                 </button>
               </span>
               <span v-if="selectedErrorCodes.length === 0" class="text-xs text-gray-400">
-                {{ t('admin.accounts.noneSelectedUsesDefault') }}
+                {{ '未选择（使用默认策略）' }}
               </span>
             </div>
           </div>
@@ -1000,10 +1000,10 @@
               </svg>
               <div>
                 <p class="text-sm font-medium text-blue-800 dark:text-blue-300">
-                  {{ t('admin.accounts.gemini.modelPassthrough') }}
+                  {{ 'Gemini 直接转发模型' }}
                 </p>
                 <p class="mt-1 text-xs text-blue-700 dark:text-blue-400">
-                  {{ t('admin.accounts.gemini.modelPassthroughDesc') }}
+                  {{ '所有模型请求将直接转发至 Gemini API，不进行模型限制或映射。' }}
                 </p>
               </div>
             </div>
@@ -1015,9 +1015,9 @@
       <div class="border-t border-gray-200 pt-4 dark:border-dark-600 space-y-4">
         <div class="mb-3 flex items-center justify-between">
           <div>
-            <label class="input-label mb-0">{{ t('admin.accounts.tempUnschedulable.title') }}</label>
+            <label class="input-label mb-0">{{ '临时不可调度' }}</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.tempUnschedulable.hint') }}
+              {{ '当错误码与关键词同时匹配时，账号会在指定时间内被临时禁用。' }}
             </p>
           </div>
           <button
@@ -1041,7 +1041,7 @@
           <div class="rounded-lg bg-blue-50 p-3 dark:bg-blue-900/20">
               <p class="text-xs text-blue-700 dark:text-blue-400">
                 <Icon name="exclamationTriangle" size="sm" class="mr-1 inline" :stroke-width="2" />
-                {{ t('admin.accounts.tempUnschedulable.notice') }}
+                {{ '规则按顺序匹配，需同时满足错误码与关键词。' }}
               </p>
             </div>
 
@@ -1065,7 +1065,7 @@
             >
               <div class="mb-2 flex items-center justify-between">
                 <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.accounts.tempUnschedulable.ruleIndex', { index: index + 1 }) }}
+                  {{ `规则 #${index + 1}` }}
                 </span>
                 <div class="flex items-center gap-2">
                   <button
@@ -1098,43 +1098,43 @@
 
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
-                  <label class="input-label">{{ t('admin.accounts.tempUnschedulable.errorCode') }}</label>
+                  <label class="input-label">{{ '错误码' }}</label>
                   <input
                     v-model.number="rule.error_code"
                     type="number"
                     min="100"
                     max="599"
                     class="input"
-                    :placeholder="t('admin.accounts.tempUnschedulable.errorCodePlaceholder')"
+                    :placeholder="'例如 429'"
                   />
                 </div>
                 <div>
-                  <label class="input-label">{{ t('admin.accounts.tempUnschedulable.durationMinutes') }}</label>
+                  <label class="input-label">{{ '持续时间（分钟）' }}</label>
                   <input
                     v-model.number="rule.duration_minutes"
                     type="number"
                     min="1"
                     class="input"
-                    :placeholder="t('admin.accounts.tempUnschedulable.durationPlaceholder')"
+                    :placeholder="'例如 30'"
                   />
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="input-label">{{ t('admin.accounts.tempUnschedulable.keywords') }}</label>
+                  <label class="input-label">{{ '关键词' }}</label>
                   <input
                     v-model="rule.keywords"
                     type="text"
                     class="input"
-                    :placeholder="t('admin.accounts.tempUnschedulable.keywordsPlaceholder')"
+                    :placeholder="'例如 overloaded, too many requests'"
                   />
-                  <p class="input-hint">{{ t('admin.accounts.tempUnschedulable.keywordsHint') }}</p>
+                  <p class="input-hint">{{ '多个关键词用逗号分隔，匹配时必须命中其中之一。' }}</p>
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="input-label">{{ t('admin.accounts.tempUnschedulable.description') }}</label>
+                  <label class="input-label">{{ '描述' }}</label>
                   <input
                     v-model="rule.description"
                     type="text"
                     class="input"
-                    :placeholder="t('admin.accounts.tempUnschedulable.descriptionPlaceholder')"
+                    :placeholder="'可选，便于记忆规则用途'"
                   />
                 </div>
               </div>
@@ -1154,7 +1154,7 @@
             >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            {{ t('admin.accounts.tempUnschedulable.addRule') }}
+            {{ '添加规则' }}
           </button>
         </div>
       </div>
@@ -1167,10 +1167,10 @@
         <div class="flex items-center justify-between">
           <div>
             <label class="input-label mb-0">{{
-              t('admin.accounts.interceptWarmupRequests')
+              '拦截预热请求'
             }}</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.interceptWarmupRequestsDesc') }}
+              {{ '启用后，标题生成等预热请求将返回 mock 响应，不消耗上游 token' }}
             </p>
           </div>
           <button
@@ -1197,9 +1197,9 @@
         class="border-t border-gray-200 pt-4 dark:border-dark-600 space-y-4"
       >
         <div class="mb-3">
-          <h3 class="input-label mb-0 text-base font-semibold">{{ t('admin.accounts.quotaControl.title') }}</h3>
+          <h3 class="input-label mb-0 text-base font-semibold">{{ '配额控制' }}</h3>
           <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            {{ t('admin.accounts.quotaControl.hint') }}
+            {{ '仅适用于 Anthropic OAuth/Setup Token 账号' }}
           </p>
         </div>
 
@@ -1207,9 +1207,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.quotaControl.windowCost.label') }}</label>
+              <label class="input-label mb-0">{{ '5h窗口费用控制' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.quotaControl.windowCost.hint') }}
+                {{ '限制账号在5小时窗口内的费用使用' }}
               </p>
             </div>
             <button
@@ -1231,7 +1231,7 @@
 
           <div v-if="windowCostEnabled" class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('admin.accounts.quotaControl.windowCost.limit') }}</label>
+              <label class="input-label">{{ '费用阈值' }}</label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
                 <input
@@ -1240,13 +1240,13 @@
                   min="0"
                   step="1"
                   class="input pl-7"
-                  :placeholder="t('admin.accounts.quotaControl.windowCost.limitPlaceholder')"
+                  :placeholder="'50'"
                 />
               </div>
-              <p class="input-hint">{{ t('admin.accounts.quotaControl.windowCost.limitHint') }}</p>
+              <p class="input-hint">{{ '达到阈值后不参与新请求调度' }}</p>
             </div>
             <div>
-              <label class="input-label">{{ t('admin.accounts.quotaControl.windowCost.stickyReserve') }}</label>
+              <label class="input-label">{{ '粘性预留额度' }}</label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
                 <input
@@ -1255,10 +1255,10 @@
                   min="0"
                   step="1"
                   class="input pl-7"
-                  :placeholder="t('admin.accounts.quotaControl.windowCost.stickyReservePlaceholder')"
+                  :placeholder="'10'"
                 />
               </div>
-              <p class="input-hint">{{ t('admin.accounts.quotaControl.windowCost.stickyReserveHint') }}</p>
+              <p class="input-hint">{{ '为粘性会话预留的额外额度' }}</p>
             </div>
           </div>
         </div>
@@ -1267,9 +1267,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.quotaControl.sessionLimit.label') }}</label>
+              <label class="input-label mb-0">{{ '会话数量控制' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.quotaControl.sessionLimit.hint') }}
+                {{ '限制同时活跃的会话数量' }}
               </p>
             </div>
             <button
@@ -1291,19 +1291,19 @@
 
           <div v-if="sessionLimitEnabled" class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('admin.accounts.quotaControl.sessionLimit.maxSessions') }}</label>
+              <label class="input-label">{{ '最大会话数' }}</label>
               <input
                 v-model.number="maxSessions"
                 type="number"
                 min="1"
                 step="1"
                 class="input"
-                :placeholder="t('admin.accounts.quotaControl.sessionLimit.maxSessionsPlaceholder')"
+                :placeholder="'3'"
               />
-              <p class="input-hint">{{ t('admin.accounts.quotaControl.sessionLimit.maxSessionsHint') }}</p>
+              <p class="input-hint">{{ '同时活跃的最大会话数量' }}</p>
             </div>
             <div>
-              <label class="input-label">{{ t('admin.accounts.quotaControl.sessionLimit.idleTimeout') }}</label>
+              <label class="input-label">{{ '空闲超时' }}</label>
               <div class="relative">
                 <input
                   v-model.number="sessionIdleTimeout"
@@ -1311,11 +1311,11 @@
                   min="1"
                   step="1"
                   class="input pr-12"
-                  :placeholder="t('admin.accounts.quotaControl.sessionLimit.idleTimeoutPlaceholder')"
+                  :placeholder="'5'"
                 />
-                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">{{ t('common.minutes') }}</span>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">{{ '分钟' }}</span>
               </div>
-              <p class="input-hint">{{ t('admin.accounts.quotaControl.sessionLimit.idleTimeoutHint') }}</p>
+              <p class="input-hint">{{ '会话空闲超时后自动释放' }}</p>
             </div>
           </div>
         </div>
@@ -1324,9 +1324,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.quotaControl.tlsFingerprint.label') }}</label>
+              <label class="input-label mb-0">{{ 'TLS 指纹模拟' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.quotaControl.tlsFingerprint.hint') }}
+                {{ '模拟 Node.js/Claude Code 客户端的 TLS 指纹' }}
               </p>
             </div>
             <button
@@ -1351,9 +1351,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.quotaControl.sessionIdMasking.label') }}</label>
+              <label class="input-label mb-0">{{ '会话 ID 伪装' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.quotaControl.sessionIdMasking.hint') }}
+                {{ '启用后将在 15 分钟内固定 metadata.user_id 中的 session ID，使上游认为请求来自同一会话' }}
               </p>
             </div>
             <button
@@ -1376,17 +1376,17 @@
       </div>
 
       <div>
-        <label class="input-label">{{ t('admin.accounts.proxy') }}</label>
+        <label class="input-label">{{ '代理' }}</label>
         <ProxySelector v-model="form.proxy_id" :proxies="proxies" />
       </div>
 
       <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
         <div>
-          <label class="input-label">{{ t('admin.accounts.concurrency') }}</label>
+          <label class="input-label">{{ '并发数' }}</label>
           <input v-model.number="form.concurrency" type="number" min="1" class="input" />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.accounts.priority') }}</label>
+          <label class="input-label">{{ '优先级' }}</label>
           <input
             v-model.number="form.priority"
             type="number"
@@ -1394,28 +1394,28 @@
             class="input"
             data-tour="account-form-priority"
           />
-          <p class="input-hint">{{ t('admin.accounts.priorityHint') }}</p>
+          <p class="input-hint">{{ '优先级越小的账号优先使用' }}</p>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.accounts.billingRateMultiplier') }}</label>
+          <label class="input-label">{{ '账号计费倍率' }}</label>
           <input v-model.number="form.rate_multiplier" type="number" min="0" step="0.001" class="input" />
-          <p class="input-hint">{{ t('admin.accounts.billingRateMultiplierHint') }}</p>
+          <p class="input-hint">{{ '>=0，0 表示该账号计费为 0；仅影响账号计费口径' }}</p>
         </div>
       </div>
       <div class="border-t border-gray-200 pt-4 dark:border-dark-600">
-        <label class="input-label">{{ t('admin.accounts.expiresAt') }}</label>
+        <label class="input-label">{{ '过期时间' }}</label>
         <input v-model="expiresAtInput" type="datetime-local" class="input" />
-        <p class="input-hint">{{ t('admin.accounts.expiresAtHint') }}</p>
+        <p class="input-hint">{{ '留空表示不过期' }}</p>
       </div>
 
       <div>
         <div class="flex items-center justify-between">
           <div>
             <label class="input-label mb-0">{{
-              t('admin.accounts.autoPauseOnExpired')
+              '过期自动暂停调度'
             }}</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.autoPauseOnExpiredDesc') }}
+              {{ '启用后，账号过期将自动暂停调度' }}
             </p>
           </div>
           <button
@@ -1446,7 +1446,7 @@
               class="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-dark-500"
             />
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.accounts.mixedScheduling') }}
+              {{ '在 /v1/messages 中使用' }}
             </span>
           </label>
           <div class="group relative">
@@ -1459,7 +1459,7 @@
             <div
               class="pointer-events-none absolute left-0 top-full z-[100] mt-1.5 w-72 rounded bg-gray-900 px-3 py-2 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700"
             >
-              {{ t('admin.accounts.mixedSchedulingTooltip') }}
+              {{ '！！注意！！ Antigravity Claude 和 Anthropic Claude 无法在同个上下文中使用，如果你同时有 Anthropic 账号和 Antigravity 账号，开启此选项会导致经常 400 报错。开启后，请用分组功能做好 Antigravity 账号和 Anthropic 账号的隔离。一定要弄明白再开启！！' }}
               <div
                 class="absolute bottom-full left-3 border-4 border-transparent border-b-gray-900 dark:border-b-gray-700"
               ></div>
@@ -1504,7 +1504,7 @@
     <template #footer>
       <div v-if="step === 1" class="flex justify-end gap-3">
         <button @click="handleClose" type="button" class="btn btn-secondary">
-          {{ t('common.cancel') }}
+          {{ '取消' }}
         </button>
         <button
           type="submit"
@@ -1535,16 +1535,16 @@
           </svg>
           {{
             isOAuthFlow
-              ? t('common.next')
+              ? '下一步'
               : submitting
-                ? t('admin.accounts.creating')
-                : t('common.create')
+                ? '创建中...'
+                : '创建'
           }}
         </button>
       </div>
       <div v-else class="flex justify-between gap-3">
         <button type="button" class="btn btn-secondary" @click="goBackToBasicInfo">
-          {{ t('common.back') }}
+          {{ '返回' }}
         </button>
         <button
           v-if="isManualInputMethod"
@@ -1575,8 +1575,8 @@
           </svg>
           {{
             currentOAuthLoading
-              ? t('admin.accounts.oauth.verifying')
-              : t('admin.accounts.oauth.completeAuth')
+              ? '验证中...'
+              : '完成授权'
           }}
         </button>
       </div>
@@ -1586,7 +1586,7 @@
   <!-- Gemini Help Dialog -->
   <BaseDialog
     :show="showGeminiHelpDialog"
-    :title="t('admin.accounts.gemini.helpDialog.title')"
+    :title="'Gemini 使用指南'"
     @close="showGeminiHelpDialog = false"
     max-width="max-w-3xl"
   >
@@ -1594,25 +1594,25 @@
       <!-- Setup Guide Section -->
       <div>
         <h3 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ t('admin.accounts.gemini.setupGuide.title') }}
+          {{ 'Gemini 使用准备' }}
         </h3>
         <div class="space-y-4">
           <div>
             <p class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.accounts.gemini.setupGuide.checklistTitle') }}
+              {{ '准备工作' }}
             </p>
             <ul class="list-inside list-disc space-y-1 text-sm text-gray-600 dark:text-gray-400">
-              <li>{{ t('admin.accounts.gemini.setupGuide.checklistItems.usIp') }}</li>
-              <li>{{ t('admin.accounts.gemini.setupGuide.checklistItems.age') }}</li>
+              <li>{{ '使用美国 IP，并确保账号归属地为美国。' }}</li>
+              <li>{{ '账号需满 18 岁。' }}</li>
             </ul>
           </div>
           <div>
             <p class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.accounts.gemini.setupGuide.activationTitle') }}
+              {{ '服务激活' }}
             </p>
             <ul class="list-inside list-disc space-y-1 text-sm text-gray-600 dark:text-gray-400">
-              <li>{{ t('admin.accounts.gemini.setupGuide.activationItems.geminiWeb') }}</li>
-              <li>{{ t('admin.accounts.gemini.setupGuide.activationItems.gcpProject') }}</li>
+              <li>{{ '激活 Gemini Web，避免 User not initialized。' }}</li>
+              <li>{{ '激活 GCP 项目，获取 Code Assist 所需 Project ID。' }}</li>
             </ul>
             <div class="mt-2 flex flex-wrap gap-2">
               <a
@@ -1621,7 +1621,7 @@
                 rel="noreferrer"
                 class="text-sm text-blue-600 hover:underline dark:text-blue-400"
               >
-                {{ t('admin.accounts.gemini.setupGuide.links.countryCheck') }}
+                {{ '检查归属地' }}
               </a>
               <span class="text-gray-400">·</span>
               <a
@@ -1639,7 +1639,7 @@
                 rel="noreferrer"
                 class="text-sm text-blue-600 hover:underline dark:text-blue-400"
               >
-                {{ t('admin.accounts.gemini.setupGuide.links.geminiWebActivation') }}
+                {{ '激活 Gemini Web' }}
               </a>
               <span class="text-gray-400">·</span>
               <a
@@ -1648,7 +1648,7 @@
                 rel="noreferrer"
                 class="text-sm text-blue-600 hover:underline dark:text-blue-400"
               >
-                {{ t('admin.accounts.gemini.setupGuide.links.gcpProject') }}
+                {{ '打开 GCP 控制台' }}
               </a>
             </div>
           </div>
@@ -1658,80 +1658,80 @@
       <!-- Quota Policy Section -->
       <div class="border-t border-gray-200 pt-6 dark:border-dark-600">
         <h3 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ t('admin.accounts.gemini.quotaPolicy.title') }}
+          {{ 'Gemini 配额与限流政策（参考）' }}
         </h3>
         <p class="mb-4 text-xs text-amber-600 dark:text-amber-400">
-          {{ t('admin.accounts.gemini.quotaPolicy.note') }}
+          {{ '注意：Gemini 官方未提供用量查询接口。此处显示的“每日配额”是由系统根据账号等级模拟计算的估算值，仅供调度参考，请以 Google 官方实际报错为准。' }}
         </p>
         <div class="overflow-x-auto">
           <table class="w-full text-xs">
             <thead class="bg-gray-50 dark:bg-dark-600">
               <tr>
                 <th class="px-3 py-2 text-left font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.accounts.gemini.quotaPolicy.columns.channel') }}
+                  {{ '授权通道' }}
                 </th>
                 <th class="px-3 py-2 text-left font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.accounts.gemini.quotaPolicy.columns.account') }}
+                  {{ '账号状态' }}
                 </th>
                 <th class="px-3 py-2 text-left font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('admin.accounts.gemini.quotaPolicy.columns.limits') }}
+                  {{ '限流政策' }}
                 </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-dark-600">
               <tr>
                 <td class="px-3 py-2 text-gray-900 dark:text-white">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.googleOne.channel') }}
+                  {{ 'Google One OAuth（个人版 / Code Assist for Individuals）' }}
                 </td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">Free</td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.googleOne.limitsFree') }}
+                  {{ '共享池：1000 RPD / 60 RPM（不分模型）' }}
                 </td>
               </tr>
               <tr>
                 <td class="px-3 py-2 text-gray-900 dark:text-white"></td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">Pro</td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.googleOne.limitsPro') }}
+                  {{ '共享池：1500 RPD / 120 RPM（不分模型）' }}
                 </td>
               </tr>
               <tr>
                 <td class="px-3 py-2 text-gray-900 dark:text-white"></td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">Ultra</td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.googleOne.limitsUltra') }}
+                  {{ '共享池：2000 RPD / 120 RPM（不分模型）' }}
                 </td>
               </tr>
               <tr>
                 <td class="px-3 py-2 text-gray-900 dark:text-white">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.gcp.channel') }}
+                  {{ 'GCP Code Assist OAuth（企业版）' }}
                 </td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">Standard</td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.gcp.limitsStandard') }}
+                  {{ '共享池：1500 RPD / 120 RPM（不分模型）' }}
                 </td>
               </tr>
               <tr>
                 <td class="px-3 py-2 text-gray-900 dark:text-white"></td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">Enterprise</td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.gcp.limitsEnterprise') }}
+                  {{ '共享池：2000 RPD / 120 RPM（不分模型）' }}
                 </td>
               </tr>
               <tr>
                 <td class="px-3 py-2 text-gray-900 dark:text-white">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.aiStudio.channel') }}
+                  {{ 'AI Studio API Key / OAuth' }}
                 </td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">Free</td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.aiStudio.limitsFree') }}
+                  {{ 'RPD 50；RPM 2（Pro）/ 15（Flash）' }}
                 </td>
               </tr>
               <tr>
                 <td class="px-3 py-2 text-gray-900 dark:text-white"></td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">Paid</td>
                 <td class="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.quotaPolicy.rows.aiStudio.limitsPaid') }}
+                  {{ 'RPD 不限；RPM 1000（Pro）/ 2000（Flash）（按模型配额）' }}
                 </td>
               </tr>
             </tbody>
@@ -1744,7 +1744,7 @@
             rel="noreferrer"
             class="text-sm text-blue-600 hover:underline dark:text-blue-400"
           >
-            {{ t('admin.accounts.gemini.quotaPolicy.docs.codeAssist') }}
+            {{ 'Code Assist 配额' }}
           </a>
           <a
             :href="geminiQuotaDocs.aiStudio"
@@ -1752,7 +1752,7 @@
             rel="noreferrer"
             class="text-sm text-blue-600 hover:underline dark:text-blue-400"
           >
-            {{ t('admin.accounts.gemini.quotaPolicy.docs.aiStudio') }}
+            {{ 'AI Studio 定价' }}
           </a>
           <a
             :href="geminiQuotaDocs.vertex"
@@ -1760,7 +1760,7 @@
             rel="noreferrer"
             class="text-sm text-blue-600 hover:underline dark:text-blue-400"
           >
-            {{ t('admin.accounts.gemini.quotaPolicy.docs.vertex') }}
+            {{ 'Vertex AI 配额' }}
           </a>
         </div>
       </div>
@@ -1768,7 +1768,7 @@
       <!-- API Key Links Section -->
       <div class="border-t border-gray-200 pt-6 dark:border-dark-600">
         <h3 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ t('admin.accounts.gemini.helpDialog.apiKeySection') }}
+          {{ 'API Key 相关链接' }}
         </h3>
         <div class="flex flex-wrap gap-3">
           <a
@@ -1777,7 +1777,7 @@
             rel="noreferrer"
             class="text-sm text-blue-600 hover:underline dark:text-blue-400"
           >
-            {{ t('admin.accounts.gemini.accountType.apiKeyLink') }}
+            {{ '获取 API Key' }}
           </a>
           <a
             :href="geminiHelpLinks.aiStudioPricing"
@@ -1785,7 +1785,7 @@
             rel="noreferrer"
             class="text-sm text-blue-600 hover:underline dark:text-blue-400"
           >
-            {{ t('admin.accounts.gemini.accountType.quotaLink') }}
+            {{ '配额说明' }}
           </a>
         </div>
       </div>
@@ -1794,7 +1794,7 @@
     <template #footer>
       <div class="flex justify-end">
         <button @click="showGeminiHelpDialog = false" type="button" class="btn btn-primary">
-          {{ t('common.close') }}
+          {{ '关闭' }}
         </button>
       </div>
     </template>
@@ -1803,7 +1803,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { claudeModels, getPresetMappingsByPlatform, getModelsByPlatform, commonErrorCodes, buildModelMappingObject } from '@/composables/useModelWhitelist'
 import { useAuthStore } from '@/stores/auth'
@@ -1836,27 +1835,26 @@ interface OAuthFlowExposed {
   reset: () => void
 }
 
-const { t } = useI18n()
 const authStore = useAuthStore()
 
 const oauthStepTitle = computed(() => {
-  if (form.platform === 'openai') return t('admin.accounts.oauth.openai.title')
-  if (form.platform === 'gemini') return t('admin.accounts.oauth.gemini.title')
-  if (form.platform === 'antigravity') return t('admin.accounts.oauth.antigravity.title')
-  return t('admin.accounts.oauth.title')
+  if (form.platform === 'openai') return 'OpenAI 账户授权'
+  if (form.platform === 'gemini') return 'Gemini 账户授权'
+  if (form.platform === 'antigravity') return 'Antigravity 账户授权'
+  return 'Claude 账号授权'
 })
 
 // Platform-specific hints for API Key type
 const baseUrlHint = computed(() => {
-  if (form.platform === 'openai') return t('admin.accounts.openai.baseUrlHint')
-  if (form.platform === 'gemini') return t('admin.accounts.gemini.baseUrlHint')
-  return t('admin.accounts.baseUrlHint')
+  if (form.platform === 'openai') return '留空使用官方 OpenAI API'
+  if (form.platform === 'gemini') return '留空使用官方 Gemini API'
+  return '留空使用官方 Anthropic API'
 })
 
 const apiKeyHint = computed(() => {
-  if (form.platform === 'openai') return t('admin.accounts.openai.apiKeyHint')
-  if (form.platform === 'gemini') return t('admin.accounts.gemini.apiKeyHint')
-  return t('admin.accounts.apiKeyHint')
+  if (form.platform === 'openai') return '您的 OpenAI API Key'
+  if (form.platform === 'gemini') return '您的 Gemini API Key（以 AIza 开头）'
+  return '您的 Claude Console API Key'
 })
 
 interface Props {
@@ -1994,30 +1992,30 @@ const geminiHelpLinks = {
 const presetMappings = computed(() => getPresetMappingsByPlatform(form.platform))
 const tempUnschedPresets = computed(() => [
   {
-    label: t('admin.accounts.tempUnschedulable.presets.overloadLabel'),
+    label: '529 过载',
     rule: {
       error_code: 529,
       keywords: 'overloaded, too many',
       duration_minutes: 60,
-      description: t('admin.accounts.tempUnschedulable.presets.overloadDesc')
+      description: '服务过载 - 暂停 60 分钟'
     }
   },
   {
-    label: t('admin.accounts.tempUnschedulable.presets.rateLimitLabel'),
+    label: '429 限流',
     rule: {
       error_code: 429,
       keywords: 'rate limit, too many requests',
       duration_minutes: 10,
-      description: t('admin.accounts.tempUnschedulable.presets.rateLimitDesc')
+      description: '触发限流 - 暂停 10 分钟'
     }
   },
   {
-    label: t('admin.accounts.tempUnschedulable.presets.unavailableLabel'),
+    label: '503 维护',
     rule: {
       error_code: 503,
       keywords: 'unavailable, maintenance',
       duration_minutes: 30,
-      description: t('admin.accounts.tempUnschedulable.presets.unavailableDesc')
+      description: '服务不可用 - 暂停 30 分钟'
     }
   }
 ])
@@ -2139,7 +2137,7 @@ watch(
 
 const handleSelectGeminiOAuthType = (oauthType: 'code_assist' | 'google_one' | 'ai_studio') => {
   if (oauthType === 'ai_studio' && !geminiAIStudioOAuthEnabled.value) {
-    appStore.showError(t('admin.accounts.oauth.gemini.aiStudioNotConfigured'))
+    appStore.showError('AI Studio OAuth 未配置：请先设置 GEMINI_OAUTH_CLIENT_ID / GEMINI_OAUTH_CLIENT_SECRET，并在 Google OAuth Client 添加 Redirect URI：http://localhost:1455/auth/callback')
     return
   }
   geminiOAuthType.value = oauthType
@@ -2166,7 +2164,7 @@ const removeModelMapping = (index: number) => {
 
 const addPresetMapping = (from: string, to: string) => {
   if (modelMappings.value.some((m) => m.from === from)) {
-    appStore.showInfo(t('admin.accounts.mappingExists', { model: from }))
+    appStore.showInfo(`模型 ${from} 的映射已存在`)
     return
   }
   modelMappings.value.push({ from, to })
@@ -2178,11 +2176,11 @@ const toggleErrorCode = (code: number) => {
   if (index === -1) {
     // Adding code - check for 429/529 warning
     if (code === 429) {
-      if (!confirm(t('admin.accounts.customErrorCodes429Warning'))) {
+      if (!confirm('429 已有内置的限流处理机制。添加到自定义错误码后，将直接停止调度而非临时限流。确定要添加吗？')) {
         return
       }
     } else if (code === 529) {
-      if (!confirm(t('admin.accounts.customErrorCodes529Warning'))) {
+      if (!confirm('529 已有内置的过载处理机制。添加到自定义错误码后，将直接停止调度而非临时标记过载。确定要添加吗？')) {
         return
       }
     }
@@ -2196,20 +2194,20 @@ const toggleErrorCode = (code: number) => {
 const addCustomErrorCode = () => {
   const code = customErrorCodeInput.value
   if (code === null || code < 100 || code > 599) {
-    appStore.showError(t('admin.accounts.invalidErrorCode'))
+    appStore.showError('请输入有效的 HTTP 错误码 (100-599)')
     return
   }
   if (selectedErrorCodes.value.includes(code)) {
-    appStore.showInfo(t('admin.accounts.errorCodeExists'))
+    appStore.showInfo('该错误码已被选中')
     return
   }
   // Check for 429/529 warning
   if (code === 429) {
-    if (!confirm(t('admin.accounts.customErrorCodes429Warning'))) {
+    if (!confirm('429 已有内置的限流处理机制。添加到自定义错误码后，将直接停止调度而非临时限流。确定要添加吗？')) {
       return
     }
   } else if (code === 529) {
-    if (!confirm(t('admin.accounts.customErrorCodes529Warning'))) {
+    if (!confirm('529 已有内置的过载处理机制。添加到自定义错误码后，将直接停止调度而非临时标记过载。确定要添加吗？')) {
       return
     }
   }
@@ -2292,7 +2290,7 @@ const applyTempUnschedConfig = (credentials: Record<string, unknown>) => {
 
   const rules = buildTempUnschedRules(tempUnschedRules.value)
   if (rules.length === 0) {
-    appStore.showError(t('admin.accounts.tempUnschedulable.rulesInvalid'))
+    appStore.showError('请至少填写一条包含错误码、关键词和时长的规则。')
     return false
   }
 
@@ -2364,7 +2362,7 @@ const handleSubmit = async () => {
   // For OAuth-based type, handle OAuth flow (goes to step 2)
   if (isOAuthFlow.value) {
     if (!form.name.trim()) {
-      appStore.showError(t('admin.accounts.pleaseEnterAccountName'))
+      appStore.showError('请输入账号名称')
       return
     }
     step.value = 2
@@ -2373,7 +2371,7 @@ const handleSubmit = async () => {
 
   // For apikey type, create directly
   if (!apiKeyValue.value.trim()) {
-    appStore.showError(t('admin.accounts.pleaseEnterApiKey'))
+    appStore.showError('请输入 API Key')
     return
   }
 
@@ -2423,11 +2421,11 @@ const handleSubmit = async () => {
       group_ids: form.group_ids,
       auto_pause_on_expired: autoPauseOnExpired.value
     })
-    appStore.showSuccess(t('admin.accounts.accountCreated'))
+    appStore.showSuccess('账号创建成功')
     emit('created')
     handleClose()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.accounts.failedToCreate'))
+    appStore.showError(error.response?.data?.detail || '创建账号失败')
   } finally {
     submitting.value = false
   }
@@ -2487,7 +2485,7 @@ const createAccountAndFinish = async (
     expires_at: form.expires_at,
     auto_pause_on_expired: autoPauseOnExpired.value
   })
-  appStore.showSuccess(t('admin.accounts.accountCreated'))
+  appStore.showSuccess('账号创建成功')
   emit('created')
   handleClose()
 }
@@ -2511,7 +2509,7 @@ const handleOpenAIExchange = async (authCode: string) => {
     const extra = openaiOAuth.buildExtraInfo(tokenInfo)
     await createAccountAndFinish('openai', 'oauth', credentials, extra)
   } catch (error: any) {
-    openaiOAuth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
+    openaiOAuth.error.value = error.response?.data?.detail || '授权失败'
     appStore.showError(openaiOAuth.error.value)
   } finally {
     openaiOAuth.loading.value = false
@@ -2529,7 +2527,7 @@ const handleGeminiExchange = async (authCode: string) => {
     const stateFromInput = oauthFlowRef.value?.oauthState || ''
     const stateToUse = stateFromInput || geminiOAuth.state.value
     if (!stateToUse) {
-      geminiOAuth.error.value = t('admin.accounts.oauth.authFailed')
+      geminiOAuth.error.value = '授权失败'
       appStore.showError(geminiOAuth.error.value)
       return
     }
@@ -2548,7 +2546,7 @@ const handleGeminiExchange = async (authCode: string) => {
     const extra = geminiOAuth.buildExtraInfo(tokenInfo)
     await createAccountAndFinish('gemini', 'oauth', credentials, extra)
   } catch (error: any) {
-    geminiOAuth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
+    geminiOAuth.error.value = error.response?.data?.detail || '授权失败'
     appStore.showError(geminiOAuth.error.value)
   } finally {
     geminiOAuth.loading.value = false
@@ -2566,7 +2564,7 @@ const handleAntigravityExchange = async (authCode: string) => {
     const stateFromInput = oauthFlowRef.value?.oauthState || ''
     const stateToUse = stateFromInput || antigravityOAuth.state.value
     if (!stateToUse) {
-      antigravityOAuth.error.value = t('admin.accounts.oauth.authFailed')
+      antigravityOAuth.error.value = '授权失败'
       appStore.showError(antigravityOAuth.error.value)
       return
     }
@@ -2583,7 +2581,7 @@ const handleAntigravityExchange = async (authCode: string) => {
     const extra = mixedScheduling.value ? { mixed_scheduling: true } : undefined
     await createAccountAndFinish('antigravity', 'oauth', credentials, extra)
   } catch (error: any) {
-    antigravityOAuth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
+    antigravityOAuth.error.value = error.response?.data?.detail || '授权失败'
     appStore.showError(antigravityOAuth.error.value)
   } finally {
     antigravityOAuth.loading.value = false
@@ -2642,7 +2640,7 @@ const handleAnthropicExchange = async (authCode: string) => {
     }
     await createAccountAndFinish(form.platform, addMethod.value as AccountType, credentials, extra)
   } catch (error: any) {
-    oauth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
+    oauth.error.value = error.response?.data?.detail || '授权失败'
     appStore.showError(oauth.error.value)
   } finally {
     oauth.loading.value = false
@@ -2674,7 +2672,7 @@ const handleCookieAuth = async (sessionKey: string) => {
     const keys = oauth.parseSessionKeys(sessionKey)
 
     if (keys.length === 0) {
-      oauth.error.value = t('admin.accounts.oauth.pleaseEnterSessionKey')
+      oauth.error.value = '请输入至少一个有效的 sessionKey'
       return
     }
 
@@ -2682,7 +2680,7 @@ const handleCookieAuth = async (sessionKey: string) => {
       ? buildTempUnschedRules(tempUnschedRules.value)
       : []
     if (tempUnschedEnabled.value && tempUnschedPayload.length === 0) {
-      appStore.showError(t('admin.accounts.tempUnschedulable.rulesInvalid'))
+      appStore.showError('请至少填写一条包含错误码、关键词和时长的规则。')
       return
     }
 
@@ -2761,16 +2759,13 @@ const handleCookieAuth = async (sessionKey: string) => {
       } catch (error: any) {
         failedCount++
         errors.push(
-          t('admin.accounts.oauth.keyAuthFailed', {
-            index: i + 1,
-            error: error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
-          })
+          `密钥 ${i + 1}: ${error.response?.data?.detail || '授权失败'}`
         )
       }
     }
 
     if (successCount > 0) {
-      appStore.showSuccess(t('admin.accounts.oauth.successCreated', { count: successCount }))
+      appStore.showSuccess(`成功创建 ${successCount} 个账号`)
       if (failedCount === 0) {
         emit('created')
         handleClose()
@@ -2783,7 +2778,7 @@ const handleCookieAuth = async (sessionKey: string) => {
       oauth.error.value = errors.join('\n')
     }
   } catch (error: any) {
-    oauth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.cookieAuthFailed')
+    oauth.error.value = error.response?.data?.detail || 'Cookie 授权失败'
   } finally {
     oauth.loading.value = false
   }

@@ -1,7 +1,7 @@
 <template>
   <div class="card p-4">
     <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
-      {{ t('admin.dashboard.modelDistribution') }}
+      {{ '模型分布' }}
     </h3>
     <div v-if="loading" class="flex h-48 items-center justify-center">
       <LoadingSpinner />
@@ -14,11 +14,11 @@
         <table class="w-full text-xs">
           <thead>
             <tr class="text-gray-500 dark:text-gray-400">
-              <th class="pb-2 text-left">{{ t('admin.dashboard.model') }}</th>
-              <th class="pb-2 text-right">{{ t('admin.dashboard.requests') }}</th>
-              <th class="pb-2 text-right">{{ t('admin.dashboard.tokens') }}</th>
-              <th class="pb-2 text-right">{{ t('admin.dashboard.actual') }}</th>
-              <th class="pb-2 text-right">{{ t('admin.dashboard.standard') }}</th>
+              <th class="pb-2 text-left">{{ '模型' }}</th>
+              <th class="pb-2 text-right">{{ '请求' }}</th>
+              <th class="pb-2 text-right">{{ 'Token' }}</th>
+              <th class="pb-2 text-right">{{ '实际' }}</th>
+              <th class="pb-2 text-right">{{ '标准' }}</th>
             </tr>
           </thead>
           <tbody>
@@ -54,22 +54,19 @@
       v-else
       class="flex h-48 items-center justify-center text-sm text-gray-500 dark:text-gray-400"
     >
-      {{ t('admin.dashboard.noDataAvailable') }}
+      {{ '暂无数据' }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import type { ModelStat } from '@/types'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
-
-const { t } = useI18n()
 
 const props = defineProps<{
   modelStats: ModelStat[]

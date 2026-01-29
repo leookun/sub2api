@@ -1,13 +1,10 @@
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { AntigravityTokenInfo } from '@/api/admin/antigravity'
 
 export function useAntigravityOAuth() {
   const appStore = useAppStore()
-  const { t } = useI18n()
-
   const authUrl = ref('')
   const sessionId = ref('')
   const state = ref('')
@@ -40,7 +37,7 @@ export function useAntigravityOAuth() {
       return true
     } catch (err: any) {
       error.value =
-        err.response?.data?.detail || t('admin.accounts.oauth.antigravity.failedToGenerateUrl')
+        err.response?.data?.detail || '生成 Antigravity 授权链接失败'
       appStore.showError(error.value)
       return false
     } finally {
@@ -56,7 +53,7 @@ export function useAntigravityOAuth() {
   }): Promise<AntigravityTokenInfo | null> => {
     const code = params.code?.trim()
     if (!code || !params.sessionId || !params.state) {
-      error.value = t('admin.accounts.oauth.antigravity.missingExchangeParams')
+      error.value = '缺少 code / session_id / state'
       return null
     }
 
@@ -75,7 +72,7 @@ export function useAntigravityOAuth() {
       return tokenInfo as AntigravityTokenInfo
     } catch (err: any) {
       error.value =
-        err.response?.data?.detail || t('admin.accounts.oauth.antigravity.failedToExchangeCode')
+        err.response?.data?.detail || 'Antigravity 授权码兑换失败'
       appStore.showError(error.value)
       return null
     } finally {

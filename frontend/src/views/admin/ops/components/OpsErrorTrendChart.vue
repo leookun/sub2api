@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,8 +31,6 @@ const emit = defineEmits<{
   (e: 'openRequestErrors'): void
   (e: 'openUpstreamErrors'): void
 }>()
-const { t } = useI18n()
-
 const isDarkMode = computed(() => document.documentElement.classList.contains('dark'))
 const colors = computed(() => ({
   red: '#ef4444',
@@ -68,7 +65,7 @@ const chartData = computed(() => {
     labels: props.points.map((p) => formatHistoryLabel(p.bucket_start, props.timeRange)),
     datasets: [
       {
-        label: t('admin.ops.errorsSla'),
+        label: '错误（SLA范围）',
         data: props.points.map((p) => p.error_count_sla ?? 0),
         borderColor: colors.value.red,
         backgroundColor: colors.value.redAlpha,
@@ -78,7 +75,7 @@ const chartData = computed(() => {
         pointHitRadius: 10
       },
       {
-        label: t('admin.ops.upstreamExcl429529'),
+        label: '上游（排除429/529）',
         data: props.points.map((p) => p.upstream_error_count_excl_429_529 ?? 0),
         borderColor: colors.value.purple,
         backgroundColor: colors.value.purpleAlpha,
@@ -88,7 +85,7 @@ const chartData = computed(() => {
         pointHitRadius: 10
       },
       {
-        label: t('admin.ops.businessLimited'),
+        label: '业务限制：',
         data: props.points.map((p) => p.business_limited_count ?? 0),
         borderColor: colors.value.gray,
         backgroundColor: 'transparent',
@@ -166,8 +163,8 @@ const options = computed(() => {
             d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
           />
         </svg>
-        {{ t('admin.ops.errorTrend') }}
-        <HelpTooltip :content="t('admin.ops.tooltips.errorTrend')" />
+        {{ '错误趋势' }}
+        <HelpTooltip :content="'错误趋势（SLA 口径排除业务限制；上游错误率排除 429/529）。'" />
       </h3>
       <div class="flex items-center gap-2">
         <button
@@ -176,7 +173,7 @@ const options = computed(() => {
           :disabled="!hasRequestErrors"
           @click="emit('openRequestErrors')"
         >
-          {{ t('admin.ops.errorDetails.requestErrors') }}
+          {{ '请求错误' }}
         </button>
         <button
           type="button"
@@ -184,7 +181,7 @@ const options = computed(() => {
           :disabled="!hasUpstreamErrors"
           @click="emit('openUpstreamErrors')"
         >
-          {{ t('admin.ops.errorDetails.upstreamErrors') }}
+          {{ '上游错误' }}
         </button>
       </div>
     </div>
@@ -192,8 +189,8 @@ const options = computed(() => {
     <div class="min-h-0 flex-1">
       <Line v-if="state === 'ready' && chartData" :data="chartData" :options="options" />
       <div v-else class="flex h-full items-center justify-center">
-        <div v-if="state === 'loading'" class="animate-pulse text-sm text-gray-400">{{ t('common.loading') }}</div>
-        <EmptyState v-else :title="t('common.noData')" :description="t('admin.ops.charts.emptyError')" />
+        <div v-if="state === 'loading'" class="animate-pulse text-sm text-gray-400">{{ '加载中...' }}</div>
+        <EmptyState v-else :title="'暂无数据'" :description="'该时间窗口内暂无错误。'" />
       </div>
     </div>
   </div>

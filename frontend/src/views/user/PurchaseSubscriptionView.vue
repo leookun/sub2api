@@ -4,10 +4,10 @@
       <div class="flex items-start justify-between gap-4">
         <div>
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-            {{ t('purchase.title') }}
+            {{ '购买订阅' }}
           </h2>
           <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-            {{ t('purchase.description') }}
+            {{ '通过内嵌页面完成订阅购买' }}
           </p>
         </div>
 
@@ -20,7 +20,7 @@
             class="btn btn-secondary btn-sm"
           >
             <Icon name="externalLink" size="sm" class="mr-1.5" :stroke-width="2" />
-            {{ t('purchase.openInNewTab') }}
+            {{ '新窗口打开' }}
           </a>
         </div>
       </div>
@@ -43,10 +43,10 @@
               <Icon name="creditCard" size="lg" class="text-gray-400" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('purchase.notEnabledTitle') }}
+              {{ '该功能未开启' }}
             </h3>
             <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-              {{ t('purchase.notEnabledDesc') }}
+              {{ '管理员暂未开启购买订阅入口，请联系管理员。' }}
             </p>
           </div>
         </div>
@@ -62,10 +62,10 @@
               <Icon name="link" size="lg" class="text-gray-400" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ t('purchase.notConfiguredTitle') }}
+              {{ '购买链接未配置' }}
             </h3>
             <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-              {{ t('purchase.notConfiguredDesc') }}
+              {{ '管理员已开启入口，但尚未配置购买订阅链接，请联系管理员。' }}
             </p>
           </div>
         </div>
@@ -78,12 +78,10 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import Icon from '@/components/icons/Icon.vue'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const loading = ref(false)

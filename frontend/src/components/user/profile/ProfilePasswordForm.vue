@@ -2,14 +2,14 @@
   <div class="card">
     <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
       <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-        {{ t('profile.changePassword') }}
+        {{ '修改密码' }}
       </h2>
     </div>
     <div class="px-6 py-6">
       <form @submit.prevent="handleChangePassword" class="space-y-4">
         <div>
           <label for="old_password" class="input-label">
-            {{ t('profile.currentPassword') }}
+            {{ '当前密码' }}
           </label>
           <input
             id="old_password"
@@ -23,7 +23,7 @@
 
         <div>
           <label for="new_password" class="input-label">
-            {{ t('profile.newPassword') }}
+            {{ '新密码' }}
           </label>
           <input
             id="new_password"
@@ -34,13 +34,13 @@
             class="input"
           />
           <p class="input-hint">
-            {{ t('profile.passwordHint') }}
+            {{ '密码至少需要 8 个字符' }}
           </p>
         </div>
 
         <div>
           <label for="confirm_password" class="input-label">
-            {{ t('profile.confirmNewPassword') }}
+            {{ '确认新密码' }}
           </label>
           <input
             id="confirm_password"
@@ -54,13 +54,13 @@
             v-if="form.new_password && form.confirm_password && form.new_password !== form.confirm_password"
             class="input-error-text"
           >
-            {{ t('profile.passwordsNotMatch') }}
+            {{ '两次输入的密码不一致' }}
           </p>
         </div>
 
         <div class="flex justify-end pt-4">
           <button type="submit" :disabled="loading" class="btn btn-primary">
-            {{ loading ? t('profile.changingPassword') : t('profile.changePasswordButton') }}
+            {{ loading ? '修改中...' : '修改密码' }}
           </button>
         </div>
       </form>
@@ -70,11 +70,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { userAPI } from '@/api'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const loading = ref(false)
@@ -86,12 +84,12 @@ const form = ref({
 
 const handleChangePassword = async () => {
   if (form.value.new_password !== form.value.confirm_password) {
-    appStore.showError(t('profile.passwordsNotMatch'))
+    appStore.showError('两次输入的密码不一致')
     return
   }
 
   if (form.value.new_password.length < 8) {
-    appStore.showError(t('profile.passwordTooShort'))
+    appStore.showError('密码至少需要 8 个字符')
     return
   }
 
@@ -99,9 +97,9 @@ const handleChangePassword = async () => {
   try {
     await userAPI.changePassword(form.value.old_password, form.value.new_password)
     form.value = { old_password: '', new_password: '', confirm_password: '' }
-    appStore.showSuccess(t('profile.passwordChangeSuccess'))
+    appStore.showSuccess('密码修改成功')
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('profile.passwordChangeFailed'))
+    appStore.showError(error.response?.data?.detail || '密码修改失败')
   } finally {
     loading.value = false
   }

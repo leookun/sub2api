@@ -7,7 +7,7 @@
         <!-- Header -->
         <div class="mb-6 text-center">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            {{ t('profile.totp.setupTitle') }}
+            {{ '设置双因素认证' }}
           </h3>
           <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
             {{ stepDescription }}
@@ -25,7 +25,7 @@
             <!-- Email verification -->
             <div v-if="verificationMethod === 'email'" class="space-y-4">
               <div>
-                <label class="input-label">{{ t('profile.totp.emailCode') }}</label>
+                <label class="input-label">{{ '邮箱验证码' }}</label>
                 <div class="flex gap-2">
                   <input
                     v-model="verifyForm.emailCode"
@@ -33,7 +33,7 @@
                     maxlength="6"
                     inputmode="numeric"
                     class="input flex-1"
-                    :placeholder="t('profile.totp.enterEmailCode')"
+                    :placeholder="'请输入 6 位验证码'"
                   />
                   <button
                     type="button"
@@ -41,7 +41,7 @@
                     :disabled="sendingCode || codeCooldown > 0"
                     @click="handleSendCode"
                   >
-                    {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? t('common.sending') : t('profile.totp.sendCode')) }}
+                    {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? t('common.sending') : '发送验证码') }}
                   </button>
                 </div>
               </div>
@@ -50,13 +50,13 @@
             <!-- Password verification -->
             <div v-else class="space-y-4">
               <div>
-                <label class="input-label">{{ t('profile.currentPassword') }}</label>
+                <label class="input-label">{{ '当前密码' }}</label>
                 <input
                   v-model="verifyForm.password"
                   type="password"
                   autocomplete="current-password"
                   class="input"
-                  :placeholder="t('profile.totp.enterPassword')"
+                  :placeholder="'请输入当前密码确认'"
                 />
               </div>
             </div>
@@ -67,7 +67,7 @@
 
             <div class="flex justify-end gap-3 pt-4">
               <button type="button" class="btn btn-secondary" @click="$emit('close')">
-                {{ t('common.cancel') }}
+                {{ '取消' }}
               </button>
               <button
                 type="button"
@@ -75,7 +75,7 @@
                 :disabled="!canProceedFromVerify || setupLoading"
                 @click="handleVerifyAndSetup"
               >
-                {{ setupLoading ? t('common.loading') : t('common.next') }}
+                {{ setupLoading ? '加载中...' : '下一步' }}
               </button>
             </div>
           </template>
@@ -93,7 +93,7 @@
 
             <div class="text-center">
               <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                {{ t('profile.totp.manualEntry') }}
+                {{ '无法扫码？手动输入密钥：' }}
               </p>
               <div class="flex items-center justify-center gap-2">
                 <code class="rounded bg-gray-100 px-3 py-2 font-mono text-sm dark:bg-dark-700">
@@ -114,7 +114,7 @@
 
           <div class="flex justify-end gap-3 pt-4">
             <button type="button" class="btn btn-secondary" @click="$emit('close')">
-              {{ t('common.cancel') }}
+              {{ '取消' }}
             </button>
             <button
               type="button"
@@ -122,7 +122,7 @@
               :disabled="!setupData"
               @click="step = 2"
             >
-              {{ t('common.next') }}
+              {{ '下一步' }}
             </button>
           </div>
         </div>
@@ -132,7 +132,7 @@
           <form @submit.prevent="handleVerify">
             <div class="mb-6">
               <label class="input-label text-center block mb-3">
-                {{ t('profile.totp.enterCode') }}
+                {{ '输入 6 位验证码' }}
               </label>
               <div class="flex justify-center gap-2">
                 <input
@@ -157,14 +157,14 @@
 
             <div class="flex justify-end gap-3">
               <button type="button" class="btn btn-secondary" @click="step = 1">
-                {{ t('common.back') }}
+                {{ '返回' }}
               </button>
               <button
                 type="submit"
                 class="btn btn-primary"
                 :disabled="verifying || code.join('').length !== 6"
               >
-                {{ verifying ? t('common.verifying') : t('profile.totp.verify') }}
+                {{ verifying ? '验证中...' : '验证' }}
               </button>
             </div>
           </form>
@@ -176,7 +176,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick, watch, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { totpAPI } from '@/api'
 import type { TotpSetupResponse } from '@/types'
@@ -187,7 +186,6 @@ const emit = defineEmits<{
   success: []
 }>()
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 // Step: 0 = verify identity, 1 = QR code, 2 = verify TOTP code
@@ -211,12 +209,12 @@ const stepDescription = computed(() => {
   switch (step.value) {
     case 0:
       return verificationMethod.value === 'email'
-        ? t('profile.totp.verifyEmailFirst')
-        : t('profile.totp.verifyPasswordFirst')
+        ? '请先验证您的邮箱'
+        : '请先验证您的身份'
     case 1:
-      return t('profile.totp.setupStep1')
+      return '使用认证器应用扫描下方二维码'
     case 2:
-      return t('profile.totp.setupStep2')
+      return '输入应用显示的 6 位验证码'
     default:
       return ''
   }
@@ -311,9 +309,9 @@ const copySecret = async () => {
   if (setupData.value) {
     try {
       await navigator.clipboard.writeText(setupData.value.secret)
-      appStore.showSuccess(t('common.copied'))
+      appStore.showSuccess('已复制')
     } catch {
-      appStore.showError(t('common.copyFailed'))
+      appStore.showError('复制失败')
     }
   }
 }
@@ -324,7 +322,7 @@ const loadVerificationMethod = async () => {
     const method = await totpAPI.getVerificationMethod()
     verificationMethod.value = method.method
   } catch (err: any) {
-    appStore.showError(err.response?.data?.message || t('common.error'))
+    appStore.showError(err.response?.data?.message || '错误')
     emit('close')
   } finally {
     methodLoading.value = false
@@ -335,7 +333,7 @@ const handleSendCode = async () => {
   sendingCode.value = true
   try {
     await totpAPI.sendVerifyCode()
-    appStore.showSuccess(t('profile.totp.codeSent'))
+    appStore.showSuccess('验证码已发送到您的邮箱')
     // Start cooldown
     codeCooldown.value = 60
     const timer = setInterval(() => {
@@ -345,7 +343,7 @@ const handleSendCode = async () => {
       }
     }, 1000)
   } catch (err: any) {
-    appStore.showError(err.response?.data?.message || t('profile.totp.sendCodeFailed'))
+    appStore.showError(err.response?.data?.message || '发送验证码失败')
   } finally {
     sendingCode.value = false
   }
@@ -363,7 +361,7 @@ const handleVerifyAndSetup = async () => {
     setupData.value = await totpAPI.initiateSetup(request)
     step.value = 1
   } catch (err: any) {
-    verifyError.value = err.response?.data?.message || t('profile.totp.setupFailed')
+    verifyError.value = err.response?.data?.message || '获取设置信息失败'
   } finally {
     setupLoading.value = false
   }
@@ -381,10 +379,10 @@ const handleVerify = async () => {
       totp_code: totpCode,
       setup_token: setupData.value.setup_token
     })
-    appStore.showSuccess(t('profile.totp.enableSuccess'))
+    appStore.showSuccess('双因素认证已启用')
     emit('success')
   } catch (err: any) {
-    error.value = err.response?.data?.message || t('profile.totp.verifyFailed')
+    error.value = err.response?.data?.message || '验证码错误，请重试'
     code.value = ['', '', '', '', '', '']
     nextTick(() => {
       inputRefs.value[0]?.focus()

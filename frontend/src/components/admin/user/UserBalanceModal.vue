@@ -1,24 +1,24 @@
 <template>
-  <BaseDialog :show="show" :title="operation === 'add' ? t('admin.users.deposit') : t('admin.users.withdraw')" width="narrow" @close="$emit('close')">
+  <BaseDialog :show="show" :title="operation === 'add' ? '充值' : '退款'" width="narrow" @close="$emit('close')">
     <form v-if="user" id="balance-form" @submit.prevent="handleBalanceSubmit" class="space-y-5">
       <div class="flex items-center gap-3 rounded-xl bg-gray-50 p-4 dark:bg-dark-700">
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-100"><span class="text-lg font-medium text-primary-700">{{ user.email.charAt(0).toUpperCase() }}</span></div>
-        <div class="flex-1"><p class="font-medium text-gray-900">{{ user.email }}</p><p class="text-sm text-gray-500">{{ t('admin.users.currentBalance') }}: ${{ formatBalance(user.balance) }}</p></div>
+        <div class="flex-1"><p class="font-medium text-gray-900">{{ user.email }}</p><p class="text-sm text-gray-500">{{ '当前余额' }}: ${{ formatBalance(user.balance) }}</p></div>
       </div>
       <div>
-        <label class="input-label">{{ operation === 'add' ? t('admin.users.depositAmount') : t('admin.users.withdrawAmount') }}</label>
+        <label class="input-label">{{ operation === 'add' ? '充值金额' : '退款金额' }}</label>
         <div class="relative flex gap-2">
           <div class="relative flex-1"><div class="absolute left-3 top-1/2 -translate-y-1/2 font-medium text-gray-500">$</div><input v-model.number="form.amount" type="number" step="any" min="0" required class="input pl-8" /></div>
-          <button v-if="operation === 'subtract'" type="button" @click="fillAllBalance" class="btn btn-secondary whitespace-nowrap">{{ t('admin.users.withdrawAll') }}</button>
+          <button v-if="operation === 'subtract'" type="button" @click="fillAllBalance" class="btn btn-secondary whitespace-nowrap">{{ '全部' }}</button>
         </div>
       </div>
-      <div><label class="input-label">{{ t('admin.users.notes') }}</label><textarea v-model="form.notes" rows="3" class="input"></textarea></div>
-      <div v-if="form.amount > 0" class="rounded-xl border border-blue-200 bg-blue-50 p-4"><div class="flex items-center justify-between text-sm"><span>{{ t('admin.users.newBalance') }}:</span><span class="font-bold">${{ formatBalance(calculateNewBalance()) }}</span></div></div>
+      <div><label class="input-label">{{ '备注' }}</label><textarea v-model="form.notes" rows="3" class="input"></textarea></div>
+      <div v-if="form.amount > 0" class="rounded-xl border border-blue-200 bg-blue-50 p-4"><div class="flex items-center justify-between text-sm"><span>{{ '操作后余额' }}:</span><span class="font-bold">${{ formatBalance(calculateNewBalance()) }}</span></div></div>
     </form>
     <template #footer>
       <div class="flex justify-end gap-3">
-        <button @click="$emit('close')" class="btn btn-secondary">{{ t('common.cancel') }}</button>
-        <button type="submit" form="balance-form" :disabled="submitting || !form.amount" class="btn" :class="operation === 'add' ? 'bg-emerald-600 text-white' : 'btn-danger'">{{ submitting ? t('common.saving') : t('common.confirm') }}</button>
+        <button @click="$emit('close')" class="btn btn-secondary">{{ '取消' }}</button>
+        <button type="submit" form="balance-form" :disabled="submitting || !form.amount" class="btn" :class="operation === 'add' ? 'bg-emerald-600 text-white' : 'btn-danger'">{{ submitting ? '保存中...' : '确认' }}</button>
       </div>
     </template>
   </BaseDialog>
@@ -26,14 +26,13 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { AdminUser } from '@/types'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 
 const props = defineProps<{ show: boolean, user: AdminUser | null, operation: 'add' | 'subtract' }>()
-const emit = defineEmits(['close', 'success']); const { t } = useI18n(); const appStore = useAppStore()
+const emit = defineEmits(['close', 'success']);  const appStore = useAppStore()
 
 const submitting = ref(false); const form = reactive({ amount: 0, notes: '' })
 watch(() => props.show, (v) => { if(v) { form.amount = 0; form.notes = '' } })
@@ -66,21 +65,21 @@ const calculateNewBalance = () => {
 const handleBalanceSubmit = async () => {
   if (!props.user) return
   if (!form.amount || form.amount <= 0) {
-    appStore.showError(t('admin.users.amountRequired'))
+    appStore.showError('请输入有效金额')
     return
   }
   // 退款时验证金额不超过实际余额
   if (props.operation === 'subtract' && form.amount > props.user.balance) {
-    appStore.showError(t('admin.users.insufficientBalance'))
+    appStore.showError('余额不足')
     return
   }
   submitting.value = true
   try {
     await adminAPI.users.updateBalance(props.user.id, form.amount, props.operation, form.notes)
-    appStore.showSuccess(t('common.success')); emit('success'); emit('close')
+    appStore.showSuccess('成功'); emit('success'); emit('close')
   } catch (e: any) {
     console.error('Failed to update balance:', e)
-    appStore.showError(e.response?.data?.detail || t('common.error'))
+    appStore.showError(e.response?.data?.detail || '错误')
   } finally { submitting.value = false }
 }
 </script>

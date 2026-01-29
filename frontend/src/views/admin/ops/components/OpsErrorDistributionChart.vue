@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { Chart as ChartJS, ArcElement, Legend, Tooltip } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
 import type { OpsErrorDistributionResponse } from '@/api/admin/ops'
@@ -19,8 +18,6 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   (e: 'openDetails'): void
 }>()
-const { t } = useI18n()
-
 const isDarkMode = computed(() => document.documentElement.classList.contains('dark'))
 const colors = computed(() => ({
   blue: '#3b82f6',
@@ -64,10 +61,10 @@ const categories = computed<ErrorCategory[]>(() => {
   }
 
   const out: ErrorCategory[] = []
-  if (upstream > 0) out.push({ label: t('admin.ops.upstream'), count: upstream, color: colors.value.orange })
-  if (client > 0) out.push({ label: t('admin.ops.client'), count: client, color: colors.value.blue })
-  if (system > 0) out.push({ label: t('admin.ops.system'), count: system, color: colors.value.red })
-  if (other > 0) out.push({ label: t('admin.ops.other'), count: other, color: colors.value.gray })
+  if (upstream > 0) out.push({ label: '上游', count: upstream, color: colors.value.orange })
+  if (client > 0) out.push({ label: '客户端', count: client, color: colors.value.blue })
+  if (system > 0) out.push({ label: '系统', count: system, color: colors.value.red })
+  if (other > 0) out.push({ label: '其他', count: other, color: colors.value.gray })
   return out
 })
 
@@ -116,17 +113,17 @@ const options = computed(() => ({
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
           />
         </svg>
-        {{ t('admin.ops.errorDistribution') }}
-        <HelpTooltip :content="t('admin.ops.tooltips.errorDistribution')" />
+        {{ '错误分布' }}
+        <HelpTooltip :content="'按状态码统计的错误分布。'" />
       </h3>
       <button
         type="button"
         class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-2 py-1 text-[11px] font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 dark:border-dark-700 dark:bg-dark-900 dark:text-gray-300 dark:hover:bg-dark-800"
         :disabled="state !== 'ready'"
-        :title="t('admin.ops.errorTrend')"
+        :title="'错误趋势'"
         @click="emit('openDetails')"
       >
-        {{ t('admin.ops.requestDetails.details') }}
+        {{ '明细' }}
       </button>
     </div>
 
@@ -137,7 +134,7 @@ const options = computed(() => ({
         </div>
         <div class="mt-4 flex flex-col items-center gap-2">
           <div v-if="topReason" class="text-xs font-bold text-gray-900 dark:text-white">
-            {{ t('admin.ops.top') }}: <span :style="{ color: topReason.color }">{{ topReason.label }}</span>
+            {{ '最高：' }}: <span :style="{ color: topReason.color }">{{ topReason.label }}</span>
           </div>
           <div class="flex flex-wrap justify-center gap-3">
             <div v-for="item in categories" :key="item.label" class="flex items-center gap-1.5 text-xs">
@@ -149,8 +146,8 @@ const options = computed(() => ({
       </div>
 
       <div v-else class="flex h-full items-center justify-center">
-        <div v-if="state === 'loading'" class="animate-pulse text-sm text-gray-400">{{ t('common.loading') }}</div>
-        <EmptyState v-else :title="t('common.noData')" :description="t('admin.ops.charts.emptyError')" />
+        <div v-if="state === 'loading'" class="animate-pulse text-sm text-gray-400">{{ '加载中...' }}</div>
+        <EmptyState v-else :title="'暂无数据'" :description="'该时间窗口内暂无错误。'" />
       </div>
     </div>
   </div>

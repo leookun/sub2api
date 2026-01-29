@@ -16,10 +16,10 @@
           <Icon name="creditCard" size="xl" class="text-gray-400" />
         </div>
         <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-          {{ t('userSubscriptions.noActiveSubscriptions') }}
+          {{ '暂无有效订阅' }}
         </h3>
         <p class="text-gray-500 dark:text-dark-400">
-          {{ t('userSubscriptions.noActiveSubscriptionsDesc') }}
+          {{ '您没有任何有效订阅。请联系管理员获取订阅。' }}
         </p>
       </div>
 
@@ -68,7 +68,7 @@
             <!-- Expiration Info -->
             <div v-if="subscription.expires_at" class="flex items-center justify-between text-sm">
               <span class="text-gray-500 dark:text-dark-400">{{
-                t('userSubscriptions.expires')
+                '到期时间'
               }}</span>
               <span :class="getExpirationClass(subscription.expires_at)">
                 {{ formatExpirationDate(subscription.expires_at) }}
@@ -76,10 +76,10 @@
             </div>
             <div v-else class="flex items-center justify-between text-sm">
               <span class="text-gray-500 dark:text-dark-400">{{
-                t('userSubscriptions.expires')
+                '到期时间'
               }}</span>
               <span class="text-gray-700 dark:text-gray-300">{{
-                t('userSubscriptions.noExpiration')
+                '无到期时间'
               }}</span>
             </div>
 
@@ -87,7 +87,7 @@
             <div v-if="subscription.group?.daily_limit_usd" class="space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('userSubscriptions.daily') }}
+                  {{ '每日' }}
                 </span>
                 <span class="text-sm text-gray-500 dark:text-dark-400">
                   ${{ (subscription.daily_usage_usd || 0).toFixed(2) }} / ${{
@@ -117,9 +117,7 @@
                 class="text-xs text-gray-500 dark:text-dark-400"
               >
                 {{
-                  t('userSubscriptions.resetIn', {
-                    time: formatResetTime(subscription.daily_window_start, 24)
-                  })
+                  `${formatResetTime(subscription.daily_window_start} 后重置`
                 }}
               </p>
             </div>
@@ -128,7 +126,7 @@
             <div v-if="subscription.group?.weekly_limit_usd" class="space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('userSubscriptions.weekly') }}
+                  {{ '每周' }}
                 </span>
                 <span class="text-sm text-gray-500 dark:text-dark-400">
                   ${{ (subscription.weekly_usage_usd || 0).toFixed(2) }} / ${{
@@ -158,9 +156,7 @@
                 class="text-xs text-gray-500 dark:text-dark-400"
               >
                 {{
-                  t('userSubscriptions.resetIn', {
-                    time: formatResetTime(subscription.weekly_window_start, 168)
-                  })
+                  `${formatResetTime(subscription.weekly_window_start} 后重置`
                 }}
               </p>
             </div>
@@ -169,7 +165,7 @@
             <div v-if="subscription.group?.monthly_limit_usd" class="space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ t('userSubscriptions.monthly') }}
+                  {{ '每月' }}
                 </span>
                 <span class="text-sm text-gray-500 dark:text-dark-400">
                   ${{ (subscription.monthly_usage_usd || 0).toFixed(2) }} / ${{
@@ -199,9 +195,7 @@
                 class="text-xs text-gray-500 dark:text-dark-400"
               >
                 {{
-                  t('userSubscriptions.resetIn', {
-                    time: formatResetTime(subscription.monthly_window_start, 720)
-                  })
+                  `${formatResetTime(subscription.monthly_window_start} 后重置`
                 }}
               </p>
             </div>
@@ -219,10 +213,10 @@
                 <span class="text-4xl text-emerald-600 dark:text-emerald-400">∞</span>
                 <div>
                   <p class="text-sm font-medium text-emerald-700 dark:text-emerald-300">
-                    {{ t('userSubscriptions.unlimited') }}
+                    {{ '无限制' }}
                   </p>
                   <p class="text-xs text-emerald-600/70 dark:text-emerald-400/70">
-                    {{ t('userSubscriptions.unlimitedDesc') }}
+                    {{ '该订阅无用量限制' }}
                   </p>
                 </div>
               </div>
@@ -236,7 +230,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import subscriptionsAPI from '@/api/subscriptions'
 import type { UserSubscription } from '@/types'
@@ -244,7 +237,6 @@ import AppLayout from '@/components/layout/AppLayout.vue'
 import Icon from '@/components/icons/Icon.vue'
 import { formatDateOnly } from '@/utils/format'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const subscriptions = ref<UserSubscription[]>([])
@@ -256,7 +248,7 @@ async function loadSubscriptions() {
     subscriptions.value = await subscriptionsAPI.getMySubscriptions()
   } catch (error) {
     console.error('Failed to load subscriptions:', error)
-    appStore.showError(t('userSubscriptions.failedToLoad'))
+    appStore.showError('加载订阅失败')
   } finally {
     loading.value = false
   }
@@ -283,7 +275,7 @@ function formatExpirationDate(expiresAt: string): string {
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
 
   if (days < 0) {
-    return t('userSubscriptions.status.expired')
+    return '已过期'
   }
 
   const dateStr = formatDateOnly(expires)
@@ -295,7 +287,7 @@ function formatExpirationDate(expiresAt: string): string {
     return `${dateStr} (Tomorrow)`
   }
 
-  return t('userSubscriptions.daysRemaining', { days }) + ` (${dateStr})`
+  return `剩余 {days} 天` + ` (${dateStr})`
 }
 
 function getExpirationClass(expiresAt: string): string {
@@ -311,14 +303,14 @@ function getExpirationClass(expiresAt: string): string {
 }
 
 function formatResetTime(windowStart: string | null, windowHours: number): string {
-  if (!windowStart) return t('userSubscriptions.windowNotActive')
+  if (!windowStart) return '等待首次使用'
 
   const start = new Date(windowStart)
   const end = new Date(start.getTime() + windowHours * 60 * 60 * 1000)
   const now = new Date()
   const diff = end.getTime() - now.getTime()
 
-  if (diff <= 0) return t('userSubscriptions.windowNotActive')
+  if (diff <= 0) return '等待首次使用'
 
   const hours = Math.floor(diff / (1000 * 60 * 60))
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))

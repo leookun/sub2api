@@ -17,13 +17,13 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.dashboard.apiKeys') }}
+                  {{ 'API 密钥' }}
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ stats.total_api_keys }}
                 </p>
                 <p class="text-xs text-green-600 dark:text-green-400">
-                  {{ stats.active_api_keys }} {{ t('common.active') }}
+                  {{ stats.active_api_keys }} {{ '启用' }}
                 </p>
               </div>
             </div>
@@ -37,17 +37,17 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.dashboard.accounts') }}
+                  {{ '账号' }}
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ stats.total_accounts }}
                 </p>
                 <p class="text-xs">
                   <span class="text-green-600 dark:text-green-400"
-                    >{{ stats.normal_accounts }} {{ t('common.active') }}</span
+                    >{{ stats.normal_accounts }} {{ '启用' }}</span
                   >
                   <span v-if="stats.error_accounts > 0" class="ml-1 text-red-500"
-                    >{{ stats.error_accounts }} {{ t('common.error') }}</span
+                    >{{ stats.error_accounts }} {{ '错误' }}</span
                   >
                 </p>
               </div>
@@ -62,13 +62,13 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.dashboard.todayRequests') }}
+                  {{ '今日请求' }}
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ stats.today_requests }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('common.total') }}: {{ formatNumber(stats.total_requests) }}
+                  {{ '总计' }}: {{ formatNumber(stats.total_requests) }}
                 </p>
               </div>
             </div>
@@ -82,13 +82,13 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.dashboard.users') }}
+                  {{ '用户' }}
                 </p>
                 <p class="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                   +{{ stats.today_new_users }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('common.total') }}: {{ formatNumber(stats.total_users) }}
+                  {{ '总计' }}: {{ formatNumber(stats.total_users) }}
                 </p>
               </div>
             </div>
@@ -105,7 +105,7 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.dashboard.todayTokens') }}
+                  {{ '今日 Token' }}
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ formatTokens(stats.today_tokens) }}
@@ -113,12 +113,12 @@
                 <p class="text-xs">
                   <span
                     class="text-amber-600 dark:text-amber-400"
-                    :title="t('admin.dashboard.actual')"
+                    :title="'实际'"
                     >${{ formatCost(stats.today_actual_cost) }}</span
                   >
                   <span
                     class="text-gray-400 dark:text-gray-500"
-                    :title="t('admin.dashboard.standard')"
+                    :title="'标准'"
                   >
                     / ${{ formatCost(stats.today_cost) }}</span
                   >
@@ -135,7 +135,7 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.dashboard.totalTokens') }}
+                  {{ '总 Token' }}
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ formatTokens(stats.total_tokens) }}
@@ -143,12 +143,12 @@
                 <p class="text-xs">
                   <span
                     class="text-indigo-600 dark:text-indigo-400"
-                    :title="t('admin.dashboard.actual')"
+                    :title="'实际'"
                     >${{ formatCost(stats.total_actual_cost) }}</span
                   >
                   <span
                     class="text-gray-400 dark:text-gray-500"
-                    :title="t('admin.dashboard.standard')"
+                    :title="'标准'"
                   >
                     / ${{ formatCost(stats.total_cost) }}</span
                   >
@@ -165,7 +165,7 @@
               </div>
               <div class="flex-1">
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.dashboard.performance') }}
+                  {{ '性能指标' }}
                 </p>
                 <div class="flex items-baseline gap-2">
                   <p class="text-xl font-bold text-gray-900 dark:text-white">
@@ -191,13 +191,13 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.dashboard.avgResponse') }}
+                  {{ '平均响应' }}
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ formatDuration(stats.average_duration_ms) }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ stats.active_users }} {{ t('admin.dashboard.activeUsers') }}
+                  {{ stats.active_users }} {{ '活跃用户' }}
                 </p>
               </div>
             </div>
@@ -211,7 +211,7 @@
             <div class="flex flex-wrap items-center gap-4">
               <div class="flex items-center gap-2">
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ t('admin.dashboard.timeRange') }}:</span
+                  >{{ '时间范围' }}:</span
                 >
                 <DateRangePicker
                   v-model:start-date="startDate"
@@ -221,7 +221,7 @@
               </div>
               <div class="ml-auto flex items-center gap-2">
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ t('admin.dashboard.granularity') }}:</span
+                  >{{ '粒度' }}:</span
                 >
                 <div class="w-28">
                   <Select
@@ -243,7 +243,7 @@
           <!-- User Usage Trend (Full Width) -->
           <div class="card p-4">
             <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
-              {{ t('admin.dashboard.recentUsage') }} (Top 12)
+              {{ '最近使用' }} (Top 12)
             </h3>
             <div class="h-64">
               <Line v-if="userTrendChartData" :data="userTrendChartData" :options="lineOptions" />
@@ -251,7 +251,7 @@
                 v-else
                 class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ t('admin.dashboard.noDataAvailable') }}
+                {{ '暂无数据' }}
               </div>
             </div>
           </div>
@@ -263,10 +263,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 
-const { t } = useI18n()
 import { adminAPI } from '@/api/admin'
 import type { DashboardStats, TrendDataPoint, ModelStat, UserUsageTrendPoint } from '@/types'
 import AppLayout from '@/components/layout/AppLayout.vue'
@@ -329,8 +327,8 @@ const endDate = ref(formatLocalDate(now))
 
 // Granularity options for Select component
 const granularityOptions = computed(() => [
-  { value: 'day', label: t('admin.dashboard.day') },
-  { value: 'hour', label: t('admin.dashboard.hour') }
+  { value: 'day', label: '按天' },
+  { value: 'hour', label: '按小时' }
 ])
 
 // Dark mode detection
@@ -409,7 +407,7 @@ const userTrendChartData = computed(() => {
     if (email && email.includes('@')) {
       return email.split('@')[0]
     }
-    return t('admin.redeem.userPrefix', { id: userId })
+    return `用户 #${userId}`
   }
 
   // Group by user
@@ -518,7 +516,7 @@ const loadDashboardStats = async () => {
   try {
     stats.value = await adminAPI.dashboard.getStats()
   } catch (error) {
-    appStore.showError(t('admin.dashboard.failedToLoad'))
+    appStore.showError('加载仪表盘数据失败')
     console.error('Error loading dashboard stats:', error)
   } finally {
     loading.value = false

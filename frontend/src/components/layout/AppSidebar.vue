@@ -57,7 +57,7 @@
         <!-- Personal Section for Admin (hidden in simple mode) -->
         <div v-if="!authStore.isSimpleMode" class="sidebar-section">
           <div v-if="!sidebarCollapsed" class="sidebar-section-title">
-            {{ t('nav.myAccount') }}
+            {{ '我的账户' }}
           </div>
           <div v-else class="mx-3 my-3 h-px bg-gray-200 dark:bg-dark-700"></div>
 
@@ -107,13 +107,13 @@
       <button
         @click="toggleTheme"
         class="sidebar-link mb-2 w-full"
-        :title="sidebarCollapsed ? (isDark ? t('nav.lightMode') : t('nav.darkMode')) : undefined"
+        :title="sidebarCollapsed ? (isDark ? '浅色模式' : '深色模式') : undefined"
       >
         <SunIcon v-if="isDark" class="h-5 w-5 flex-shrink-0 text-amber-500" />
         <MoonIcon v-else class="h-5 w-5 flex-shrink-0" />
         <transition name="fade">
           <span v-if="!sidebarCollapsed">{{
-            isDark ? t('nav.lightMode') : t('nav.darkMode')
+            isDark ? '浅色模式' : '深色模式'
           }}</span>
         </transition>
       </button>
@@ -122,12 +122,12 @@
       <button
         @click="toggleSidebar"
         class="sidebar-link w-full"
-        :title="sidebarCollapsed ? t('nav.expand') : t('nav.collapse')"
+        :title="sidebarCollapsed ? '展开' : '收起'"
       >
         <ChevronDoubleLeftIcon v-if="!sidebarCollapsed" class="h-5 w-5 flex-shrink-0" />
         <ChevronDoubleRightIcon v-else class="h-5 w-5 flex-shrink-0" />
         <transition name="fade">
-          <span v-if="!sidebarCollapsed">{{ t('nav.collapse') }}</span>
+          <span v-if="!sidebarCollapsed">{{ '收起' }}</span>
         </transition>
       </button>
     </div>
@@ -146,11 +146,8 @@
 <script setup lang="ts">
 import { computed, h, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { useAdminSettingsStore, useAppStore, useAuthStore, useOnboardingStore } from '@/stores'
 import VersionBadge from '@/components/common/VersionBadge.vue'
-
-const { t } = useI18n()
 
 const route = useRoute()
 const appStore = useAppStore()
@@ -417,22 +414,22 @@ const ChevronDoubleRightIcon = {
 // User navigation items (for regular users)
 const userNavItems = computed(() => {
   const items = [
-    { path: '/dashboard', label: t('nav.dashboard'), icon: DashboardIcon },
-    { path: '/keys', label: t('nav.apiKeys'), icon: KeyIcon },
-    { path: '/usage', label: t('nav.usage'), icon: ChartIcon, hideInSimpleMode: true },
-    { path: '/subscriptions', label: t('nav.mySubscriptions'), icon: CreditCardIcon, hideInSimpleMode: true },
+    { path: '/dashboard', label: '仪表盘', icon: DashboardIcon },
+    { path: '/keys', label: 'API 密钥', icon: KeyIcon },
+    { path: '/usage', label: '使用记录', icon: ChartIcon, hideInSimpleMode: true },
+    { path: '/subscriptions', label: '我的订阅', icon: CreditCardIcon, hideInSimpleMode: true },
     ...(appStore.cachedPublicSettings?.purchase_subscription_enabled
       ? [
           {
             path: '/purchase',
-            label: t('nav.buySubscription'),
+            label: '购买订阅',
             icon: CreditCardIcon,
             hideInSimpleMode: true
           }
         ]
       : []),
-    { path: '/redeem', label: t('nav.redeem'), icon: GiftIcon, hideInSimpleMode: true },
-    { path: '/profile', label: t('nav.profile'), icon: UserIcon }
+    { path: '/redeem', label: '兑换', icon: GiftIcon, hideInSimpleMode: true },
+    { path: '/profile', label: '个人资料', icon: UserIcon }
   ]
   return authStore.isSimpleMode ? items.filter(item => !item.hideInSimpleMode) : items
 })
@@ -440,21 +437,21 @@ const userNavItems = computed(() => {
 // Personal navigation items (for admin's "My Account" section, without Dashboard)
 const personalNavItems = computed(() => {
   const items = [
-    { path: '/keys', label: t('nav.apiKeys'), icon: KeyIcon },
-    { path: '/usage', label: t('nav.usage'), icon: ChartIcon, hideInSimpleMode: true },
-    { path: '/subscriptions', label: t('nav.mySubscriptions'), icon: CreditCardIcon, hideInSimpleMode: true },
+    { path: '/keys', label: 'API 密钥', icon: KeyIcon },
+    { path: '/usage', label: '使用记录', icon: ChartIcon, hideInSimpleMode: true },
+    { path: '/subscriptions', label: '我的订阅', icon: CreditCardIcon, hideInSimpleMode: true },
     ...(appStore.cachedPublicSettings?.purchase_subscription_enabled
       ? [
           {
             path: '/purchase',
-            label: t('nav.buySubscription'),
+            label: '购买订阅',
             icon: CreditCardIcon,
             hideInSimpleMode: true
           }
         ]
       : []),
-    { path: '/redeem', label: t('nav.redeem'), icon: GiftIcon, hideInSimpleMode: true },
-    { path: '/profile', label: t('nav.profile'), icon: UserIcon }
+    { path: '/redeem', label: '兑换', icon: GiftIcon, hideInSimpleMode: true },
+    { path: '/profile', label: '个人资料', icon: UserIcon }
   ]
   return authStore.isSimpleMode ? items.filter(item => !item.hideInSimpleMode) : items
 })
@@ -462,29 +459,29 @@ const personalNavItems = computed(() => {
 // Admin navigation items
 const adminNavItems = computed(() => {
   const baseItems = [
-    { path: '/admin/dashboard', label: t('nav.dashboard'), icon: DashboardIcon },
+    { path: '/admin/dashboard', label: '仪表盘', icon: DashboardIcon },
     ...(adminSettingsStore.opsMonitoringEnabled
-      ? [{ path: '/admin/ops', label: t('nav.ops'), icon: ChartIcon }]
+      ? [{ path: '/admin/ops', label: '运维监控', icon: ChartIcon }]
       : []),
-    { path: '/admin/users', label: t('nav.users'), icon: UsersIcon, hideInSimpleMode: true },
-    { path: '/admin/groups', label: t('nav.groups'), icon: FolderIcon, hideInSimpleMode: true },
-    { path: '/admin/subscriptions', label: t('nav.subscriptions'), icon: CreditCardIcon, hideInSimpleMode: true },
-    { path: '/admin/accounts', label: t('nav.accounts'), icon: GlobeIcon },
-    { path: '/admin/proxies', label: t('nav.proxies'), icon: ServerIcon },
-    { path: '/admin/redeem', label: t('nav.redeemCodes'), icon: TicketIcon, hideInSimpleMode: true },
-    { path: '/admin/promo-codes', label: t('nav.promoCodes'), icon: GiftIcon, hideInSimpleMode: true },
-    { path: '/admin/usage', label: t('nav.usage'), icon: ChartIcon },
+    { path: '/admin/users', label: '用户管理', icon: UsersIcon, hideInSimpleMode: true },
+    { path: '/admin/groups', label: '分组管理', icon: FolderIcon, hideInSimpleMode: true },
+    { path: '/admin/subscriptions', label: '订阅管理', icon: CreditCardIcon, hideInSimpleMode: true },
+    { path: '/admin/accounts', label: '账号管理', icon: GlobeIcon },
+    { path: '/admin/proxies', label: 'IP管理', icon: ServerIcon },
+    { path: '/admin/redeem', label: '兑换码', icon: TicketIcon, hideInSimpleMode: true },
+    { path: '/admin/promo-codes', label: '优惠码', icon: GiftIcon, hideInSimpleMode: true },
+    { path: '/admin/usage', label: '使用记录', icon: ChartIcon },
   ]
 
   // 简单模式下，在系统设置前插入 API密钥
   if (authStore.isSimpleMode) {
     const filtered = baseItems.filter(item => !item.hideInSimpleMode)
-    filtered.push({ path: '/keys', label: t('nav.apiKeys'), icon: KeyIcon })
-    filtered.push({ path: '/admin/settings', label: t('nav.settings'), icon: CogIcon })
+    filtered.push({ path: '/keys', label: 'API 密钥', icon: KeyIcon })
+    filtered.push({ path: '/admin/settings', label: '系统设置', icon: CogIcon })
     return filtered
   }
 
-  baseItems.push({ path: '/admin/settings', label: t('nav.settings'), icon: CogIcon })
+  baseItems.push({ path: '/admin/settings', label: '系统设置', icon: CogIcon })
   return baseItems
 })
 

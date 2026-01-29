@@ -11,24 +11,24 @@ import { i18n, getLocale } from '@/i18n'
  * @returns 相对时间字符串，如 "5m ago", "2h ago", "3d ago"
  */
 export function formatRelativeTime(date: string | Date | null | undefined): string {
-  if (!date) return i18n.global.t('common.time.never')
+  if (!date) return i18n.global.'从未'
 
   const now = new Date()
   const past = new Date(date)
   const diffMs = now.getTime() - past.getTime()
 
   // 处理未来时间或无效日期
-  if (diffMs < 0 || isNaN(diffMs)) return i18n.global.t('common.time.never')
+  if (diffMs < 0 || isNaN(diffMs)) return i18n.global.'从未'
 
   const diffSecs = Math.floor(diffMs / 1000)
   const diffMins = Math.floor(diffSecs / 60)
   const diffHours = Math.floor(diffMins / 60)
   const diffDays = Math.floor(diffHours / 24)
 
-  if (diffDays > 0) return i18n.global.t('common.time.daysAgo', { n: diffDays })
-  if (diffHours > 0) return i18n.global.t('common.time.hoursAgo', { n: diffHours })
-  if (diffMins > 0) return i18n.global.t('common.time.minutesAgo', { n: diffMins })
-  return i18n.global.t('common.time.justNow')
+  if (diffDays > 0) return i18n.global.`${diffDays}天前`
+  if (diffHours > 0) return i18n.global.`${diffHours}小时前`
+  if (diffMins > 0) return i18n.global.`${diffMins}分钟前`
+  return i18n.global.'刚刚'
 }
 
 /**
@@ -241,14 +241,14 @@ export function formatCountdown(targetDate: string | Date | null | undefined): s
 
   if (diffDays > 0) {
     // 超过1天：显示 "Xd Yh"
-    return i18n.global.t('common.time.countdown.daysHours', { d: diffDays, h: remainingHours })
+    return i18n.global.`${diffDays}d ${remainingHours}h`
   }
   if (diffHours > 0) {
     // 小于1天：显示 "Xh Ym"
-    return i18n.global.t('common.time.countdown.hoursMinutes', { h: diffHours, m: remainingMins })
+    return i18n.global.`${diffHours}h ${remainingMins}m`
   }
   // 小于1小时：显示 "Ym"
-  return i18n.global.t('common.time.countdown.minutes', { m: diffMins })
+  return i18n.global.`${diffMins}m`
 }
 
 /**
@@ -259,5 +259,5 @@ export function formatCountdown(targetDate: string | Date | null | undefined): s
 export function formatCountdownWithSuffix(targetDate: string | Date | null | undefined): string | null {
   const countdown = formatCountdown(targetDate)
   if (!countdown) return null
-  return i18n.global.t('common.time.countdown.withSuffix', { time: countdown })
+  return i18n.global.`${countdown} 后解除`
 }

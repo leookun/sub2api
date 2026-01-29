@@ -4,13 +4,13 @@
     <div class="card p-4">
       <div class="flex flex-wrap items-center gap-4">
         <div class="flex items-center gap-2">
-          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('dashboard.timeRange') }}:</span>
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ '时间范围' }}:</span>
           <DateRangePicker :start-date="startDate" :end-date="endDate" @update:startDate="$emit('update:startDate', $event)" @update:endDate="$emit('update:endDate', $event)" @change="$emit('dateRangeChange', $event)" />
         </div>
         <div class="ml-auto flex items-center gap-2">
-          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('dashboard.granularity') }}:</span>
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ '粒度' }}:</span>
           <div class="w-28">
-            <Select :model-value="granularity" :options="[{value:'day', label:t('dashboard.day')}, {value:'hour', label:t('dashboard.hour')}]" @update:model-value="$emit('update:granularity', $event)" @change="$emit('granularityChange')" />
+            <Select :model-value="granularity" :options="[{value:'day', label:'按天'}, {value:'hour', label:'按小时'}]" @update:model-value="$emit('update:granularity', $event)" @change="$emit('granularityChange')" />
           </div>
         </div>
       </div>
@@ -23,21 +23,21 @@
         <div v-if="loading" class="absolute inset-0 z-10 flex items-center justify-center bg-white/50 backdrop-blur-sm dark:bg-dark-800/50">
           <LoadingSpinner size="md" />
         </div>
-        <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">{{ t('dashboard.modelDistribution') }}</h3>
+        <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">{{ '模型分布' }}</h3>
         <div class="flex items-center gap-6">
           <div class="h-48 w-48">
             <Doughnut v-if="modelData" :data="modelData" :options="doughnutOptions" />
-            <div v-else class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400">{{ t('dashboard.noDataAvailable') }}</div>
+            <div v-else class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400">{{ '暂无数据' }}</div>
           </div>
           <div class="max-h-48 flex-1 overflow-y-auto">
             <table class="w-full text-xs">
               <thead>
                 <tr class="text-gray-500 dark:text-gray-400">
-                  <th class="pb-2 text-left">{{ t('dashboard.model') }}</th>
-                  <th class="pb-2 text-right">{{ t('dashboard.requests') }}</th>
-                  <th class="pb-2 text-right">{{ t('dashboard.tokens') }}</th>
-                  <th class="pb-2 text-right">{{ t('dashboard.actual') }}</th>
-                  <th class="pb-2 text-right">{{ t('dashboard.standard') }}</th>
+                  <th class="pb-2 text-left">{{ '模型' }}</th>
+                  <th class="pb-2 text-right">{{ '请求' }}</th>
+                  <th class="pb-2 text-right">{{ 'Token' }}</th>
+                  <th class="pb-2 text-right">{{ '实际' }}</th>
+                  <th class="pb-2 text-right">{{ '标准' }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -59,10 +59,10 @@
         <div v-if="loading" class="absolute inset-0 z-10 flex items-center justify-center bg-white/50 backdrop-blur-sm dark:bg-dark-800/50">
           <LoadingSpinner size="md" />
         </div>
-        <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">{{ t('dashboard.tokenUsageTrend') }}</h3>
+        <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">{{ 'Token 使用趋势' }}</h3>
         <div class="h-48">
           <Line v-if="trendData" :data="trendData" :options="lineOptions" />
-          <div v-else class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400">{{ t('dashboard.noDataAvailable') }}</div>
+          <div v-else class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400">{{ '暂无数据' }}</div>
         </div>
       </div>
     </div>
@@ -71,7 +71,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import DateRangePicker from '@/components/common/DateRangePicker.vue'
 import Select from '@/components/common/Select.vue'
@@ -83,8 +82,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcEleme
 
 const props = defineProps<{ loading: boolean, startDate: string, endDate: string, granularity: string, trend: TrendDataPoint[], models: ModelStat[] }>()
 defineEmits(['update:startDate', 'update:endDate', 'update:granularity', 'dateRangeChange', 'granularityChange'])
-const { t } = useI18n()
-
 const modelData = computed(() => !props.models?.length ? null : {
   labels: props.models.map((m: ModelStat) => m.model),
   datasets: [{
@@ -97,7 +94,7 @@ const trendData = computed(() => !props.trend?.length ? null : {
   labels: props.trend.map((d: TrendDataPoint) => d.date),
   datasets: [
     {
-      label: t('dashboard.input'),
+      label: '输入',
       data: props.trend.map((d: TrendDataPoint) => d.input_tokens),
       borderColor: '#3b82f6',
       backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -105,7 +102,7 @@ const trendData = computed(() => !props.trend?.length ? null : {
       fill: true
     },
     {
-      label: t('dashboard.output'),
+      label: '输出',
       data: props.trend.map((d: TrendDataPoint) => d.output_tokens),
       borderColor: '#10b981',
       backgroundColor: 'rgba(16, 185, 129, 0.1)',

@@ -2,27 +2,27 @@
   <div class="card">
     <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
       <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-        {{ t('profile.editProfile') }}
+        {{ '编辑个人资料' }}
       </h2>
     </div>
     <div class="px-6 py-6">
       <form @submit.prevent="handleUpdateProfile" class="space-y-4">
         <div>
           <label for="username" class="input-label">
-            {{ t('profile.username') }}
+            {{ '用户名' }}
           </label>
           <input
             id="username"
             v-model="username"
             type="text"
             class="input"
-            :placeholder="t('profile.enterUsername')"
+            :placeholder="'输入用户名'"
           />
         </div>
 
         <div class="flex justify-end pt-4">
           <button type="submit" :disabled="loading" class="btn btn-primary">
-            {{ loading ? t('profile.updating') : t('profile.updateProfile') }}
+            {{ loading ? '更新中...' : '更新资料' }}
           </button>
         </div>
       </form>
@@ -32,7 +32,6 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { useAppStore } from '@/stores/app'
 import { userAPI } from '@/api'
@@ -41,7 +40,6 @@ const props = defineProps<{
   initialUsername: string
 }>()
 
-const { t } = useI18n()
 const authStore = useAuthStore()
 const appStore = useAppStore()
 
@@ -54,7 +52,7 @@ watch(() => props.initialUsername, (val) => {
 
 const handleUpdateProfile = async () => {
   if (!username.value.trim()) {
-    appStore.showError(t('profile.usernameRequired'))
+    appStore.showError('用户名不能为空')
     return
   }
 
@@ -64,9 +62,9 @@ const handleUpdateProfile = async () => {
       username: username.value
     })
     authStore.user = updatedUser
-    appStore.showSuccess(t('profile.updateSuccess'))
+    appStore.showSuccess('资料更新成功')
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('profile.updateFailed'))
+    appStore.showError(error.response?.data?.detail || '资料更新失败')
   } finally {
     loading.value = false
   }

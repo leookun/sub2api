@@ -11,13 +11,13 @@
             </div>
             <div>
               <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ t('usage.totalRequests') }}
+                {{ '总请求数' }}
               </p>
               <p class="text-xl font-bold text-gray-900 dark:text-white">
                 {{ usageStats?.total_requests?.toLocaleString() || '0' }}
               </p>
               <p class="text-xs text-gray-500 dark:text-gray-400">
-                {{ t('usage.inSelectedRange') }}
+                {{ '所选范围内' }}
               </p>
             </div>
           </div>
@@ -31,14 +31,14 @@
             </div>
             <div>
               <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ t('usage.totalTokens') }}
+                {{ '总 Token' }}
               </p>
               <p class="text-xl font-bold text-gray-900 dark:text-white">
                 {{ formatTokens(usageStats?.total_tokens || 0) }}
               </p>
               <p class="text-xs text-gray-500 dark:text-gray-400">
-                {{ t('usage.in') }}: {{ formatTokens(usageStats?.total_input_tokens || 0) }} /
-                {{ t('usage.out') }}: {{ formatTokens(usageStats?.total_output_tokens || 0) }}
+                {{ '输入' }}: {{ formatTokens(usageStats?.total_input_tokens || 0) }} /
+                {{ '输出' }}: {{ formatTokens(usageStats?.total_output_tokens || 0) }}
               </p>
             </div>
           </div>
@@ -52,15 +52,15 @@
             </div>
             <div class="min-w-0 flex-1">
               <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ t('usage.totalCost') }}
+                {{ '总消费' }}
               </p>
               <p class="text-xl font-bold text-green-600 dark:text-green-400">
                 ${{ (usageStats?.total_actual_cost || 0).toFixed(4) }}
               </p>
               <p class="text-xs text-gray-500 dark:text-gray-400">
-                {{ t('usage.actualCost') }} /
+                {{ '实际' }} /
                 <span class="line-through">${{ (usageStats?.total_cost || 0).toFixed(4) }}</span>
-                {{ t('usage.standardCost') }}
+                {{ '标准' }}
               </p>
             </div>
           </div>
@@ -74,12 +74,12 @@
             </div>
             <div>
               <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                {{ t('usage.avgDuration') }}
+                {{ '平均耗时' }}
               </p>
               <p class="text-xl font-bold text-gray-900 dark:text-white">
                 {{ formatDuration(usageStats?.average_duration_ms || 0) }}
               </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.perRequest') }}</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">{{ '每次请求' }}</p>
             </div>
           </div>
         </div>
@@ -92,18 +92,18 @@
           <div class="flex flex-wrap items-end gap-4">
             <!-- API Key Filter -->
             <div class="min-w-[180px]">
-              <label class="input-label">{{ t('usage.apiKeyFilter') }}</label>
+              <label class="input-label">{{ 'API 密钥' }}</label>
               <Select
                 v-model="filters.api_key_id"
                 :options="apiKeyOptions"
-                :placeholder="t('usage.allApiKeys')"
+                :placeholder="'全部密钥'"
                 @change="applyFilters"
               />
             </div>
 
             <!-- Date Range Filter -->
             <div>
-              <label class="input-label">{{ t('usage.timeRange') }}</label>
+              <label class="input-label">{{ '时间范围' }}</label>
               <DateRangePicker
                 v-model:start-date="startDate"
                 v-model:end-date="endDate"
@@ -114,7 +114,7 @@
             <!-- Actions -->
             <div class="ml-auto flex items-center gap-3">
               <button @click="resetFilters" class="btn btn-secondary">
-                {{ t('common.reset') }}
+                {{ '重置' }}
               </button>
               <button @click="exportToCSV" :disabled="exporting" class="btn btn-primary">
                 <svg
@@ -137,7 +137,7 @@
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                {{ exporting ? t('usage.exporting') : t('usage.exportCsv') }}
+                {{ exporting ? '导出中...' : '导出 CSV' }}
               </button>
             </div>
           </div>
@@ -166,7 +166,7 @@
                   : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
               "
             >
-              {{ row.stream ? t('usage.stream') : t('usage.sync') }}
+              {{ row.stream ? '流式' : '同步' }}
             </span>
           </template>
 
@@ -186,7 +186,7 @@
                   d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <span class="font-medium text-gray-900 dark:text-white">{{ row.image_count }}{{ $t('usage.imageUnit') }}</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{ row.image_count }}{{ $'张' }}</span>
               <span class="text-gray-400">({{ row.image_size || '2K' }})</span>
             </div>
             <!-- Token 请求 -->
@@ -301,7 +301,7 @@
           </template>
 
           <template #empty>
-            <EmptyState :message="t('usage.noRecords')" />
+            <EmptyState :message="'未找到使用记录，请尝试调整筛选条件。'" />
           </template>
         </DataTable>
       </template>
@@ -335,27 +335,27 @@
         <div class="space-y-1.5">
           <!-- Token Breakdown -->
           <div>
-            <div class="text-xs font-semibold text-gray-300 mb-1">{{ t('usage.tokenDetails') }}</div>
+            <div class="text-xs font-semibold text-gray-300 mb-1">{{ 'Token 明细' }}</div>
             <div v-if="tokenTooltipData && tokenTooltipData.input_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.inputTokens') }}</span>
+              <span class="text-gray-400">{{ '输入 Token' }}</span>
               <span class="font-medium text-white">{{ tokenTooltipData.input_tokens.toLocaleString() }}</span>
             </div>
             <div v-if="tokenTooltipData && tokenTooltipData.output_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.outputTokens') }}</span>
+              <span class="text-gray-400">{{ '输出 Token' }}</span>
               <span class="font-medium text-white">{{ tokenTooltipData.output_tokens.toLocaleString() }}</span>
             </div>
             <div v-if="tokenTooltipData && tokenTooltipData.cache_creation_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.cacheCreationTokens') }}</span>
+              <span class="text-gray-400">{{ '缓存创建 Token' }}</span>
               <span class="font-medium text-white">{{ tokenTooltipData.cache_creation_tokens.toLocaleString() }}</span>
             </div>
             <div v-if="tokenTooltipData && tokenTooltipData.cache_read_tokens > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.cacheReadTokens') }}</span>
+              <span class="text-gray-400">{{ '缓存读取 Token' }}</span>
               <span class="font-medium text-white">{{ tokenTooltipData.cache_read_tokens.toLocaleString() }}</span>
             </div>
           </div>
           <!-- Total -->
           <div class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5">
-            <span class="text-gray-400">{{ t('usage.totalTokens') }}</span>
+            <span class="text-gray-400">{{ '总 Token' }}</span>
             <span class="font-semibold text-blue-400">{{ ((tokenTooltipData?.input_tokens || 0) + (tokenTooltipData?.output_tokens || 0) + (tokenTooltipData?.cache_creation_tokens || 0) + (tokenTooltipData?.cache_read_tokens || 0)).toLocaleString() }}</span>
           </div>
         </div>
@@ -383,37 +383,37 @@
         <div class="space-y-1.5">
           <!-- Cost Breakdown -->
           <div class="mb-2 border-b border-gray-700 pb-1.5">
-            <div class="text-xs font-semibold text-gray-300 mb-1">{{ t('usage.costDetails') }}</div>
+            <div class="text-xs font-semibold text-gray-300 mb-1">{{ '成本明细' }}</div>
             <div v-if="tooltipData && tooltipData.input_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.inputCost') }}</span>
+              <span class="text-gray-400">{{ '输入成本' }}</span>
               <span class="font-medium text-white">${{ tooltipData.input_cost.toFixed(6) }}</span>
             </div>
             <div v-if="tooltipData && tooltipData.output_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.outputCost') }}</span>
+              <span class="text-gray-400">{{ '输出成本' }}</span>
               <span class="font-medium text-white">${{ tooltipData.output_cost.toFixed(6) }}</span>
             </div>
             <div v-if="tooltipData && tooltipData.cache_creation_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.cacheCreationCost') }}</span>
+              <span class="text-gray-400">{{ '缓存创建成本' }}</span>
               <span class="font-medium text-white">${{ tooltipData.cache_creation_cost.toFixed(6) }}</span>
             </div>
             <div v-if="tooltipData && tooltipData.cache_read_cost > 0" class="flex items-center justify-between gap-4">
-              <span class="text-gray-400">{{ t('admin.usage.cacheReadCost') }}</span>
+              <span class="text-gray-400">{{ '缓存读取成本' }}</span>
               <span class="font-medium text-white">${{ tooltipData.cache_read_cost.toFixed(6) }}</span>
             </div>
           </div>
           <!-- Rate and Summary -->
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ t('usage.rate') }}</span>
+            <span class="text-gray-400">{{ '倍率' }}</span>
             <span class="font-semibold text-blue-400"
               >{{ (tooltipData?.rate_multiplier || 1).toFixed(2) }}x</span
             >
           </div>
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ t('usage.original') }}</span>
+            <span class="text-gray-400">{{ '原始' }}</span>
             <span class="font-medium text-white">${{ tooltipData?.total_cost.toFixed(6) }}</span>
           </div>
           <div class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5">
-            <span class="text-gray-400">{{ t('usage.billed') }}</span>
+            <span class="text-gray-400">{{ '计费' }}</span>
             <span class="font-semibold text-green-400"
               >${{ tooltipData?.actual_cost.toFixed(6) }}</span
             >
@@ -430,7 +430,6 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { usageAPI, keysAPI } from '@/api'
 import AppLayout from '@/components/layout/AppLayout.vue'
@@ -445,7 +444,6 @@ import type { UsageLog, ApiKey, UsageQueryParams, UsageStatsResponse } from '@/t
 import type { Column } from '@/components/common/types'
 import { formatDateTime } from '@/utils/format'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 let abortController: AbortController | null = null
@@ -464,15 +462,15 @@ const tokenTooltipData = ref<UsageLog | null>(null)
 const usageStats = ref<UsageStatsResponse | null>(null)
 
 const columns = computed<Column[]>(() => [
-  { key: 'api_key', label: t('usage.apiKeyFilter'), sortable: false },
-  { key: 'model', label: t('usage.model'), sortable: true },
-  { key: 'stream', label: t('usage.type'), sortable: false },
-  { key: 'tokens', label: t('usage.tokens'), sortable: false },
-  { key: 'cost', label: t('usage.cost'), sortable: false },
-  { key: 'first_token', label: t('usage.firstToken'), sortable: false },
-  { key: 'duration', label: t('usage.duration'), sortable: false },
-  { key: 'created_at', label: t('usage.time'), sortable: true },
-  { key: 'user_agent', label: t('usage.userAgent'), sortable: false }
+  { key: 'api_key', label: 'API 密钥', sortable: false },
+  { key: 'model', label: '模型', sortable: true },
+  { key: 'stream', label: '类型', sortable: false },
+  { key: 'tokens', label: 'Token', sortable: false },
+  { key: 'cost', label: '费用', sortable: false },
+  { key: 'first_token', label: '首 Token', sortable: false },
+  { key: 'duration', label: '耗时', sortable: false },
+  { key: 'created_at', label: '时间', sortable: true },
+  { key: 'user_agent', label: 'User-Agent', sortable: false }
 ])
 
 const usageLogs = ref<UsageLog[]>([])
@@ -482,7 +480,7 @@ const exporting = ref(false)
 
 const apiKeyOptions = computed(() => {
   return [
-    { value: null, label: t('usage.allApiKeys') },
+    { value: null, label: '全部密钥' },
     ...apiKeys.value.map((key) => ({
       value: key.id,
       label: key.name
@@ -601,7 +599,7 @@ const loadUsageLogs = async () => {
     if (abortError?.name === 'AbortError' || abortError?.code === 'ERR_CANCELED') {
       return
     }
-    appStore.showError(t('usage.failedToLoad'))
+    appStore.showError('加载使用记录失败')
   } finally {
     if (abortController === currentAbortController) {
       loading.value = false
@@ -692,12 +690,12 @@ const escapeCSVValue = (value: unknown): string => {
 
 const exportToCSV = async () => {
   if (pagination.total === 0) {
-    appStore.showWarning(t('usage.noDataToExport'))
+    appStore.showWarning('没有可导出的数据')
     return
   }
 
   exporting.value = true
-  appStore.showInfo(t('usage.preparingExport'))
+  appStore.showInfo('正在准备导出...')
 
   try {
     const allLogs: UsageLog[] = []
@@ -715,7 +713,7 @@ const exportToCSV = async () => {
     }
 
     if (allLogs.length === 0) {
-      appStore.showWarning(t('usage.noDataToExport'))
+      appStore.showWarning('没有可导出的数据')
       return
     }
 
@@ -765,9 +763,9 @@ const exportToCSV = async () => {
     link.click()
     window.URL.revokeObjectURL(url)
 
-    appStore.showSuccess(t('usage.exportSuccess'))
+    appStore.showSuccess('使用数据导出成功')
   } catch (error) {
-    appStore.showError(t('usage.exportFailed'))
+    appStore.showError('使用数据导出失败')
     console.error('CSV Export failed:', error)
   } finally {
     exporting.value = false

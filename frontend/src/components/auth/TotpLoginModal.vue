@@ -12,10 +12,10 @@
             </svg>
           </div>
           <h3 class="mt-4 text-xl font-semibold text-gray-900 dark:text-white">
-            {{ t('profile.totp.loginTitle') }}
+            {{ '双因素认证' }}
           </h3>
           <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            {{ t('profile.totp.loginHint') }}
+            {{ '请输入您认证器应用显示的 6 位验证码' }}
           </p>
           <p v-if="userEmailMasked" class="mt-1 text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ userEmailMasked }}
@@ -43,7 +43,7 @@
           <!-- Loading indicator -->
           <div v-if="verifying" class="mt-3 flex items-center justify-center gap-2 text-sm text-gray-500">
             <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-500"></div>
-            {{ t('common.verifying') }}
+            {{ '验证中...' }}
           </div>
         </div>
 
@@ -59,7 +59,7 @@
           :disabled="verifying"
           @click="$emit('cancel')"
         >
-          {{ t('common.cancel') }}
+          {{ '取消' }}
         </button>
       </div>
     </div>
@@ -68,8 +68,6 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
-
 defineProps<{
   tempToken: string
   userEmailMasked?: string
@@ -79,8 +77,6 @@ const emit = defineEmits<{
   verify: [code: string]
   cancel: []
 }>()
-
-const { t } = useI18n()
 
 const verifying = ref(false)
 const error = ref('')

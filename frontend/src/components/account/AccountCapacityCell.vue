@@ -57,14 +57,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import type { Account } from '@/types'
 
 const props = defineProps<{
   account: Account
 }>()
-
-const { t } = useI18n()
 
 // 当前并发数
 const currentConcurrency = computed(() => props.account.current_concurrency || 0)
@@ -150,12 +147,12 @@ const windowCostTooltip = computed(() => {
   const reserve = props.account.window_cost_sticky_reserve || 10
 
   if (current >= limit + reserve) {
-    return t('admin.accounts.capacity.windowCost.blocked')
+    return '5h窗口费用超限，账号暂停调度'
   }
   if (current >= limit) {
-    return t('admin.accounts.capacity.windowCost.stickyOnly')
+    return '5h窗口费用达阈值，仅允许粘性会话'
   }
-  return t('admin.accounts.capacity.windowCost.normal')
+  return '5h窗口费用正常'
 })
 
 // 会话限制状态样式
@@ -186,9 +183,9 @@ const sessionLimitTooltip = computed(() => {
   const idle = props.account.session_idle_timeout_minutes || 5
 
   if (current >= max) {
-    return t('admin.accounts.capacity.sessions.full', { idle })
+    return `活跃会话已满，新会话需等待（空闲超时：{idle}分钟）`
   }
-  return t('admin.accounts.capacity.sessions.normal', { idle })
+  return `活跃会话正常（空闲超时：{idle}分钟）`
 })
 
 // 格式化费用显示

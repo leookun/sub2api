@@ -16,7 +16,7 @@
               <input
                 v-model="searchQuery"
                 type="text"
-                :placeholder="t('admin.users.searchUsers')"
+                :placeholder="'搜索用户...'"
                 class="input pl-10"
                 @input="handleSearch"
               />
@@ -27,9 +27,9 @@
               <Select
                 v-model="filters.role"
                 :options="[
-                  { value: '', label: t('admin.users.allRoles') },
-                  { value: 'admin', label: t('admin.users.admin') },
-                  { value: 'user', label: t('admin.users.user') }
+                  { value: '', label: '全部角色' },
+                  { value: 'admin', label: '管理员' },
+                  { value: 'user', label: '用户' }
                 ]"
                 @change="applyFilter"
               />
@@ -40,9 +40,9 @@
               <Select
                 v-model="filters.status"
                 :options="[
-                  { value: '', label: t('admin.users.allStatus') },
-                  { value: 'active', label: t('common.active') },
-                  { value: 'disabled', label: t('admin.users.disabled') }
+                  { value: '', label: '全部状态' },
+                  { value: 'active', label: '启用' },
+                  { value: 'disabled', label: '禁用' }
                 ]"
                 @change="applyFilter"
               />
@@ -108,7 +108,7 @@
                 @click="loadUsers"
                 :disabled="loading"
                 class="btn btn-secondary px-2 md:px-3"
-                :title="t('common.refresh')"
+                :title="'刷新'"
               >
                 <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
               </button>
@@ -117,10 +117,10 @@
                 <button
                   @click="showFilterDropdown = !showFilterDropdown"
                   class="btn btn-secondary px-2 md:px-3"
-                  :title="t('admin.users.filterSettings')"
+                  :title="'筛选设置'"
                 >
                   <Icon name="filter" size="sm" class="md:mr-1.5" />
-                  <span class="hidden md:inline">{{ t('admin.users.filterSettings') }}</span>
+                  <span class="hidden md:inline">{{ '筛选设置' }}</span>
                 </button>
                 <!-- Dropdown menu -->
                 <div
@@ -171,12 +171,12 @@
                 <button
                   @click="showColumnDropdown = !showColumnDropdown"
                   class="btn btn-secondary px-2 md:px-3"
-                  :title="t('admin.users.columnSettings')"
+                  :title="'列设置'"
                 >
                   <svg class="h-4 w-4 md:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
                   </svg>
-                  <span class="hidden md:inline">{{ t('admin.users.columnSettings') }}</span>
+                  <span class="hidden md:inline">{{ '列设置' }}</span>
                 </button>
                 <!-- Dropdown menu -->
                 <div
@@ -204,17 +204,17 @@
               <button
                 @click="showAttributesModal = true"
                 class="btn btn-secondary px-2 md:px-3"
-                :title="t('admin.users.attributes.configButton')"
+                :title="'属性配置'"
               >
                 <Icon name="cog" size="sm" class="md:mr-1.5" />
-                <span class="hidden md:inline">{{ t('admin.users.attributes.configButton') }}</span>
+                <span class="hidden md:inline">{{ '属性配置' }}</span>
               </button>
             </div>
 
             <!-- Create User Button (full width on mobile, auto width on desktop) -->
             <button @click="showCreateModal = true" class="btn btn-primary flex-1 md:flex-initial">
               <Icon name="plus" size="md" class="mr-2" />
-              {{ t('admin.users.createUser') }}
+              {{ '创建用户' }}
             </button>
           </div>
         </div>
@@ -296,7 +296,7 @@
               class="inline-flex items-center gap-1.5 rounded-md bg-gray-50 px-2 py-1 text-xs text-gray-400 dark:bg-dark-700/50 dark:text-dark-500"
             >
               <Icon name="ban" size="xs" class="h-3.5 w-3.5" />
-              <span>{{ t('admin.users.noSubscription') }}</span>
+              <span>{{ '暂无订阅' }}</span>
             </span>
           </template>
 
@@ -307,13 +307,13 @@
           <template #cell-usage="{ row }">
             <div class="text-sm">
               <div class="flex items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400">{{ t('admin.users.today') }}:</span>
+                <span class="text-gray-500 dark:text-gray-400">{{ '今日' }}:</span>
                 <span class="font-medium text-gray-900 dark:text-white">
                   ${{ (usageStats[row.id]?.today_actual_cost ?? 0).toFixed(4) }}
                 </span>
               </div>
               <div class="mt-0.5 flex items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400">{{ t('admin.users.total') }}:</span>
+                <span class="text-gray-500 dark:text-gray-400">{{ '累计' }}:</span>
                 <span class="font-medium text-gray-900 dark:text-white">
                   ${{ (usageStats[row.id]?.total_actual_cost ?? 0).toFixed(4) }}
                 </span>
@@ -334,7 +334,7 @@
                 ]"
               ></span>
               <span class="text-sm text-gray-700 dark:text-gray-300">
-                {{ value === 'active' ? t('common.active') : t('admin.users.disabled') }}
+                {{ value === 'active' ? '启用' : '禁用' }}
               </span>
             </div>
           </template>
@@ -351,7 +351,7 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ t('common.edit') }}</span>
+                <span class="text-xs">{{ '编辑' }}</span>
               </button>
 
               <!-- Toggle Status Button (not for admin) -->
@@ -367,7 +367,7 @@
               >
                 <Icon v-if="row.status === 'active'" name="ban" size="sm" />
                 <Icon v-else name="checkCircle" size="sm" />
-                <span class="text-xs">{{ row.status === 'active' ? t('admin.users.disable') : t('admin.users.enable') }}</span>
+                <span class="text-xs">{{ row.status === 'active' ? '禁用' : '启用' }}</span>
               </button>
 
               <!-- More Actions Menu Trigger -->
@@ -377,16 +377,16 @@
                 :class="{ 'bg-gray-100 text-gray-900 dark:bg-dark-700 dark:text-white': activeMenuId === row.id }"
               >
                 <Icon name="more" size="sm" />
-                <span class="text-xs">{{ t('common.more') }}</span>
+                <span class="text-xs">{{ '更多' }}</span>
               </button>
             </div>
           </template>
 
           <template #empty>
             <EmptyState
-              :title="t('admin.users.noUsersYet')"
-              :description="t('admin.users.createFirstUser')"
-              :action-text="t('admin.users.createUser')"
+              :title="'暂无用户'"
+              :description="'创建您的第一个用户以开始使用系统'"
+              :action-text="'创建用户'"
               @action="showCreateModal = true"
             />
           </template>
@@ -422,7 +422,7 @@
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
               >
                 <Icon name="key" size="sm" class="text-gray-400" :stroke-width="2" />
-                {{ t('admin.users.apiKeys') }}
+                {{ 'API密钥' }}
               </button>
 
               <!-- Allowed Groups -->
@@ -431,7 +431,7 @@
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
               >
                 <Icon name="users" size="sm" class="text-gray-400" :stroke-width="2" />
-                {{ t('admin.users.groups') }}
+                {{ '分组' }}
               </button>
 
               <div class="my-1 border-t border-gray-100 dark:border-dark-700"></div>
@@ -442,7 +442,7 @@
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
               >
                 <Icon name="plus" size="sm" class="text-emerald-500" :stroke-width="2" />
-                {{ t('admin.users.deposit') }}
+                {{ '充值' }}
               </button>
 
               <!-- Withdraw -->
@@ -453,7 +453,7 @@
                 <svg class="h-4 w-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                 </svg>
-                {{ t('admin.users.withdraw') }}
+                {{ '退款' }}
               </button>
 
               <div class="my-1 border-t border-gray-100 dark:border-dark-700"></div>
@@ -465,7 +465,7 @@
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
               >
                 <Icon name="trash" size="sm" :stroke-width="2" />
-                {{ t('common.delete') }}
+                {{ '删除' }}
               </button>
             </template>
           </template>
@@ -473,7 +473,7 @@
       </div>
     </Teleport>
 
-    <ConfirmDialog :show="showDeleteDialog" :title="t('admin.users.deleteUser')" :message="t('admin.users.deleteConfirm', { email: deletingUser?.email })" :danger="true" @confirm="confirmDelete" @cancel="showDeleteDialog = false" />
+    <ConfirmDialog :show="showDeleteDialog" :title="'删除用户'" :message="`确定要删除用户 '${deletingUser?.email}' 吗？此操作无法撤销。`" :danger="true" @confirm="confirmDelete" @cancel="showDeleteDialog = false" />
     <UserCreateModal :show="showCreateModal" @close="showCreateModal = false" @success="loadUsers" />
     <UserEditModal :show="showEditModal" :user="editingUser" @close="closeEditModal" @success="loadUsers" />
     <UserApiKeysModal :show="showApiKeysModal" :user="viewingUser" @close="closeApiKeysModal" />
@@ -485,12 +485,10 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { formatDateTime } from '@/utils/format'
 import Icon from '@/components/icons/Icon.vue'
 
-const { t } = useI18n()
 import { adminAPI } from '@/api/admin'
 import type { AdminUser, UserAttributeDefinition } from '@/types'
 import type { BatchUserUsageStats } from '@/api/admin/dashboard'
@@ -560,20 +558,20 @@ const getAttributeValue = (userId: number, attrId: number): string => {
 
 // All possible columns (for column settings)
 const allColumns = computed<Column[]>(() => [
-  { key: 'email', label: t('admin.users.columns.user'), sortable: true },
+  { key: 'email', label: '用户', sortable: true },
   { key: 'id', label: 'ID', sortable: true },
-  { key: 'username', label: t('admin.users.columns.username'), sortable: true },
-  { key: 'notes', label: t('admin.users.columns.notes'), sortable: false },
+  { key: 'username', label: '用户名', sortable: true },
+  { key: 'notes', label: '备注', sortable: false },
   // Dynamic attribute columns
   ...attributeColumns.value,
-  { key: 'role', label: t('admin.users.columns.role'), sortable: true },
-  { key: 'subscriptions', label: t('admin.users.columns.subscriptions'), sortable: false },
-  { key: 'balance', label: t('admin.users.columns.balance'), sortable: true },
-  { key: 'usage', label: t('admin.users.columns.usage'), sortable: false },
-  { key: 'concurrency', label: t('admin.users.columns.concurrency'), sortable: true },
-  { key: 'status', label: t('admin.users.columns.status'), sortable: true },
-  { key: 'created_at', label: t('admin.users.columns.created'), sortable: true },
-  { key: 'actions', label: t('admin.users.columns.actions'), sortable: false }
+  { key: 'role', label: '角色', sortable: true },
+  { key: 'subscriptions', label: '订阅分组', sortable: false },
+  { key: 'balance', label: '余额', sortable: true },
+  { key: 'usage', label: '用量', sortable: false },
+  { key: 'concurrency', label: '并发数', sortable: true },
+  { key: 'status', label: '状态', sortable: true },
+  { key: 'created_at', label: '创建时间', sortable: true },
+  { key: 'actions', label: '操作', sortable: false }
 ])
 
 // Columns that can be toggled (exclude email and actions which are always visible)
@@ -671,8 +669,8 @@ const filterableAttributes = computed(() =>
 
 // Built-in filter definitions
 const builtInFilters = computed(() => [
-  { key: 'role', name: t('admin.users.columns.role'), type: 'select' as const },
-  { key: 'status', name: t('admin.users.columns.status'), type: 'select' as const }
+  { key: 'role', name: '角色', type: 'select' as const },
+  { key: 'status', name: '状态', type: 'select' as const }
 ])
 
 // Load saved filters from localStorage
@@ -921,7 +919,7 @@ const loadUsers = async () => {
     if (errorInfo?.name === 'AbortError' || errorInfo?.name === 'CanceledError' || errorInfo?.code === 'ERR_CANCELED') {
       return
     }
-    const message = error.response?.data?.detail || error.message || t('admin.users.failedToLoad')
+    const message = error.response?.data?.detail || error.message || '加载用户列表失败'
     appStore.showError(message)
     console.error('Error loading users:', error)
   } finally {
@@ -1013,11 +1011,11 @@ const handleToggleStatus = async (user: AdminUser) => {
   try {
     await adminAPI.users.toggleStatus(user.id, newStatus)
     appStore.showSuccess(
-      newStatus === 'active' ? t('admin.users.userEnabled') : t('admin.users.userDisabled')
+      newStatus === 'active' ? '用户已启用' : '用户已禁用'
     )
     loadUsers()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.users.failedToToggle'))
+    appStore.showError(error.response?.data?.detail || '更新用户状态失败')
     console.error('Error toggling user status:', error)
   }
 }
@@ -1051,12 +1049,12 @@ const confirmDelete = async () => {
   if (!deletingUser.value) return
   try {
     await adminAPI.users.delete(deletingUser.value.id)
-    appStore.showSuccess(t('common.success'))
+    appStore.showSuccess('成功')
     showDeleteDialog.value = false
     deletingUser.value = null
     loadUsers()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.users.failedToDelete'))
+    appStore.showError(error.response?.data?.detail || '删除用户失败')
     console.error('Error deleting user:', error)
   }
 }

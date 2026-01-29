@@ -83,7 +83,7 @@
       <template v-if="!isFullscreen">
         <OpsSettingsDialog :show="showSettingsDialog" @close="showSettingsDialog = false" @saved="onSettingsSaved" />
 
-        <BaseDialog :show="showAlertRulesCard" :title="t('admin.ops.alertRules.title')" width="extra-wide" @close="showAlertRulesCard = false">
+        <BaseDialog :show="showAlertRulesCard" :title="'告警规则'" width="extra-wide" @close="showAlertRulesCard = false">
           <OpsAlertRulesCard />
         </BaseDialog>
 
@@ -115,7 +115,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useDebounceFn, useIntervalFn } from '@vueuse/core'
-import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import BaseDialog from '@/components/common/BaseDialog.vue'
@@ -147,8 +146,6 @@ const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
 const adminSettingsStore = useAdminSettingsStore()
-const { t } = useI18n()
-
 const opsEnabled = computed(() => adminSettingsStore.opsMonitoringEnabled)
 
 type TimeRange = '5m' | '30m' | '1h' | '6h' | '24h' | 'custom'
@@ -399,7 +396,7 @@ function handleThroughputSelectGroup(nextGroupId: number) {
 
 function handleOpenRequestDetails(preset?: OpsRequestDetailsPreset) {
   const basePreset: OpsRequestDetailsPreset = {
-    title: t('admin.ops.requestDetails.title'),
+    title: '请求明细',
     kind: 'all',
     sort: 'created_at_desc'
   }
@@ -500,7 +497,7 @@ async function refreshOverviewWithCancel(fetchSeq: number, signal: AbortSignal) 
   } catch (err: any) {
     if (fetchSeq !== dashboardFetchSeq || isCanceledRequest(err)) return
     overview.value = null
-    appStore.showError(err?.message || t('admin.ops.failedToLoadOverview'))
+    appStore.showError(err?.message || '加载概览数据失败')
   }
 }
 
@@ -514,7 +511,7 @@ async function refreshThroughputTrendWithCancel(fetchSeq: number, signal: AbortS
   } catch (err: any) {
     if (fetchSeq !== dashboardFetchSeq || isCanceledRequest(err)) return
     throughputTrend.value = null
-    appStore.showError(err?.message || t('admin.ops.failedToLoadThroughputTrend'))
+    appStore.showError(err?.message || '加载吞吐趋势失败')
   } finally {
     if (fetchSeq === dashboardFetchSeq) {
       loadingTrend.value = false
@@ -532,7 +529,7 @@ async function refreshLatencyHistogramWithCancel(fetchSeq: number, signal: Abort
   } catch (err: any) {
     if (fetchSeq !== dashboardFetchSeq || isCanceledRequest(err)) return
     latencyHistogram.value = null
-    appStore.showError(err?.message || t('admin.ops.failedToLoadLatencyHistogram'))
+    appStore.showError(err?.message || '加载请求时长分布失败')
   } finally {
     if (fetchSeq === dashboardFetchSeq) {
       loadingLatency.value = false
@@ -550,7 +547,7 @@ async function refreshErrorTrendWithCancel(fetchSeq: number, signal: AbortSignal
   } catch (err: any) {
     if (fetchSeq !== dashboardFetchSeq || isCanceledRequest(err)) return
     errorTrend.value = null
-    appStore.showError(err?.message || t('admin.ops.failedToLoadErrorTrend'))
+    appStore.showError(err?.message || '加载错误趋势失败')
   } finally {
     if (fetchSeq === dashboardFetchSeq) {
       loadingErrorTrend.value = false
@@ -568,7 +565,7 @@ async function refreshErrorDistributionWithCancel(fetchSeq: number, signal: Abor
   } catch (err: any) {
     if (fetchSeq !== dashboardFetchSeq || isCanceledRequest(err)) return
     errorDistribution.value = null
-    appStore.showError(err?.message || t('admin.ops.failedToLoadErrorDistribution'))
+    appStore.showError(err?.message || '加载错误分布失败')
   } finally {
     if (fetchSeq === dashboardFetchSeq) {
       loadingErrorDistribution.value = false
@@ -618,7 +615,7 @@ async function fetchData() {
   } catch (err) {
     if (!isOpsDisabledError(err)) {
       console.error('[ops] failed to fetch dashboard data', err)
-      errorMessage.value = t('admin.ops.failedToLoadData')
+      errorMessage.value = '加载运维数据失败'
     }
   } finally {
     if (fetchSeq === dashboardFetchSeq) {

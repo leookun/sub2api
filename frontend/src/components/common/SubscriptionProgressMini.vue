@@ -4,7 +4,7 @@
     <button
       @click="toggleTooltip"
       class="flex cursor-pointer items-center gap-2 rounded-xl bg-purple-50 px-3 py-1.5 transition-colors hover:bg-purple-100 dark:bg-purple-900/20 dark:hover:bg-purple-900/30"
-      :title="t('subscriptionProgress.viewDetails')"
+      :title="'查看订阅详情'"
     >
       <Icon name="creditCard" size="sm" class="text-purple-600 dark:text-purple-400" />
       <div class="flex items-center gap-1.5">
@@ -31,10 +31,10 @@
       >
         <div class="border-b border-gray-100 p-3 dark:border-dark-700">
           <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
-            {{ t('subscriptionProgress.title') }}
+            {{ '我的订阅' }}
           </h3>
           <p class="mt-0.5 text-xs text-gray-500 dark:text-dark-400">
-            {{ t('subscriptionProgress.activeCount', { count: activeSubscriptions.length }) }}
+            {{ `${activeSubscriptions.length} 个有效订阅` }}
           </p>
         </div>
 
@@ -66,7 +66,7 @@
               >
                 <span class="text-lg text-emerald-600 dark:text-emerald-400">∞</span>
                 <span class="text-xs font-medium text-emerald-700 dark:text-emerald-300">
-                  {{ t('subscriptionProgress.unlimited') }}
+                  {{ '无限制' }}
                 </span>
               </div>
 
@@ -74,7 +74,7 @@
               <template v-else>
                 <div v-if="subscription.group?.daily_limit_usd" class="flex items-center gap-2">
                   <span class="w-8 flex-shrink-0 text-[10px] text-gray-500">{{
-                    t('subscriptionProgress.daily')
+                    '每日'
                   }}</span>
                   <div class="h-1.5 min-w-0 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
                     <div
@@ -102,7 +102,7 @@
 
                 <div v-if="subscription.group?.weekly_limit_usd" class="flex items-center gap-2">
                   <span class="w-8 flex-shrink-0 text-[10px] text-gray-500">{{
-                    t('subscriptionProgress.weekly')
+                    '每周'
                   }}</span>
                   <div class="h-1.5 min-w-0 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
                     <div
@@ -130,7 +130,7 @@
 
                 <div v-if="subscription.group?.monthly_limit_usd" class="flex items-center gap-2">
                   <span class="w-8 flex-shrink-0 text-[10px] text-gray-500">{{
-                    t('subscriptionProgress.monthly')
+                    '每月'
                   }}</span>
                   <div class="h-1.5 min-w-0 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
                     <div
@@ -169,7 +169,7 @@
             @click="closeTooltip"
             class="block w-full py-1 text-center text-xs text-primary-600 hover:underline dark:text-primary-400"
           >
-            {{ t('subscriptionProgress.viewAll') }}
+            {{ '查看全部订阅' }}
           </router-link>
         </div>
       </div>
@@ -179,12 +179,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { useI18n } from 'vue-i18n'
 import Icon from '@/components/icons/Icon.vue'
 import { useSubscriptionStore } from '@/stores'
 import type { UserSubscription } from '@/types'
-
-const { t } = useI18n()
 
 const subscriptionStore = useSubscriptionStore()
 
@@ -261,11 +258,11 @@ function formatDaysRemaining(expiresAt: string): string {
   const now = new Date()
   const expires = new Date(expiresAt)
   const diff = expires.getTime() - now.getTime()
-  if (diff < 0) return t('subscriptionProgress.expired')
+  if (diff < 0) return '已过期'
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
-  if (days === 0) return t('subscriptionProgress.expiresToday')
-  if (days === 1) return t('subscriptionProgress.expiresTomorrow')
-  return t('subscriptionProgress.daysRemaining', { days })
+  if (days === 0) return '今天到期'
+  if (days === 1) return '明天到期'
+  return `剩余 {days} 天`
 }
 
 function getDaysRemainingClass(expiresAt: string): string {

@@ -1,14 +1,14 @@
 <template>
-  <BaseDialog :show="show" :title="t('admin.users.attributes.title')" width="wide" @close="emit('close')">
+  <BaseDialog :show="show" :title="'用户属性配置'" width="wide" @close="emit('close')">
     <div class="space-y-4">
       <!-- Header with Add Button -->
       <div class="flex items-center justify-between">
         <p class="text-sm text-gray-500 dark:text-dark-400">
-          {{ t('admin.users.attributes.description') }}
+          {{ '配置用户的自定义属性字段' }}
         </p>
         <button @click="openCreateModal" class="btn btn-primary btn-sm">
           <Icon name="plus" size="sm" class="mr-1.5" :stroke-width="2" />
-          {{ t('admin.users.attributes.addAttribute') }}
+          {{ '添加属性' }}
         </button>
       </div>
 
@@ -27,10 +27,10 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
         </svg>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ t('admin.users.attributes.noAttributes') }}
+          {{ '暂无自定义属性' }}
         </p>
         <p class="text-xs text-gray-400 dark:text-dark-500">
-          {{ t('admin.users.attributes.noAttributesHint') }}
+          {{ '点击上方按钮添加自定义属性' }}
         </p>
       </div>
 
@@ -42,7 +42,7 @@
           class="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3 dark:border-dark-600 dark:bg-dark-800"
         >
           <!-- Drag Handle -->
-          <div class="cursor-move text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" :title="t('admin.users.attributes.dragToReorder')">
+          <div class="cursor-move text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" :title="'拖拽排序'">
             <Icon name="menu" size="md" />
           </div>
 
@@ -54,10 +54,10 @@
                 {{ attr.key }}
               </span>
               <span v-if="attr.required" class="badge badge-danger text-xs">
-                {{ t('admin.users.attributes.required') }}
+                {{ '必填' }}
               </span>
               <span v-if="!attr.enabled" class="badge badge-gray text-xs">
-                {{ t('common.disabled') }}
+                {{ '已禁用' }}
               </span>
             </div>
             <div class="mt-0.5 flex items-center gap-2 text-xs text-gray-500 dark:text-dark-400">
@@ -71,14 +71,14 @@
             <button
               @click="openEditModal(attr)"
               class="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
-              :title="t('common.edit')"
+              :title="'编辑'"
             >
               <Icon name="edit" size="sm" />
             </button>
             <button
               @click="confirmDelete(attr)"
               class="rounded-lg p-1.5 text-gray-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
-              :title="t('common.delete')"
+              :title="'删除'"
             >
               <Icon name="trash" size="sm" />
             </button>
@@ -90,7 +90,7 @@
     <template #footer>
       <div class="flex justify-end">
         <button @click="emit('close')" class="btn btn-secondary">
-          {{ t('common.close') }}
+          {{ '关闭' }}
         </button>
       </div>
     </template>
@@ -99,41 +99,41 @@
   <!-- Create/Edit Attribute Modal -->
   <BaseDialog
     :show="showEditModal"
-    :title="editingAttribute ? t('admin.users.attributes.editAttribute') : t('admin.users.attributes.addAttribute')"
+    :title="editingAttribute ? '编辑属性' : '添加属性'"
     width="normal"
     @close="closeEditModal"
   >
     <form id="attribute-form" @submit.prevent="handleSave" class="space-y-4">
       <!-- Key -->
       <div>
-        <label class="input-label">{{ t('admin.users.attributes.key') }}</label>
+        <label class="input-label">{{ '属性键' }}</label>
         <input
           v-model="form.key"
           type="text"
           required
           pattern="^[a-zA-Z][a-zA-Z0-9_]*$"
           class="input font-mono"
-          :placeholder="t('admin.users.attributes.keyHint')"
+          :placeholder="'用于程序引用，只能包含字母、数字和下划线'"
           :disabled="!!editingAttribute"
         />
-        <p class="input-hint">{{ t('admin.users.attributes.keyHint') }}</p>
+        <p class="input-hint">{{ '用于程序引用，只能包含字母、数字和下划线' }}</p>
       </div>
 
       <!-- Name -->
       <div>
-        <label class="input-label">{{ t('admin.users.attributes.name') }}</label>
+        <label class="input-label">{{ '显示名称' }}</label>
         <input
           v-model="form.name"
           type="text"
           required
           class="input"
-          :placeholder="t('admin.users.attributes.nameHint')"
+          :placeholder="'在表单中显示的名称'"
         />
       </div>
 
       <!-- Type -->
       <div>
-        <label class="input-label">{{ t('admin.users.attributes.type') }}</label>
+        <label class="input-label">{{ '属性类型' }}</label>
         <Select
           v-model="form.type"
           :options="attributeTypes.map(type => ({ value: type, label: t(`admin.users.attributes.types.${type}`) }))"
@@ -142,20 +142,20 @@
 
       <!-- Options (for select/multi_select) -->
       <div v-if="form.type === 'select' || form.type === 'multi_select'" class="space-y-2">
-        <label class="input-label">{{ t('admin.users.attributes.options') }}</label>
+        <label class="input-label">{{ '选项配置' }}</label>
         <div v-for="(option, index) in form.options" :key="index" class="flex items-center gap-2">
           <input
             v-model="option.value"
             type="text"
             class="input flex-1 font-mono text-sm"
-            :placeholder="t('admin.users.attributes.optionValue')"
+            :placeholder="'选项值'"
             required
           />
           <input
             v-model="option.label"
             type="text"
             class="input flex-1 text-sm"
-            :placeholder="t('admin.users.attributes.optionLabel')"
+            :placeholder="'显示文本'"
             required
           />
           <button
@@ -168,29 +168,29 @@
         </div>
         <button type="button" @click="addOption" class="btn btn-secondary btn-sm">
           <Icon name="plus" size="sm" class="mr-1" :stroke-width="2" />
-          {{ t('admin.users.attributes.addOption') }}
+          {{ '添加选项' }}
         </button>
       </div>
 
       <!-- Description -->
       <div>
-        <label class="input-label">{{ t('admin.users.attributes.fieldDescription') }}</label>
+        <label class="input-label">{{ '描述' }}</label>
         <input
           v-model="form.description"
           type="text"
           class="input"
-          :placeholder="t('admin.users.attributes.fieldDescriptionHint')"
+          :placeholder="'属性的说明文字'"
         />
       </div>
 
       <!-- Placeholder -->
       <div>
-        <label class="input-label">{{ t('admin.users.attributes.placeholder') }}</label>
+        <label class="input-label">{{ '占位符' }}</label>
         <input
           v-model="form.placeholder"
           type="text"
           class="input"
-          :placeholder="t('admin.users.attributes.placeholderHint')"
+          :placeholder="'输入框的提示文字'"
         />
       </div>
 
@@ -198,11 +198,11 @@
       <div class="flex items-center gap-6">
         <label class="flex items-center gap-2">
           <input v-model="form.required" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary-600" />
-          <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('admin.users.attributes.required') }}</span>
+          <span class="text-sm text-gray-700 dark:text-gray-300">{{ '必填' }}</span>
         </label>
         <label class="flex items-center gap-2">
           <input v-model="form.enabled" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary-600" />
-          <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('admin.users.attributes.enabled') }}</span>
+          <span class="text-sm text-gray-700 dark:text-gray-300">{{ '启用' }}</span>
         </label>
       </div>
     </form>
@@ -210,14 +210,14 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button @click="closeEditModal" type="button" class="btn btn-secondary">
-          {{ t('common.cancel') }}
+          {{ '取消' }}
         </button>
         <button type="submit" form="attribute-form" :disabled="saving" class="btn btn-primary">
           <svg v-if="saving" class="-ml-1 mr-2 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
           </svg>
-          {{ saving ? t('common.saving') : (editingAttribute ? t('common.update') : t('common.create')) }}
+          {{ saving ? '保存中...' : (editingAttribute ? '更新' : '创建') }}
         </button>
       </div>
     </template>
@@ -226,10 +226,10 @@
   <!-- Delete Confirmation -->
   <ConfirmDialog
     :show="showDeleteDialog"
-    :title="t('admin.users.attributes.deleteAttribute')"
-    :message="t('admin.users.attributes.deleteConfirm', { name: deletingAttribute?.name })"
-    :confirm-text="t('common.delete')"
-    :cancel-text="t('common.cancel')"
+    :title="'删除属性'"
+    :message="`确定要删除属性 '${deletingAttribute?.name}' 吗？所有用户的该属性值将被删除。`"
+    :confirm-text="'删除'"
+    :cancel-text="'取消'"
     :danger="true"
     @confirm="handleDelete"
     @cancel="showDeleteDialog = false"
@@ -238,7 +238,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { UserAttributeDefinition, UserAttributeType, UserAttributeOption } from '@/types'
@@ -247,7 +246,6 @@ import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 import Icon from '@/components/icons/Icon.vue'
 import Select from '@/components/common/Select.vue'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 interface Props {
@@ -287,7 +285,7 @@ const loadAttributes = async () => {
   try {
     attributes.value = await adminAPI.userAttributes.listDefinitions()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.users.attributes.failedToLoad'))
+    appStore.showError(error.response?.data?.detail || '加载属性列表失败')
   } finally {
     loading.value = false
   }
@@ -334,15 +332,15 @@ const removeOption = (index: number) => {
 
 const handleSave = async () => {
   if (!form.key.trim()) {
-    appStore.showError(t('admin.users.attributes.keyRequired'))
+    appStore.showError('请输入属性键')
     return
   }
   if (!form.name.trim()) {
-    appStore.showError(t('admin.users.attributes.nameRequired'))
+    appStore.showError('请输入显示名称')
     return
   }
   if ((form.type === 'select' || form.type === 'multi_select') && form.options.length === 0) {
-    appStore.showError(t('admin.users.attributes.optionsRequired'))
+    appStore.showError('请至少添加一个选项')
     return
   }
   saving.value = true
@@ -360,18 +358,18 @@ const handleSave = async () => {
 
     if (editingAttribute.value) {
       await adminAPI.userAttributes.updateDefinition(editingAttribute.value.id, data)
-      appStore.showSuccess(t('admin.users.attributes.updated'))
+      appStore.showSuccess('属性更新成功')
     } else {
       await adminAPI.userAttributes.createDefinition(data)
-      appStore.showSuccess(t('admin.users.attributes.created'))
+      appStore.showSuccess('属性创建成功')
     }
 
     closeEditModal()
     loadAttributes()
   } catch (error: any) {
     const msg = editingAttribute.value
-      ? t('admin.users.attributes.failedToUpdate')
-      : t('admin.users.attributes.failedToCreate')
+      ? '更新属性失败'
+      : '创建属性失败'
     appStore.showError(error.response?.data?.detail || msg)
   } finally {
     saving.value = false
@@ -388,12 +386,12 @@ const handleDelete = async () => {
 
   try {
     await adminAPI.userAttributes.deleteDefinition(deletingAttribute.value.id)
-    appStore.showSuccess(t('admin.users.attributes.deleted'))
+    appStore.showSuccess('属性删除成功')
     showDeleteDialog.value = false
     deletingAttribute.value = null
     loadAttributes()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.users.attributes.failedToDelete'))
+    appStore.showError(error.response?.data?.detail || '删除属性失败')
   }
 }
 

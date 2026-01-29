@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { Chart as ChartJS, BarElement, CategoryScale, Legend, LinearScale, Tooltip } from 'chart.js'
 import { Bar } from 'vue-chartjs'
 import type { OpsLatencyHistogramResponse } from '@/api/admin/ops'
@@ -16,8 +15,6 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { t } = useI18n()
-
 const isDarkMode = computed(() => document.documentElement.classList.contains('dark'))
 const colors = computed(() => ({
   blue: '#3b82f6',
@@ -40,7 +37,7 @@ const chartData = computed(() => {
     labels: props.latencyData.buckets.map((b) => b.range),
     datasets: [
       {
-        label: t('admin.ops.requests'),
+        label: '请求数',
         data: props.latencyData.buckets.map((b) => b.count),
         backgroundColor: c.blue,
         borderRadius: 4,
@@ -85,16 +82,16 @@ const options = computed(() => {
             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        {{ t('admin.ops.latencyHistogram') }}
-        <HelpTooltip :content="t('admin.ops.tooltips.latencyHistogram')" />
+        {{ '请求时长分布' }}
+        <HelpTooltip :content="'成功请求的请求时长分布（毫秒）。'" />
       </h3>
     </div>
 
     <div class="min-h-0 flex-1">
       <Bar v-if="state === 'ready' && chartData" :data="chartData" :options="options" />
       <div v-else class="flex h-full items-center justify-center">
-        <div v-if="state === 'loading'" class="animate-pulse text-sm text-gray-400">{{ t('common.loading') }}</div>
-        <EmptyState v-else :title="t('common.noData')" :description="t('admin.ops.charts.emptyRequest')" />
+        <div v-if="state === 'loading'" class="animate-pulse text-sm text-gray-400">{{ '加载中...' }}</div>
+        <EmptyState v-else :title="'暂无数据'" :description="'该时间窗口内暂无请求。'" />
       </div>
     </div>
   </div>

@@ -10,8 +10,8 @@
         >
           <Icon name="cog" size="xl" class="text-white" />
         </div>
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ t('setup.title') }}</h1>
-        <p class="mt-2 text-gray-500 dark:text-dark-400">{{ t('setup.description') }}</p>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ 'Sub2API 安装向导' }}</h1>
+        <p class="mt-2 text-gray-500 dark:text-dark-400">{{ '配置您的 Sub2API 实例' }}</p>
       </div>
 
       <!-- Progress Steps -->
@@ -63,16 +63,16 @@
         <div v-if="currentStep === 0" class="space-y-6">
           <div class="mb-6 text-center">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ t('setup.database.title') }}
+              {{ '数据库配置' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-              {{ t('setup.database.description') }}
+              {{ '连接到您的 PostgreSQL 数据库' }}
             </p>
           </div>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('setup.database.host') }}</label>
+              <label class="input-label">{{ '主机' }}</label>
               <input
                 v-model="formData.database.host"
                 type="text"
@@ -81,7 +81,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ t('setup.database.port') }}</label>
+              <label class="input-label">{{ '端口' }}</label>
               <input
                 v-model.number="formData.database.port"
                 type="number"
@@ -93,7 +93,7 @@
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('setup.database.username') }}</label>
+              <label class="input-label">{{ '用户名' }}</label>
               <input
                 v-model="formData.database.user"
                 type="text"
@@ -102,19 +102,19 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ t('setup.database.password') }}</label>
+              <label class="input-label">{{ '密码' }}</label>
               <input
                 v-model="formData.database.password"
                 type="password"
                 class="input"
-                :placeholder="t('setup.database.passwordPlaceholder')"
+                :placeholder="'密码'"
               />
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('setup.database.databaseName') }}</label>
+              <label class="input-label">{{ '数据库名称' }}</label>
               <input
                 v-model="formData.database.dbname"
                 type="text"
@@ -123,14 +123,14 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ t('setup.database.sslMode') }}</label>
+              <label class="input-label">{{ 'SSL 模式' }}</label>
               <Select
                 v-model="formData.database.sslmode"
                 :options="[
-                  { value: 'disable', label: t('setup.database.ssl.disable') },
-                  { value: 'require', label: t('setup.database.ssl.require') },
-                  { value: 'verify-ca', label: t('setup.database.ssl.verifyCa') },
-                  { value: 'verify-full', label: t('setup.database.ssl.verifyFull') }
+                  { value: 'disable', label: '禁用' },
+                  { value: 'require', label: '要求' },
+                  { value: 'verify-ca', label: '验证 CA' },
+                  { value: 'verify-full', label: '完全验证' }
                 ]"
               />
             </div>
@@ -164,10 +164,10 @@
             <Icon v-else-if="dbConnected" name="check" size="md" class="mr-2 text-green-500" :stroke-width="2" />
             {{
               testingDb
-                ? t('setup.status.testing')
+                ? '测试中...'
                 : dbConnected
-                  ? t('setup.status.success')
-                  : t('setup.status.testConnection')
+                  ? '连接成功'
+                  : '测试连接'
             }}
           </button>
         </div>
@@ -176,16 +176,16 @@
         <div v-if="currentStep === 1" class="space-y-6">
           <div class="mb-6 text-center">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ t('setup.redis.title') }}
+              {{ 'Redis 配置' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-              {{ t('setup.redis.description') }}
+              {{ '连接到您的 Redis 服务器' }}
             </p>
           </div>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('setup.redis.host') }}</label>
+              <label class="input-label">{{ '主机' }}</label>
               <input
                 v-model="formData.redis.host"
                 type="text"
@@ -194,7 +194,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ t('setup.redis.port') }}</label>
+              <label class="input-label">{{ '端口' }}</label>
               <input
                 v-model.number="formData.redis.port"
                 type="number"
@@ -206,16 +206,16 @@
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('setup.redis.password') }}</label>
+              <label class="input-label">{{ '密码（可选）' }}</label>
               <input
                 v-model="formData.redis.password"
                 type="password"
                 class="input"
-                :placeholder="t('setup.redis.passwordPlaceholder')"
+                :placeholder="'密码'"
               />
             </div>
             <div>
-              <label class="input-label">{{ t('setup.redis.database') }}</label>
+              <label class="input-label">{{ '数据库' }}</label>
               <input
                 v-model.number="formData.redis.db"
                 type="number"
@@ -259,10 +259,10 @@
             />
             {{
               testingRedis
-                ? t('setup.status.testing')
+                ? '测试中...'
                 : redisConnected
-                  ? t('setup.status.success')
-                  : t('setup.status.testConnection')
+                  ? '连接成功'
+                  : '测试连接'
             }}
           </button>
         </div>
@@ -271,15 +271,15 @@
         <div v-if="currentStep === 2" class="space-y-6">
           <div class="mb-6 text-center">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ t('setup.admin.title') }}
+              {{ '管理员账户' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-              {{ t('setup.admin.description') }}
+              {{ '创建您的管理员账户' }}
             </p>
           </div>
 
           <div>
-            <label class="input-label">{{ t('setup.admin.email') }}</label>
+            <label class="input-label">{{ '邮箱' }}</label>
             <input
               v-model="formData.admin.email"
               type="email"
@@ -289,28 +289,28 @@
           </div>
 
           <div>
-            <label class="input-label">{{ t('setup.admin.password') }}</label>
+            <label class="input-label">{{ '密码' }}</label>
             <input
               v-model="formData.admin.password"
               type="password"
               class="input"
-              :placeholder="t('setup.admin.passwordPlaceholder')"
+              :placeholder="'至少 6 个字符'"
             />
           </div>
 
           <div>
-            <label class="input-label">{{ t('setup.admin.confirmPassword') }}</label>
+            <label class="input-label">{{ '确认密码' }}</label>
             <input
               v-model="confirmPassword"
               type="password"
               class="input"
-              :placeholder="t('setup.admin.confirmPasswordPlaceholder')"
+              :placeholder="'确认密码'"
             />
             <p
               v-if="confirmPassword && formData.admin.password !== confirmPassword"
               class="input-error-text"
             >
-              {{ t('setup.admin.passwordMismatch') }}
+              {{ '密码不匹配' }}
             </p>
           </div>
         </div>
@@ -319,17 +319,17 @@
         <div v-if="currentStep === 3" class="space-y-6">
           <div class="mb-6 text-center">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ t('setup.ready.title') }}
+              {{ '准备安装' }}
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-              {{ t('setup.ready.description') }}
+              {{ '检查您的配置并完成安装' }}
             </p>
           </div>
 
           <div class="space-y-4">
             <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-700">
               <h3 class="mb-2 text-sm font-medium text-gray-500 dark:text-dark-400">
-                {{ t('setup.ready.database') }}
+                {{ '数据库' }}
               </h3>
               <p class="text-gray-900 dark:text-white">
                 {{ formData.database.user }}@{{ formData.database.host }}:{{
@@ -340,7 +340,7 @@
 
             <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-700">
               <h3 class="mb-2 text-sm font-medium text-gray-500 dark:text-dark-400">
-                {{ t('setup.ready.redis') }}
+                {{ 'Redis' }}
               </h3>
               <p class="text-gray-900 dark:text-white">
                 {{ formData.redis.host }}:{{ formData.redis.port }}
@@ -349,7 +349,7 @@
 
             <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-700">
               <h3 class="mb-2 text-sm font-medium text-gray-500 dark:text-dark-400">
-                {{ t('setup.ready.adminEmail') }}
+                {{ '管理员邮箱' }}
               </h3>
               <p class="text-gray-900 dark:text-white">{{ formData.admin.email }}</p>
             </div>
@@ -396,13 +396,13 @@
             <Icon v-else name="checkCircle" size="md" class="flex-shrink-0 text-green-500" />
             <div>
               <p class="text-sm font-medium text-green-700 dark:text-green-400">
-                {{ t('setup.status.completed') }}
+                {{ '安装完成！' }}
               </p>
               <p class="mt-1 text-sm text-green-600 dark:text-green-500">
                 {{
                   serviceReady
-                    ? t('setup.status.redirecting')
-                    : t('setup.status.restarting')
+                    ? '正在跳转到登录页面...'
+                    : '服务正在重启，请稍候...'
                 }}
               </p>
             </div>
@@ -417,7 +417,7 @@
             class="btn btn-secondary"
           >
             <Icon name="chevronLeft" size="sm" class="mr-2" :stroke-width="2" />
-            {{ t('common.back') }}
+            {{ '返回' }}
           </button>
           <div v-else></div>
 
@@ -427,7 +427,7 @@
             :disabled="!canProceed"
             class="btn btn-primary"
           >
-            {{ t('common.next') }}
+            {{ '下一步' }}
             <Icon name="chevronRight" size="sm" class="ml-2" :stroke-width="2" />
           </button>
 
@@ -457,7 +457,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ installing ? t('setup.status.installing') : t('setup.status.completeInstallation') }}
+            {{ installing ? '安装中...' : '完成安装' }}
           </button>
         </div>
       </div>
@@ -467,18 +467,15 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { testDatabase, testRedis, install, type InstallRequest } from '@/api/setup'
 import Select from '@/components/common/Select.vue'
 import Icon from '@/components/icons/Icon.vue'
 
-const { t } = useI18n()
-
 const steps = computed(() => [
-  { id: 'database', title: t('setup.database.title') },
-  { id: 'redis', title: t('setup.redis.title') },
-  { id: 'admin', title: t('setup.admin.title') },
-  { id: 'complete', title: t('setup.ready.title') }
+  { id: 'database', title: '数据库配置' },
+  { id: 'redis', title: 'Redis 配置' },
+  { id: 'admin', title: '管理员账户' },
+  { id: 'complete', title: '准备安装' }
 ])
 
 const currentStep = ref(0)
@@ -641,6 +638,6 @@ async function waitForServiceRestart() {
 
   // If we reach here, service didn't restart in time
   // Show a message to refresh manually
-  errorMessage.value = t('setup.status.timeout')
+  errorMessage.value = '服务重启时间超出预期，请手动刷新页面。'
 }
 </script>

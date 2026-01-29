@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { opsAPI, type OpsAccountAvailabilityStatsResponse, type OpsConcurrencyStatsResponse } from '@/api/admin/ops'
 
 interface Props {
@@ -13,8 +12,6 @@ const props = withDefaults(defineProps<Props>(), {
   platformFilter: '',
   groupIdFilter: null
 })
-
-const { t } = useI18n()
 
 const loading = ref(false)
 const errorMessage = ref('')
@@ -210,9 +207,9 @@ const displayRows = computed(() => {
 })
 
 const displayTitle = computed(() => {
-  if (displayDimension.value === 'account') return t('admin.ops.concurrency.byAccount')
-  if (displayDimension.value === 'group') return t('admin.ops.concurrency.byGroup')
-  return t('admin.ops.concurrency.byPlatform')
+  if (displayDimension.value === 'account') return '按账号'
+  if (displayDimension.value === 'group') return '按分组'
+  return '按平台'
 })
 
 async function loadData() {
@@ -227,7 +224,7 @@ async function loadData() {
     availability.value = availData
   } catch (err: any) {
     console.error('[OpsConcurrencyCard] Failed to load data', err)
-    errorMessage.value = err?.response?.data?.detail || t('admin.ops.concurrency.loadFailed')
+    errorMessage.value = err?.response?.data?.detail || '加载并发数据失败'
   } finally {
     loading.value = false
   }
@@ -288,12 +285,12 @@ watch(
         <svg class="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
-        {{ t('admin.ops.concurrency.title') }}
+        {{ '并发 / 排队' }}
       </h3>
       <button
         class="flex items-center gap-1 rounded-lg bg-gray-100 px-2 py-1 text-[11px] font-semibold text-gray-700 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
         :disabled="loading"
-        :title="t('common.refresh')"
+        :title="'刷新'"
         @click="loadData"
       >
         <svg class="h-3 w-3" :class="{ 'animate-spin': loading }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -312,7 +309,7 @@ watch(
       v-if="!realtimeEnabled"
       class="flex flex-1 items-center justify-center rounded-xl border border-dashed border-gray-200 text-sm text-gray-500 dark:border-dark-700 dark:text-gray-400"
     >
-      {{ t('admin.ops.concurrency.disabledHint') }}
+      {{ '已在设置中关闭实时监控。' }}
     </div>
 
     <!-- 数据展示区域 -->
@@ -323,13 +320,13 @@ watch(
           {{ displayTitle }}
         </span>
         <span class="text-[10px] text-gray-500 dark:text-gray-400">
-          {{ t('admin.ops.concurrency.totalRows', { count: displayRows.length }) }}
+          {{ `共 ${displayRows.length} 项` }}
         </span>
       </div>
 
       <!-- 空状态 -->
       <div v-if="displayRows.length === 0" class="flex flex-1 items-center justify-center text-sm text-gray-500 dark:text-gray-400">
-        {{ t('admin.ops.concurrency.empty') }}
+        {{ '暂无数据' }}
       </div>
 
       <!-- 汇总视图（平台/分组） -->
@@ -384,7 +381,7 @@ watch(
               v-if="row.rate_limited_accounts > 0"
               class="rounded-full bg-amber-100 px-1.5 py-0.5 font-semibold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
             >
-              {{ t('admin.ops.concurrency.rateLimited', { count: row.rate_limited_accounts }) }}
+              {{ `限流 ${row.rate_limited_accounts}` }}
             </span>
 
             <!-- 异常账号 -->
@@ -392,7 +389,7 @@ watch(
               v-if="row.error_accounts > 0"
               class="rounded-full bg-red-100 px-1.5 py-0.5 font-semibold text-red-700 dark:bg-red-900/30 dark:text-red-400"
             >
-              {{ t('admin.ops.concurrency.errorAccounts', { count: row.error_accounts }) }}
+              {{ `异常 ${row.error_accounts}` }}
             </span>
 
             <!-- 等待队列 -->
@@ -400,7 +397,7 @@ watch(
               v-if="row.waiting_in_queue > 0"
               class="rounded-full bg-purple-100 px-1.5 py-0.5 font-semibold text-purple-700 dark:bg-purple-900/30 dark:text-purple-400"
             >
-              {{ t('admin.ops.concurrency.queued', { count: row.waiting_in_queue }) }}
+              {{ `队列 ${row.waiting_in_queue}` }}
             </span>
           </div>
         </div>
@@ -430,7 +427,7 @@ watch(
                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                {{ t('admin.ops.accountAvailability.available') }}
+                {{ '可用' }}
               </span>
               <span
                 v-else-if="row.is_rate_limited"
@@ -462,13 +459,13 @@ watch(
                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                {{ t('admin.ops.accountAvailability.accountError') }}
+                {{ '异常' }}
               </span>
               <span
                 v-else
                 class="inline-flex items-center gap-1 rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-400"
               >
-                {{ t('admin.ops.accountAvailability.unavailable') }}
+                {{ '不可用' }}
               </span>
             </div>
           </div>
@@ -481,7 +478,7 @@ watch(
           <!-- 等待队列 -->
           <div v-if="row.waiting_in_queue > 0" class="mt-1.5 flex justify-end">
             <span class="rounded-full bg-purple-100 px-1.5 py-0.5 text-[10px] font-semibold text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
-              {{ t('admin.ops.concurrency.queued', { count: row.waiting_in_queue }) }}
+              {{ `队列 ${row.waiting_in_queue}` }}
             </span>
           </div>
         </div>

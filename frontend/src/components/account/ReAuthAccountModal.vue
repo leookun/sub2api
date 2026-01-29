@@ -1,7 +1,7 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('admin.accounts.reAuthorizeAccount')"
+    :title="'重新授权账号'"
     width="normal"
     @close="handleClose"
   >
@@ -32,12 +32,12 @@
             <span class="text-sm text-gray-500 dark:text-gray-400">
               {{
                 isOpenAI
-                  ? t('admin.accounts.openaiAccount')
+                  ? 'OpenAI 账号'
                   : isGemini
-                    ? t('admin.accounts.geminiAccount')
+                    ? 'Gemini 账号'
                     : isAntigravity
-                      ? t('admin.accounts.antigravityAccount')
-                      : t('admin.accounts.claudeCodeAccount')
+                      ? 'Antigravity 账号'
+                      : 'Claude Code 账号'
               }}
             </span>
           </div>
@@ -46,7 +46,7 @@
 
       <!-- Add Method Selection (Claude only) -->
       <fieldset v-if="isAnthropic" class="border-0 p-0">
-        <legend class="input-label">{{ t('admin.accounts.oauth.authMethod') }}</legend>
+        <legend class="input-label">{{ '授权方式' }}</legend>
         <div class="mt-2 flex gap-4">
           <label class="flex cursor-pointer items-center">
             <input
@@ -56,7 +56,7 @@
               class="mr-2 text-primary-600 focus:ring-primary-500"
             />
             <span class="text-sm text-gray-700 dark:text-gray-300">{{
-              t('admin.accounts.types.oauth')
+              'OAuth'
             }}</span>
           </label>
           <label class="flex cursor-pointer items-center">
@@ -67,7 +67,7 @@
               class="mr-2 text-primary-600 focus:ring-primary-500"
             />
             <span class="text-sm text-gray-700 dark:text-gray-300">{{
-              t('admin.accounts.setupTokenLongLived')
+              'Setup Token（长期有效）'
             }}</span>
           </label>
         </div>
@@ -76,7 +76,7 @@
       <!-- Gemini OAuth Type Display (read-only) -->
       <div v-if="isGemini" class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-dark-600 dark:bg-dark-700">
         <div class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-          {{ t('admin.accounts.oauth.gemini.oauthTypeLabel') }}
+          {{ 'OAuth 类型' }}
         </div>
         <div class="flex items-center gap-3">
           <div
@@ -99,8 +99,8 @@
                 geminiOAuthType === 'google_one'
                   ? 'Google One'
                   : geminiOAuthType === 'code_assist'
-                    ? t('admin.accounts.gemini.oauthType.builtInTitle')
-                    : t('admin.accounts.gemini.oauthType.customTitle')
+                    ? '内置授权（Gemini CLI / Code Assist）'
+                    : '自定义授权（AI Studio OAuth）'
               }}
             </span>
             <span class="text-xs text-gray-500 dark:text-gray-400">
@@ -108,8 +108,8 @@
                 geminiOAuthType === 'google_one'
                   ? '个人账号'
                   : geminiOAuthType === 'code_assist'
-                    ? t('admin.accounts.gemini.oauthType.builtInDesc')
-                    : t('admin.accounts.gemini.oauthType.customDesc')
+                    ? '使用 Google 内置客户端 ID，无需管理员配置。'
+                    : '使用管理员预设的 OAuth 客户端，适合组织管理。'
               }}
             </span>
           </div>
@@ -127,7 +127,7 @@
         :show-proxy-warning="isAnthropic"
         :show-cookie-option="isAnthropic"
         :allow-multiple="false"
-        :method-label="t('admin.accounts.inputMethod')"
+        :method-label="'输入方式'"
         :platform="isOpenAI ? 'openai' : isGemini ? 'gemini' : isAntigravity ? 'antigravity' : 'anthropic'"
         :show-project-id="isGemini && geminiOAuthType === 'code_assist'"
         @generate-url="handleGenerateUrl"
@@ -139,7 +139,7 @@
     <template #footer>
       <div v-if="account" class="flex justify-between gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ t('common.cancel') }}
+          {{ '取消' }}
         </button>
         <button
           v-if="isManualInputMethod"
@@ -170,8 +170,8 @@
           </svg>
           {{
             currentLoading
-              ? t('admin.accounts.oauth.verifying')
-              : t('admin.accounts.oauth.completeAuth')
+              ? '验证中...'
+              : '完成授权'
           }}
         </button>
       </div>
@@ -181,7 +181,6 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import {
@@ -220,8 +219,6 @@ const emit = defineEmits<{
 }>()
 
 const appStore = useAppStore()
-const { t } = useI18n()
-
 // OAuth composables
 const claudeOAuth = useAccountOAuth()
 const openaiOAuth = useOpenAIOAuth()
@@ -372,11 +369,11 @@ const handleExchangeCode = async () => {
       // Clear error status after successful re-authorization
       await adminAPI.accounts.clearError(props.account.id)
 
-      appStore.showSuccess(t('admin.accounts.reAuthorizedSuccess'))
+      appStore.showSuccess('账号重新授权成功')
       emit('reauthorized')
       handleClose()
     } catch (error: any) {
-      openaiOAuth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
+      openaiOAuth.error.value = error.response?.data?.detail || '授权失败'
       appStore.showError(openaiOAuth.error.value)
     }
   } else if (isGemini.value) {
@@ -405,11 +402,11 @@ const handleExchangeCode = async () => {
         credentials
       })
       await adminAPI.accounts.clearError(props.account.id)
-      appStore.showSuccess(t('admin.accounts.reAuthorizedSuccess'))
+      appStore.showSuccess('账号重新授权成功')
       emit('reauthorized')
       handleClose()
     } catch (error: any) {
-      geminiOAuth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
+      geminiOAuth.error.value = error.response?.data?.detail || '授权失败'
       appStore.showError(geminiOAuth.error.value)
     }
   } else if (isAntigravity.value) {
@@ -437,11 +434,11 @@ const handleExchangeCode = async () => {
         credentials
       })
       await adminAPI.accounts.clearError(props.account.id)
-      appStore.showSuccess(t('admin.accounts.reAuthorizedSuccess'))
+      appStore.showSuccess('账号重新授权成功')
       emit('reauthorized')
       handleClose()
     } catch (error: any) {
-      antigravityOAuth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
+      antigravityOAuth.error.value = error.response?.data?.detail || '授权失败'
       appStore.showError(antigravityOAuth.error.value)
     }
   } else {
@@ -477,11 +474,11 @@ const handleExchangeCode = async () => {
       // Clear error status after successful re-authorization
       await adminAPI.accounts.clearError(props.account.id)
 
-      appStore.showSuccess(t('admin.accounts.reAuthorizedSuccess'))
+      appStore.showSuccess('账号重新授权成功')
       emit('reauthorized')
       handleClose()
     } catch (error: any) {
-      claudeOAuth.error.value = error.response?.data?.detail || t('admin.accounts.oauth.authFailed')
+      claudeOAuth.error.value = error.response?.data?.detail || '授权失败'
       appStore.showError(claudeOAuth.error.value)
     } finally {
       claudeOAuth.loading.value = false
@@ -520,12 +517,12 @@ const handleCookieAuth = async (sessionKey: string) => {
     // Clear error status after successful re-authorization
     await adminAPI.accounts.clearError(props.account.id)
 
-    appStore.showSuccess(t('admin.accounts.reAuthorizedSuccess'))
+    appStore.showSuccess('账号重新授权成功')
     emit('reauthorized')
     handleClose()
   } catch (error: any) {
     claudeOAuth.error.value =
-      error.response?.data?.detail || t('admin.accounts.oauth.cookieAuthFailed')
+      error.response?.data?.detail || 'Cookie 授权失败'
   } finally {
     claudeOAuth.loading.value = false
   }

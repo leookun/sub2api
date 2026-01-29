@@ -25,14 +25,14 @@
                     showColumnDropdown = false
                   "
                   class="btn btn-secondary px-2 md:px-3"
-                  :title="t('admin.accounts.autoRefresh')"
+                  :title="'自动刷新'"
                 >
                   <Icon name="refresh" size="sm" :class="[autoRefreshEnabled ? 'animate-spin' : '']" />
                   <span class="hidden md:inline">
                     {{
                       autoRefreshEnabled
-                        ? t('admin.accounts.autoRefreshCountdown', { seconds: autoRefreshCountdown })
-                        : t('admin.accounts.autoRefresh')
+                        ? `自动刷新：${autoRefreshCountdown}s`
+                        : '自动刷新'
                     }}
                   </span>
                 </button>
@@ -45,7 +45,7 @@
                       @click="setAutoRefreshEnabled(!autoRefreshEnabled)"
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                     >
-                      <span>{{ t('admin.accounts.enableAutoRefresh') }}</span>
+                      <span>{{ '启用自动刷新' }}</span>
                       <Icon v-if="autoRefreshEnabled" name="check" size="sm" class="text-primary-500" />
                     </button>
                     <div class="my-1 border-t border-gray-100 dark:border-gray-700"></div>
@@ -70,12 +70,12 @@
                     showAutoRefreshDropdown = false
                   "
                   class="btn btn-secondary px-2 md:px-3"
-                  :title="t('admin.users.columnSettings')"
+                  :title="'列设置'"
                 >
                   <svg class="h-4 w-4 md:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
                   </svg>
-                  <span class="hidden md:inline">{{ t('admin.users.columnSettings') }}</span>
+                  <span class="hidden md:inline">{{ '列设置' }}</span>
                 </button>
                 <!-- Dropdown menu -->
                 <div
@@ -139,7 +139,7 @@
             <AccountStatusIndicator :account="row" @show-temp-unsched="handleShowTempUnsched" />
           </template>
           <template #cell-schedulable="{ row }">
-            <button @click="handleToggleSchedulable(row)" :disabled="togglingSchedulable === row.id" class="relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-dark-800" :class="[row.schedulable ? 'bg-primary-500 hover:bg-primary-600' : 'bg-gray-200 hover:bg-gray-300 dark:bg-dark-600 dark:hover:bg-dark-500']" :title="row.schedulable ? t('admin.accounts.schedulableEnabled') : t('admin.accounts.schedulableDisabled')">
+            <button @click="handleToggleSchedulable(row)" :disabled="togglingSchedulable === row.id" class="relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-dark-800" :class="[row.schedulable ? 'bg-primary-500 hover:bg-primary-600' : 'bg-gray-200 hover:bg-gray-300 dark:bg-dark-600 dark:hover:bg-dark-500']" :title="row.schedulable ? '调度已开启' : '调度已关闭'">
               <span class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out" :class="[row.schedulable ? 'translate-x-4' : 'translate-x-0']" />
             </button>
           </template>
@@ -180,13 +180,13 @@
                   v-if="isExpired(value)"
                   class="inline-flex items-center rounded-md bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
                 >
-                  {{ t('admin.accounts.expired') }}
+                  {{ '已过期' }}
                 </span>
                 <span
                   v-if="row.auto_pause_on_expired && value"
                   class="inline-flex items-center rounded-md bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
                 >
-                  {{ t('admin.accounts.autoPauseOnExpired') }}
+                  {{ '过期自动暂停调度' }}
                 </span>
               </div>
             </div>
@@ -195,15 +195,15 @@
             <div class="flex items-center gap-1">
               <button @click="handleEdit(row)" class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
-                <span class="text-xs">{{ t('common.edit') }}</span>
+                <span class="text-xs">{{ '编辑' }}</span>
               </button>
               <button @click="handleDelete(row)" class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
-                <span class="text-xs">{{ t('common.delete') }}</span>
+                <span class="text-xs">{{ '删除' }}</span>
               </button>
               <button @click="openMenu(row, $event)" class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-dark-700 dark:hover:text-white">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
-                <span class="text-xs">{{ t('common.more') }}</span>
+                <span class="text-xs">{{ '更多' }}</span>
               </button>
             </div>
           </template>
@@ -220,14 +220,13 @@
     <SyncFromCrsModal :show="showSync" @close="showSync = false" @synced="reload" />
     <BulkEditAccountModal :show="showBulkEdit" :account-ids="selIds" :proxies="proxies" :groups="groups" @close="showBulkEdit = false" @updated="handleBulkUpdated" />
     <TempUnschedStatusModal :show="showTempUnsched" :account="tempUnschedAcc" @close="showTempUnsched = false" @reset="handleTempUnschedReset" />
-    <ConfirmDialog :show="showDeleteDialog" :title="t('admin.accounts.deleteAccount')" :message="t('admin.accounts.deleteConfirm', { name: deletingAcc?.name })" :confirm-text="t('common.delete')" :cancel-text="t('common.cancel')" :danger="true" @confirm="confirmDelete" @cancel="showDeleteDialog = false" />
+    <ConfirmDialog :show="showDeleteDialog" :title="'删除账号'" :message="`确定要删除账号 '${deletingAcc?.name}' 吗？此操作无法撤销。`" :confirm-text="'删除'" :cancel-text="'取消'" :danger="true" @confirm="confirmDelete" @cancel="showDeleteDialog = false" />
   </AppLayout>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { useIntervalFn } from '@vueuse/core'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 import { adminAPI } from '@/api/admin'
@@ -255,7 +254,6 @@ import Icon from '@/components/icons/Icon.vue'
 import { formatDateTime, formatRelativeTime } from '@/utils/format'
 import type { Account, Proxy, AdminGroup } from '@/types'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const authStore = useAuthStore()
 
@@ -300,10 +298,10 @@ const autoRefreshIntervalSeconds = ref<(typeof autoRefreshIntervals)[number]>(30
 const autoRefreshCountdown = ref(0)
 
 const autoRefreshIntervalLabel = (sec: number) => {
-  if (sec === 5) return t('admin.accounts.refreshInterval5s')
-  if (sec === 10) return t('admin.accounts.refreshInterval10s')
-  if (sec === 15) return t('admin.accounts.refreshInterval15s')
-  if (sec === 30) return t('admin.accounts.refreshInterval30s')
+  if (sec === 5) return '5 秒'
+  if (sec === 10) return '10 秒'
+  if (sec === 15) return '15 秒'
+  if (sec === 30) return '30 秒'
   return `${sec}s`
 }
 
@@ -442,25 +440,25 @@ const { pause: pauseAutoRefresh, resume: resumeAutoRefresh } = useIntervalFn(
 const allColumns = computed(() => {
   const c = [
     { key: 'select', label: '', sortable: false },
-    { key: 'name', label: t('admin.accounts.columns.name'), sortable: true },
-    { key: 'platform_type', label: t('admin.accounts.columns.platformType'), sortable: false },
-    { key: 'capacity', label: t('admin.accounts.columns.capacity'), sortable: false },
-    { key: 'status', label: t('admin.accounts.columns.status'), sortable: true },
-    { key: 'schedulable', label: t('admin.accounts.columns.schedulable'), sortable: true },
-    { key: 'today_stats', label: t('admin.accounts.columns.todayStats'), sortable: false }
+    { key: 'name', label: '名称', sortable: true },
+    { key: 'platform_type', label: '平台/类型', sortable: false },
+    { key: 'capacity', label: '容量', sortable: false },
+    { key: 'status', label: '状态', sortable: true },
+    { key: 'schedulable', label: '调度', sortable: true },
+    { key: 'today_stats', label: '今日统计', sortable: false }
   ]
   if (!authStore.isSimpleMode) {
-    c.push({ key: 'groups', label: t('admin.accounts.columns.groups'), sortable: false })
+    c.push({ key: 'groups', label: '分组', sortable: false })
   }
   c.push(
-    { key: 'usage', label: t('admin.accounts.columns.usageWindows'), sortable: false },
-    { key: 'proxy', label: t('admin.accounts.columns.proxy'), sortable: false },
-    { key: 'priority', label: t('admin.accounts.columns.priority'), sortable: true },
-    { key: 'rate_multiplier', label: t('admin.accounts.columns.billingRateMultiplier'), sortable: true },
-    { key: 'last_used_at', label: t('admin.accounts.columns.lastUsed'), sortable: true },
-    { key: 'expires_at', label: t('admin.accounts.columns.expiresAt'), sortable: true },
-    { key: 'notes', label: t('admin.accounts.columns.notes'), sortable: false },
-    { key: 'actions', label: t('admin.accounts.columns.actions'), sortable: false }
+    { key: 'usage', label: '用量窗口', sortable: false },
+    { key: 'proxy', label: '代理', sortable: false },
+    { key: 'priority', label: '优先级', sortable: true },
+    { key: 'rate_multiplier', label: '账号倍率', sortable: true },
+    { key: 'last_used_at', label: '最近使用', sortable: true },
+    { key: 'expires_at', label: '过期时间', sortable: true },
+    { key: 'notes', label: '备注', sortable: false },
+    { key: 'actions', label: '操作', sortable: false }
   )
   return c
 })
@@ -530,7 +528,7 @@ const openMenu = (a: Account, e: MouseEvent) => {
 }
 const toggleSel = (id: number) => { const i = selIds.value.indexOf(id); if(i === -1) selIds.value.push(id); else selIds.value.splice(i, 1) }
 const selectPage = () => { selIds.value = [...new Set([...selIds.value, ...accounts.value.map(a => a.id)])] }
-const handleBulkDelete = async () => { if(!confirm(t('common.confirm'))) return; try { await Promise.all(selIds.value.map(id => adminAPI.accounts.delete(id))); selIds.value = []; reload() } catch (error) { console.error('Failed to bulk delete accounts:', error) } }
+const handleBulkDelete = async () => { if(!confirm('确认')) return; try { await Promise.all(selIds.value.map(id => adminAPI.accounts.delete(id))); selIds.value = []; reload() } catch (error) { console.error('Failed to bulk delete accounts:', error) } }
 const updateSchedulableInList = (accountIds: number[], schedulable: boolean) => {
   if (accountIds.length === 0) return
   const idSet = new Set(accountIds)
@@ -602,7 +600,7 @@ const handleBulkToggleSchedulable = async (schedulable: boolean) => {
     const result = await adminAPI.accounts.bulkUpdate(accountIds, { schedulable })
     const { successIds, failedIds, successCount, failedCount, hasIds, hasCounts } = normalizeBulkSchedulableResult(result, accountIds)
     if (!hasIds && !hasCounts) {
-      appStore.showError(t('admin.accounts.bulkSchedulableResultUnknown'))
+      appStore.showError('批量调度结果不完整，请稍后重试或刷新列表')
       selIds.value = accountIds
       load().catch((error) => {
         console.error('Failed to refresh accounts:', error)
@@ -614,14 +612,14 @@ const handleBulkToggleSchedulable = async (schedulable: boolean) => {
     }
     if (successCount > 0 && failedCount === 0) {
       const message = schedulable
-        ? t('admin.accounts.bulkSchedulableEnabled', { count: successCount })
-        : t('admin.accounts.bulkSchedulableDisabled', { count: successCount })
+        ? `成功启用 ${successCount} 个账号的调度`
+        : `成功停止 ${successCount} 个账号的调度`
       appStore.showSuccess(message)
     }
     if (failedCount > 0) {
       const message = hasCounts || hasIds
-        ? t('admin.accounts.bulkSchedulablePartial', { success: successCount, failed: failedCount })
-        : t('admin.accounts.bulkSchedulableResultUnknown')
+        ? `部分调度更新成功：成功 ${successCount} 个，失败 ${failedCount} 个`
+        : '批量调度结果不完整，请稍后重试或刷新列表'
       appStore.showError(message)
       selIds.value = failedIds.length > 0 ? failedIds : accountIds
     } else {
@@ -629,7 +627,7 @@ const handleBulkToggleSchedulable = async (schedulable: boolean) => {
     }
   } catch (error) {
     console.error('Failed to bulk toggle schedulable:', error)
-    appStore.showError(t('common.error'))
+    appStore.showError('错误')
   }
 }
 const handleBulkUpdated = () => { showBulkEdit.value = false; selIds.value = []; reload() }
@@ -640,8 +638,8 @@ const handleTest = (a: Account) => { testingAcc.value = a; showTest.value = true
 const handleViewStats = (a: Account) => { statsAcc.value = a; showStats.value = true }
 const handleReAuth = (a: Account) => { reAuthAcc.value = a; showReAuth.value = true }
 const handleRefresh = async (a: Account) => { try { await adminAPI.accounts.refreshCredentials(a.id); load() } catch (error) { console.error('Failed to refresh credentials:', error) } }
-const handleResetStatus = async (a: Account) => { try { await adminAPI.accounts.clearError(a.id); appStore.showSuccess(t('common.success')); load() } catch (error) { console.error('Failed to reset status:', error) } }
-const handleClearRateLimit = async (a: Account) => { try { await adminAPI.accounts.clearRateLimit(a.id); appStore.showSuccess(t('common.success')); load() } catch (error) { console.error('Failed to clear rate limit:', error) } }
+const handleResetStatus = async (a: Account) => { try { await adminAPI.accounts.clearError(a.id); appStore.showSuccess('成功'); load() } catch (error) { console.error('Failed to reset status:', error) } }
+const handleClearRateLimit = async (a: Account) => { try { await adminAPI.accounts.clearRateLimit(a.id); appStore.showSuccess('成功'); load() } catch (error) { console.error('Failed to clear rate limit:', error) } }
 const handleDelete = (a: Account) => { deletingAcc.value = a; showDeleteDialog.value = true }
 const confirmDelete = async () => { if(!deletingAcc.value) return; try { await adminAPI.accounts.delete(deletingAcc.value.id); showDeleteDialog.value = false; deletingAcc.value = null; reload() } catch (error) { console.error('Failed to delete account:', error) } }
 const handleToggleSchedulable = async (a: Account) => {
@@ -652,7 +650,7 @@ const handleToggleSchedulable = async (a: Account) => {
     updateSchedulableInList([a.id], updated?.schedulable ?? nextSchedulable)
   } catch (error) {
     console.error('Failed to toggle schedulable:', error)
-    appStore.showError(t('admin.accounts.failedToToggleSchedulable'))
+    appStore.showError('切换调度状态失败')
   } finally {
     togglingSchedulable.value = null
   }

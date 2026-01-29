@@ -1,7 +1,7 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('admin.accounts.editAccount')"
+    :title="'编辑账号'"
     width="normal"
     @close="handleClose"
   >
@@ -12,24 +12,24 @@
       class="space-y-5"
     >
       <div>
-        <label class="input-label">{{ t('common.name') }}</label>
+        <label class="input-label">{{ '名称' }}</label>
         <input v-model="form.name" type="text" required class="input" data-tour="edit-account-form-name" />
       </div>
       <div>
-        <label class="input-label">{{ t('admin.accounts.notes') }}</label>
+        <label class="input-label">{{ '备注' }}</label>
         <textarea
           v-model="form.notes"
           rows="3"
           class="input"
-          :placeholder="t('admin.accounts.notesPlaceholder')"
+          :placeholder="'请输入备注'"
         ></textarea>
-        <p class="input-hint">{{ t('admin.accounts.notesHint') }}</p>
+        <p class="input-hint">{{ '备注可选' }}</p>
       </div>
 
       <!-- API Key fields (only for apikey type) -->
       <div v-if="account.type === 'apikey'" class="space-y-4">
         <div>
-          <label class="input-label">{{ t('admin.accounts.baseUrl') }}</label>
+          <label class="input-label">{{ 'Base URL' }}</label>
           <input
             v-model="editBaseUrl"
             type="text"
@@ -45,7 +45,7 @@
           <p class="input-hint">{{ baseUrlHint }}</p>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.accounts.apiKey') }}</label>
+          <label class="input-label">{{ 'API Key' }}</label>
           <input
             v-model="editApiKey"
             type="password"
@@ -58,12 +58,12 @@
                   : 'sk-ant-...'
             "
           />
-          <p class="input-hint">{{ t('admin.accounts.leaveEmptyToKeep') }}</p>
+          <p class="input-hint">{{ '留空以保持当前密钥' }}</p>
         </div>
 
         <!-- Model Restriction Section (不适用于 Gemini) -->
         <div v-if="account.platform !== 'gemini'" class="border-t border-gray-200 pt-4 dark:border-dark-600">
-          <label class="input-label">{{ t('admin.accounts.modelRestriction') }}</label>
+          <label class="input-label">{{ '模型限制（可选）' }}</label>
 
           <!-- Mode Toggle -->
           <div class="mb-4 flex gap-2">
@@ -90,7 +90,7 @@
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              {{ t('admin.accounts.modelWhitelist') }}
+              {{ '模型白名单' }}
             </button>
             <button
               type="button"
@@ -115,7 +115,7 @@
                   d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
                 />
               </svg>
-              {{ t('admin.accounts.modelMapping') }}
+              {{ '模型映射' }}
             </button>
           </div>
 
@@ -123,9 +123,9 @@
           <div v-if="modelRestrictionMode === 'whitelist'">
             <ModelWhitelistSelector v-model="allowedModels" :platform="account?.platform || 'anthropic'" />
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.selectedModels', { count: allowedModels.length }) }}
+              {{ `已选择 ${allowedModels.length} 个模型` }}
               <span v-if="allowedModels.length === 0">{{
-                t('admin.accounts.supportsAllModels')
+                '（支持所有模型）'
               }}</span>
             </p>
           </div>
@@ -147,7 +147,7 @@
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                {{ t('admin.accounts.mapRequestModels') }}
+                {{ '将请求模型映射到实际模型。左边是请求的模型，右边是发送到 API 的实际模型。' }}
               </p>
             </div>
 
@@ -162,7 +162,7 @@
                   v-model="mapping.from"
                   type="text"
                   class="input flex-1"
-                  :placeholder="t('admin.accounts.requestModel')"
+                  :placeholder="'请求模型'"
                 />
                 <svg
                   class="h-4 w-4 flex-shrink-0 text-gray-400"
@@ -181,7 +181,7 @@
                   v-model="mapping.to"
                   type="text"
                   class="input flex-1"
-                  :placeholder="t('admin.accounts.actualModel')"
+                  :placeholder="'实际模型'"
                 />
                 <button
                   type="button"
@@ -218,7 +218,7 @@
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              {{ t('admin.accounts.addMapping') }}
+              {{ '添加映射' }}
             </button>
 
             <!-- Quick Add Buttons -->
@@ -240,9 +240,9 @@
         <div class="border-t border-gray-200 pt-4 dark:border-dark-600">
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.customErrorCodes') }}</label>
+              <label class="input-label mb-0">{{ '自定义错误码' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.customErrorCodesHint') }}
+                {{ '仅对选中的错误码停止调度' }}
               </p>
             </div>
             <button
@@ -266,7 +266,7 @@
             <div class="rounded-lg bg-amber-50 p-3 dark:bg-amber-900/20">
               <p class="text-xs text-amber-700 dark:text-amber-400">
                 <Icon name="exclamationTriangle" size="sm" class="mr-1 inline" :stroke-width="2" />
-                {{ t('admin.accounts.customErrorCodesWarning') }}
+                {{ '仅选中的错误码会停止调度，其他错误将返回 500。' }}
               </p>
             </div>
 
@@ -296,7 +296,7 @@
                 min="100"
                 max="599"
                 class="input flex-1"
-                :placeholder="t('admin.accounts.enterErrorCode')"
+                :placeholder="'输入错误码 (100-599)'"
                 @keyup.enter="addCustomErrorCode"
               />
               <button type="button" @click="addCustomErrorCode" class="btn btn-secondary px-3">
@@ -328,7 +328,7 @@
                 </button>
               </span>
               <span v-if="selectedErrorCodes.length === 0" class="text-xs text-gray-400">
-                {{ t('admin.accounts.noneSelectedUsesDefault') }}
+                {{ '未选择（使用默认策略）' }}
               </span>
             </div>
           </div>
@@ -353,10 +353,10 @@
               </svg>
               <div>
                 <p class="text-sm font-medium text-blue-800 dark:text-blue-300">
-                  {{ t('admin.accounts.gemini.modelPassthrough') }}
+                  {{ 'Gemini 直接转发模型' }}
                 </p>
                 <p class="mt-1 text-xs text-blue-700 dark:text-blue-400">
-                  {{ t('admin.accounts.gemini.modelPassthroughDesc') }}
+                  {{ '所有模型请求将直接转发至 Gemini API，不进行模型限制或映射。' }}
                 </p>
               </div>
             </div>
@@ -368,9 +368,9 @@
       <div class="border-t border-gray-200 pt-4 dark:border-dark-600 space-y-4">
         <div class="mb-3 flex items-center justify-between">
           <div>
-            <label class="input-label mb-0">{{ t('admin.accounts.tempUnschedulable.title') }}</label>
+            <label class="input-label mb-0">{{ '临时不可调度' }}</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.tempUnschedulable.hint') }}
+              {{ '当错误码与关键词同时匹配时，账号会在指定时间内被临时禁用。' }}
             </p>
           </div>
           <button
@@ -394,7 +394,7 @@
           <div class="rounded-lg bg-blue-50 p-3 dark:bg-blue-900/20">
             <p class="text-xs text-blue-700 dark:text-blue-400">
               <Icon name="exclamationTriangle" size="sm" class="mr-1 inline" :stroke-width="2" />
-              {{ t('admin.accounts.tempUnschedulable.notice') }}
+              {{ '规则按顺序匹配，需同时满足错误码与关键词。' }}
             </p>
           </div>
 
@@ -418,7 +418,7 @@
             >
               <div class="mb-2 flex items-center justify-between">
                 <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ t('admin.accounts.tempUnschedulable.ruleIndex', { index: index + 1 }) }}
+                  {{ `规则 #${index + 1}` }}
                 </span>
                 <div class="flex items-center gap-2">
                   <button
@@ -451,43 +451,43 @@
 
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
-                  <label class="input-label">{{ t('admin.accounts.tempUnschedulable.errorCode') }}</label>
+                  <label class="input-label">{{ '错误码' }}</label>
                   <input
                     v-model.number="rule.error_code"
                     type="number"
                     min="100"
                     max="599"
                     class="input"
-                    :placeholder="t('admin.accounts.tempUnschedulable.errorCodePlaceholder')"
+                    :placeholder="'例如 429'"
                   />
                 </div>
                 <div>
-                  <label class="input-label">{{ t('admin.accounts.tempUnschedulable.durationMinutes') }}</label>
+                  <label class="input-label">{{ '持续时间（分钟）' }}</label>
                   <input
                     v-model.number="rule.duration_minutes"
                     type="number"
                     min="1"
                     class="input"
-                    :placeholder="t('admin.accounts.tempUnschedulable.durationPlaceholder')"
+                    :placeholder="'例如 30'"
                   />
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="input-label">{{ t('admin.accounts.tempUnschedulable.keywords') }}</label>
+                  <label class="input-label">{{ '关键词' }}</label>
                   <input
                     v-model="rule.keywords"
                     type="text"
                     class="input"
-                    :placeholder="t('admin.accounts.tempUnschedulable.keywordsPlaceholder')"
+                    :placeholder="'例如 overloaded, too many requests'"
                   />
-                  <p class="input-hint">{{ t('admin.accounts.tempUnschedulable.keywordsHint') }}</p>
+                  <p class="input-hint">{{ '多个关键词用逗号分隔，匹配时必须命中其中之一。' }}</p>
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="input-label">{{ t('admin.accounts.tempUnschedulable.description') }}</label>
+                  <label class="input-label">{{ '描述' }}</label>
                   <input
                     v-model="rule.description"
                     type="text"
                     class="input"
-                    :placeholder="t('admin.accounts.tempUnschedulable.descriptionPlaceholder')"
+                    :placeholder="'可选，便于记忆规则用途'"
                   />
                 </div>
               </div>
@@ -507,7 +507,7 @@
             >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            {{ t('admin.accounts.tempUnschedulable.addRule') }}
+            {{ '添加规则' }}
           </button>
         </div>
       </div>
@@ -520,10 +520,10 @@
         <div class="flex items-center justify-between">
           <div>
             <label class="input-label mb-0">{{
-              t('admin.accounts.interceptWarmupRequests')
+              '拦截预热请求'
             }}</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.interceptWarmupRequestsDesc') }}
+              {{ '启用后，标题生成等预热请求将返回 mock 响应，不消耗上游 token' }}
             </p>
           </div>
           <button
@@ -545,17 +545,17 @@
       </div>
 
       <div>
-        <label class="input-label">{{ t('admin.accounts.proxy') }}</label>
+        <label class="input-label">{{ '代理' }}</label>
         <ProxySelector v-model="form.proxy_id" :proxies="proxies" />
       </div>
 
       <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
         <div>
-          <label class="input-label">{{ t('admin.accounts.concurrency') }}</label>
+          <label class="input-label">{{ '并发数' }}</label>
           <input v-model.number="form.concurrency" type="number" min="1" class="input" />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.accounts.priority') }}</label>
+          <label class="input-label">{{ '优先级' }}</label>
           <input
             v-model.number="form.priority"
             type="number"
@@ -565,25 +565,25 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ t('admin.accounts.billingRateMultiplier') }}</label>
+          <label class="input-label">{{ '账号计费倍率' }}</label>
           <input v-model.number="form.rate_multiplier" type="number" min="0" step="0.001" class="input" />
-          <p class="input-hint">{{ t('admin.accounts.billingRateMultiplierHint') }}</p>
+          <p class="input-hint">{{ '>=0，0 表示该账号计费为 0；仅影响账号计费口径' }}</p>
         </div>
       </div>
       <div class="border-t border-gray-200 pt-4 dark:border-dark-600">
-        <label class="input-label">{{ t('admin.accounts.expiresAt') }}</label>
+        <label class="input-label">{{ '过期时间' }}</label>
         <input v-model="expiresAtInput" type="datetime-local" class="input" />
-        <p class="input-hint">{{ t('admin.accounts.expiresAtHint') }}</p>
+        <p class="input-hint">{{ '留空表示不过期' }}</p>
       </div>
 
       <div>
         <div class="flex items-center justify-between">
           <div>
             <label class="input-label mb-0">{{
-              t('admin.accounts.autoPauseOnExpired')
+              '过期自动暂停调度'
             }}</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ t('admin.accounts.autoPauseOnExpiredDesc') }}
+              {{ '启用后，账号过期将自动暂停调度' }}
             </p>
           </div>
           <button
@@ -610,9 +610,9 @@
         class="border-t border-gray-200 pt-4 dark:border-dark-600 space-y-4"
       >
         <div class="mb-3">
-          <h3 class="input-label mb-0 text-base font-semibold">{{ t('admin.accounts.quotaControl.title') }}</h3>
+          <h3 class="input-label mb-0 text-base font-semibold">{{ '配额控制' }}</h3>
           <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            {{ t('admin.accounts.quotaControl.hint') }}
+            {{ '仅适用于 Anthropic OAuth/Setup Token 账号' }}
           </p>
         </div>
 
@@ -620,9 +620,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.quotaControl.windowCost.label') }}</label>
+              <label class="input-label mb-0">{{ '5h窗口费用控制' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.quotaControl.windowCost.hint') }}
+                {{ '限制账号在5小时窗口内的费用使用' }}
               </p>
             </div>
             <button
@@ -644,7 +644,7 @@
 
           <div v-if="windowCostEnabled" class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('admin.accounts.quotaControl.windowCost.limit') }}</label>
+              <label class="input-label">{{ '费用阈值' }}</label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
                 <input
@@ -653,13 +653,13 @@
                   min="0"
                   step="1"
                   class="input pl-7"
-                  :placeholder="t('admin.accounts.quotaControl.windowCost.limitPlaceholder')"
+                  :placeholder="'50'"
                 />
               </div>
-              <p class="input-hint">{{ t('admin.accounts.quotaControl.windowCost.limitHint') }}</p>
+              <p class="input-hint">{{ '达到阈值后不参与新请求调度' }}</p>
             </div>
             <div>
-              <label class="input-label">{{ t('admin.accounts.quotaControl.windowCost.stickyReserve') }}</label>
+              <label class="input-label">{{ '粘性预留额度' }}</label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
                 <input
@@ -668,10 +668,10 @@
                   min="0"
                   step="1"
                   class="input pl-7"
-                  :placeholder="t('admin.accounts.quotaControl.windowCost.stickyReservePlaceholder')"
+                  :placeholder="'10'"
                 />
               </div>
-              <p class="input-hint">{{ t('admin.accounts.quotaControl.windowCost.stickyReserveHint') }}</p>
+              <p class="input-hint">{{ '为粘性会话预留的额外额度' }}</p>
             </div>
           </div>
         </div>
@@ -680,9 +680,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.quotaControl.sessionLimit.label') }}</label>
+              <label class="input-label mb-0">{{ '会话数量控制' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.quotaControl.sessionLimit.hint') }}
+                {{ '限制同时活跃的会话数量' }}
               </p>
             </div>
             <button
@@ -704,19 +704,19 @@
 
           <div v-if="sessionLimitEnabled" class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ t('admin.accounts.quotaControl.sessionLimit.maxSessions') }}</label>
+              <label class="input-label">{{ '最大会话数' }}</label>
               <input
                 v-model.number="maxSessions"
                 type="number"
                 min="1"
                 step="1"
                 class="input"
-                :placeholder="t('admin.accounts.quotaControl.sessionLimit.maxSessionsPlaceholder')"
+                :placeholder="'3'"
               />
-              <p class="input-hint">{{ t('admin.accounts.quotaControl.sessionLimit.maxSessionsHint') }}</p>
+              <p class="input-hint">{{ '同时活跃的最大会话数量' }}</p>
             </div>
             <div>
-              <label class="input-label">{{ t('admin.accounts.quotaControl.sessionLimit.idleTimeout') }}</label>
+              <label class="input-label">{{ '空闲超时' }}</label>
               <div class="relative">
                 <input
                   v-model.number="sessionIdleTimeout"
@@ -724,11 +724,11 @@
                   min="1"
                   step="1"
                   class="input pr-12"
-                  :placeholder="t('admin.accounts.quotaControl.sessionLimit.idleTimeoutPlaceholder')"
+                  :placeholder="'5'"
                 />
-                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">{{ t('common.minutes') }}</span>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">{{ '分钟' }}</span>
               </div>
-              <p class="input-hint">{{ t('admin.accounts.quotaControl.sessionLimit.idleTimeoutHint') }}</p>
+              <p class="input-hint">{{ '会话空闲超时后自动释放' }}</p>
             </div>
           </div>
         </div>
@@ -737,9 +737,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.quotaControl.tlsFingerprint.label') }}</label>
+              <label class="input-label mb-0">{{ 'TLS 指纹模拟' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.quotaControl.tlsFingerprint.hint') }}
+                {{ '模拟 Node.js/Claude Code 客户端的 TLS 指纹' }}
               </p>
             </div>
             <button
@@ -764,9 +764,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ t('admin.accounts.quotaControl.sessionIdMasking.label') }}</label>
+              <label class="input-label mb-0">{{ '会话 ID 伪装' }}</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ t('admin.accounts.quotaControl.sessionIdMasking.hint') }}
+                {{ '启用后将在 15 分钟内固定 metadata.user_id 中的 session ID，使上游认为请求来自同一会话' }}
               </p>
             </div>
             <button
@@ -790,7 +790,7 @@
 
       <div class="border-t border-gray-200 pt-4 dark:border-dark-600">
         <div>
-          <label class="input-label">{{ t('common.status') }}</label>
+          <label class="input-label">{{ '状态' }}</label>
           <Select v-model="form.status" :options="statusOptions" />
         </div>
 
@@ -804,7 +804,7 @@
               class="h-4 w-4 cursor-not-allowed rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-dark-500"
             />
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ t('admin.accounts.mixedScheduling') }}
+              {{ '在 /v1/messages 中使用' }}
             </span>
           </label>
           <div class="group relative">
@@ -817,7 +817,7 @@
             <div
               class="pointer-events-none absolute left-0 top-full z-[100] mt-1.5 w-72 rounded bg-gray-900 px-3 py-2 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700"
             >
-              {{ t('admin.accounts.mixedSchedulingTooltip') }}
+              {{ '！！注意！！ Antigravity Claude 和 Anthropic Claude 无法在同个上下文中使用，如果你同时有 Anthropic 账号和 Antigravity 账号，开启此选项会导致经常 400 报错。开启后，请用分组功能做好 Antigravity 账号和 Anthropic 账号的隔离。一定要弄明白再开启！！' }}
               <div
                 class="absolute bottom-full left-3 border-4 border-transparent border-b-gray-900 dark:border-b-gray-700"
               ></div>
@@ -841,7 +841,7 @@
     <template #footer>
       <div v-if="account" class="flex justify-end gap-3">
         <button @click="handleClose" type="button" class="btn btn-secondary">
-          {{ t('common.cancel') }}
+          {{ '取消' }}
         </button>
         <button
           type="submit"
@@ -870,7 +870,7 @@
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          {{ submitting ? t('admin.accounts.updating') : t('common.update') }}
+          {{ submitting ? '更新中...' : '更新' }}
         </button>
       </div>
     </template>
@@ -879,7 +879,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
 import { adminAPI } from '@/api/admin'
@@ -910,16 +909,15 @@ const emit = defineEmits<{
   updated: []
 }>()
 
-const { t } = useI18n()
 const appStore = useAppStore()
 const authStore = useAuthStore()
 
 // Platform-specific hint for Base URL
 const baseUrlHint = computed(() => {
-  if (!props.account) return t('admin.accounts.baseUrlHint')
-  if (props.account.platform === 'openai') return t('admin.accounts.openai.baseUrlHint')
-  if (props.account.platform === 'gemini') return t('admin.accounts.gemini.baseUrlHint')
-  return t('admin.accounts.baseUrlHint')
+  if (!props.account) return '留空使用官方 Anthropic API'
+  if (props.account.platform === 'openai') return '留空使用官方 OpenAI API'
+  if (props.account.platform === 'gemini') return '留空使用官方 Gemini API'
+  return '留空使用官方 Anthropic API'
 })
 
 // Model mapping type
@@ -965,30 +963,30 @@ const sessionIdMaskingEnabled = ref(false)
 const presetMappings = computed(() => getPresetMappingsByPlatform(props.account?.platform || 'anthropic'))
 const tempUnschedPresets = computed(() => [
   {
-    label: t('admin.accounts.tempUnschedulable.presets.overloadLabel'),
+    label: '529 过载',
     rule: {
       error_code: 529,
       keywords: 'overloaded, too many',
       duration_minutes: 60,
-      description: t('admin.accounts.tempUnschedulable.presets.overloadDesc')
+      description: '服务过载 - 暂停 60 分钟'
     }
   },
   {
-    label: t('admin.accounts.tempUnschedulable.presets.rateLimitLabel'),
+    label: '429 限流',
     rule: {
       error_code: 429,
       keywords: 'rate limit, too many requests',
       duration_minutes: 10,
-      description: t('admin.accounts.tempUnschedulable.presets.rateLimitDesc')
+      description: '触发限流 - 暂停 10 分钟'
     }
   },
   {
-    label: t('admin.accounts.tempUnschedulable.presets.unavailableLabel'),
+    label: '503 维护',
     rule: {
       error_code: 503,
       keywords: 'unavailable, maintenance',
       duration_minutes: 30,
-      description: t('admin.accounts.tempUnschedulable.presets.unavailableDesc')
+      description: '服务不可用 - 暂停 30 分钟'
     }
   }
 ])
@@ -1013,8 +1011,8 @@ const form = reactive({
 })
 
 const statusOptions = computed(() => [
-  { value: 'active', label: t('common.active') },
-  { value: 'inactive', label: t('common.inactive') }
+  { value: 'active', label: '启用' },
+  { value: 'inactive', label: '禁用' }
 ])
 
 const expiresAtInput = computed({
@@ -1130,7 +1128,7 @@ const removeModelMapping = (index: number) => {
 const addPresetMapping = (from: string, to: string) => {
   const exists = modelMappings.value.some((m) => m.from === from)
   if (exists) {
-    appStore.showInfo(t('admin.accounts.mappingExists', { model: from }))
+    appStore.showInfo(`模型 ${from} 的映射已存在`)
     return
   }
   modelMappings.value.push({ from, to })
@@ -1142,11 +1140,11 @@ const toggleErrorCode = (code: number) => {
   if (index === -1) {
     // Adding code - check for 429/529 warning
     if (code === 429) {
-      if (!confirm(t('admin.accounts.customErrorCodes429Warning'))) {
+      if (!confirm('429 已有内置的限流处理机制。添加到自定义错误码后，将直接停止调度而非临时限流。确定要添加吗？')) {
         return
       }
     } else if (code === 529) {
-      if (!confirm(t('admin.accounts.customErrorCodes529Warning'))) {
+      if (!confirm('529 已有内置的过载处理机制。添加到自定义错误码后，将直接停止调度而非临时标记过载。确定要添加吗？')) {
         return
       }
     }
@@ -1160,20 +1158,20 @@ const toggleErrorCode = (code: number) => {
 const addCustomErrorCode = () => {
   const code = customErrorCodeInput.value
   if (code === null || code < 100 || code > 599) {
-    appStore.showError(t('admin.accounts.invalidErrorCode'))
+    appStore.showError('请输入有效的 HTTP 错误码 (100-599)')
     return
   }
   if (selectedErrorCodes.value.includes(code)) {
-    appStore.showInfo(t('admin.accounts.errorCodeExists'))
+    appStore.showInfo('该错误码已被选中')
     return
   }
   // Check for 429/529 warning
   if (code === 429) {
-    if (!confirm(t('admin.accounts.customErrorCodes429Warning'))) {
+    if (!confirm('429 已有内置的限流处理机制。添加到自定义错误码后，将直接停止调度而非临时限流。确定要添加吗？')) {
       return
     }
   } else if (code === 529) {
-    if (!confirm(t('admin.accounts.customErrorCodes529Warning'))) {
+    if (!confirm('529 已有内置的过载处理机制。添加到自定义错误码后，将直接停止调度而非临时标记过载。确定要添加吗？')) {
       return
     }
   }
@@ -1256,7 +1254,7 @@ const applyTempUnschedConfig = (credentials: Record<string, unknown>) => {
 
   const rules = buildTempUnschedRules(tempUnschedRules.value)
   if (rules.length === 0) {
-    appStore.showError(t('admin.accounts.tempUnschedulable.rulesInvalid'))
+    appStore.showError('请至少填写一条包含错误码、关键词和时长的规则。')
     return false
   }
 
@@ -1396,7 +1394,7 @@ const handleSubmit = async () => {
         // Preserve existing api_key
         newCredentials.api_key = currentCredentials.api_key
       } else {
-        appStore.showError(t('admin.accounts.apiKeyIsRequired'))
+        appStore.showError('API Key 是必需的')
         submitting.value = false
         return
       }
@@ -1493,11 +1491,11 @@ const handleSubmit = async () => {
     }
 
     await adminAPI.accounts.update(props.account.id, updatePayload)
-    appStore.showSuccess(t('admin.accounts.accountUpdated'))
+    appStore.showSuccess('账号更新成功')
     emit('updated')
     handleClose()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.message || error.response?.data?.detail || t('admin.accounts.failedToUpdate'))
+    appStore.showError(error.response?.data?.message || error.response?.data?.detail || '更新账号失败')
   } finally {
     submitting.value = false
   }

@@ -3,7 +3,7 @@
     <div v-if="loading" class="flex items-center justify-center py-16">
       <div class="flex flex-col items-center gap-3">
         <div class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary-600"></div>
-        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ t('admin.ops.errorDetail.loading') }}</div>
+        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ '加载中…' }}</div>
       </div>
     </div>
 
@@ -15,14 +15,14 @@
       <!-- Summary -->
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.errorDetail.requestId') }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '请求 ID' }}</div>
           <div class="mt-1 break-all font-mono text-sm font-medium text-gray-900 dark:text-white">
             {{ requestId || '—' }}
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.errorDetail.time') }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '时间' }}</div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{ formatDateTime(detail.created_at) }}
           </div>
@@ -30,7 +30,7 @@
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ isUpstreamError(detail) ? t('admin.ops.errorDetail.account') : t('admin.ops.errorDetail.user') }}
+            {{ isUpstreamError(detail) ? '账号' : '用户' }}
           </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             <template v-if="isUpstreamError(detail)">
@@ -43,28 +43,28 @@
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.errorDetail.platform') }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '平台' }}</div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{ detail.platform || '—' }}
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.errorDetail.group') }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '分组' }}</div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{ detail.group_name || (detail.group_id != null ? String(detail.group_id) : '—') }}
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.errorDetail.model') }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '模型' }}</div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{ detail.model || '—' }}
           </div>
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.errorDetail.status') }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '状态码' }}</div>
           <div class="mt-1">
             <span :class="['inline-flex items-center rounded-lg px-2 py-1 text-xs font-black ring-1 ring-inset shadow-sm', statusClass]">
               {{ detail.status_code }}
@@ -73,7 +73,7 @@
         </div>
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.errorDetail.message') }}</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ '消息' }}</div>
           <div class="mt-1 truncate text-sm font-medium text-gray-900 dark:text-white" :title="detail.message">
             {{ detail.message || '—' }}
           </div>
@@ -82,19 +82,19 @@
 
       <!-- Response content (client request -> error_body; upstream -> upstream_error_detail/message) -->
       <div class="rounded-xl bg-gray-50 p-6 dark:bg-dark-900">
-        <h3 class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white">{{ t('admin.ops.errorDetail.responseBody') }}</h3>
+        <h3 class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white">{{ '响应详情' }}</h3>
         <pre class="mt-4 max-h-[520px] overflow-auto rounded-xl border border-gray-200 bg-white p-4 text-xs text-gray-800 dark:border-dark-700 dark:bg-dark-800 dark:text-gray-100"><code>{{ prettyJSON(primaryResponseBody || '') }}</code></pre>
       </div>
 
       <!-- Upstream errors list (only for request errors) -->
       <div v-if="showUpstreamList" class="rounded-xl bg-gray-50 p-6 dark:bg-dark-900">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <h3 class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white">{{ t('admin.ops.errorDetails.upstreamErrors') }}</h3>
-          <div class="text-xs text-gray-500 dark:text-gray-400" v-if="correlatedUpstreamLoading">{{ t('common.loading') }}</div>
+          <h3 class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white">{{ '上游错误' }}</h3>
+          <div class="text-xs text-gray-500 dark:text-gray-400" v-if="correlatedUpstreamLoading">{{ '加载中...' }}</div>
         </div>
 
         <div v-if="!correlatedUpstreamLoading && !correlatedUpstreamErrors.length" class="mt-3 text-sm text-gray-500 dark:text-gray-400">
-          {{ t('common.noData') }}
+          {{ '暂无数据' }}
         </div>
 
         <div v-else class="mt-4 space-y-3">
@@ -116,7 +116,7 @@
                   type="button"
                   class="inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 text-[10px] font-bold text-primary-700 hover:bg-primary-50 disabled:cursor-not-allowed disabled:opacity-60 dark:text-primary-200 dark:hover:bg-dark-700"
                   :disabled="!getUpstreamResponsePreview(ev)"
-                  :title="getUpstreamResponsePreview(ev) ? '' : t('common.noData')"
+                  :title="getUpstreamResponsePreview(ev) ? '' : '暂无数据'"
                   @click="toggleUpstreamDetail(ev.id)"
                 >
                   <Icon
@@ -127,8 +127,8 @@
                   <span>
                     {{
                       expandedUpstreamDetailIds.has(ev.id)
-                        ? t('admin.ops.errorDetail.responsePreview.collapse')
-                        : t('admin.ops.errorDetail.responsePreview.expand')
+                        ? '响应内容（点击收起）'
+                        : '响应内容（点击展开）'
                     }}
                   </span>
                 </button>
@@ -137,11 +137,11 @@
 
             <div class="mt-3 grid grid-cols-1 gap-2 text-xs text-gray-600 dark:text-gray-300 sm:grid-cols-2">
               <div>
-                <span class="text-gray-400">{{ t('admin.ops.errorDetail.upstreamEvent.status') }}:</span>
+                <span class="text-gray-400">{{ '状态码' }}:</span>
                 <span class="ml-1 font-mono">{{ ev.status_code ?? '—' }}</span>
               </div>
               <div>
-                <span class="text-gray-400">{{ t('admin.ops.errorDetail.upstreamEvent.requestId') }}:</span>
+                <span class="text-gray-400">{{ '请求ID' }}:</span>
                 <span class="ml-1 font-mono">{{ ev.request_id || ev.client_request_id || '—' }}</span>
               </div>
             </div>
@@ -161,7 +161,6 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 import Icon from '@/components/icons/Icon.vue'
 import { useAppStore } from '@/stores'
@@ -181,7 +180,6 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const loading = ref(false)
@@ -203,11 +201,11 @@ const primaryResponseBody = computed(() => {
 
 
 const title = computed(() => {
-  if (!props.errorId) return t('admin.ops.errorDetail.title')
-  return t('admin.ops.errorDetail.titleWithId', { id: String(props.errorId) })
+  if (!props.errorId) return '错误详情'
+  return `错误 #${String(props.errorId)}`
 })
 
-const emptyText = computed(() => t('admin.ops.errorDetail.noErrorSelected'))
+const emptyText = computed(() => '未选择错误。')
 
 function isUpstreamError(d: OpsErrorDetail | null): boolean {
   if (!d) return false
@@ -272,7 +270,7 @@ async function fetchDetail(id: number) {
     detail.value = d
   } catch (err: any) {
     detail.value = null
-    appStore.showError(err?.message || t('admin.ops.failedToLoadErrorDetail'))
+    appStore.showError(err?.message || '加载错误详情失败')
   } finally {
     loading.value = false
   }

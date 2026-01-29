@@ -17,7 +17,7 @@
       <!-- Requests -->
       <div class="flex items-center gap-1">
         <span class="text-gray-500 dark:text-gray-400"
-          >{{ t('admin.accounts.stats.requests') }}:</span
+          >{{ '请求' }}:</span
         >
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatNumber(stats.requests)
@@ -26,7 +26,7 @@
       <!-- Tokens -->
       <div class="flex items-center gap-1">
         <span class="text-gray-500 dark:text-gray-400"
-          >{{ t('admin.accounts.stats.tokens') }}:</span
+          >{{ 'Token' }}:</span
         >
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatTokens(stats.tokens)
@@ -34,14 +34,14 @@
       </div>
       <!-- Cost (Account) -->
       <div class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400">{{ t('usage.accountBilled') }}:</span>
+        <span class="text-gray-500 dark:text-gray-400">{{ '账号计费' }}:</span>
         <span class="font-medium text-emerald-600 dark:text-emerald-400">{{
           formatCurrency(stats.cost)
         }}</span>
       </div>
       <!-- Cost (User/API Key) -->
       <div v-if="stats.user_cost != null" class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400">{{ t('usage.userBilled') }}:</span>
+        <span class="text-gray-500 dark:text-gray-400">{{ '用户扣费' }}:</span>
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatCurrency(stats.user_cost)
         }}</span>
@@ -55,7 +55,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { adminAPI } from '@/api/admin'
 import type { Account, WindowStats } from '@/types'
 import { formatNumber, formatCurrency } from '@/utils/format'
@@ -63,8 +62,6 @@ import { formatNumber, formatCurrency } from '@/utils/format'
 const props = defineProps<{
   account: Account
 }>()
-
-const { t } = useI18n()
 
 const loading = ref(false)
 const error = ref<string | null>(null)

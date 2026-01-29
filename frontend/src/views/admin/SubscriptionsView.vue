@@ -19,7 +19,7 @@
               <input
                 v-model="filterUserKeyword"
                 type="text"
-                :placeholder="t('admin.users.searchUsers')"
+                :placeholder="'搜索用户...'"
                 class="input pl-10 pr-8"
                 @input="debounceSearchFilterUsers"
                 @focus="showFilterUserDropdown = true"
@@ -43,13 +43,13 @@
                   v-if="filterUserLoading"
                   class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
                 >
-                  {{ t('common.loading') }}
+                  {{ '加载中...' }}
                 </div>
                 <div
                   v-else-if="filterUserResults.length === 0 && filterUserKeyword"
                   class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
                 >
-                  {{ t('common.noOptionsFound') }}
+                  {{ '无匹配选项' }}
                 </div>
                 <button
                   v-for="user in filterUserResults"
@@ -69,7 +69,7 @@
               <Select
                 v-model="filters.status"
                 :options="statusOptions"
-                :placeholder="t('admin.subscriptions.allStatus')"
+                :placeholder="'全部状态'"
                 @change="applyFilters"
               />
             </div>
@@ -77,7 +77,7 @@
               <Select
                 v-model="filters.group_id"
                 :options="groupOptions"
-                :placeholder="t('admin.subscriptions.allGroups')"
+                :placeholder="'全部分组'"
                 @change="applyFilters"
               />
             </div>
@@ -89,7 +89,7 @@
               @click="loadSubscriptions"
               :disabled="loading"
               class="btn btn-secondary"
-              :title="t('common.refresh')"
+              :title="'刷新'"
             >
               <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
             </button>
@@ -98,12 +98,12 @@
               <button
                 @click="showColumnDropdown = !showColumnDropdown"
                 class="btn btn-secondary px-2 md:px-3"
-                :title="t('admin.users.columnSettings')"
+                :title="'列设置'"
               >
                 <svg class="h-4 w-4 md:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
                 </svg>
-                <span class="hidden md:inline">{{ t('admin.users.columnSettings') }}</span>
+                <span class="hidden md:inline">{{ '列设置' }}</span>
               </button>
               <!-- Dropdown menu -->
               <div
@@ -114,20 +114,20 @@
                   <!-- User column mode selection -->
                   <div class="mb-2 border-b border-gray-200 pb-2 dark:border-gray-700">
                     <div class="px-3 py-1 text-xs font-medium text-gray-500 dark:text-gray-400">
-                      {{ t('admin.subscriptions.columns.user') }}
+                      {{ '用户' }}
                     </div>
                     <button
                       @click="setUserColumnMode('email')"
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                     >
-                      <span>{{ t('admin.users.columns.email') }}</span>
+                      <span>{{ '邮箱' }}</span>
                       <Icon v-if="userColumnMode === 'email'" name="check" size="sm" class="text-primary-500" />
                     </button>
                     <button
                       @click="setUserColumnMode('username')"
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                     >
-                      <span>{{ t('admin.users.columns.username') }}</span>
+                      <span>{{ '用户名' }}</span>
                       <Icon v-if="userColumnMode === 'username'" name="check" size="sm" class="text-primary-500" />
                     </button>
                   </div>
@@ -146,7 +146,7 @@
             </div>
             <button @click="showAssignModal = true" class="btn btn-primary">
               <Icon name="plus" size="md" class="mr-2" />
-              {{ t('admin.subscriptions.assignSubscription') }}
+              {{ '分配订阅' }}
             </button>
           </div>
         </div>
@@ -175,7 +175,7 @@
               </div>
               <span class="font-medium text-gray-900 dark:text-white">
                 {{ userColumnMode === 'email'
-                  ? (row.user?.email || t('admin.redeem.userPrefix', { id: row.user_id }))
+                  ? (row.user?.email || `用户 #${row.user_id}`)
                   : (row.user?.username || '-')
                 }}
               </span>
@@ -199,7 +199,7 @@
               <!-- Daily Usage -->
               <div v-if="row.group?.daily_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ t('admin.subscriptions.daily') }}</span>
+                  <span class="usage-label">{{ '每日' }}</span>
                   <div class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
                     <div
                       class="h-1.5 rounded-full transition-all"
@@ -236,7 +236,7 @@
               <!-- Weekly Usage -->
               <div v-if="row.group?.weekly_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ t('admin.subscriptions.weekly') }}</span>
+                  <span class="usage-label">{{ '每周' }}</span>
                   <div class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
                     <div
                       class="h-1.5 rounded-full transition-all"
@@ -273,7 +273,7 @@
               <!-- Monthly Usage -->
               <div v-if="row.group?.monthly_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ t('admin.subscriptions.monthly') }}</span>
+                  <span class="usage-label">{{ '每月' }}</span>
                   <div class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600">
                     <div
                       class="h-1.5 rounded-full transition-all"
@@ -318,7 +318,7 @@
               >
                 <span class="text-lg text-emerald-600 dark:text-emerald-400">∞</span>
                 <span class="text-xs font-medium text-emerald-700 dark:text-emerald-300">
-                  {{ t('admin.subscriptions.unlimited') }}
+                  {{ '无限制' }}
                 </span>
               </div>
             </div>
@@ -337,11 +337,11 @@
                 {{ formatDateOnly(value) }}
               </span>
               <div v-if="getDaysRemaining(value) !== null" class="text-xs text-gray-500">
-                {{ getDaysRemaining(value) }} {{ t('admin.subscriptions.daysRemaining') }}
+                {{ getDaysRemaining(value) }} {{ '天剩余' }}
               </div>
             </div>
             <span v-else class="text-sm text-gray-500">{{
-              t('admin.subscriptions.noExpiration')
+              '无过期时间'
             }}</span>
           </template>
 
@@ -368,7 +368,7 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400"
               >
                 <Icon name="calendar" size="sm" />
-                <span class="text-xs">{{ t('admin.subscriptions.adjust') }}</span>
+                <span class="text-xs">{{ '调整' }}</span>
               </button>
               <button
                 v-if="row.status === 'active'"
@@ -376,16 +376,16 @@
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
               >
                 <Icon name="ban" size="sm" />
-                <span class="text-xs">{{ t('admin.subscriptions.revoke') }}</span>
+                <span class="text-xs">{{ '撤销' }}</span>
               </button>
             </div>
           </template>
 
           <template #empty>
             <EmptyState
-              :title="t('admin.subscriptions.noSubscriptionsYet')"
-              :description="t('admin.subscriptions.assignFirstSubscription')"
-              :action-text="t('admin.subscriptions.assignSubscription')"
+              :title="'暂无订阅'"
+              :description="'分配一个订阅以开始使用。'"
+              :action-text="'分配订阅'"
               @action="showAssignModal = true"
             />
           </template>
@@ -408,7 +408,7 @@
     <!-- Assign Subscription Modal -->
     <BaseDialog
       :show="showAssignModal"
-      :title="t('admin.subscriptions.assignSubscription')"
+      :title="'分配订阅'"
       width="normal"
       @close="closeAssignModal"
     >
@@ -418,13 +418,13 @@
         class="space-y-5"
       >
         <div>
-          <label class="input-label">{{ t('admin.subscriptions.form.user') }}</label>
+          <label class="input-label">{{ '用户' }}</label>
           <div class="relative" data-assign-user-search>
             <input
               v-model="userSearchKeyword"
               type="text"
               class="input pr-8"
-              :placeholder="t('admin.usage.searchUserPlaceholder')"
+              :placeholder="'按邮箱搜索用户...'"
               @input="debounceSearchUsers"
               @focus="showUserDropdown = true"
             />
@@ -445,13 +445,13 @@
                 v-if="userSearchLoading"
                 class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ t('common.loading') }}
+                {{ '加载中...' }}
               </div>
               <div
                 v-else-if="userSearchResults.length === 0 && userSearchKeyword"
                 class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ t('common.noOptionsFound') }}
+                {{ '无匹配选项' }}
               </div>
               <button
                 v-for="user in userSearchResults"
@@ -467,11 +467,11 @@
           </div>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.subscriptions.form.group') }}</label>
+          <label class="input-label">{{ '订阅分组' }}</label>
           <Select
             v-model="assignForm.group_id"
             :options="subscriptionGroupOptions"
-            :placeholder="t('admin.subscriptions.selectGroup')"
+            :placeholder="'选择订阅分组'"
           >
             <template #selected="{ option }">
               <GroupBadge
@@ -481,7 +481,7 @@
                 :subscription-type="(option as unknown as GroupOption).subscriptionType"
                 :rate-multiplier="(option as unknown as GroupOption).rate"
               />
-              <span v-else class="text-gray-400">{{ t('admin.subscriptions.selectGroup') }}</span>
+              <span v-else class="text-gray-400">{{ '选择订阅分组' }}</span>
             </template>
             <template #option="{ option, selected }">
               <GroupOptionItem
@@ -494,18 +494,18 @@
               />
             </template>
           </Select>
-          <p class="input-hint">{{ t('admin.subscriptions.groupHint') }}</p>
+          <p class="input-hint">{{ '仅显示订阅计费类型的分组' }}</p>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.subscriptions.form.validityDays') }}</label>
+          <label class="input-label">{{ '有效期（天）' }}</label>
           <input v-model.number="assignForm.validity_days" type="number" min="1" class="input" />
-          <p class="input-hint">{{ t('admin.subscriptions.validityHint') }}</p>
+          <p class="input-hint">{{ '订阅的有效天数' }}</p>
         </div>
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
           <button @click="closeAssignModal" type="button" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button
             type="submit"
@@ -533,7 +533,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {{ submitting ? t('admin.subscriptions.assigning') : t('admin.subscriptions.assign') }}
+            {{ submitting ? '分配中...' : '分配' }}
           </button>
         </div>
       </template>
@@ -542,7 +542,7 @@
     <!-- Adjust Subscription Modal -->
     <BaseDialog
       :show="showExtendModal"
-      :title="t('admin.subscriptions.adjustSubscription')"
+      :title="'调整订阅'"
       width="narrow"
       @close="closeExtendModal"
     >
@@ -554,46 +554,46 @@
       >
         <div class="rounded-lg bg-gray-50 p-4 dark:bg-dark-700">
           <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ t('admin.subscriptions.adjustingFor') }}
+            {{ '为以下用户调整订阅' }}
             <span class="font-medium text-gray-900 dark:text-white">{{
               extendingSubscription.user?.email
             }}</span>
           </p>
           <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ t('admin.subscriptions.currentExpiration') }}:
+            {{ '当前到期时间' }}:
             <span class="font-medium text-gray-900 dark:text-white">
               {{
                 extendingSubscription.expires_at
                   ? formatDateOnly(extendingSubscription.expires_at)
-                  : t('admin.subscriptions.noExpiration')
+                  : '无过期时间'
               }}
             </span>
           </p>
           <p v-if="extendingSubscription.expires_at" class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ t('admin.subscriptions.remainingDays') }}:
+            {{ '剩余天数' }}:
             <span class="font-medium text-gray-900 dark:text-white">
               {{ getDaysRemaining(extendingSubscription.expires_at) ?? 0 }}
             </span>
           </p>
         </div>
         <div>
-          <label class="input-label">{{ t('admin.subscriptions.form.adjustDays') }}</label>
+          <label class="input-label">{{ '调整天数' }}</label>
           <div class="flex items-center gap-2">
             <input
               v-model.number="extendForm.days"
               type="number"
               required
               class="input text-center"
-              :placeholder="t('admin.subscriptions.adjustDaysPlaceholder')"
+              :placeholder="'正数延长，负数缩短'"
             />
           </div>
-          <p class="input-hint">{{ t('admin.subscriptions.adjustHint') }}</p>
+          <p class="input-hint">{{ '输入正数延长订阅，负数缩短订阅（缩短后剩余天数需大于0）' }}</p>
         </div>
       </form>
       <template #footer>
         <div v-if="extendingSubscription" class="flex justify-end gap-3">
           <button @click="closeExtendModal" type="button" class="btn btn-secondary">
-            {{ t('common.cancel') }}
+            {{ '取消' }}
           </button>
           <button
             type="submit"
@@ -601,7 +601,7 @@
             :disabled="submitting"
             class="btn btn-primary"
           >
-            {{ submitting ? t('admin.subscriptions.adjusting') : t('admin.subscriptions.adjust') }}
+            {{ submitting ? '调整中...' : '调整' }}
           </button>
         </div>
       </template>
@@ -610,10 +610,10 @@
     <!-- Revoke Confirmation Dialog -->
     <ConfirmDialog
       :show="showRevokeDialog"
-      :title="t('admin.subscriptions.revokeSubscription')"
-      :message="t('admin.subscriptions.revokeConfirm', { user: revokingSubscription?.user?.email })"
-      :confirm-text="t('admin.subscriptions.revoke')"
-      :cancel-text="t('common.cancel')"
+      :title="'撤销订阅'"
+      :message="`确定要撤销 '${revokingSubscription?.user?.email}' 的订阅吗？此操作无法撤销。`"
+      :confirm-text="'撤销'"
+      :cancel-text="'取消'"
       :danger="true"
       @confirm="confirmRevoke"
       @cancel="showRevokeDialog = false"
@@ -623,7 +623,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { UserSubscription, Group, GroupPlatform, SubscriptionType } from '@/types'
@@ -642,7 +641,6 @@ import GroupBadge from '@/components/common/GroupBadge.vue'
 import GroupOptionItem from '@/components/common/GroupOptionItem.vue'
 import Icon from '@/components/icons/Icon.vue'
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 interface GroupOption {
@@ -687,15 +685,15 @@ const allColumns = computed<Column[]>(() => [
   {
     key: 'user',
     label: userColumnMode.value === 'email'
-      ? t('admin.subscriptions.columns.user')
-      : t('admin.users.columns.username'),
+      ? '用户'
+      : '用户名',
     sortable: false
   },
-  { key: 'group', label: t('admin.subscriptions.columns.group'), sortable: false },
-  { key: 'usage', label: t('admin.subscriptions.columns.usage'), sortable: false },
-  { key: 'expires_at', label: t('admin.subscriptions.columns.expires'), sortable: true },
-  { key: 'status', label: t('admin.subscriptions.columns.status'), sortable: true },
-  { key: 'actions', label: t('admin.subscriptions.columns.actions'), sortable: false }
+  { key: 'group', label: '分组', sortable: false },
+  { key: 'usage', label: '用量', sortable: false },
+  { key: 'expires_at', label: '到期时间', sortable: true },
+  { key: 'status', label: '状态', sortable: true },
+  { key: 'actions', label: '操作', sortable: false }
 ])
 
 // Columns that can be toggled (exclude user and actions which are always visible)
@@ -763,10 +761,10 @@ const columnDropdownRef = ref<HTMLElement | null>(null)
 
 // Filter options
 const statusOptions = computed(() => [
-  { value: '', label: t('admin.subscriptions.allStatus') },
-  { value: 'active', label: t('admin.subscriptions.status.active') },
-  { value: 'expired', label: t('admin.subscriptions.status.expired') },
-  { value: 'revoked', label: t('admin.subscriptions.status.revoked') }
+  { value: '', label: '全部状态' },
+  { value: 'active', label: '生效中' },
+  { value: 'expired', label: '已过期' },
+  { value: 'revoked', label: '已撤销' }
 ])
 
 const subscriptions = ref<UserSubscription[]>([])
@@ -828,7 +826,7 @@ const extendForm = reactive({
 
 // Group options for filter (all groups)
 const groupOptions = computed(() => [
-  { value: '', label: t('admin.subscriptions.allGroups') },
+  { value: '', label: '全部分组' },
   ...groups.value.map((g) => ({ value: g.id.toString(), label: g.name }))
 ])
 
@@ -883,7 +881,7 @@ const loadSubscriptions = async () => {
     if (signal.aborted || error?.name === 'AbortError' || error?.code === 'ERR_CANCELED') {
       return
     }
-    appStore.showError(t('admin.subscriptions.failedToLoad'))
+    appStore.showError('加载订阅列表失败')
     console.error('Error loading subscriptions:', error)
   } finally {
     if (abortController === requestController) {
@@ -1031,15 +1029,15 @@ const closeAssignModal = () => {
 
 const handleAssignSubscription = async () => {
   if (!assignForm.user_id) {
-    appStore.showError(t('admin.subscriptions.pleaseSelectUser'))
+    appStore.showError('请选择用户')
     return
   }
   if (!assignForm.group_id) {
-    appStore.showError(t('admin.subscriptions.pleaseSelectGroup'))
+    appStore.showError('请选择分组')
     return
   }
   if (!assignForm.validity_days || assignForm.validity_days < 1) {
-    appStore.showError(t('admin.subscriptions.validityDaysRequired'))
+    appStore.showError('请输入有效的天数（至少1天）')
     return
   }
 
@@ -1050,11 +1048,11 @@ const handleAssignSubscription = async () => {
       group_id: assignForm.group_id,
       validity_days: assignForm.validity_days
     })
-    appStore.showSuccess(t('admin.subscriptions.subscriptionAssigned'))
+    appStore.showSuccess('订阅分配成功')
     closeAssignModal()
     loadSubscriptions()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.subscriptions.failedToAssign'))
+    appStore.showError(error.response?.data?.detail || '分配订阅失败')
     console.error('Error assigning subscription:', error)
   } finally {
     submitting.value = false
@@ -1080,7 +1078,7 @@ const handleExtendSubscription = async () => {
     const expiresAt = new Date(extendingSubscription.value.expires_at)
     const newExpiresAt = new Date(expiresAt.getTime() + extendForm.days * 24 * 60 * 60 * 1000)
     if (newExpiresAt <= new Date()) {
-      appStore.showError(t('admin.subscriptions.adjustWouldExpire'))
+      appStore.showError('调整后剩余天数必须大于0')
       return
     }
   }
@@ -1090,11 +1088,11 @@ const handleExtendSubscription = async () => {
     await adminAPI.subscriptions.extend(extendingSubscription.value.id, {
       days: extendForm.days
     })
-    appStore.showSuccess(t('admin.subscriptions.subscriptionAdjusted'))
+    appStore.showSuccess('订阅调整成功')
     closeExtendModal()
     loadSubscriptions()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.subscriptions.failedToAdjust'))
+    appStore.showError(error.response?.data?.detail || '调整订阅失败')
     console.error('Error adjusting subscription:', error)
   } finally {
     submitting.value = false
@@ -1111,12 +1109,12 @@ const confirmRevoke = async () => {
 
   try {
     await adminAPI.subscriptions.revoke(revokingSubscription.value.id)
-    appStore.showSuccess(t('admin.subscriptions.subscriptionRevoked'))
+    appStore.showSuccess('订阅撤销成功')
     showRevokeDialog.value = false
     revokingSubscription.value = null
     loadSubscriptions()
   } catch (error: any) {
-    appStore.showError(error.response?.data?.detail || t('admin.subscriptions.failedToRevoke'))
+    appStore.showError(error.response?.data?.detail || '撤销订阅失败')
     console.error('Error revoking subscription:', error)
   }
 }
@@ -1153,7 +1151,7 @@ const getProgressClass = (used: number | null | undefined, limit: number | null)
 
 // Format reset time based on window start and period type
 const formatResetTime = (windowStart: string, period: 'daily' | 'weekly' | 'monthly'): string => {
-  if (!windowStart) return t('admin.subscriptions.windowNotActive')
+  if (!windowStart) return '窗口未激活'
 
   const start = new Date(windowStart)
   const now = new Date()
@@ -1173,7 +1171,7 @@ const formatResetTime = (windowStart: string, period: 'daily' | 'weekly' | 'mont
   }
 
   const diffMs = resetTime.getTime() - now.getTime()
-  if (diffMs <= 0) return t('admin.subscriptions.windowNotActive')
+  if (diffMs <= 0) return '窗口未激活'
 
   const diffSeconds = Math.floor(diffMs / 1000)
   const days = Math.floor(diffSeconds / 86400)
@@ -1181,11 +1179,11 @@ const formatResetTime = (windowStart: string, period: 'daily' | 'weekly' | 'mont
   const minutes = Math.floor((diffSeconds % 3600) / 60)
 
   if (days > 0) {
-    return t('admin.subscriptions.resetInDaysHours', { days, hours })
+    return `{days} 天 {hours} 小时后重置`
   } else if (hours > 0) {
-    return t('admin.subscriptions.resetInHoursMinutes', { hours, minutes })
+    return `{hours} 小时 {minutes} 分钟后重置`
   } else {
-    return t('admin.subscriptions.resetInMinutes', { minutes })
+    return `{minutes} 分钟后重置`
   }
 }
 

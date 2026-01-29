@@ -1,7 +1,7 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('admin.accounts.testAccountConnection')"
+    :title="'测试账号连接'"
     width="normal"
     @close="handleClose"
   >
@@ -25,7 +25,7 @@
               >
                 {{ account.type }}
               </span>
-              <span>{{ t('admin.accounts.account') }}</span>
+              <span>{{ '账号' }}</span>
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
 
       <div class="space-y-1.5">
         <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {{ t('admin.accounts.selectTestModel') }}
+          {{ '选择测试模型' }}
         </label>
         <Select
           v-model="selectedModelId"
@@ -51,7 +51,7 @@
           :disabled="loadingModels || status === 'connecting'"
           value-key="id"
           label-key="display_name"
-          :placeholder="loadingModels ? t('common.loading') + '...' : t('admin.accounts.selectTestModel')"
+          :placeholder="loadingModels ? '加载中...' + '...' : '选择测试模型'"
         />
       </div>
 
@@ -64,11 +64,11 @@
           <!-- Status Line -->
           <div v-if="status === 'idle'" class="flex items-center gap-2 text-gray-500">
             <Icon name="play" size="sm" :stroke-width="2" />
-            <span>{{ t('admin.accounts.readyToTest') }}</span>
+            <span>{{ '准备测试。点击"开始测试"按钮开始...' }}</span>
           </div>
           <div v-else-if="status === 'connecting'" class="flex items-center gap-2 text-yellow-400">
             <Icon name="refresh" size="sm" class="animate-spin" :stroke-width="2" />
-            <span>{{ t('admin.accounts.connectingToApi') }}</span>
+            <span>{{ '连接 API 中...' }}</span>
           </div>
 
           <!-- Output Lines -->
@@ -87,7 +87,7 @@
             class="mt-3 flex items-center gap-2 border-t border-gray-700 pt-3 text-green-400"
           >
             <Icon name="check" size="sm" :stroke-width="2" />
-            <span>{{ t('admin.accounts.testCompleted') }}</span>
+            <span>{{ '测试完成！' }}</span>
           </div>
           <div
             v-else-if="status === 'error'"
@@ -103,7 +103,7 @@
           v-if="outputLines.length > 0"
           @click="copyOutput"
           class="absolute right-2 top-2 rounded-lg bg-gray-800/80 p-1.5 text-gray-400 opacity-0 transition-all hover:bg-gray-700 hover:text-white group-hover:opacity-100"
-          :title="t('admin.accounts.copyOutput')"
+          :title="'复制输出'"
         >
           <Icon name="link" size="sm" :stroke-width="2" />
         </button>
@@ -114,12 +114,12 @@
         <div class="flex items-center gap-3">
           <span class="flex items-center gap-1">
             <Icon name="grid" size="sm" :stroke-width="2" />
-            {{ t('admin.accounts.testModel') }}
+            {{ '测试模型' }}
           </span>
         </div>
         <span class="flex items-center gap-1">
           <Icon name="chat" size="sm" :stroke-width="2" />
-          {{ t('admin.accounts.testPrompt') }}
+          {{ '提示词："hi"' }}
         </span>
       </div>
     </div>
@@ -131,7 +131,7 @@
           class="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-300 dark:hover:bg-dark-500"
           :disabled="status === 'connecting'"
         >
-          {{ t('common.close') }}
+          {{ '关闭' }}
         </button>
         <button
           @click="startTest"
@@ -159,10 +159,10 @@
           <span>
             {{
               status === 'connecting'
-                ? t('admin.accounts.testing')
+                ? '测试中...'
                 : status === 'idle'
-                  ? t('admin.accounts.startTest')
-                  : t('admin.accounts.retry')
+                  ? '开始测试'
+                  : '重试'
             }}
           </span>
         </button>
@@ -173,7 +173,6 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
-import { useI18n } from 'vue-i18n'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 import Select from '@/components/common/Select.vue'
 import { Icon } from '@/components/icons'
@@ -181,7 +180,6 @@ import { useClipboard } from '@/composables/useClipboard'
 import { adminAPI } from '@/api/admin'
 import type { Account, ClaudeModel } from '@/types'
 
-const { t } = useI18n()
 const { copyToClipboard } = useClipboard()
 
 interface OutputLine {
@@ -294,8 +292,8 @@ const startTest = async () => {
 
   resetState()
   status.value = 'connecting'
-  addLine(t('admin.accounts.startingTestForAccount', { name: props.account.name }), 'text-blue-400')
-  addLine(t('admin.accounts.testAccountTypeLabel', { type: props.account.type }), 'text-gray-400')
+  addLine(`开始测试账号：${props.account.name}`, 'text-blue-400')
+  addLine(`账号类型：${props.account.type}`, 'text-gray-400')
   addLine('', 'text-gray-300')
 
   closeEventSource()
@@ -364,13 +362,13 @@ const handleEvent = (event: {
 }) => {
   switch (event.type) {
     case 'test_start':
-      addLine(t('admin.accounts.connectedToApi'), 'text-green-400')
+      addLine('已连接到 API', 'text-green-400')
       if (event.model) {
-        addLine(t('admin.accounts.usingModel', { model: event.model }), 'text-cyan-400')
+        addLine(`使用模型：${event.model}`, 'text-cyan-400')
       }
-      addLine(t('admin.accounts.sendingTestMessage'), 'text-gray-400')
+      addLine('发送测试消息："hi"', 'text-gray-400')
       addLine('', 'text-gray-300')
-      addLine(t('admin.accounts.response'), 'text-yellow-400')
+      addLine('响应：', 'text-yellow-400')
       break
 
     case 'content':
@@ -407,6 +405,6 @@ const handleEvent = (event: {
 
 const copyOutput = () => {
   const text = outputLines.value.map((l) => l.text).join('\n')
-  copyToClipboard(text, t('admin.accounts.outputCopied'))
+  copyToClipboard(text, '输出已复制')
 }
 </script>

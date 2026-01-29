@@ -4,10 +4,10 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ t('auth.forgotPasswordTitle') }}
+          {{ '重置密码' }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ t('auth.forgotPasswordHint') }}
+          {{ '输入您的邮箱地址，我们将向您发送密码重置链接。' }}
         </p>
       </div>
 
@@ -20,10 +20,10 @@
             </div>
             <div>
               <h3 class="text-lg font-semibold text-green-800 dark:text-green-200">
-                {{ t('auth.resetEmailSent') }}
+                {{ '重置链接已发送' }}
               </h3>
               <p class="mt-2 text-sm text-green-700 dark:text-green-300">
-                {{ t('auth.resetEmailSentHint') }}
+                {{ '如果该邮箱已注册，您将很快收到密码重置链接。请检查您的收件箱和垃圾邮件文件夹。' }}
               </p>
             </div>
           </div>
@@ -35,7 +35,7 @@
             class="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
             <Icon name="arrowLeft" size="sm" />
-            {{ t('auth.backToLogin') }}
+            {{ '返回登录' }}
           </router-link>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <!-- Email Input -->
         <div>
           <label for="email" class="input-label">
-            {{ t('auth.emailLabel') }}
+            {{ '邮箱' }}
           </label>
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
@@ -61,7 +61,7 @@
               :disabled="isLoading"
               class="input pl-11"
               :class="{ 'input-error': errors.email }"
-              :placeholder="t('auth.emailPlaceholder')"
+              :placeholder="'请输入邮箱'"
             />
           </div>
           <p v-if="errors.email" class="input-error-text">
@@ -127,7 +127,7 @@
             ></path>
           </svg>
           <Icon v-else name="mail" size="md" class="mr-2" />
-          {{ isLoading ? t('auth.sendingResetLink') : t('auth.sendResetLink') }}
+          {{ isLoading ? '发送中...' : '发送重置链接' }}
         </button>
       </form>
     </div>
@@ -135,12 +135,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ t('auth.rememberedPassword') }}
+        {{ '想起密码了？' }}
         <router-link
           to="/login"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ t('auth.signIn') }}
+          {{ '登录' }}
         </router-link>
       </p>
     </template>
@@ -149,14 +149,11 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { AuthLayout } from '@/components/layout'
 import Icon from '@/components/icons/Icon.vue'
 import TurnstileWidget from '@/components/TurnstileWidget.vue'
 import { useAppStore } from '@/stores'
 import { getPublicSettings, forgotPassword } from '@/api/auth'
-
-const { t } = useI18n()
 
 // ==================== Stores ====================
 
@@ -206,12 +203,12 @@ function onTurnstileVerify(token: string): void {
 
 function onTurnstileExpire(): void {
   turnstileToken.value = ''
-  errors.turnstile = t('auth.turnstileExpired')
+  errors.turnstile = '验证已过期，请重试'
 }
 
 function onTurnstileError(): void {
   turnstileToken.value = ''
-  errors.turnstile = t('auth.turnstileFailed')
+  errors.turnstile = '验证失败，请重试'
 }
 
 // ==================== Validation ====================
@@ -224,16 +221,16 @@ function validateForm(): boolean {
 
   // Email validation
   if (!formData.email.trim()) {
-    errors.email = t('auth.emailRequired')
+    errors.email = '请输入邮箱'
     isValid = false
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-    errors.email = t('auth.invalidEmail')
+    errors.email = '请输入有效的邮箱地址'
     isValid = false
   }
 
   // Turnstile validation
   if (turnstileEnabled.value && !turnstileToken.value) {
-    errors.turnstile = t('auth.completeVerification')
+    errors.turnstile = '请完成验证'
     isValid = false
   }
 
@@ -258,7 +255,7 @@ async function handleSubmit(): Promise<void> {
     })
 
     isSubmitted.value = true
-    appStore.showSuccess(t('auth.resetEmailSent'))
+    appStore.showSuccess('重置链接已发送')
   } catch (error: unknown) {
     // Reset Turnstile on error
     if (turnstileRef.value) {
@@ -273,7 +270,7 @@ async function handleSubmit(): Promise<void> {
     } else if (err.message) {
       errorMessage.value = err.message
     } else {
-      errorMessage.value = t('auth.sendResetLinkFailed')
+      errorMessage.value = '发送重置链接失败，请重试。'
     }
 
     appStore.showError(errorMessage.value)

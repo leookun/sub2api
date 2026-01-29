@@ -4,7 +4,7 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ t('auth.verifyYourEmail') }}
+          {{ '验证您的邮箱' }}
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
           We'll send a verification code to
@@ -22,8 +22,8 @@
             <Icon name="exclamationCircle" size="md" class="text-amber-500" />
           </div>
           <div class="text-sm text-amber-700 dark:text-amber-400">
-            <p class="font-medium">{{ t('auth.sessionExpired') }}</p>
-            <p class="mt-1">{{ t('auth.sessionExpiredDesc') }}</p>
+            <p class="font-medium">{{ '会话已过期' }}</p>
+            <p class="mt-1">{{ '请返回注册页面重新开始。' }}</p>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
         <!-- Verification Code Input -->
         <div>
           <label for="code" class="input-label text-center">
-            {{ t('auth.verificationCode') }}
+            {{ '验证码' }}
           </label>
           <input
             id="code"
@@ -51,7 +51,7 @@
           <p v-if="errors.code" class="input-error-text text-center">
             {{ errors.code }}
           </p>
-          <p v-else class="input-hint text-center">{{ t('auth.verificationCodeHint') }}</p>
+          <p v-else class="input-hint text-center">{{ '请输入发送到您邮箱的6位验证码' }}</p>
         </div>
 
         <!-- Code Status -->
@@ -145,11 +145,11 @@
             "
             class="text-sm text-primary-600 transition-colors hover:text-primary-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-primary-400 dark:hover:text-primary-300"
           >
-            <span v-if="isSendingCode">{{ t('auth.sendingCode') }}</span>
+            <span v-if="isSendingCode">{{ '发送中...' }}</span>
             <span v-else-if="turnstileEnabled && !showResendTurnstile">
-              {{ t('auth.clickToResend') }}
+              {{ '点击重新发送验证码' }}
             </span>
-            <span v-else>{{ t('auth.resendCode') }}</span>
+            <span v-else>{{ '重新发送验证码' }}</span>
           </button>
         </div>
       </form>
@@ -171,14 +171,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { AuthLayout } from '@/components/layout'
 import Icon from '@/components/icons/Icon.vue'
 import TurnstileWidget from '@/components/TurnstileWidget.vue'
 import { useAuthStore, useAppStore } from '@/stores'
 import { getPublicSettings, sendVerifyCode } from '@/api/auth'
-
-const { t } = useI18n()
 
 // ==================== Router & Stores ====================
 

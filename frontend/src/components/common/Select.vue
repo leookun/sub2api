@@ -101,10 +101,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
-import { useI18n } from 'vue-i18n'
 import Icon from '@/components/icons/Icon.vue'
-
-const { t } = useI18n()
 
 // Instance ID for unique click-outside detection
 const instanceId = `select-${Math.random().toString(36).substring(2, 9)}`
@@ -156,9 +153,9 @@ const dropdownPosition = ref<'bottom' | 'top'>('bottom')
 const triggerRect = ref<DOMRect | null>(null)
 
 // i18n placeholders
-const placeholderText = computed(() => props.placeholder ?? t('common.selectOption'))
-const searchPlaceholderText = computed(() => props.searchPlaceholder ?? t('common.searchPlaceholder'))
-const emptyTextDisplay = computed(() => props.emptyText ?? t('common.noOptionsFound'))
+const placeholderText = computed(() => props.placeholder ?? '请选择')
+const searchPlaceholderText = computed(() => props.searchPlaceholder ?? '搜索...')
+const emptyTextDisplay = computed(() => props.emptyText ?? '无匹配选项')
 
 // Computed style for teleported dropdown
 const dropdownStyle = computed(() => {

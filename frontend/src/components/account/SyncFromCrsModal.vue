@@ -1,14 +1,14 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('admin.accounts.syncFromCrsTitle')"
+    :title="'从 CRS 同步账号'"
     width="normal"
     close-on-click-outside
     @close="handleClose"
   >
     <form id="sync-from-crs-form" class="space-y-4" @submit.prevent="handleSync">
       <div class="text-sm text-gray-600 dark:text-dark-300">
-        {{ t('admin.accounts.syncFromCrsDesc') }}
+        {{ '将 claude-relay-service（CRS）中的账号同步到当前系统（不会在浏览器侧直接请求 CRS）。' }}
       </div>
       <div
         class="rounded-lg bg-gray-50 p-3 text-xs text-gray-500 dark:bg-dark-700/60 dark:text-dark-400"
@@ -19,27 +19,27 @@
       <div
         class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-600 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400"
       >
-        {{ t('admin.accounts.crsVersionRequirement') }}
+        {{ '⚠️ 注意：CRS 版本必须 ≥ v1.1.240 才支持此功能' }}
       </div>
 
       <div class="grid grid-cols-1 gap-4">
         <div>
-          <label class="input-label">{{ t('admin.accounts.crsBaseUrl') }}</label>
+          <label class="input-label">{{ 'CRS 服务地址' }}</label>
           <input
             v-model="form.base_url"
             type="text"
             class="input"
-            :placeholder="t('admin.accounts.crsBaseUrlPlaceholder')"
+            :placeholder="'例如：http://127.0.0.1:3000'"
           />
         </div>
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label class="input-label">{{ t('admin.accounts.crsUsername') }}</label>
+            <label class="input-label">{{ '用户名' }}</label>
             <input v-model="form.username" type="text" class="input" autocomplete="username" />
           </div>
           <div>
-            <label class="input-label">{{ t('admin.accounts.crsPassword') }}</label>
+            <label class="input-label">{{ '密码' }}</label>
             <input
               v-model="form.password"
               type="password"
@@ -55,7 +55,7 @@
             type="checkbox"
             class="rounded border-gray-300 dark:border-dark-600"
           />
-          {{ t('admin.accounts.syncProxies') }}
+          {{ '同时同步代理（按 host/port/账号匹配或自动创建）' }}
         </label>
       </div>
 
@@ -64,7 +64,7 @@
         class="space-y-2 rounded-xl border border-gray-200 p-4 dark:border-dark-700"
       >
         <div class="text-sm font-medium text-gray-900 dark:text-white">
-          {{ t('admin.accounts.syncResult') }}
+          {{ '同步结果' }}
         </div>
         <div class="text-sm text-gray-700 dark:text-dark-300">
           {{ t('admin.accounts.syncResultSummary', result) }}
@@ -72,7 +72,7 @@
 
         <div v-if="errorItems.length" class="mt-2">
           <div class="text-sm font-medium text-red-600 dark:text-red-400">
-            {{ t('admin.accounts.syncErrors') }}
+            {{ '错误/跳过详情' }}
           </div>
           <div
             class="mt-2 max-h-48 overflow-auto rounded-lg bg-gray-50 p-3 font-mono text-xs dark:bg-dark-800"
@@ -89,7 +89,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button class="btn btn-secondary" type="button" :disabled="syncing" @click="handleClose">
-          {{ t('common.cancel') }}
+          {{ '取消' }}
         </button>
         <button
           class="btn btn-primary"
@@ -97,7 +97,7 @@
           form="sync-from-crs-form"
           :disabled="syncing"
         >
-          {{ syncing ? t('admin.accounts.syncing') : t('admin.accounts.syncNow') }}
+          {{ syncing ? '同步中...' : '开始同步' }}
         </button>
       </div>
     </template>
@@ -106,7 +106,6 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
@@ -123,7 +122,6 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const { t } = useI18n()
 const appStore = useAppStore()
 
 const syncing = ref(false)
@@ -160,7 +158,7 @@ const handleClose = () => {
 
 const handleSync = async () => {
   if (!form.base_url.trim() || !form.username.trim() || !form.password.trim()) {
-    appStore.showError(t('admin.accounts.syncMissingFields'))
+    appStore.showError('请填写服务地址、用户名和密码')
     return
   }
 
@@ -181,7 +179,7 @@ const handleSync = async () => {
       emit('synced')
     }
   } catch (error: any) {
-    appStore.showError(error?.message || t('admin.accounts.syncFailed'))
+    appStore.showError(error?.message || '同步失败')
   } finally {
     syncing.value = false
   }

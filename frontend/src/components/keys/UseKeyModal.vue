@@ -1,7 +1,7 @@
 <template>
   <BaseDialog
     :show="show"
-    :title="t('keys.useKeyModal.title')"
+    :title="'使用 API 密钥'"
     width="wide"
     @close="emit('close')"
   >
@@ -13,10 +13,10 @@
         </svg>
         <div>
           <p class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-            {{ t('keys.useKeyModal.noGroupTitle') }}
+            {{ '请先分配分组' }}
           </p>
           <p class="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
-            {{ t('keys.useKeyModal.noGroupDescription') }}
+            {{ '此 API 密钥尚未分配分组，请先在密钥列表中点击分组列进行分配，然后才能查看使用配置。' }}
           </p>
         </div>
       </div>
@@ -101,7 +101,7 @@
                   <svg v-else class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
                   </svg>
-                  {{ copiedIndex === index ? t('keys.useKeyModal.copied') : t('keys.useKeyModal.copy') }}
+                  {{ copiedIndex === index ? '已复制' : '复制' }}
                 </button>
               </div>
               <!-- Code Content -->
@@ -126,7 +126,7 @@
           @click="emit('close')"
           class="btn btn-secondary"
         >
-          {{ t('common.close') }}
+          {{ '关闭' }}
         </button>
       </div>
     </template>
@@ -135,7 +135,6 @@
 
 <script setup lang="ts">
 import { ref, computed, h, watch, type Component } from 'vue'
-import { useI18n } from 'vue-i18n'
 import BaseDialog from '@/components/common/BaseDialog.vue'
 import Icon from '@/components/icons/Icon.vue'
 import { useClipboard } from '@/composables/useClipboard'
@@ -168,7 +167,6 @@ interface FileConfig {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const { t } = useI18n()
 const { copyToClipboard: clipboardCopy } = useClipboard()
 
 const copiedIndex = ref<number | null>(null)
@@ -267,24 +265,24 @@ const clientTabs = computed((): TabConfig[] => {
   switch (props.platform) {
     case 'openai':
       return [
-        { id: 'codex', label: t('keys.useKeyModal.cliTabs.codexCli'), icon: TerminalIcon },
-        { id: 'opencode', label: t('keys.useKeyModal.cliTabs.opencode'), icon: TerminalIcon }
+        { id: 'codex', label: 'Codex CLI', icon: TerminalIcon },
+        { id: 'opencode', label: 'OpenCode', icon: TerminalIcon }
       ]
     case 'gemini':
       return [
-        { id: 'gemini', label: t('keys.useKeyModal.cliTabs.geminiCli'), icon: SparkleIcon },
-        { id: 'opencode', label: t('keys.useKeyModal.cliTabs.opencode'), icon: TerminalIcon }
+        { id: 'gemini', label: 'Gemini CLI', icon: SparkleIcon },
+        { id: 'opencode', label: 'OpenCode', icon: TerminalIcon }
       ]
     case 'antigravity':
       return [
-        { id: 'claude', label: t('keys.useKeyModal.cliTabs.claudeCode'), icon: TerminalIcon },
-        { id: 'gemini', label: t('keys.useKeyModal.cliTabs.geminiCli'), icon: SparkleIcon },
-        { id: 'opencode', label: t('keys.useKeyModal.cliTabs.opencode'), icon: TerminalIcon }
+        { id: 'claude', label: 'Claude Code', icon: TerminalIcon },
+        { id: 'gemini', label: 'Gemini CLI', icon: SparkleIcon },
+        { id: 'opencode', label: 'OpenCode', icon: TerminalIcon }
       ]
     default:
       return [
-        { id: 'claude', label: t('keys.useKeyModal.cliTabs.claudeCode'), icon: TerminalIcon },
-        { id: 'opencode', label: t('keys.useKeyModal.cliTabs.opencode'), icon: TerminalIcon }
+        { id: 'claude', label: 'Claude Code', icon: TerminalIcon },
+        { id: 'opencode', label: 'OpenCode', icon: TerminalIcon }
       ]
   }
 })
@@ -315,13 +313,13 @@ const currentTabs = computed(() => {
 const platformDescription = computed(() => {
   switch (props.platform) {
     case 'openai':
-      return t('keys.useKeyModal.openai.description')
+      return '将以下配置文件添加到 Codex CLI 配置目录中。'
     case 'gemini':
-      return t('keys.useKeyModal.gemini.description')
+      return '将以下环境变量添加到您的终端配置文件或直接在终端中运行，以配置 Gemini CLI 访问。'
     case 'antigravity':
-      return t('keys.useKeyModal.antigravity.description')
+      return '为 Antigravity 分组配置 API 访问。请根据您使用的客户端选择对应的配置方式。'
     default:
-      return t('keys.useKeyModal.description')
+      return '将以下环境变量添加到您的终端配置文件或直接在终端中运行。'
   }
 })
 
@@ -329,16 +327,16 @@ const platformNote = computed(() => {
   switch (props.platform) {
     case 'openai':
       return activeTab.value === 'windows'
-        ? t('keys.useKeyModal.openai.noteWindows')
-        : t('keys.useKeyModal.openai.note')
+        ? '按 Win+R，输入 %userprofile%\.codex 打开配置目录。如目录不存在，请先手动创建。'
+        : '请确保配置目录存在。macOS/Linux 用户可运行 mkdir -p ~/.codex 创建目录。'
     case 'gemini':
-      return t('keys.useKeyModal.gemini.note')
+      return '这些环境变量将在当前终端会话中生效。如需永久配置，请将其添加到 ~/.bashrc、~/.zshrc 或相应的配置文件中。'
     case 'antigravity':
       return activeClientTab.value === 'claude'
-        ? t('keys.useKeyModal.antigravity.claudeNote')
-        : t('keys.useKeyModal.antigravity.geminiNote')
+        ? '这些环境变量将在当前终端会话中生效。如需永久配置，请将其添加到 ~/.bashrc、~/.zshrc 或相应的配置文件中。'
+        : '这些环境变量将在当前终端会话中生效。如需永久配置，请将其添加到 ~/.bashrc、~/.zshrc 或相应的配置文件中。'
     default:
-      return t('keys.useKeyModal.note')
+      return '这些环境变量将在当前终端会话中生效。如需永久配置，请将其添加到 ~/.bashrc、~/.zshrc 或相应的配置文件中。'
   }
 })
 
@@ -444,7 +442,7 @@ $env:ANTHROPIC_AUTH_TOKEN="${apiKey}"`
 
 function generateGeminiCliContent(baseUrl: string, apiKey: string): FileConfig {
   const model = 'gemini-2.0-flash'
-  const modelComment = t('keys.useKeyModal.gemini.modelComment')
+  const modelComment = '如果你有 Gemini 3 权限可以填：gemini-3-pro-preview'
   let path: string
   let content: string
   let highlighted: string
@@ -515,7 +513,7 @@ requires_openai_auth = true`
     {
       path: `${configDir}/config.toml`,
       content: configContent,
-      hint: t('keys.useKeyModal.openai.configTomlHint')
+      hint: '请确保以下内容位于 config.toml 文件的开头部分'
     },
     {
       path: `${configDir}/auth.json`,
@@ -617,12 +615,12 @@ function generateOpenCodeConfig(platform: string, baseUrl: string, apiKey: strin
   return {
     path: pathLabel ?? 'opencode.json',
     content,
-    hint: t('keys.useKeyModal.opencode.hint')
+    hint: '配置文件路径：~/.config/opencode/opencode.json（或 opencode.jsonc），不存在需手动创建。可使用默认 provider（openai/anthropic/google）或自定义 provider_id。API Key 支持直接配置或通过客户端 /connect 命令配置。示例仅供参考，模型与选项可按需调整。'
   }
 }
 
 const copyContent = async (content: string, index: number) => {
-  const success = await clipboardCopy(content, t('keys.copied'))
+  const success = await clipboardCopy(content, '已复制！')
   if (success) {
     copiedIndex.value = index
     setTimeout(() => {

@@ -32,10 +32,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import BaseDialog from './BaseDialog.vue'
-
-const { t } = useI18n()
 
 interface Props {
   show: boolean
@@ -55,8 +52,8 @@ const props = withDefaults(defineProps<Props>(), {
   danger: false
 })
 
-const confirmText = computed(() => props.confirmText || t('common.confirm'))
-const cancelText = computed(() => props.cancelText || t('common.cancel'))
+const confirmText = computed(() => props.confirmText || '确认')
+const cancelText = computed(() => props.cancelText || '取消')
 
 const emit = defineEmits<Emits>()
 
