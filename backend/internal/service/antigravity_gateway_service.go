@@ -12,7 +12,6 @@ import (
 	mathrand "math/rand"
 	"net"
 	"net/http"
-	"os"
 	"strings"
 	"sync/atomic"
 	"time"
@@ -28,8 +27,6 @@ const (
 	antigravityRetryBaseDelay   = 1 * time.Second
 	antigravityRetryMaxDelay    = 16 * time.Second
 )
-
-const antigravityScopeRateLimitEnv = "GATEWAY_ANTIGRAVITY_429_SCOPE_LIMIT"
 
 // antigravityRetryLoopParams 重试循环的参数
 type antigravityRetryLoopParams struct {
@@ -1529,8 +1526,7 @@ func sleepAntigravityBackoffWithContext(ctx context.Context, attempt int) bool {
 }
 
 func antigravityUseScopeRateLimit() bool {
-	v := strings.ToLower(strings.TrimSpace(os.Getenv(antigravityScopeRateLimitEnv)))
-	return v == "1" || v == "true" || v == "yes" || v == "on"
+	return false
 }
 
 func (s *AntigravityGatewayService) handleUpstreamError(ctx context.Context, prefix string, account *Account, statusCode int, headers http.Header, body []byte, quotaScope AntigravityQuotaScope) {

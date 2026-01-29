@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/Wei-Shaw/sub2api/internal/repository"
@@ -26,13 +25,8 @@ const (
 )
 
 // GetDataDir returns the data directory for storing config and lock files.
-// Priority: DATA_DIR env > /app/data (if exists and writable) > current directory
+// Priority: /app/data (if exists and writable) > current directory
 func GetDataDir() string {
-	// Check DATA_DIR environment variable first
-	if dir := os.Getenv("DATA_DIR"); dir != "" {
-		return dir
-	}
-
 	// Check if /app/data exists and is writable (Docker environment)
 	dockerDataDir := "/app/data"
 	if info, err := os.Stat(dockerDataDir); err == nil && info.IsDir() {
@@ -432,142 +426,4 @@ func generateSecret(length int) (string, error) {
 		return "", err
 	}
 	return hex.EncodeToString(bytes), nil
-}
-
-// =============================================================================
-// Auto Setup for Docker Deployment
-// =============================================================================
-
-// AutoSetupEnabled checks if auto setup is enabled via environment variable
-func AutoSetupEnabled() bool {
-	val := os.Getenv("AUTO_SETUP")
-	return val == "true" || val == "1" || val == "yes"
-}
-
-// getEnvOrDefault gets environment variable or returns default value
-func getEnvOrDefault(key, defaultValue string) string {
-	if val := os.Getenv(key); val != "" {
-		return val
-	}
-	return defaultValue
-}
-
-// getEnvIntOrDefault gets environment variable as int or returns default value
-func getEnvIntOrDefault(key string, defaultValue int) int {
-	if val := os.Getenv(key); val != "" {
-		if i, err := strconv.Atoi(val); err == nil {
-			return i
-		}
-	}
-	return defaultValue
-}
-
-// AutoSetupFromEnv performs automatic setup using environment variables
-// This is designed for Docker deployment where all config is passed via env vars
-func AutoSetupFromEnv() error {
-	log.Println("Auto setup enabled, configuring from environment variables...")
-	log.Printf("Data directory: %s", GetDataDir())
-
-	// Get timezone from TZ or TIMEZONE env var (TZ is standard for Docker)
-	tz := getEnvOrDefault("TZ", "")
-	if tz == "" {
-		tz = getEnvOrDefault("TIMEZONE", "Asia/Shanghai")
-	}
-
-	// Build config from environment variables
-	cfg := &SetupConfig{
-		Database: DatabaseConfig{
-			Host:     getEnvOrDefault("DATABASE_HOST", "localhost"),
-			Port:     getEnvIntOrDefault("DATABASE_PORT", 5432),
-			User:     getEnvOrDefault("DATABASE_USER", "postgres"),
-			Password: getEnvOrDefault("DATABASE_PASSWORD", ""),
-			DBName:   getEnvOrDefault("DATABASE_DBNAME", "sub2api"),
-			SSLMode:  getEnvOrDefault("DATABASE_SSLMODE", "disable"),
-		},
-		Redis: RedisConfig{
-			Host:     getEnvOrDefault("REDIS_HOST", "localhost"),
-			Port:     getEnvIntOrDefault("REDIS_PORT", 6379),
-			Password: getEnvOrDefault("REDIS_PASSWORD", ""),
-			DB:       getEnvIntOrDefault("REDIS_DB", 0),
-		},
-		Admin: AdminConfig{
-			Email:    getEnvOrDefault("ADMIN_EMAIL", "admin@sub2api.local"),
-			Password: getEnvOrDefault("ADMIN_PASSWORD", ""),
-		},
-		Server: ServerConfig{
-			Host: getEnvOrDefault("SERVER_HOST", "0.0.0.0"),
-			Port: getEnvIntOrDefault("SERVER_PORT", 8080),
-			Mode: getEnvOrDefault("SERVER_MODE", "release"),
-		},
-		JWT: JWTConfig{
-			Secret:     getEnvOrDefault("JWT_SECRET", ""),
-			ExpireHour: getEnvIntOrDefault("JWT_EXPIRE_HOUR", 24),
-		},
-		Timezone: tz,
-	}
-
-	// Generate JWT secret if not provided
-	if cfg.JWT.Secret == "" {
-		secret, err := generateSecret(32)
-		if err != nil {
-			return fmt.Errorf("failed to generate jwt secret: %w", err)
-		}
-		cfg.JWT.Secret = secret
-		log.Println("Warning: JWT secret auto-generated. Consider setting a fixed secret for production.")
-	}
-
-	// Generate admin password if not provided
-	if cfg.Admin.Password == "" {
-		password, err := generateSecret(16)
-		if err != nil {
-			return fmt.Errorf("failed to generate admin password: %w", err)
-		}
-		cfg.Admin.Password = password
-		fmt.Printf("Generated admin password (one-time): %s\n", cfg.Admin.Password)
-		fmt.Println("IMPORTANT: Save this password! It will not be shown again.")
-	}
-
-	// Test database connection
-	log.Println("Testing database connection...")
-	if err := TestDatabaseConnection(&cfg.Database); err != nil {
-		return fmt.Errorf("database connection failed: %w", err)
-	}
-	log.Println("Database connection successful")
-
-	// Test Redis connection
-	log.Println("Testing Redis connection...")
-	if err := TestRedisConnection(&cfg.Redis); err != nil {
-		return fmt.Errorf("redis connection failed: %w", err)
-	}
-	log.Println("Redis connection successful")
-
-	// Initialize database
-	log.Println("Initializing database...")
-	if err := initializeDatabase(cfg); err != nil {
-		return fmt.Errorf("database initialization failed: %w", err)
-	}
-	log.Println("Database initialized successfully")
-
-	// Create admin user
-	log.Println("Creating admin user...")
-	if err := createAdminUser(cfg); err != nil {
-		return fmt.Errorf("admin user creation failed: %w", err)
-	}
-	log.Printf("Admin user created: %s", cfg.Admin.Email)
-
-	// Write config file
-	log.Println("Writing configuration file...")
-	if err := writeConfigFile(cfg); err != nil {
-		return fmt.Errorf("config file creation failed: %w", err)
-	}
-	log.Println("Configuration file created")
-
-	// Create installation lock file
-	if err := createInstallLock(); err != nil {
-		return fmt.Errorf("failed to create install lock: %w", err)
-	}
-	log.Println("Installation lock created")
-
-	log.Println("Auto setup completed successfully!")
-	return nil
 }

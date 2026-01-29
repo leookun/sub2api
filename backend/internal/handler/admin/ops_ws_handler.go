@@ -9,8 +9,6 @@ import (
 	"net/http"
 	"net/netip"
 	"net/url"
-	"os"
-	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -26,14 +24,6 @@ type OpsWSProxyConfig struct {
 	TrustedProxies []netip.Prefix
 	OriginPolicy   string
 }
-
-const (
-	envOpsWSTrustProxy     = "OPS_WS_TRUST_PROXY"
-	envOpsWSTrustedProxies = "OPS_WS_TRUSTED_PROXIES"
-	envOpsWSOriginPolicy   = "OPS_WS_ORIGIN_POLICY"
-	envOpsWSMaxConns       = "OPS_WS_MAX_CONNS"
-	envOpsWSMaxConnsPerIP  = "OPS_WS_MAX_CONNS_PER_IP"
-)
 
 const (
 	OriginPolicyStrict     = "strict"
@@ -656,62 +646,18 @@ func isAddrInTrustedProxies(addr netip.Addr, trusted []netip.Prefix) bool {
 }
 
 func loadOpsWSProxyConfigFromEnv() OpsWSProxyConfig {
-	cfg := OpsWSProxyConfig{
+	return OpsWSProxyConfig{
 		TrustProxy:     true,
 		TrustedProxies: defaultTrustedProxies(),
 		OriginPolicy:   OriginPolicyPermissive,
 	}
-
-	if v := strings.TrimSpace(os.Getenv(envOpsWSTrustProxy)); v != "" {
-		if parsed, err := strconv.ParseBool(v); err == nil {
-			cfg.TrustProxy = parsed
-		} else {
-			log.Printf("[OpsWS] invalid %s=%q (expected bool); using default=%v", envOpsWSTrustProxy, v, cfg.TrustProxy)
-		}
-	}
-
-	if raw := strings.TrimSpace(os.Getenv(envOpsWSTrustedProxies)); raw != "" {
-		prefixes, invalid := parseTrustedProxyList(raw)
-		if len(invalid) > 0 {
-			log.Printf("[OpsWS] invalid %s entries ignored: %s", envOpsWSTrustedProxies, strings.Join(invalid, ", "))
-		}
-		cfg.TrustedProxies = prefixes
-	}
-
-	if v := strings.TrimSpace(os.Getenv(envOpsWSOriginPolicy)); v != "" {
-		normalized := strings.ToLower(v)
-		switch normalized {
-		case OriginPolicyStrict, OriginPolicyPermissive:
-			cfg.OriginPolicy = normalized
-		default:
-			log.Printf("[OpsWS] invalid %s=%q (expected %q or %q); using default=%q", envOpsWSOriginPolicy, v, OriginPolicyStrict, OriginPolicyPermissive, cfg.OriginPolicy)
-		}
-	}
-
-	return cfg
 }
 
 func loadOpsWSRuntimeLimitsFromEnv() opsWSRuntimeLimits {
-	cfg := opsWSRuntimeLimits{
+	return opsWSRuntimeLimits{
 		MaxConns:      defaultMaxWSConns,
 		MaxConnsPerIP: defaultMaxWSConnsPerIP,
 	}
-
-	if v := strings.TrimSpace(os.Getenv(envOpsWSMaxConns)); v != "" {
-		if parsed, err := strconv.Atoi(v); err == nil && parsed > 0 {
-			cfg.MaxConns = int32(parsed)
-		} else {
-			log.Printf("[OpsWS] invalid %s=%q (expected int>0); using default=%d", envOpsWSMaxConns, v, cfg.MaxConns)
-		}
-	}
-	if v := strings.TrimSpace(os.Getenv(envOpsWSMaxConnsPerIP)); v != "" {
-		if parsed, err := strconv.Atoi(v); err == nil && parsed >= 0 {
-			cfg.MaxConnsPerIP = int32(parsed)
-		} else {
-			log.Printf("[OpsWS] invalid %s=%q (expected int>=0); using default=%d", envOpsWSMaxConnsPerIP, v, cfg.MaxConnsPerIP)
-		}
-	}
-	return cfg
 }
 
 func defaultTrustedProxies() []netip.Prefix {

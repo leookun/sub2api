@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"os"
 	"strings"
 	"time"
 
@@ -794,14 +793,11 @@ func (r *usageLogRepository) GetDailyStatsAggregated(ctx context.Context, userID
 }
 
 // resolveUsageStatsTimezone 获取用于 SQL 分组的时区名称。
-// 优先使用应用初始化的时区，其次尝试读取 TZ 环境变量，最后回落为 UTC。
+// 优先使用应用初始化的时区，最后回落为 UTC。
 func resolveUsageStatsTimezone() string {
 	tzName := timezone.Name()
 	if tzName != "" && tzName != "Local" {
 		return tzName
-	}
-	if envTZ := strings.TrimSpace(os.Getenv("TZ")); envTZ != "" {
-		return envTZ
 	}
 	return "UTC"
 }

@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"log"
 	"net/url"
-	"os"
 	"strings"
 	"time"
 
@@ -572,11 +571,7 @@ func Load() (*Config, error) {
 	viper.SetConfigType("yaml")
 
 	// Add config paths in priority order
-	// 1. DATA_DIR environment variable (highest priority)
-	if dataDir := os.Getenv("DATA_DIR"); dataDir != "" {
-		viper.AddConfigPath(dataDir)
-	}
-	// 2. Docker data directory
+	// 1. Docker data directory
 	viper.AddConfigPath("/app/data")
 	// 3. Current directory
 	viper.AddConfigPath(".")
@@ -584,10 +579,6 @@ func Load() (*Config, error) {
 	viper.AddConfigPath("./config")
 	// 5. System config directory
 	viper.AddConfigPath("/etc/sub2api")
-
-	// 环境变量支持
-	viper.AutomaticEnv()
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	// 默认值
 	setDefaults()
@@ -1287,9 +1278,6 @@ func GetServerAddress() string {
 	v.AddConfigPath("./config")
 	v.AddConfigPath("/etc/sub2api")
 
-	// Support SERVER_HOST and SERVER_PORT environment variables
-	v.AutomaticEnv()
-	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	v.SetDefault("server.host", "0.0.0.0")
 	v.SetDefault("server.port", 8080)
 

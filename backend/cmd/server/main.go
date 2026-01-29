@@ -84,18 +84,9 @@ func main() {
 
 	// Check if setup is needed
 	if setup.NeedsSetup() {
-		// Check if auto-setup is enabled (for Docker deployment)
-		if setup.AutoSetupEnabled() {
-			log.Println("Auto setup mode enabled...")
-			if err := setup.AutoSetupFromEnv(); err != nil {
-				log.Fatalf("Auto setup failed: %v", err)
-			}
-			// Continue to main server after auto-setup
-		} else {
-			log.Println("First run detected, starting setup wizard...")
-			runSetupServer()
-			return
-		}
+		log.Println("First run detected, starting setup wizard...")
+		runSetupServer()
+		return
 	}
 
 	// Normal server mode

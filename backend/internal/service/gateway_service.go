@@ -14,7 +14,6 @@ import (
 	"log/slog"
 	mathrand "math/rand"
 	"net/http"
-	"os"
 	"regexp"
 	"sort"
 	"strings"
@@ -42,8 +41,7 @@ const (
 )
 
 func (s *GatewayService) debugModelRoutingEnabled() bool {
-	v := strings.ToLower(strings.TrimSpace(os.Getenv("SUB2API_DEBUG_MODEL_ROUTING")))
-	return v == "1" || v == "true" || v == "yes" || v == "on"
+	return false
 }
 
 func shortSessionHash(sessionHash string) string {
