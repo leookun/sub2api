@@ -8,261 +8,268 @@
 [![Redis](https://img.shields.io/badge/Redis-7+-DC382D.svg)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
 
-**AI API Gateway Platform for Subscription Quota Distribution**
+**AI API 网关平台 - 订阅配额分发管理**
 
-English | [中文](README_CN.md)
+[English](README.md) | 中文
 
 </div>
 
 ---
 
-## Demo
+## 在线体验
 
-Try Sub2API online: **https://demo.sub2api.org/**
+体验地址：**https://v2.pincc.ai/**
 
-Demo credentials (shared demo environment; **not** created automatically for self-hosted installs):
+演示账号（共享演示环境；自建部署不会自动创建该账号）：
 
-| Email | Password |
-|-------|----------|
+| 邮箱 | 密码 |
+|------|------|
 | admin@sub2api.com | admin123 |
 
-## Overview
+## 项目概述
 
-Sub2API is an AI API gateway platform designed to distribute and manage API quotas from AI product subscriptions (like Claude Code $200/month). Users can access upstream AI services through platform-generated API Keys, while the platform handles authentication, billing, load balancing, and request forwarding.
+Sub2API 是一个 AI API 网关平台，用于分发和管理 AI 产品订阅（如 Claude Code $200/月）的 API 配额。用户通过平台生成的 API Key 调用上游 AI 服务，平台负责鉴权、计费、负载均衡和请求转发。
 
-## Features
+## 核心功能
 
-- **Multi-Account Management** - Support multiple upstream account types (OAuth, API Key)
-- **API Key Distribution** - Generate and manage API Keys for users
-- **Precise Billing** - Token-level usage tracking and cost calculation
-- **Smart Scheduling** - Intelligent account selection with sticky sessions
-- **Concurrency Control** - Per-user and per-account concurrency limits
-- **Rate Limiting** - Configurable request and token rate limits
-- **Admin Dashboard** - Web interface for monitoring and management
+- **多账号管理** - 支持多种上游账号类型（OAuth、API Key）
+- **API Key 分发** - 为用户生成和管理 API Key
+- **精确计费** - Token 级别的用量追踪和成本计算
+- **智能调度** - 智能账号选择，支持粘性会话
+- **并发控制** - 用户级和账号级并发限制
+- **速率限制** - 可配置的请求和 Token 速率限制
+- **管理后台** - Web 界面进行监控和管理
 
-## Tech Stack
+## 技术栈
 
-| Component | Technology |
-|-----------|------------|
-| Backend | Go 1.25.5, Gin, Ent |
-| Frontend | Vue 3.4+, Vite 5+, TailwindCSS |
-| Database | PostgreSQL 15+ |
-| Cache/Queue | Redis 7+ |
-
----
-
-## Documentation
-
-- Dependency Security: `docs/dependency-security.md`
+| 组件 | 技术 |
+|------|------|
+| 后端 | Go 1.25.5, Gin, Ent |
+| 前端 | Vue 3.4+, Vite 5+, TailwindCSS |
+| 数据库 | PostgreSQL 15+ |
+| 缓存/队列 | Redis 7+ |
 
 ---
 
-## Deployment
+## 文档
 
-### Method 1: Script Installation (Recommended)
+- 依赖安全：`docs/dependency-security.md`
 
-One-click installation script that downloads pre-built binaries from GitHub Releases.
+---
 
-#### Prerequisites
+## OpenAI Responses 兼容注意事项
 
-- Linux server (amd64 or arm64)
-- PostgreSQL 15+ (installed and running)
-- Redis 7+ (installed and running)
-- Root privileges
+- 当请求包含 `function_call_output` 时，需要携带 `previous_response_id`，或在 `input` 中包含带 `call_id` 的 `tool_call`/`function_call`，或带非空 `id` 且与 `function_call_output.call_id` 匹配的 `item_reference`。
+- 若依赖上游历史记录，网关会强制 `store=true` 并需要复用 `previous_response_id`，以避免出现 “No tool call found for function call output” 错误。
 
-#### Installation Steps
+---
+
+## 部署方式
+
+### 方式一：脚本安装（推荐）
+
+一键安装脚本，自动从 GitHub Releases 下载预编译的二进制文件。
+
+#### 前置条件
+
+- Linux 服务器（amd64 或 arm64）
+- PostgreSQL 15+（已安装并运行）
+- Redis 7+（已安装并运行）
+- Root 权限
+
+#### 安装步骤
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/install.sh | sudo bash
 ```
 
-The script will:
-1. Detect your system architecture
-2. Download the latest release
-3. Install binary to `/opt/sub2api`
-4. Create systemd service
-5. Configure system user and permissions
+脚本会自动：
+1. 检测系统架构
+2. 下载最新版本
+3. 安装二进制文件到 `/opt/sub2api`
+4. 创建 systemd 服务
+5. 配置系统用户和权限
 
-#### Post-Installation
+#### 安装后配置
 
 ```bash
-# 1. Start the service
+# 1. 启动服务
 sudo systemctl start sub2api
 
-# 2. Enable auto-start on boot
+# 2. 设置开机自启
 sudo systemctl enable sub2api
 
-# 3. Open Setup Wizard in browser
-# http://YOUR_SERVER_IP:8080
+# 3. 在浏览器中打开设置向导
+# http://你的服务器IP:8080
 ```
 
-The Setup Wizard will guide you through:
-- Database configuration
-- Redis configuration
-- Admin account creation
+设置向导将引导你完成：
+- 数据库配置
+- Redis 配置
+- 管理员账号创建
 
-#### Upgrade
+#### 升级
 
-You can upgrade directly from the **Admin Dashboard** by clicking the **Check for Updates** button in the top-left corner.
+可以直接在 **管理后台** 左上角点击 **检测更新** 按钮进行在线升级。
 
-The web interface will:
-- Check for new versions automatically
-- Download and apply updates with one click
-- Support rollback if needed
+网页升级功能支持：
+- 自动检测新版本
+- 一键下载并应用更新
+- 支持回滚
 
-#### Useful Commands
+#### 常用命令
 
 ```bash
-# Check status
+# 查看状态
 sudo systemctl status sub2api
 
-# View logs
+# 查看日志
 sudo journalctl -u sub2api -f
 
-# Restart service
+# 重启服务
 sudo systemctl restart sub2api
 
-# Uninstall
+# 卸载
 curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/install.sh | sudo bash -s -- uninstall -y
 ```
 
 ---
 
-### Method 2: Docker Compose
+### 方式二：Docker Compose
 
-Deploy with Docker Compose, including PostgreSQL and Redis containers.
+使用 Docker Compose 部署，包含 PostgreSQL 和 Redis 容器。
 
-#### Prerequisites
+#### 前置条件
 
 - Docker 20.10+
 - Docker Compose v2+
 
-#### Installation Steps
+#### 安装步骤
 
 ```bash
-# 1. Clone the repository
+# 1. 克隆仓库
 git clone https://github.com/Wei-Shaw/sub2api.git
 cd sub2api
 
-# 2. Enter the deploy directory
+# 2. 进入 deploy 目录
 cd deploy
 
-# 3. Copy environment configuration
+# 3. 复制环境配置文件
 cp .env.example .env
 
-# 4. Edit configuration (set your passwords)
+# 4. 编辑配置（设置密码等）
 nano .env
 ```
 
-**Required configuration in `.env`:**
+**`.env` 必须配置项：**
 
 ```bash
-# PostgreSQL password (REQUIRED - change this!)
+# PostgreSQL 密码（必须修改！）
 POSTGRES_PASSWORD=your_secure_password_here
 
-# Optional: Admin account
+# 可选：管理员账号
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=your_admin_password
 
-# Optional: Custom port
+# 可选：自定义端口
 SERVER_PORT=8080
 
-# Optional: Security configuration
-# Enable URL allowlist validation (false to skip allowlist checks, only basic format validation)
+# 可选：安全配置
+# 启用 URL 白名单验证（false 则跳过白名单检查，仅做基本格式校验）
 SECURITY_URL_ALLOWLIST_ENABLED=false
 
-# Allow insecure HTTP URLs when allowlist is disabled (default: false, requires https)
-# ⚠️ WARNING: Enabling this allows HTTP (plaintext) URLs which can expose API keys
-#             Only recommended for:
-#             - Development/testing environments
-#             - Internal networks with trusted endpoints
-#             - When using local test servers (http://localhost)
-# PRODUCTION: Keep this false or use HTTPS URLs only
+# 关闭白名单时，是否允许 http:// URL（默认 false，只允许 https://）
+# ⚠️ 警告：允许 HTTP 会暴露 API 密钥（明文传输）
+#          仅建议在以下场景使用：
+#          - 开发/测试环境
+#          - 内部可信网络
+#          - 本地测试服务器（http://localhost）
+# 生产环境：保持 false 或仅使用 HTTPS URL
 SECURITY_URL_ALLOWLIST_ALLOW_INSECURE_HTTP=false
 
-# Allow private IP addresses for upstream/pricing/CRS (for internal deployments)
+# 是否允许私有 IP 地址用于上游/定价/CRS（内网部署时使用）
 SECURITY_URL_ALLOWLIST_ALLOW_PRIVATE_HOSTS=false
 ```
 
 ```bash
-# 5. Start all services
+# 5. 启动所有服务
 docker-compose up -d
 
-# 6. Check status
+# 6. 查看状态
 docker-compose ps
 
-# 7. View logs
+# 7. 查看日志
 docker-compose logs -f sub2api
 ```
 
-#### Access
+#### 访问
 
-Open `http://YOUR_SERVER_IP:8080` in your browser.
+在浏览器中打开 `http://你的服务器IP:8080`
 
-#### Upgrade
+#### 升级
 
 ```bash
-# Pull latest image and recreate container
+# 拉取最新镜像并重建容器
 docker-compose pull
 docker-compose up -d
 ```
 
-#### Useful Commands
+#### 常用命令
 
 ```bash
-# Stop all services
+# 停止所有服务
 docker-compose down
 
-# Restart
+# 重启
 docker-compose restart
 
-# View all logs
+# 查看所有日志
 docker-compose logs -f
 ```
 
 ---
 
-### Method 3: Build from Source
+### 方式三：源码编译
 
-Build and run from source code for development or customization.
+从源码编译安装，适合开发或定制需求。
 
-#### Prerequisites
+#### 前置条件
 
 - Go 1.21+
 - Node.js 18+
 - PostgreSQL 15+
 - Redis 7+
 
-#### Build Steps
+#### 编译步骤
 
 ```bash
-# 1. Clone the repository
+# 1. 克隆仓库
 git clone https://github.com/Wei-Shaw/sub2api.git
 cd sub2api
 
-# 2. Install pnpm (if not already installed)
+# 2. 安装 pnpm（如果还没有安装）
 npm install -g pnpm
 
-# 3. Build frontend
+# 3. 编译前端
 cd frontend
 pnpm install
 pnpm run build
-# Output will be in ../backend/internal/web/dist/
+# 构建产物输出到 ../backend/internal/web/dist/
 
-# 4. Build backend with embedded frontend
+# 4. 编译后端（嵌入前端）
 cd ../backend
 go build -tags embed -o sub2api ./cmd/server
 
-# 5. Create configuration file
+# 5. 创建配置文件
 cp ../deploy/config.example.yaml ./config.yaml
 
-# 6. Edit configuration
+# 6. 编辑配置
 nano config.yaml
 ```
 
-> **Note:** The `-tags embed` flag embeds the frontend into the binary. Without this flag, the binary will not serve the frontend UI.
+> **注意：** `-tags embed` 参数会将前端嵌入到二进制文件中。不使用此参数编译的程序将不包含前端界面。
 
-**Key configuration in `config.yaml`:**
+**`config.yaml` 关键配置：**
 
 ```yaml
 server:
@@ -293,79 +300,79 @@ default:
   rate_multiplier: 1.0
 ```
 
-Additional security-related options are available in `config.yaml`:
+`config.yaml` 还支持以下安全相关配置：
 
-- `cors.allowed_origins` for CORS allowlist
-- `security.url_allowlist` for upstream/pricing/CRS host allowlists
-- `security.url_allowlist.enabled` to disable URL validation (use with caution)
-- `security.url_allowlist.allow_insecure_http` to allow HTTP URLs when validation is disabled
-- `security.url_allowlist.allow_private_hosts` to allow private/local IP addresses
-- `security.response_headers.enabled` to enable configurable response header filtering (disabled uses default allowlist)
-- `security.csp` to control Content-Security-Policy headers
-- `billing.circuit_breaker` to fail closed on billing errors
-- `server.trusted_proxies` to enable X-Forwarded-For parsing
-- `turnstile.required` to require Turnstile in release mode
+- `cors.allowed_origins` 配置 CORS 白名单
+- `security.url_allowlist` 配置上游/价格数据/CRS 主机白名单
+- `security.url_allowlist.enabled` 可关闭 URL 校验（慎用）
+- `security.url_allowlist.allow_insecure_http` 关闭校验时允许 HTTP URL
+- `security.url_allowlist.allow_private_hosts` 允许私有/本地 IP 地址
+- `security.response_headers.enabled` 可启用可配置响应头过滤（关闭时使用默认白名单）
+- `security.csp` 配置 Content-Security-Policy
+- `billing.circuit_breaker` 计费异常时 fail-closed
+- `server.trusted_proxies` 启用可信代理解析 X-Forwarded-For
+- `turnstile.required` 在 release 模式强制启用 Turnstile
 
-**⚠️ Security Warning: HTTP URL Configuration**
+**⚠️ 安全警告：HTTP URL 配置**
 
-When `security.url_allowlist.enabled=false`, the system performs minimal URL validation by default, **rejecting HTTP URLs** and only allowing HTTPS. To allow HTTP URLs (e.g., for development or internal testing), you must explicitly set:
+当 `security.url_allowlist.enabled=false` 时，系统默认执行最小 URL 校验，**拒绝 HTTP URL**，仅允许 HTTPS。要允许 HTTP URL（例如用于开发或内网测试），必须显式设置：
 
 ```yaml
 security:
   url_allowlist:
-    enabled: false                # Disable allowlist checks
-    allow_insecure_http: true     # Allow HTTP URLs (⚠️ INSECURE)
+    enabled: false                # 禁用白名单检查
+    allow_insecure_http: true     # 允许 HTTP URL（⚠️ 不安全）
 ```
 
-**Or via environment variable:**
+**或通过环境变量：**
 
 ```bash
 SECURITY_URL_ALLOWLIST_ENABLED=false
 SECURITY_URL_ALLOWLIST_ALLOW_INSECURE_HTTP=true
 ```
 
-**Risks of allowing HTTP:**
-- API keys and data transmitted in **plaintext** (vulnerable to interception)
-- Susceptible to **man-in-the-middle (MITM) attacks**
-- **NOT suitable for production** environments
+**允许 HTTP 的风险：**
+- API 密钥和数据以**明文传输**（可被截获）
+- 易受**中间人攻击 (MITM)**
+- **不适合生产环境**
 
-**When to use HTTP:**
-- ✅ Development/testing with local servers (http://localhost)
-- ✅ Internal networks with trusted endpoints
-- ✅ Testing account connectivity before obtaining HTTPS
-- ❌ Production environments (use HTTPS only)
+**适用场景：**
+- ✅ 开发/测试环境的本地服务器（http://localhost）
+- ✅ 内网可信端点
+- ✅ 获取 HTTPS 前测试账号连通性
+- ❌ 生产环境（仅使用 HTTPS）
 
-**Example error without this setting:**
+**未设置此项时的错误示例：**
 ```
 Invalid base URL: invalid url scheme: http
 ```
 
-If you disable URL validation or response header filtering, harden your network layer:
-- Enforce an egress allowlist for upstream domains/IPs
-- Block private/loopback/link-local ranges
-- Enforce TLS-only outbound traffic
-- Strip sensitive upstream response headers at the proxy
+如关闭 URL 校验或响应头过滤，请加强网络层防护：
+- 出站访问白名单限制上游域名/IP
+- 阻断私网/回环/链路本地地址
+- 强制仅允许 TLS 出站
+- 在反向代理层移除敏感响应头
 
 ```bash
-# 6. Run the application
+# 6. 运行应用
 ./sub2api
 ```
 
-#### Development Mode
+#### 开发模式
 
 ```bash
-# Backend (with hot reload)
+# 后端（支持热重载）
 cd backend
 go run ./cmd/server
 
-# Frontend (with hot reload)
+# 前端（支持热重载）
 cd frontend
 pnpm run dev
 ```
 
-#### Code Generation
+#### 代码生成
 
-When editing `backend/ent/schema`, regenerate Ent + Wire:
+修改 `backend/ent/schema` 后，需要重新生成 Ent + Wire：
 
 ```bash
 cd backend
@@ -375,77 +382,75 @@ go generate ./cmd/server
 
 ---
 
-## Simple Mode
+## 简易模式
 
-Simple Mode is designed for individual developers or internal teams who want quick access without full SaaS features.
+简易模式适合个人开发者或内部团队快速使用，不依赖完整 SaaS 功能。
 
-- Enable: Set environment variable `RUN_MODE=simple`
-- Difference: Hides SaaS-related features and skips billing process
-- Security note: In production, you must also set `SIMPLE_MODE_CONFIRM=true` to allow startup
+- 启用方式：设置环境变量 `RUN_MODE=simple`
+- 功能差异：隐藏 SaaS 相关功能，跳过计费流程
+- 安全注意事项：生产环境需同时设置 `SIMPLE_MODE_CONFIRM=true` 才允许启动
 
 ---
 
-## Antigravity Support
+## Antigravity 使用说明
 
-Sub2API supports [Antigravity](https://antigravity.so/) accounts. After authorization, dedicated endpoints are available for Claude and Gemini models.
+Sub2API 支持 [Antigravity](https://antigravity.so/) 账户，授权后可通过专用端点访问 Claude 和 Gemini 模型。
 
-### Dedicated Endpoints
+### 专用端点
 
-| Endpoint | Model |
-|----------|-------|
-| `/antigravity/v1/messages` | Claude models |
-| `/antigravity/v1beta/` | Gemini models |
+| 端点 | 模型 |
+|------|------|
+| `/antigravity/v1/messages` | Claude 模型 |
+| `/antigravity/v1beta/` | Gemini 模型 |
 
-### Claude Code Configuration
+### Claude Code 配置示例
 
 ```bash
 export ANTHROPIC_BASE_URL="http://localhost:8080/antigravity"
 export ANTHROPIC_AUTH_TOKEN="sk-xxx"
 ```
 
-### Hybrid Scheduling Mode
+### 混合调度模式
 
-Antigravity accounts support optional **hybrid scheduling**. When enabled, the general endpoints `/v1/messages` and `/v1beta/` will also route requests to Antigravity accounts.
+Antigravity 账户支持可选的**混合调度**功能。开启后，通用端点 `/v1/messages` 和 `/v1beta/` 也会调度该账户。
 
-> **⚠️ Warning**: Anthropic Claude and Antigravity Claude **cannot be mixed within the same conversation context**. Use groups to isolate them properly.
+> **⚠️ 注意**：Anthropic Claude 和 Antigravity Claude **不能在同一上下文中混合使用**，请通过分组功能做好隔离。
 
-### Known Issues
 
-In Claude Code, Plan Mode cannot exit automatically. (Normally when using the native Claude API, after planning is complete, Claude Code will pop up options for users to approve or reject the plan.)
-
-**Workaround**: Press `Shift + Tab` to manually exit Plan Mode, then type your response to approve or reject the plan.
-
+### 已知问题
+在 Claude Code 中，无法自动退出Plan Mode。（正常使用原生Claude Api时，Plan 完成后，Claude Code会弹出弹出选项让用户同意或拒绝Plan。） 
+解决办法：shift + Tab，手动退出Plan mode，然后输入内容 告诉 Claude Code 同意或拒绝 Plan
 ---
 
-## Project Structure
+## 项目结构
 
 ```
 sub2api/
-├── backend/                  # Go backend service
-│   ├── cmd/server/           # Application entry
-│   ├── internal/             # Internal modules
-│   │   ├── config/           # Configuration
-│   │   ├── model/            # Data models
-│   │   ├── service/          # Business logic
-│   │   ├── handler/          # HTTP handlers
-│   │   └── gateway/          # API gateway core
-│   └── resources/            # Static resources
+├── backend/                  # Go 后端服务
+│   ├── cmd/server/           # 应用入口
+│   ├── internal/             # 内部模块
+│   │   ├── config/           # 配置管理
+│   │   ├── model/            # 数据模型
+│   │   ├── service/          # 业务逻辑
+│   │   ├── handler/          # HTTP 处理器
+│   │   └── gateway/          # API 网关核心
+│   └── resources/            # 静态资源
 │
-├── frontend/                 # Vue 3 frontend
+├── frontend/                 # Vue 3 前端
 │   └── src/
-│       ├── api/              # API calls
-│       ├── stores/           # State management
-│       ├── views/            # Page components
-│       └── components/       # Reusable components
+│       ├── api/              # API 调用
+│       ├── stores/           # 状态管理
+│       ├── views/            # 页面组件
+│       └── components/       # 通用组件
 │
-└── deploy/                   # Deployment files
-    ├── docker-compose.yml    # Docker Compose configuration
-    ├── .env.example          # Environment variables for Docker Compose
-    ├── config.example.yaml   # Full config file for binary deployment
-    └── install.sh            # One-click installation script
+└── deploy/                   # 部署文件
+    ├── docker-compose.yml    # Docker Compose 配置
+    ├── .env.example          # Docker Compose 环境变量
+    ├── config.example.yaml   # 二进制部署完整配置文件
+    └── install.sh            # 一键安装脚本
 ```
 
-## License
+## 许可证
 
 MIT License
 
@@ -453,6 +458,6 @@ MIT License
 
 <div align="center">
 
-**If you find this project useful, please give it a star!**
+**如果觉得有用，请给个 Star 支持一下！**
 
 </div>
