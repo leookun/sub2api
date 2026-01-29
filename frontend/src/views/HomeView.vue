@@ -149,34 +149,56 @@
           <!-- Right: Terminal Animation -->
           <div class="flex flex-1 justify-center lg:justify-end">
             <div class="relative inline-block">
-              <div class="inline-block w-[420px] bg-gradient-to-br from-slate-800 to-slate-950 rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.1),inset_0_1px_0_rgba(255,255,255,0.1)] overflow-hidden transform perspective-[1000px] rotate-x-[2deg] rotate-y-[-2deg] transition-transform duration-300 hover:rotate-x-0 hover:rotate-y-0 hover:-translate-y-1">
+              <div
+                class="inline-block w-[420px] bg-gradient-to-br from-slate-800 to-slate-950 rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.1),inset_0_1px_0_rgba(255,255,255,0.1)] overflow-hidden transform perspective-[1000px] rotate-x-[2deg] rotate-y-[-2deg] transition-transform duration-300 hover:rotate-x-0 hover:rotate-y-0 hover:-translate-y-1"
+              >
                 <!-- Window header -->
-                <div class="flex items-center px-4 py-3 bg-slate-800/80 border-b border-white/5">
+                <div
+                  class="flex items-center px-4 py-3 bg-slate-800/80 border-b border-white/5"
+                >
                   <div class="flex gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500"></span>
                     <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span class="w-3 h-3 rounded-full bg-green-500"></span>
                   </div>
-                  <span class="flex-1 text-center text-xs font-mono text-slate-500 mr-13">terminal</span>
+                  <span
+                    class="flex-1 text-center text-xs font-mono text-slate-500 mr-13"
+                    >terminal</span
+                  >
                 </div>
                 <!-- Terminal content -->
                 <div class="p-5 font-mono text-sm leading-8">
-                  <div class="flex items-center gap-2 flex-wrap opacity-0 animate-[line-appear_0.5s_ease_forwards]">
+                  <div
+                    class="flex items-center gap-2 flex-wrap opacity-0 animate-[line-appear_0.5s_ease_forwards]"
+                  >
                     <span class="text-green-500 font-bold">$</span>
                     <span class="text-sky-400">curl</span>
                     <span class="text-violet-400">-X POST</span>
                     <span class="text-teal-400">/v1/messages</span>
                   </div>
-                  <div class="flex items-center gap-2 flex-wrap opacity-0 animate-[line-appear_1s_ease_forwards]">
-                    <span class="text-slate-400 italic"># Routing to upstream...</span>
+                  <div
+                    class="flex items-center gap-2 flex-wrap opacity-0 animate-[line-appear_1s_ease_forwards]"
+                  >
+                    <span class="text-slate-400 italic"
+                      ># Routing to upstream...</span
+                    >
                   </div>
-                  <div class="flex items-center gap-2 flex-wrap opacity-0 animate-[line-appear_1.8s_ease_forwards]">
-                    <span class="text-green-500 font-bold bg-green-500/15 px-2 py-0.5 rounded font-semibold">200 OK</span>
+                  <div
+                    class="flex items-center gap-2 flex-wrap opacity-0 animate-[line-appear_1.8s_ease_forwards]"
+                  >
+                    <span
+                      class="text-green-500 font-bold bg-green-500/15 px-2 py-0.5 rounded font-semibold"
+                      >200 OK</span
+                    >
                     <span class="text-amber-400">{ "content": "Hello!" }</span>
                   </div>
-                  <div class="flex items-center gap-2 flex-wrap opacity-0 animate-[line-appear_2.5s_ease_forwards]">
+                  <div
+                    class="flex items-center gap-2 flex-wrap opacity-0 animate-[line-appear_2.5s_ease_forwards]"
+                  >
                     <span class="text-green-500 font-bold">$</span>
-                    <span class="inline-block w-2 h-4 bg-green-500 animate-[blink_1s_step-end_infinite]"></span>
+                    <span
+                      class="inline-block w-2 h-4 bg-green-500 animate-[blink_1s_step-end_infinite]"
+                    ></span>
                   </div>
                 </div>
               </div>

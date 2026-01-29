@@ -91,8 +91,12 @@ export default function viteAppPlugin(option: ViteAppPluginOptions) {
         "vue",
         "vue-router",
         {
-          "@tanstack/vue-query": disableVueQuery ? [] : ["useQuery", "useQueryClient", "useMutation"],
-          "lodash-es": disableLodash ? [] : Object.keys(lodash).map((key) => [key, `_${key}`]),
+          "@tanstack/vue-query": disableVueQuery
+            ? []
+            : ["useQuery", "useQueryClient", "useMutation"],
+          "lodash-es": disableLodash
+            ? []
+            : Object.keys(lodash).map((key) => [key, `_${key}`]),
         },
         // 合并自定义导入
         ...(customAutoImport.imports || []),

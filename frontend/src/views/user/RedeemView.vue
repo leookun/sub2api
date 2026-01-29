@@ -380,7 +380,7 @@ import { ref, computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { useAppStore } from "@/stores/app";
 import { useSubscriptionStore } from "@/stores/subscriptions";
-import { redeemAPI, authAPI, type RedeemHistoryItem } from "@/api";
+import { redeemAPI, type RedeemHistoryItem } from "@/api";
 
 const authStore = useAuthStore();
 const appStore = useAppStore();

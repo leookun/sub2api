@@ -149,6 +149,8 @@
 </template>
 
 <script setup lang="ts">
+import AppLayout from "@/components/layout/AppLayout.vue";
+const AppLayoutComponent = AppLayout;
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useDebounceFn, useIntervalFn } from "@vueuse/core";
 import { useRoute, useRouter } from "vue-router";

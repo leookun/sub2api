@@ -1,6 +1,6 @@
 <template>
   <div v-if="siteKey" class="w-full">
-    <div ref="containerRef" class="w-full" style="min-height: 65px;"></div>
+    <div ref="containerRef" class="w-full" style="min-height: 65px"></div>
   </div>
 </template>
 
