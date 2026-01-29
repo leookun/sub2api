@@ -426,6 +426,24 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+@import "tailwindcss";
+
+@theme {
+  --color-dark-400: #94a3b8;
+  --color-dark-500: #64748b;
+  --color-dark-600: #475569;
+  --color-dark-700: #334155;
+  --color-dark-800: #1e293b;
+  --color-dark-900: #0f172a;
+  --color-primary-50: #eff6ff;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-700: #1d4ed8;
+  --color-primary-900: #1e3a8a;
+}
+
 .select-trigger {
   @apply flex w-full items-center justify-between gap-2;
   @apply rounded-xl px-4 py-2.5 text-sm;
@@ -460,6 +478,23 @@ onUnmounted(() => {
 </style>
 
 <style>
+@import "tailwindcss";
+
+@theme {
+  --color-dark-400: #94a3b8;
+  --color-dark-500: #64748b;
+  --color-dark-700: #334155;
+  --color-dark-800: #1e293b;
+  --color-dark-900: #0f172a;
+  --color-primary-50: #eff6ff;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-700: #1d4ed8;
+  --color-primary-900: #1e3a8a;
+}
+
 .select-dropdown-portal {
   @apply w-max min-w-[160px] max-w-[320px];
   @apply bg-white dark:bg-dark-800;

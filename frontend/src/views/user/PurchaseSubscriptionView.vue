@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <div class="purchase-page-layout">
+    <div class="flex flex-col gap-6" style="height: calc(100vh - 64px - 4rem)">
       <div class="flex items-start justify-between gap-4">
         <div>
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
@@ -122,10 +122,3 @@ onMounted(async () => {
   }
 });
 </script>
-
-<style scoped>
-.purchase-page-layout {
-  @apply flex flex-col gap-6;
-  height: calc(100vh - 64px - 4rem); /* 减去 header + lg:p-8 的上下padding */
-}
-</style>

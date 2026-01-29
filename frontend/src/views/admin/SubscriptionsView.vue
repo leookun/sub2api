@@ -242,9 +242,9 @@
           <template #cell-usage="{ row }">
             <div class="min-w-[280px] space-y-2">
               <!-- Daily Usage -->
-              <div v-if="row.group?.daily_limit_usd" class="usage-row">
+              <div v-if="row.group?.daily_limit_usd" class="space-y-1">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">每日</span>
+                  <span class="w-10 flex-shrink-0 text-xs font-medium text-gray-500 dark:text-gray-400">每日</span>
                   <div
                     class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
                   >
@@ -264,13 +264,13 @@
                       }"
                     ></div>
                   </div>
-                  <span class="usage-amount">
+                  <span class="whitespace-nowrap text-xs tabular-nums text-gray-600 dark:text-gray-300">
                     ${{ row.daily_usage_usd?.toFixed(2) || "0.00" }}
                     <span class="text-gray-400">/</span>
                     ${{ row.group?.daily_limit_usd?.toFixed(2) }}
                   </span>
                 </div>
-                <div v-if="row.daily_window_start" class="reset-info">
+                <div v-if="row.daily_window_start" class="flex items-center gap-1 pl-12 text-[10px] text-blue-600 dark:text-blue-400">
                   <svg
                     class="h-3 w-3"
                     fill="none"
@@ -291,9 +291,9 @@
               </div>
 
               <!-- Weekly Usage -->
-              <div v-if="row.group?.weekly_limit_usd" class="usage-row">
+              <div v-if="row.group?.weekly_limit_usd" class="space-y-1">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">每周</span>
+                  <span class="w-10 flex-shrink-0 text-xs font-medium text-gray-500 dark:text-gray-400">每周</span>
                   <div
                     class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
                   >
@@ -313,13 +313,13 @@
                       }"
                     ></div>
                   </div>
-                  <span class="usage-amount">
+                  <span class="whitespace-nowrap text-xs tabular-nums text-gray-600 dark:text-gray-300">
                     ${{ row.weekly_usage_usd?.toFixed(2) || "0.00" }}
                     <span class="text-gray-400">/</span>
                     ${{ row.group?.weekly_limit_usd?.toFixed(2) }}
                   </span>
                 </div>
-                <div v-if="row.weekly_window_start" class="reset-info">
+                <div v-if="row.weekly_window_start" class="flex items-center gap-1 pl-12 text-[10px] text-blue-600 dark:text-blue-400">
                   <svg
                     class="h-3 w-3"
                     fill="none"
@@ -340,9 +340,9 @@
               </div>
 
               <!-- Monthly Usage -->
-              <div v-if="row.group?.monthly_limit_usd" class="usage-row">
+              <div v-if="row.group?.monthly_limit_usd" class="space-y-1">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">每月</span>
+                  <span class="w-10 flex-shrink-0 text-xs font-medium text-gray-500 dark:text-gray-400">每月</span>
                   <div
                     class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
                   >
@@ -362,13 +362,13 @@
                       }"
                     ></div>
                   </div>
-                  <span class="usage-amount">
+                  <span class="whitespace-nowrap text-xs tabular-nums text-gray-600 dark:text-gray-300">
                     ${{ row.monthly_usage_usd?.toFixed(2) || "0.00" }}
                     <span class="text-gray-400">/</span>
                     ${{ row.group?.monthly_limit_usd?.toFixed(2) }}
                   </span>
                 </div>
-                <div v-if="row.monthly_window_start" class="reset-info">
+                <div v-if="row.monthly_window_start" class="flex items-center gap-1 pl-12 text-[10px] text-blue-600 dark:text-blue-400">
                   <svg
                     class="h-3 w-3"
                     fill="none"
@@ -1352,21 +1352,3 @@ onUnmounted(() => {
   }
 });
 </script>
-
-<style scoped>
-.usage-row {
-  @apply space-y-1;
-}
-
-.usage-label {
-  @apply w-10 flex-shrink-0 text-xs font-medium text-gray-500 dark:text-gray-400;
-}
-
-.usage-amount {
-  @apply whitespace-nowrap text-xs tabular-nums text-gray-600 dark:text-gray-300;
-}
-
-.reset-info {
-  @apply flex items-center gap-1 pl-12 text-[10px] text-blue-600 dark:text-blue-400;
-}
-</style>

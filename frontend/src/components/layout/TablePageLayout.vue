@@ -1,24 +1,35 @@
 <template>
-  <div class="table-page-layout" :class="{ 'mobile-mode': isMobile }">
-    <!-- 固定区域：操作按钮 -->
-    <div v-if="$slots.actions" class="layout-section-fixed">
+  <div
+    :class="[
+      'flex flex-col gap-6',
+      isMobile ? 'mobile-mode' : '',
+      'h-[calc(100vh-64px-4rem)]'
+    ]"
+  >
+    <!-- 固定区域:操作按钮 -->
+    <div v-if="$slots.actions" class="flex-shrink-0">
       <slot name="actions" />
     </div>
 
-    <!-- 固定区域：搜索和过滤器 -->
-    <div v-if="$slots.filters" class="layout-section-fixed">
+    <!-- 固定区域:搜索和过滤器 -->
+    <div v-if="$slots.filters" class="flex-shrink-0">
       <slot name="filters" />
     </div>
 
-    <!-- 滚动区域：表格 -->
-    <div class="layout-section-scrollable">
-      <div class="card table-scroll-container">
+    <!-- 滚动区域:表格 -->
+    <div class="flex min-h-0 flex-1 flex-col">
+      <div
+        :class="[
+          'card flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-dark-700 dark:bg-dark-800',
+          isMobile ? 'h-auto border-none bg-transparent shadow-none' : ''
+        ]"
+      >
         <slot name="table" />
       </div>
     </div>
 
-    <!-- 固定区域：分页器 -->
-    <div v-if="$slots.pagination" class="layout-section-fixed">
+    <!-- 固定区域:分页器 -->
+    <div v-if="$slots.pagination" class="flex-shrink-0">
       <slot name="pagination" />
     </div>
   </div>
@@ -44,18 +55,65 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* 桌面端：Flexbox 布局 */
-.table-page-layout {
-  @apply flex flex-col gap-6;
-  height: calc(100vh - 64px - 4rem); /* 减去 header + lg:p-8 的上下padding */
-}
+@import "tailwindcss";
 
-.layout-section-fixed {
-  @apply flex-shrink-0;
-}
+@theme {
+  --color-dark-50: #f8fafc;
+  --color-dark-100: #f1f5f9;
+  --color-dark-200: #e2e8f0;
+  --color-dark-300: #cbd5e1;
+  --color-dark-400: #94a3b8;
+  --color-dark-500: #64748b;
+  --color-dark-600: #475569;
+  --color-dark-700: #334155;
+  --color-dark-800: #1e293b;
+  --color-dark-900: #0f172a;
+  --color-dark-950: #020617;
 
-.layout-section-scrollable {
-  @apply flex-1 min-h-0 flex flex-col;
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+
+  --shadow-glass: 0 8px 32px rgb(0 0 0 / 0.08);
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-card-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  --animate-scale-in: scale-in 0.2s ease-out;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out;
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
 
 /* 表格滚动容器 - 增强版表体滚动方案 */
@@ -94,19 +152,19 @@ onUnmounted(() => {
 }
 
 /* 移动端：恢复正常滚动 */
-.table-page-layout.mobile-mode .table-scroll-container {
+.mobile-mode .table-scroll-container {
   @apply h-auto overflow-visible border-none shadow-none bg-transparent;
 }
 
-.table-page-layout.mobile-mode .layout-section-scrollable {
+.mobile-mode .layout-section-scrollable {
   @apply flex-none min-h-fit;
 }
 
-.table-page-layout.mobile-mode .table-scroll-container :deep(.table-wrapper) {
+.mobile-mode .table-scroll-container :deep(.table-wrapper) {
   @apply overflow-visible;
 }
 
-.table-page-layout.mobile-mode .table-scroll-container :deep(table) {
+.mobile-mode .table-scroll-container :deep(table) {
   @apply flex-none;
   display: table;
   min-width: 100%;

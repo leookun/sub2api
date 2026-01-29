@@ -187,7 +187,7 @@ watch(
         class="mb-4 flex-shrink-0 border-b border-gray-200 pb-4 dark:border-dark-700"
       >
         <div class="grid grid-cols-8 gap-2">
-          <div class="col-span-2 compact-select">
+          <div class="[&_.select-trigger]:px-3 [&_.select-trigger]:py-1.5 [&_.select-trigger]:text-xs [&_.select-trigger]:rounded-lg col-span-2">
             <div class="relative group">
               <div
                 class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
@@ -215,7 +215,7 @@ watch(
             </div>
           </div>
 
-          <div class="compact-select">
+          <div class="[&_.select-trigger]:px-3 [&_.select-trigger]:py-1.5 [&_.select-trigger]:text-xs [&_.select-trigger]:rounded-lg">
             <Select
               :model-value="statusCode"
               :options="statusCodeSelectOptions"
@@ -223,7 +223,7 @@ watch(
             />
           </div>
 
-          <div class="compact-select">
+          <div class="[&_.select-trigger]:px-3 [&_.select-trigger]:py-1.5 [&_.select-trigger]:text-xs [&_.select-trigger]:rounded-lg">
             <Select
               :model-value="phase"
               :options="phaseSelectOptions"
@@ -231,7 +231,7 @@ watch(
             />
           </div>
 
-          <div class="compact-select">
+          <div class="[&_.select-trigger]:px-3 [&_.select-trigger]:py-1.5 [&_.select-trigger]:text-xs [&_.select-trigger]:rounded-lg">
             <Select
               :model-value="errorOwner"
               :options="ownerSelectOptions"
@@ -239,7 +239,7 @@ watch(
             />
           </div>
 
-          <div class="compact-select">
+          <div class="[&_.select-trigger]:px-3 [&_.select-trigger]:py-1.5 [&_.select-trigger]:text-xs [&_.select-trigger]:rounded-lg">
             <Select
               :model-value="viewMode"
               :options="viewModeSelectOptions"
@@ -282,9 +282,3 @@ watch(
     </div>
   </BaseDialog>
 </template>
-
-<style>
-.compact-select .select-trigger {
-  @apply py-1.5 px-3 text-xs rounded-lg;
-}
-</style>

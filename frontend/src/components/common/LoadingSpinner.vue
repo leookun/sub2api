@@ -1,6 +1,10 @@
 <template>
   <div
-    :class="['spinner', sizeClasses, colorClass]"
+    :class="[
+      'inline-block h-8 w-8 animate-spin rounded-full border-2 border-current border-r-transparent',
+      sizeClasses,
+      colorClass
+    ]"
     role="status"
     :aria-label="'加载中...'"
   >
@@ -25,10 +29,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const sizeClasses = computed(() => {
   const sizes: Record<SpinnerSize, string> = {
-    sm: "w-4 h-4 border-2",
-    md: "w-8 h-8 border-2",
-    lg: "w-12 h-12 border-[3px]",
-    xl: "w-16 h-16 border-4",
+    sm: "h-4 w-4 border-2",
+    md: "h-8 w-8 border-2",
+    lg: "h-12 h-12 border-[3px]",
+    xl: "h-16 w-16 border-4",
   };
   return sizes[props.size];
 });
@@ -43,19 +47,3 @@ const colorClass = computed(() => {
   return colors[props.color];
 });
 </script>
-
-<style scoped>
-.spinner {
-  @apply inline-block rounded-full border-solid border-current border-r-transparent;
-  animation: spin 0.75s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>

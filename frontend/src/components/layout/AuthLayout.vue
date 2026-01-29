@@ -40,7 +40,9 @@
             class="h-full w-full object-contain"
           />
         </div>
-        <h1 class="text-gradient mb-2 text-3xl font-bold">
+        <h1
+          class="mb-2 bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-3xl font-bold text-transparent"
+        >
           {{ siteName }}
         </h1>
         <p class="text-sm text-gray-500 dark:text-dark-400">
@@ -91,9 +93,3 @@ onMounted(async () => {
   }
 });
 </script>
-
-<style scoped>
-.text-gradient {
-  @apply bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent;
-}
-</style>

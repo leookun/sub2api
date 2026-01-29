@@ -39,7 +39,7 @@
         <!-- Page size selector -->
         <div v-if="showPageSizeSelector" class="flex items-center space-x-2">
           <span class="text-sm text-gray-700 dark:text-gray-300">每页:</span>
-          <div class="page-size-select w-20">
+          <div class="w-20 [&_.select-trigger]:px-3 [&_.select-trigger]:py-1.5 [&_.select-trigger]:text-sm">
             <Select
               :model-value="pageSize"
               :options="pageSizeSelectOptions"
@@ -228,9 +228,3 @@ const submitJump = () => {
   goToPage(nextPage);
 };
 </script>
-
-<style scoped>
-.page-size-select :deep(.select-trigger) {
-  @apply px-3 py-1.5 text-sm;
-}
-</style>
