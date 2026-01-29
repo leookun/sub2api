@@ -46,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '@/components/icons/Icon.vue'
 import type { User } from '@/types'
 
 defineProps<{

@@ -204,8 +204,6 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAppStore, useAuthStore, useOnboardingStore } from '@/stores'
-import SubscriptionProgressMini from '@/components/common/SubscriptionProgressMini.vue'
-import Icon from '@/components/icons/Icon.vue'
 
 const router = useRouter()
 const route = useRoute()

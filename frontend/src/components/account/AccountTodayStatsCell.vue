@@ -57,7 +57,6 @@
 import { ref, onMounted } from 'vue'
 import { adminAPI } from '@/api/admin'
 import type { Account, WindowStats } from '@/types'
-import { formatNumber, formatCurrency } from '@/utils/format'
 
 const props = defineProps<{
   account: Account

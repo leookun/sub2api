@@ -54,7 +54,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Component } from 'vue'
-import Icon from '@/components/icons/Icon.vue'
 
 interface Props {
   icon?: Component | string

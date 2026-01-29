@@ -3,8 +3,6 @@ import { ref, onMounted, computed } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { opsAPI } from '@/api/admin/ops'
 import type { EmailNotificationConfig, AlertSeverity } from '../types'
-import BaseDialog from '@/components/common/BaseDialog.vue'
-import Select from '@/components/common/Select.vue'
 
 const appStore = useAppStore()
 

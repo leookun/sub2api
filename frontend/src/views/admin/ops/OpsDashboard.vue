@@ -116,8 +116,6 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useDebounceFn, useIntervalFn } from '@vueuse/core'
 import { useRoute, useRouter } from 'vue-router'
-import AppLayout from '@/components/layout/AppLayout.vue'
-import BaseDialog from '@/components/common/BaseDialog.vue'
 import {
   opsAPI,
   type OpsDashboardOverview,
@@ -128,19 +126,7 @@ import {
   type OpsMetricThresholds
 } from '@/api/admin/ops'
 import { useAdminSettingsStore, useAppStore } from '@/stores'
-import OpsDashboardHeader from './components/OpsDashboardHeader.vue'
-import OpsDashboardSkeleton from './components/OpsDashboardSkeleton.vue'
-import OpsConcurrencyCard from './components/OpsConcurrencyCard.vue'
-import OpsErrorDetailModal from './components/OpsErrorDetailModal.vue'
-import OpsErrorDistributionChart from './components/OpsErrorDistributionChart.vue'
-import OpsErrorDetailsModal from './components/OpsErrorDetailsModal.vue'
-import OpsErrorTrendChart from './components/OpsErrorTrendChart.vue'
-import OpsLatencyChart from './components/OpsLatencyChart.vue'
-import OpsThroughputTrendChart from './components/OpsThroughputTrendChart.vue'
-import OpsAlertEventsCard from './components/OpsAlertEventsCard.vue'
-import OpsRequestDetailsModal, { type OpsRequestDetailsPreset } from './components/OpsRequestDetailsModal.vue'
-import OpsSettingsDialog from './components/OpsSettingsDialog.vue'
-import OpsAlertRulesCard from './components/OpsAlertRulesCard.vue'
+import { type OpsRequestDetailsPreset } from './components/OpsRequestDetailsModal.vue'
 
 const route = useRoute()
 const router = useRouter()

@@ -413,7 +413,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useClipboard } from '@/composables/useClipboard'
-import Icon from '@/components/icons/Icon.vue'
 import type { AddMethod, AuthInputMethod } from '@/composables/useAccountOAuth'
 
 interface Props {

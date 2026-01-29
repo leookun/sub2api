@@ -79,7 +79,6 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import GroupBadge from '@/components/common/GroupBadge.vue'
 import type { Group } from '@/types'
 
 interface Props {

@@ -171,8 +171,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, toRef, watch } from 'vue'
 import { adminAPI } from '@/api/admin'
-import Select, { type SelectOption } from '@/components/common/Select.vue'
-import DateRangePicker from '@/components/common/DateRangePicker.vue'
+import { type SelectOption } from '@/components/common/Select.vue'
 import type { SimpleApiKey, SimpleUser } from '@/api/admin/usage'
 
 type ModelValue = Record<string, any>

@@ -31,7 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import GroupBadge from './GroupBadge.vue'
 import type { SubscriptionType, GroupPlatform } from '@/types'
 
 interface Props {

@@ -281,8 +281,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { adminAPI } from '@/api/admin'
 import type { Account, AccountUsageInfo, GeminiCredentials, WindowStats } from '@/types'
-import UsageProgressBar from './UsageProgressBar.vue'
-import AccountQuotaInfo from './AccountQuotaInfo.vue'
 
 const props = defineProps<{
   account: Account

@@ -180,12 +180,12 @@ const sessionLimitTooltip = computed(() => {
 
   const current = activeSessions.value
   const max = props.account.max_sessions || 0
-  const idle = props.account.session_idle_timeout_minutes || 5
+  const idleMinutes = props.account.session_idle_timeout_minutes || 5
 
   if (current >= max) {
-    return `活跃会话已满，新会话需等待（空闲超时：{idle}分钟）`
+    return `活跃会话已满，新会话需等待（空闲超时：${idleMinutes}分钟）`
   }
-  return `活跃会话正常（空闲超时：{idle}分钟）`
+  return `活跃会话正常（空闲超时：${idleMinutes}分钟）`
 })
 
 // 格式化费用显示

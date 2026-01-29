@@ -468,8 +468,6 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import { testDatabase, testRedis, install, type InstallRequest } from '@/api/setup'
-import Select from '@/components/common/Select.vue'
-import Icon from '@/components/icons/Icon.vue'
 
 const steps = computed(() => [
   { id: 'database', title: '数据库配置' },

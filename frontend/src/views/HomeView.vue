@@ -404,7 +404,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore, useAppStore } from '@/stores'
-import Icon from '@/components/icons/Icon.vue'
 
 const authStore = useAuthStore()
 const appStore = useAppStore()

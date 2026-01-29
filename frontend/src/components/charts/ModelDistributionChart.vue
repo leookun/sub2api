@@ -62,8 +62,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import { Doughnut } from 'vue-chartjs'
-import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import type { ModelStat } from '@/types'
 
 ChartJS.register(ArcElement, Tooltip, Legend)

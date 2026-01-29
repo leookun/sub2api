@@ -391,18 +391,8 @@ import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { useClipboard } from '@/composables/useClipboard'
 import { adminAPI } from '@/api/admin'
-import { formatDateTime } from '@/utils/format'
 import type { RedeemCode, RedeemCodeType, Group, GroupPlatform, SubscriptionType } from '@/types'
 import type { Column } from '@/components/common/types'
-import AppLayout from '@/components/layout/AppLayout.vue'
-import TablePageLayout from '@/components/layout/TablePageLayout.vue'
-import DataTable from '@/components/common/DataTable.vue'
-import Pagination from '@/components/common/Pagination.vue'
-import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
-import Select from '@/components/common/Select.vue'
-import GroupBadge from '@/components/common/GroupBadge.vue'
-import GroupOptionItem from '@/components/common/GroupOptionItem.vue'
-import Icon from '@/components/icons/Icon.vue'
 
 const appStore = useAppStore()
 const { copyToClipboard: clipboardCopy } = useClipboard()
@@ -467,7 +457,7 @@ const copyGeneratedCodes = async () => {
     setTimeout(() => {
       copiedAll.value = false
     }, 2000)
-  } catch (error) {
+  } catch {
     appStore.showError('复制失败')
   }
 }

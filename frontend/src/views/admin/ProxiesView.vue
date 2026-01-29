@@ -657,16 +657,6 @@ import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { Proxy, ProxyAccountSummary, ProxyProtocol } from '@/types'
 import type { Column } from '@/components/common/types'
-import AppLayout from '@/components/layout/AppLayout.vue'
-import TablePageLayout from '@/components/layout/TablePageLayout.vue'
-import DataTable from '@/components/common/DataTable.vue'
-import Pagination from '@/components/common/Pagination.vue'
-import BaseDialog from '@/components/common/BaseDialog.vue'
-import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
-import EmptyState from '@/components/common/EmptyState.vue'
-import Select from '@/components/common/Select.vue'
-import Icon from '@/components/icons/Icon.vue'
-import PlatformTypeBadge from '@/components/common/PlatformTypeBadge.vue'
 
 const appStore = useAppStore()
 
@@ -957,9 +947,9 @@ const handleBatchCreate = async () => {
     const skipped = result.skipped || 0
 
     if (created > 0) {
-      appStore.showSuccess(`成功导入 {created} 个代理，跳过 {skipped} 个重复`)
+      appStore.showSuccess(`成功导入 ${created} 个代理，跳过 ${skipped} 个重复`)
     } else {
-      appStore.showInfo(`全部 {skipped} 个代理已存在，跳过导入`)
+      appStore.showInfo(`全部 ${skipped} 个代理已存在，跳过导入`)
     }
 
     closeCreateModal()

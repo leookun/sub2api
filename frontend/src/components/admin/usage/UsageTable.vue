@@ -234,10 +234,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { formatDateTime } from '@/utils/format'
-import DataTable from '@/components/common/DataTable.vue'
-import EmptyState from '@/components/common/EmptyState.vue'
-import Icon from '@/components/icons/Icon.vue'
 import type { AdminUsageLog } from '@/types'
 
 defineProps(['data', 'loading'])

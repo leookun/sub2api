@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { SubscriptionType, GroupPlatform } from '@/types'
-import PlatformIcon from './PlatformIcon.vue'
 
 interface Props {
   name: string

@@ -143,7 +143,6 @@ import { computed, ref, watch } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { Account, TempUnschedulableStatus } from '@/types'
-import BaseDialog from '@/components/common/BaseDialog.vue'
 import { formatDateTime } from '@/utils/format'
 
 const props = defineProps<{
@@ -192,14 +191,14 @@ const remainingText = computed(() => {
   }
   const minutes = Math.ceil(remainingMs / 60000)
   if (minutes < 60) {
-    return `约 {minutes} 分钟`
+    return `约 ${minutes} 分钟`
   }
   const hours = Math.floor(minutes / 60)
   const rest = minutes % 60
   if (rest === 0) {
-    return `约 {hours} 小时`
+    return `约 ${hours} 小时`
   }
-  return `约 {hours} 小时 ${rest} 分钟`
+  return `约 ${hours} 小时 ${rest} 分钟`
 })
 
 const loadStatus = async () => {

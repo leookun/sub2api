@@ -21,16 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, h, onMounted } from 'vue'; import { useAuthStore } from '@/stores/auth'; import { formatDate } from '@/utils/format'
-import { authAPI } from '@/api'; import AppLayout from '@/components/layout/AppLayout.vue'
-import StatCard from '@/components/common/StatCard.vue'
-import ProfileInfoCard from '@/components/user/profile/ProfileInfoCard.vue'
-import ProfileEditForm from '@/components/user/profile/ProfileEditForm.vue'
-import ProfilePasswordForm from '@/components/user/profile/ProfilePasswordForm.vue'
-import ProfileTotpCard from '@/components/user/profile/ProfileTotpCard.vue'
-import { Icon } from '@/components/icons'
-
- const authStore = useAuthStore(); const user = computed(() => authStore.user)
+import { ref, computed, h, onMounted } from 'vue'; import { useAuthStore } from '@/stores/auth'; import { authAPI } from '@/api'; 
+const authStore = useAuthStore(); const user = computed(() => authStore.user)
 const contactInfo = ref('')
 
 const WalletIcon = { render: () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': '1.5' }, [h('path', { d: 'M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12' })]) }

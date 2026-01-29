@@ -486,27 +486,11 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { useAppStore } from '@/stores/app'
-import { formatDateTime } from '@/utils/format'
-import Icon from '@/components/icons/Icon.vue'
 
 import { adminAPI } from '@/api/admin'
 import type { AdminUser, UserAttributeDefinition } from '@/types'
 import type { BatchUserUsageStats } from '@/api/admin/dashboard'
 import type { Column } from '@/components/common/types'
-import AppLayout from '@/components/layout/AppLayout.vue'
-import TablePageLayout from '@/components/layout/TablePageLayout.vue'
-import DataTable from '@/components/common/DataTable.vue'
-import Pagination from '@/components/common/Pagination.vue'
-import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
-import EmptyState from '@/components/common/EmptyState.vue'
-import GroupBadge from '@/components/common/GroupBadge.vue'
-import Select from '@/components/common/Select.vue'
-import UserAttributesConfigModal from '@/components/user/UserAttributesConfigModal.vue'
-import UserCreateModal from '@/components/admin/user/UserCreateModal.vue'
-import UserEditModal from '@/components/admin/user/UserEditModal.vue'
-import UserApiKeysModal from '@/components/admin/user/UserApiKeysModal.vue'
-import UserAllowedGroupsModal from '@/components/admin/user/UserAllowedGroupsModal.vue'
-import UserBalanceModal from '@/components/admin/user/UserBalanceModal.vue'
 
 const appStore = useAppStore()
 

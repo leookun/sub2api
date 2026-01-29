@@ -135,8 +135,6 @@
 
 <script setup lang="ts">
 import { ref, computed, h, watch, type Component } from 'vue'
-import BaseDialog from '@/components/common/BaseDialog.vue'
-import Icon from '@/components/icons/Icon.vue'
 import { useClipboard } from '@/composables/useClipboard'
 import type { GroupPlatform } from '@/types'
 

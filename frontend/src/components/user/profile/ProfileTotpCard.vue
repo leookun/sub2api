@@ -104,8 +104,6 @@
 import { ref, onMounted } from 'vue'
 import { totpAPI } from '@/api'
 import type { TotpStatus } from '@/types'
-import TotpSetupModal from './TotpSetupModal.vue'
-import TotpDisableDialog from './TotpDisableDialog.vue'
 
 const loading = ref(true)
 const status = ref<TotpStatus | null>(null)

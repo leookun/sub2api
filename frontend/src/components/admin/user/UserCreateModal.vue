@@ -51,8 +51,6 @@
 import { reactive, watch } from 'vue'
  import { adminAPI } from '@/api/admin'
 import { useForm } from '@/composables/useForm'
-import BaseDialog from '@/components/common/BaseDialog.vue'
-import Icon from '@/components/icons/Icon.vue'
 
 const props = defineProps<{ show: boolean }>()
 const emit = defineEmits(['close', 'success']); const form = reactive({ email: '', password: '', username: '', notes: '', balance: 0, concurrency: 1 })

@@ -122,8 +122,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useAppStore } from '@/stores/app'
-import ModelIcon from '@/components/common/ModelIcon.vue'
-import Icon from '@/components/icons/Icon.vue'
 import { allModels, getModelsByPlatform } from '@/composables/useModelWhitelist'
 
 const props = defineProps<{

@@ -628,18 +628,6 @@ import { adminAPI } from '@/api/admin'
 import type { UserSubscription, Group, GroupPlatform, SubscriptionType } from '@/types'
 import type { SimpleUser } from '@/api/admin/usage'
 import type { Column } from '@/components/common/types'
-import { formatDateOnly } from '@/utils/format'
-import AppLayout from '@/components/layout/AppLayout.vue'
-import TablePageLayout from '@/components/layout/TablePageLayout.vue'
-import DataTable from '@/components/common/DataTable.vue'
-import Pagination from '@/components/common/Pagination.vue'
-import BaseDialog from '@/components/common/BaseDialog.vue'
-import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
-import EmptyState from '@/components/common/EmptyState.vue'
-import Select from '@/components/common/Select.vue'
-import GroupBadge from '@/components/common/GroupBadge.vue'
-import GroupOptionItem from '@/components/common/GroupOptionItem.vue'
-import Icon from '@/components/icons/Icon.vue'
 
 const appStore = useAppStore()
 
@@ -1179,11 +1167,11 @@ const formatResetTime = (windowStart: string, period: 'daily' | 'weekly' | 'mont
   const minutes = Math.floor((diffSeconds % 3600) / 60)
 
   if (days > 0) {
-    return `{days} 天 {hours} 小时后重置`
+    return `${days} 天 ${hours} 小时后重置`
   } else if (hours > 0) {
-    return `{hours} 小时 {minutes} 分钟后重置`
+    return `${hours} 小时 ${minutes} 分钟后重置`
   } else {
-    return `{minutes} 分钟后重置`
+    return `${minutes} 分钟后重置`
   }
 }
 

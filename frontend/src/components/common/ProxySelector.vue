@@ -170,7 +170,6 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { adminAPI } from '@/api/admin'
-import Icon from '@/components/icons/Icon.vue'
 import type { Proxy } from '@/types'
 
 interface ProxyTestResult {

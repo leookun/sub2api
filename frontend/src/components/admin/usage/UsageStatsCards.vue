@@ -53,7 +53,6 @@
 
 <script setup lang="ts">
 import type { AdminUsageStatsResponse } from '@/api/admin/usage'
-import Icon from '@/components/icons/Icon.vue'
 
 defineProps<{ stats: AdminUsageStatsResponse | null }>()
 

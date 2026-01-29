@@ -30,9 +30,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { adminAPI } from '@/api/admin'
-import { formatDateTime } from '@/utils/format'
 import type { AdminUser, ApiKey } from '@/types'
-import BaseDialog from '@/components/common/BaseDialog.vue'
 
 const props = defineProps<{ show: boolean, user: AdminUser | null }>()
 defineEmits(['close']); const apiKeys = ref<ApiKey[]>([]); const loading = ref(false)

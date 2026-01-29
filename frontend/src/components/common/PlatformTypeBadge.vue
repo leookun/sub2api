@@ -34,8 +34,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { AccountPlatform, AccountType } from '@/types'
-import PlatformIcon from './PlatformIcon.vue'
-import Icon from '@/components/icons/Icon.vue'
 
 interface Props {
   platform: AccountPlatform

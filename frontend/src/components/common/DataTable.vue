@@ -118,13 +118,15 @@
       </thead>
       <tbody class="table-body divide-y divide-gray-200 bg-white dark:divide-dark-700 dark:bg-dark-900">
         <!-- Loading skeleton -->
-        <tr v-for="i in 5" v-if="loading" :key="i">
-          <td v-for="column in columns" :key="column.key" :class="['whitespace-nowrap py-4', getAdaptivePaddingClass()]">
-            <div class="animate-pulse">
-              <div class="h-4 w-3/4 rounded bg-gray-200 dark:bg-dark-700"></div>
-            </div>
-          </td>
-        </tr>
+        <template v-if="loading">
+          <tr v-for="i in 5" :key="i">
+            <td v-for="column in columns" :key="column.key" :class="['whitespace-nowrap py-4', getAdaptivePaddingClass()]">
+              <div class="animate-pulse">
+                <div class="h-4 w-3/4 rounded bg-gray-200 dark:bg-dark-700"></div>
+              </div>
+            </td>
+          </tr>
+        </template>
 
         <!-- Empty state -->
         <tr v-else-if="!data || data.length === 0">
@@ -176,7 +178,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import type { Column } from './types'
-import Icon from '@/components/icons/Icon.vue'
 
 const emit = defineEmits<{
   sort: [key: string, order: 'asc' | 'desc']

@@ -161,11 +161,8 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import BaseDialog from '@/components/common/BaseDialog.vue'
-import Icon from '@/components/icons/Icon.vue'
 import { useAppStore } from '@/stores'
 import { opsAPI, type OpsErrorDetail } from '@/api/admin/ops'
-import { formatDateTime } from '@/utils/format'
 
 interface Props {
   show: boolean

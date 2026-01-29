@@ -77,7 +77,6 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import Icon from '@/components/icons/Icon.vue'
 
 interface DatePreset {
   labelKey: string

@@ -40,7 +40,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import GroupBadge from './GroupBadge.vue'
 import type { AdminGroup, GroupPlatform } from '@/types'
 
 interface Props {

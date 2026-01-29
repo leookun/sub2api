@@ -495,22 +495,9 @@
 	import { useClipboard } from '@/composables/useClipboard'
 
 import { keysAPI, authAPI, usageAPI, userGroupsAPI } from '@/api'
-import AppLayout from '@/components/layout/AppLayout.vue'
-import TablePageLayout from '@/components/layout/TablePageLayout.vue'
-	import DataTable from '@/components/common/DataTable.vue'
-	import Pagination from '@/components/common/Pagination.vue'
-	import BaseDialog from '@/components/common/BaseDialog.vue'
-	import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
-	import EmptyState from '@/components/common/EmptyState.vue'
-	import Select from '@/components/common/Select.vue'
-	import Icon from '@/components/icons/Icon.vue'
-	import UseKeyModal from '@/components/keys/UseKeyModal.vue'
-	import GroupBadge from '@/components/common/GroupBadge.vue'
-	import GroupOptionItem from '@/components/common/GroupOptionItem.vue'
-	import type { ApiKey, Group, PublicSettings, SubscriptionType, GroupPlatform } from '@/types'
+import type { ApiKey, Group, PublicSettings, SubscriptionType, GroupPlatform } from '@/types'
 import type { Column } from '@/components/common/types'
 import type { BatchApiKeyUsageStats } from '@/api/usage'
-import { formatDateTime } from '@/utils/format'
 
 interface GroupOption {
   value: number
@@ -743,7 +730,7 @@ const toggleKeyStatus = async (key: ApiKey) => {
       newStatus === 'active' ? 'API 密钥已启用' : 'API 密钥已禁用'
     )
     loadApiKeys()
-  } catch (error) {
+  } catch {
     appStore.showError('更新 API 密钥状态失败')
   }
 }
@@ -774,7 +761,7 @@ const changeGroup = async (key: ApiKey, newGroupId: number | null) => {
     await keysAPI.update(key.id, { group_id: newGroupId })
     appStore.showSuccess('分组更换成功')
     loadApiKeys()
-  } catch (error) {
+  } catch {
     appStore.showError('更换分组失败')
   }
 }
@@ -965,7 +952,7 @@ const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
         appStore.showError('CC-Switch 未安装或协议处理程序未注册。请先安装 CC-Switch 或手动复制 API 密钥。')
       }
     }, 100)
-  } catch (error) {
+  } catch {
     appStore.showError('CC-Switch 未安装或协议处理程序未注册。请先安装 CC-Switch 或手动复制 API 密钥。')
   }
 }

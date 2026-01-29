@@ -38,7 +38,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import BaseDialog from './BaseDialog.vue'
 
 interface Props {
   show: boolean

@@ -384,7 +384,6 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useAuthStore, useAppStore } from '@/stores'
 import { performUpdate, restartService } from '@/api/admin/system'
-import Icon from '@/components/icons/Icon.vue'
 
 const props = defineProps<{
   version?: string
@@ -466,7 +465,7 @@ async function handleRestart() {
   try {
     await restartService()
     // Service will restart, page will reload automatically or show disconnected
-  } catch (error) {
+  } catch {
     // Expected - connection will be lost during restart
     console.log('Service restarting...')
   }

@@ -227,8 +227,6 @@ import { ref, onMounted } from 'vue'
 import { useAppStore } from '@/stores/app'
 import subscriptionsAPI from '@/api/subscriptions'
 import type { UserSubscription } from '@/types'
-import AppLayout from '@/components/layout/AppLayout.vue'
-import Icon from '@/components/icons/Icon.vue'
 import { formatDateOnly } from '@/utils/format'
 
 const appStore = useAppStore()

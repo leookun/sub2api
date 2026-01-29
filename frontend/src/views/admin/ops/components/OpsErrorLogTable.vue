@@ -180,9 +180,7 @@
 </template>
 
 <script setup lang="ts">
-import Pagination from '@/components/common/Pagination.vue'
 import type { OpsErrorLog } from '@/api/admin/ops'
-import { getSeverityClass, formatDateTime } from '../utils/opsFormatters'
 
 function isUpstreamRow(log: OpsErrorLog): boolean {
   const phase = String(log.phase || '').toLowerCase()

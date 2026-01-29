@@ -648,11 +648,6 @@ import { ref, watch, computed } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { adminAPI } from '@/api/admin'
 import type { Proxy, AdminGroup } from '@/types'
-import BaseDialog from '@/components/common/BaseDialog.vue'
-import Select from '@/components/common/Select.vue'
-import ProxySelector from '@/components/common/ProxySelector.vue'
-import GroupSelector from '@/components/common/GroupSelector.vue'
-import Icon from '@/components/icons/Icon.vue'
 
 interface Props {
   show: boolean

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { RouterView, useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { onMounted, watch } from 'vue'
-import Toast from '@/components/common/Toast.vue'
-import NavigationProgress from '@/components/common/NavigationProgress.vue'
 import { useAppStore, useAuthStore, useSubscriptionStore } from '@/stores'
 import { getSetupStatus } from '@/api/setup'
 

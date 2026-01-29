@@ -119,8 +119,6 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import Icon from '@/components/icons/Icon.vue'
-import Select from './Select.vue'
 
 interface Props {
   total: number
