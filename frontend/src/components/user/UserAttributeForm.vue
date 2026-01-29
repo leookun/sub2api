@@ -70,8 +70,8 @@
             type="checkbox"
             :value="opt.value"
             :checked="isOptionSelected(attr.id, opt.value)"
-            @change="toggleMultiSelectOption(attr.id, opt.value)"
             class="h-4 w-4 rounded border-gray-300 text-primary-600"
+            @change="toggleMultiSelectOption(attr.id, opt.value)"
           />
           <span class="text-sm text-gray-700 dark:text-gray-300">{{ opt.label }}</span>
         </label>

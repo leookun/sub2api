@@ -4,14 +4,14 @@
       <template #actions>
         <div class="flex justify-end gap-3">
           <button
-            @click="loadCodes"
             :disabled="loading"
             class="btn btn-secondary"
             :title="'刷新'"
+            @click="loadCodes"
           >
             <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
           </button>
-          <button @click="showCreateDialog = true" class="btn btn-primary">
+          <button class="btn btn-primary" @click="showCreateDialog = true">
             <Icon name="plus" size="md" class="mr-1" />
             {{ '创建优惠码' }}
           </button>
@@ -46,7 +46,6 @@
             <div class="flex items-center space-x-2">
               <code class="font-mono text-sm text-gray-900 dark:text-gray-100">{{ value }}</code>
               <button
-                @click="copyToClipboard(value)"
                 :class="[
                   'flex items-center transition-colors',
                   copiedCode === value
@@ -54,6 +53,7 @@
                     : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                 ]"
                 :title="copiedCode === value ? '已复制！' : '复制到剪贴板'"
+                @click="copyToClipboard(value)"
               >
                 <Icon v-if="copiedCode !== value" name="copy" size="sm" :stroke-width="2" />
                 <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,30 +106,30 @@
           <template #cell-actions="{ row }">
             <div class="flex items-center space-x-1">
               <button
-                @click="copyRegisterLink(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400"
                 :title="'复制注册链接'"
+                @click="copyRegisterLink(row)"
               >
                 <Icon name="link" size="sm" />
               </button>
               <button
-                @click="handleViewUsages(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400"
                 :title="'查看使用记录'"
+                @click="handleViewUsages(row)"
               >
                 <Icon name="eye" size="sm" />
               </button>
               <button
-                @click="handleEdit(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-dark-600 dark:hover:text-gray-300"
                 :title="'编辑'"
+                @click="handleEdit(row)"
               >
                 <Icon name="edit" size="sm" />
               </button>
               <button
-                @click="handleDelete(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
                 :title="'删除'"
+                @click="handleDelete(row)"
               >
                 <Icon name="trash" size="sm" />
               </button>
@@ -157,7 +157,7 @@
       width="normal"
       @close="showCreateDialog = false"
     >
-      <form id="create-promo-form" @submit.prevent="handleCreate" class="space-y-4">
+      <form id="create-promo-form" class="space-y-4" @submit.prevent="handleCreate">
         <div>
           <label class="input-label">
             {{ '优惠码' }}
@@ -219,11 +219,11 @@
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button type="button" @click="showCreateDialog = false" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="showCreateDialog = false">
             {{ '取消' }}
           </button>
           <button type="submit" form="create-promo-form" :disabled="creating" class="btn btn-primary">
-            {{ creating ? t('common.creating') : '创建' }}
+            {{ creating ? 'common.creating' : '创建' }}
           </button>
         </div>
       </template>
@@ -236,7 +236,7 @@
       width="normal"
       @close="closeEditDialog"
     >
-      <form id="edit-promo-form" @submit.prevent="handleUpdate" class="space-y-4">
+      <form id="edit-promo-form" class="space-y-4" @submit.prevent="handleUpdate">
         <div>
           <label class="input-label">{{ '优惠码' }}</label>
           <input
@@ -297,7 +297,7 @@
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button type="button" @click="closeEditDialog" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="closeEditDialog">
             {{ '取消' }}
           </button>
           <button type="submit" form="edit-promo-form" :disabled="updating" class="btn btn-primary">
@@ -359,7 +359,7 @@
       </div>
       <template #footer>
         <div class="flex justify-end">
-          <button type="button" @click="showUsagesDialog = false" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="showUsagesDialog = false">
             {{ '关闭' }}
           </button>
         </div>

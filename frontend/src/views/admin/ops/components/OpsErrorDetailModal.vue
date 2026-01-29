@@ -90,7 +90,7 @@
       <div v-if="showUpstreamList" class="rounded-xl bg-gray-50 p-6 dark:bg-dark-900">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <h3 class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white">{{ '上游错误' }}</h3>
-          <div class="text-xs text-gray-500 dark:text-gray-400" v-if="correlatedUpstreamLoading">{{ '加载中...' }}</div>
+          <div v-if="correlatedUpstreamLoading" class="text-xs text-gray-500 dark:text-gray-400">{{ '加载中...' }}</div>
         </div>
 
         <div v-if="!correlatedUpstreamLoading && !correlatedUpstreamErrors.length" class="mt-3 text-sm text-gray-500 dark:text-gray-400">

@@ -8,8 +8,8 @@
     <form
       v-if="account"
       id="edit-account-form"
-      @submit.prevent="handleSubmit"
       class="space-y-5"
+      @submit.prevent="handleSubmit"
     >
       <div>
         <label class="input-label">{{ '名称' }}</label>
@@ -69,13 +69,13 @@
           <div class="mb-4 flex gap-2">
             <button
               type="button"
-              @click="modelRestrictionMode = 'whitelist'"
               :class="[
                 'flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all',
                 modelRestrictionMode === 'whitelist'
                   ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-400 dark:hover:bg-dark-500'
               ]"
+              @click="modelRestrictionMode = 'whitelist'"
             >
               <svg
                 class="mr-1.5 inline h-4 w-4"
@@ -94,13 +94,13 @@
             </button>
             <button
               type="button"
-              @click="modelRestrictionMode = 'mapping'"
               :class="[
                 'flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all',
                 modelRestrictionMode === 'mapping'
                   ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-400 dark:hover:bg-dark-500'
               ]"
+              @click="modelRestrictionMode = 'mapping'"
             >
               <svg
                 class="mr-1.5 inline h-4 w-4"
@@ -185,8 +185,8 @@
                 />
                 <button
                   type="button"
-                  @click="removeModelMapping(index)"
                   class="rounded-lg p-2 text-red-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
+                  @click="removeModelMapping(index)"
                 >
                   <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path
@@ -202,8 +202,8 @@
 
             <button
               type="button"
-              @click="addModelMapping"
               class="mb-3 w-full rounded-lg border-2 border-dashed border-gray-300 px-4 py-2 text-gray-600 transition-colors hover:border-gray-400 hover:text-gray-700 dark:border-dark-500 dark:text-gray-400 dark:hover:border-dark-400 dark:hover:text-gray-300"
+              @click="addModelMapping"
             >
               <svg
                 class="mr-1 inline h-4 w-4"
@@ -227,8 +227,8 @@
                 v-for="preset in presetMappings"
                 :key="preset.label"
                 type="button"
-                @click="addPresetMapping(preset.from, preset.to)"
                 :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
+                @click="addPresetMapping(preset.from, preset.to)"
               >
                 + {{ preset.label }}
               </button>
@@ -247,11 +247,11 @@
             </div>
             <button
               type="button"
-              @click="customErrorCodesEnabled = !customErrorCodesEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 customErrorCodesEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="customErrorCodesEnabled = !customErrorCodesEnabled"
             >
               <span
                 :class="[
@@ -276,13 +276,13 @@
                 v-for="code in commonErrorCodes"
                 :key="code.value"
                 type="button"
-                @click="toggleErrorCode(code.value)"
                 :class="[
                   'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
                   selectedErrorCodes.includes(code.value)
                     ? 'bg-red-100 text-red-700 ring-1 ring-red-500 dark:bg-red-900/30 dark:text-red-400'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-400 dark:hover:bg-dark-500'
                 ]"
+                @click="toggleErrorCode(code.value)"
               >
                 {{ code.value }} {{ code.label }}
               </button>
@@ -299,7 +299,7 @@
                 :placeholder="'输入错误码 (100-599)'"
                 @keyup.enter="addCustomErrorCode"
               />
-              <button type="button" @click="addCustomErrorCode" class="btn btn-secondary px-3">
+              <button type="button" class="btn btn-secondary px-3" @click="addCustomErrorCode">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
                     stroke-linecap="round"
@@ -321,8 +321,8 @@
                 {{ code }}
                 <button
                   type="button"
-                  @click="removeErrorCode(code)"
                   class="hover:text-red-900 dark:hover:text-red-300"
+                  @click="removeErrorCode(code)"
                 >
                   <Icon name="x" size="sm" :stroke-width="2" />
                 </button>
@@ -375,11 +375,11 @@
           </div>
           <button
             type="button"
-            @click="tempUnschedEnabled = !tempUnschedEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
               tempUnschedEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
             ]"
+            @click="tempUnschedEnabled = !tempUnschedEnabled"
           >
             <span
               :class="[
@@ -403,8 +403,8 @@
               v-for="preset in tempUnschedPresets"
               :key="preset.label"
               type="button"
-              @click="addTempUnschedRule(preset.rule)"
               class="rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-300 dark:hover:bg-dark-500"
+              @click="addTempUnschedRule(preset.rule)"
             >
               + {{ preset.label }}
             </button>
@@ -424,16 +424,16 @@
                   <button
                     type="button"
                     :disabled="index === 0"
-                    @click="moveTempUnschedRule(index, -1)"
                     class="rounded p-1 text-gray-400 transition-colors hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-gray-200"
+                    @click="moveTempUnschedRule(index, -1)"
                   >
                     <Icon name="chevronUp" size="sm" :stroke-width="2" />
                   </button>
                   <button
                     type="button"
                     :disabled="index === tempUnschedRules.length - 1"
-                    @click="moveTempUnschedRule(index, 1)"
                     class="rounded p-1 text-gray-400 transition-colors hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-gray-200"
+                    @click="moveTempUnschedRule(index, 1)"
                   >
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -441,8 +441,8 @@
                   </button>
                   <button
                     type="button"
-                    @click="removeTempUnschedRule(index)"
                     class="rounded p-1 text-red-500 transition-colors hover:text-red-600"
+                    @click="removeTempUnschedRule(index)"
                   >
                     <Icon name="x" size="sm" :stroke-width="2" />
                   </button>
@@ -496,8 +496,8 @@
 
           <button
             type="button"
-            @click="addTempUnschedRule()"
             class="w-full rounded-lg border-2 border-dashed border-gray-300 px-4 py-2 text-sm text-gray-600 transition-colors hover:border-gray-400 hover:text-gray-700 dark:border-dark-500 dark:text-gray-400 dark:hover:border-dark-400 dark:hover:text-gray-300"
+            @click="addTempUnschedRule()"
           >
             <svg
               class="mr-1 inline h-4 w-4"
@@ -528,11 +528,11 @@
           </div>
           <button
             type="button"
-            @click="interceptWarmupRequests = !interceptWarmupRequests"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
               interceptWarmupRequests ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
             ]"
+            @click="interceptWarmupRequests = !interceptWarmupRequests"
           >
             <span
               :class="[
@@ -588,11 +588,11 @@
           </div>
           <button
             type="button"
-            @click="autoPauseOnExpired = !autoPauseOnExpired"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
               autoPauseOnExpired ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
             ]"
+            @click="autoPauseOnExpired = !autoPauseOnExpired"
           >
             <span
               :class="[
@@ -627,11 +627,11 @@
             </div>
             <button
               type="button"
-              @click="windowCostEnabled = !windowCostEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 windowCostEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="windowCostEnabled = !windowCostEnabled"
             >
               <span
                 :class="[
@@ -687,11 +687,11 @@
             </div>
             <button
               type="button"
-              @click="sessionLimitEnabled = !sessionLimitEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 sessionLimitEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="sessionLimitEnabled = !sessionLimitEnabled"
             >
               <span
                 :class="[
@@ -744,11 +744,11 @@
             </div>
             <button
               type="button"
-              @click="tlsFingerprintEnabled = !tlsFingerprintEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 tlsFingerprintEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="tlsFingerprintEnabled = !tlsFingerprintEnabled"
             >
               <span
                 :class="[
@@ -771,11 +771,11 @@
             </div>
             <button
               type="button"
-              @click="sessionIdMaskingEnabled = !sessionIdMaskingEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 sessionIdMaskingEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="sessionIdMaskingEnabled = !sessionIdMaskingEnabled"
             >
               <span
                 :class="[
@@ -798,8 +798,8 @@
         <div v-if="account?.platform === 'antigravity'" class="flex items-center gap-2">
           <label class="flex cursor-not-allowed items-center gap-2 opacity-60">
             <input
-              type="checkbox"
               v-model="mixedScheduling"
+              type="checkbox"
               disabled
               class="h-4 w-4 cursor-not-allowed rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-dark-500"
             />
@@ -835,12 +835,11 @@
         :mixed-scheduling="mixedScheduling"
         data-tour="account-form-groups"
       />
-
-    </form>
+</form>
 
     <template #footer>
       <div v-if="account" class="flex justify-end gap-3">
-        <button @click="handleClose" type="button" class="btn btn-secondary">
+        <button type="button" class="btn btn-secondary" @click="handleClose">
           {{ '取消' }}
         </button>
         <button

@@ -45,17 +45,17 @@
           <!-- Right: actions -->
           <div class="flex w-full flex-shrink-0 flex-wrap items-center justify-end gap-3 lg:w-auto">
             <button
-              @click="loadGroups"
               :disabled="loading"
               class="btn btn-secondary"
               :title="'刷新'"
+              @click="loadGroups"
             >
               <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
             </button>
             <button
-              @click="showCreateModal = true"
               class="btn btn-primary"
               data-tour="groups-create-btn"
+              @click="showCreateModal = true"
             >
               <Icon name="plus" size="md" class="mr-2" />
               {{ '创建分组' }}
@@ -84,7 +84,7 @@
               ]"
             >
               <PlatformIcon :platform="value" size="xs" />
-              {{ t('admin.groups.platforms.' + value) }}
+              {{ value === 'anthropic' ? 'Anthropic' : value === 'openai' ? 'OpenAI' : value === 'gemini' ? 'Gemini' : 'Antigravity' }}
             </span>
           </template>
 
@@ -160,22 +160,22 @@
 
           <template #cell-status="{ value }">
             <span :class="['badge', value === 'active' ? 'badge-success' : 'badge-danger']">
-              {{ t('admin.accounts.status.' + value) }}
+              {{ value === 'active' ? '正常' : '停用' }}
             </span>
           </template>
 
           <template #cell-actions="{ row }">
             <div class="flex items-center gap-1">
               <button
-                @click="handleEdit(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
+                @click="handleEdit(row)"
               >
                 <Icon name="edit" size="sm" />
                 <span class="text-xs">{{ '编辑' }}</span>
               </button>
               <button
-                @click="handleDelete(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                @click="handleDelete(row)"
               >
                 <Icon name="trash" size="sm" />
                 <span class="text-xs">{{ '删除' }}</span>
@@ -213,7 +213,7 @@
       width="normal"
       @close="closeCreateModal"
     >
-      <form id="create-group-form" @submit.prevent="handleCreateGroup" class="space-y-5">
+      <form id="create-group-form" class="space-y-5" @submit.prevent="handleCreateGroup">
         <div>
           <label class="input-label">{{ '名称' }}</label>
           <input
@@ -291,11 +291,11 @@
           <div class="flex items-center gap-3">
             <button
               type="button"
-              @click="createForm.is_exclusive = !createForm.is_exclusive"
               :class="[
                 'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
                 createForm.is_exclusive ? 'bg-primary-500' : 'bg-gray-300 dark:bg-dark-600'
               ]"
+              @click="createForm.is_exclusive = !createForm.is_exclusive"
             >
               <span
                 :class="[
@@ -431,11 +431,11 @@
           <div class="flex items-center gap-3">
             <button
               type="button"
-              @click="createForm.claude_code_only = !createForm.claude_code_only"
               :class="[
                 'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
                 createForm.claude_code_only ? 'bg-primary-500' : 'bg-gray-300 dark:bg-dark-600'
               ]"
+              @click="createForm.claude_code_only = !createForm.claude_code_only"
             >
               <span
                 :class="[
@@ -488,11 +488,11 @@
           <div class="flex items-center gap-3 mb-3">
             <button
               type="button"
-              @click="createForm.model_routing_enabled = !createForm.model_routing_enabled"
               :class="[
                 'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
                 createForm.model_routing_enabled ? 'bg-primary-500' : 'bg-gray-300 dark:bg-dark-600'
               ]"
+              @click="createForm.model_routing_enabled = !createForm.model_routing_enabled"
             >
               <span
                 :class="[
@@ -541,8 +541,8 @@
                         {{ account.name }}
                         <button
                           type="button"
-                          @click="removeSelectedAccount(index, account.id, false)"
                           class="ml-0.5 text-primary-500 hover:text-primary-700 dark:hover:text-primary-200"
+                          @click="removeSelectedAccount(index, account.id, false)"
                         >
                           <Icon name="x" size="xs" />
                         </button>
@@ -567,10 +567,10 @@
                           v-for="account in accountSearchResults[`create-${index}`]"
                           :key="account.id"
                           type="button"
-                          @click="selectAccount(index, account, false)"
                           class="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-dark-700"
                           :class="{ 'opacity-50': rule.accounts.some(a => a.id === account.id) }"
                           :disabled="rule.accounts.some(a => a.id === account.id)"
+                          @click="selectAccount(index, account, false)"
                         >
                           <span>{{ account.name }}</span>
                           <span class="ml-2 text-xs text-gray-400">#{{ account.id }}</span>
@@ -582,9 +582,9 @@
                 </div>
                 <button
                   type="button"
-                  @click="removeCreateRoutingRule(index)"
                   class="mt-5 p-1.5 text-gray-400 hover:text-red-500 transition-colors"
                   :title="'删除规则'"
+                  @click="removeCreateRoutingRule(index)"
                 >
                   <Icon name="trash" size="sm" />
                 </button>
@@ -595,19 +595,18 @@
           <button
             v-if="createForm.model_routing_enabled"
             type="button"
-            @click="addCreateRoutingRule"
             class="mt-3 flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+            @click="addCreateRoutingRule"
           >
             <Icon name="plus" size="sm" />
             {{ '添加路由规则' }}
           </button>
         </div>
-
-      </form>
+</form>
 
       <template #footer>
         <div class="flex justify-end gap-3 pt-4">
-          <button @click="closeCreateModal" type="button" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="closeCreateModal">
             {{ '取消' }}
           </button>
           <button
@@ -653,8 +652,8 @@
       <form
         v-if="editingGroup"
         id="edit-group-form"
-        @submit.prevent="handleUpdateGroup"
         class="space-y-5"
+        @submit.prevent="handleUpdateGroup"
       >
         <div>
           <label class="input-label">{{ '名称' }}</label>
@@ -727,11 +726,11 @@
           <div class="flex items-center gap-3">
             <button
               type="button"
-              @click="editForm.is_exclusive = !editForm.is_exclusive"
               :class="[
                 'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
                 editForm.is_exclusive ? 'bg-primary-500' : 'bg-gray-300 dark:bg-dark-600'
               ]"
+              @click="editForm.is_exclusive = !editForm.is_exclusive"
             >
               <span
                 :class="[
@@ -875,11 +874,11 @@
           <div class="flex items-center gap-3">
             <button
               type="button"
-              @click="editForm.claude_code_only = !editForm.claude_code_only"
               :class="[
                 'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
                 editForm.claude_code_only ? 'bg-primary-500' : 'bg-gray-300 dark:bg-dark-600'
               ]"
+              @click="editForm.claude_code_only = !editForm.claude_code_only"
             >
               <span
                 :class="[
@@ -932,11 +931,11 @@
           <div class="flex items-center gap-3 mb-3">
             <button
               type="button"
-              @click="editForm.model_routing_enabled = !editForm.model_routing_enabled"
               :class="[
                 'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
                 editForm.model_routing_enabled ? 'bg-primary-500' : 'bg-gray-300 dark:bg-dark-600'
               ]"
+              @click="editForm.model_routing_enabled = !editForm.model_routing_enabled"
             >
               <span
                 :class="[
@@ -985,8 +984,8 @@
                         {{ account.name }}
                         <button
                           type="button"
-                          @click="removeSelectedAccount(index, account.id, true)"
                           class="ml-0.5 text-primary-500 hover:text-primary-700 dark:hover:text-primary-200"
+                          @click="removeSelectedAccount(index, account.id, true)"
                         >
                           <Icon name="x" size="xs" />
                         </button>
@@ -1011,10 +1010,10 @@
                           v-for="account in accountSearchResults[`edit-${index}`]"
                           :key="account.id"
                           type="button"
-                          @click="selectAccount(index, account, true)"
                           class="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-dark-700"
                           :class="{ 'opacity-50': rule.accounts.some(a => a.id === account.id) }"
                           :disabled="rule.accounts.some(a => a.id === account.id)"
+                          @click="selectAccount(index, account, true)"
                         >
                           <span>{{ account.name }}</span>
                           <span class="ml-2 text-xs text-gray-400">#{{ account.id }}</span>
@@ -1026,9 +1025,9 @@
                 </div>
                 <button
                   type="button"
-                  @click="removeEditRoutingRule(index)"
                   class="mt-5 p-1.5 text-gray-400 hover:text-red-500 transition-colors"
                   :title="'删除规则'"
+                  @click="removeEditRoutingRule(index)"
                 >
                   <Icon name="trash" size="sm" />
                 </button>
@@ -1039,19 +1038,18 @@
           <button
             v-if="editForm.model_routing_enabled"
             type="button"
-            @click="addEditRoutingRule"
             class="mt-3 flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+            @click="addEditRoutingRule"
           >
             <Icon name="plus" size="sm" />
             {{ '添加路由规则' }}
           </button>
         </div>
-
-      </form>
+</form>
 
       <template #footer>
         <div class="flex justify-end gap-3 pt-4">
-          <button @click="closeEditModal" type="button" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="closeEditModal">
             {{ '取消' }}
           </button>
           <button

@@ -41,7 +41,7 @@
       </div>
 
       <!-- Form State -->
-      <form v-else @submit.prevent="handleSubmit" class="space-y-5">
+      <form v-else class="space-y-5" @submit.prevent="handleSubmit">
         <!-- Email Input -->
         <div>
           <label for="email" class="input-label">

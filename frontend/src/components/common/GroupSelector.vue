@@ -17,8 +17,8 @@
           type="checkbox"
           :value="group.id"
           :checked="modelValue.includes(group.id)"
-          @change="handleChange(group.id, ($event.target as HTMLInputElement).checked)"
           class="h-3.5 w-3.5 shrink-0 rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-dark-500"
+          @change="handleChange(group.id, ($event.target as HTMLInputElement).checked)"
         />
         <GroupBadge
           :name="group.name"

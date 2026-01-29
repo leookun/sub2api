@@ -24,7 +24,7 @@
           <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
         </div>
 
-        <form v-else @submit.prevent="handleDisable" class="space-y-4">
+        <form v-else class="space-y-4" @submit.prevent="handleDisable">
           <!-- Email verification -->
           <div v-if="verificationMethod === 'email'">
             <label class="input-label">{{ '邮箱验证码' }}</label>
@@ -43,7 +43,7 @@
                 :disabled="sendingCode || codeCooldown > 0"
                 @click="handleSendCode"
               >
-                {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? t('common.sending') : '发送验证码') }}
+                {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? 'common.sending' : '发送验证码') }}
               </button>
             </div>
           </div>

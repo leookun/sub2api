@@ -29,7 +29,7 @@
       </div>
 
       <!-- Verification Form -->
-      <form v-else @submit.prevent="handleVerify" class="space-y-5">
+      <form v-else class="space-y-5" @submit.prevent="handleVerify">
         <!-- Verification Code Input -->
         <div>
           <label for="code" class="input-label text-center">
@@ -139,11 +139,11 @@
           <button
             v-else
             type="button"
-            @click="handleResendCode"
             :disabled="
               isSendingCode || (turnstileEnabled && showResendTurnstile && !resendTurnstileToken)
             "
             class="text-sm text-primary-600 transition-colors hover:text-primary-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-primary-400 dark:hover:text-primary-300"
+            @click="handleResendCode"
           >
             <span v-if="isSendingCode">{{ '发送中...' }}</span>
             <span v-else-if="turnstileEnabled && !showResendTurnstile">
@@ -158,8 +158,8 @@
     <!-- Footer -->
     <template #footer>
       <button
-        @click="handleBack"
         class="flex items-center gap-2 text-gray-500 transition-colors hover:text-gray-700 dark:text-dark-400 dark:hover:text-gray-300"
+        @click="handleBack"
       >
         <Icon name="arrowLeft" size="sm" />
         Back to registration

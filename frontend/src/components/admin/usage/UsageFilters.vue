@@ -18,9 +18,9 @@
           <button
             v-if="filters.user_id"
             type="button"
-            @click="clearUser"
             class="absolute right-2 top-9 text-gray-400"
             aria-label="Clear user filter"
+            @click="clearUser"
           >
             ✕
           </button>
@@ -32,8 +32,8 @@
               v-for="u in userResults"
               :key="u.id"
               type="button"
-              @click="selectUser(u)"
               class="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+              @click="selectUser(u)"
             >
               <span>{{ u.email }}</span>
               <span class="ml-2 text-xs text-gray-400">#{{ u.id }}</span>
@@ -55,9 +55,9 @@
           <button
             v-if="filters.api_key_id"
             type="button"
-            @click="onClearApiKey"
             class="absolute right-2 top-9 text-gray-400"
             aria-label="Clear API key filter"
+            @click="onClearApiKey"
           >
             ✕
           </button>
@@ -69,8 +69,8 @@
               v-for="k in apiKeyResults"
               :key="k.id"
               type="button"
-              @click="selectApiKey(k)"
               class="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+              @click="selectApiKey(k)"
             >
               <span class="truncate">{{ k.name || `#${k.id}` }}</span>
               <span class="ml-2 text-xs text-gray-400">#{{ k.id }}</span>
@@ -98,9 +98,9 @@
           <button
             v-if="filters.account_id"
             type="button"
-            @click="clearAccount"
             class="absolute right-2 top-9 text-gray-400"
             aria-label="Clear account filter"
+            @click="clearAccount"
           >
             ✕
           </button>
@@ -112,8 +112,8 @@
               v-for="a in accountResults"
               :key="a.id"
               type="button"
-              @click="selectAccount(a)"
               class="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+              @click="selectAccount(a)"
             >
               <span class="truncate">{{ a.name }}</span>
               <span class="ml-2 text-xs text-gray-400">#{{ a.id }}</span>
@@ -154,13 +154,13 @@
 
       <!-- Right: actions -->
       <div v-if="showActions" class="flex w-full flex-wrap items-center justify-end gap-3 sm:w-auto">
-        <button type="button" @click="$emit('reset')" class="btn btn-secondary">
+        <button type="button" class="btn btn-secondary" @click="$emit('reset')">
           {{ '重置' }}
         </button>
-        <button type="button" @click="$emit('cleanup')" class="btn btn-danger">
+        <button type="button" class="btn btn-danger" @click="$emit('cleanup')">
           {{ '清理' }}
         </button>
-        <button type="button" @click="$emit('export')" :disabled="exporting" class="btn btn-primary">
+        <button type="button" :disabled="exporting" class="btn btn-primary" @click="$emit('export')">
           {{ '导出 Excel' }}
         </button>
       </div>

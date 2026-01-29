@@ -327,12 +327,12 @@ onMounted(() => {
       </div>
 
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
-        <div class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">{{ t('admin.ops.runtime.metricThresholds') }}</div>
-        <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.runtime.metricThresholdsHint') }}</p>
+        <div class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">{{ 'admin.ops.runtime.metricThresholds' }}</div>
+        <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">{{ 'admin.ops.runtime.metricThresholdsHint' }}</p>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.runtime.slaMinPercent') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ 'admin.ops.runtime.slaMinPercent' }}</div>
             <input
               v-model.number="draftAlert.thresholds.sla_percent_min"
               type="number"
@@ -342,13 +342,13 @@ onMounted(() => {
               class="input"
               placeholder="99.5"
             />
-            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.runtime.slaMinPercentHint') }}</p>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ 'admin.ops.runtime.slaMinPercentHint' }}</p>
           </div>
 
 
 
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.runtime.ttftP99MaxMs') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ 'admin.ops.runtime.ttftP99MaxMs' }}</div>
             <input
               v-model.number="draftAlert.thresholds.ttft_p99_ms_max"
               type="number"
@@ -357,11 +357,11 @@ onMounted(() => {
               class="input"
               placeholder="500"
             />
-            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.runtime.ttftP99MaxMsHint') }}</p>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ 'admin.ops.runtime.ttftP99MaxMsHint' }}</p>
           </div>
 
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.runtime.requestErrorRateMaxPercent') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ 'admin.ops.runtime.requestErrorRateMaxPercent' }}</div>
             <input
               v-model.number="draftAlert.thresholds.request_error_rate_percent_max"
               type="number"
@@ -371,11 +371,11 @@ onMounted(() => {
               class="input"
               placeholder="5"
             />
-            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.runtime.requestErrorRateMaxPercentHint') }}</p>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ 'admin.ops.runtime.requestErrorRateMaxPercentHint' }}</p>
           </div>
 
           <div>
-            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ t('admin.ops.runtime.upstreamErrorRateMaxPercent') }}</div>
+            <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">{{ 'admin.ops.runtime.upstreamErrorRateMaxPercent' }}</div>
             <input
               v-model.number="draftAlert.thresholds.upstream_error_rate_percent_max"
               type="number"
@@ -385,7 +385,7 @@ onMounted(() => {
               class="input"
               placeholder="5"
             />
-            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.runtime.upstreamErrorRateMaxPercentHint') }}</p>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ 'admin.ops.runtime.upstreamErrorRateMaxPercentHint' }}</p>
           </div>
         </div>
       </div>

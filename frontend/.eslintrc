@@ -1,0 +1,83 @@
+{
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "parser": "@typescript-eslint/parser",
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "tsx": true,
+      "jsx": true
+    }
+  },
+  "plugins": ["unused-imports"],
+  "extends": [
+    "plugin:vue/vue3-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "lodash-es",
+            "message": "禁止直接导入 lodash-es，请使用全局别名，例如 _cloneDeep, _set, _toNumber"
+          }
+        ]
+      }
+    ],
+    "@typescript-eslint/no-this-alias": 0,
+    "vue/require-explicit-emits": 0,
+    "prettier/prettier": 0,
+    "vue/html-self-closing": 0,
+    "vue/first-attribute-linebreak": 0,
+    "vue/valid-define-emits": 0,
+    "vue/singleline-html-element-content-newline": 0,
+    "vue/html-closing-bracket-newline": 0,
+    "vue/html-indent": 0,
+    "vue/one-component-per-file": 0,
+    "vue/max-attributes-per-line": 0,
+    "no-undef": 0,
+    "vue/v-on-event-hyphenation": 0,
+    "vue/valid-v-else": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "vue/no-template-shadow": 0,
+    "vue/no-v-html": 0,
+    "no-control-regex": 0,
+    "no-useless-escape": 0,
+    "vue/require-prop-types": 0,
+    "vue/require-default-prop": 0,
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": [
+      "error",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "unused-imports/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "vue/no-parsing-error": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "vue/multi-word-component-names": 0,
+    "@typescript-eslint/ban-types": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "prefer-const": 0,
+    "@typescript-eslint/no-non-null-asserted-optional-chain": 0,
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": 0,
+    "camelcase": 0
+  }
+}

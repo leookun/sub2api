@@ -3,7 +3,6 @@
     <!-- Admin: Full version badge with dropdown -->
     <template v-if="isAdmin">
       <button
-        @click="toggleDropdown"
         class="flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs transition-colors"
         :class="[
           hasUpdate
@@ -11,6 +10,7 @@
             : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-800 dark:text-dark-400 dark:hover:bg-dark-700'
         ]"
         :title="hasUpdate ? '有新版本可用！' : '已是最新版本'"
+        @click="toggleDropdown"
       >
         <span v-if="currentVersion" class="font-medium">v{{ currentVersion }}</span>
         <span
@@ -41,10 +41,10 @@
               '当前版本'
             }}</span>
             <button
-              @click="refreshVersion(true)"
               class="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-dark-700 dark:hover:text-dark-200"
               :disabled="loading"
               :title="'刷新'"
+              @click="refreshVersion(true)"
             >
               <Icon
                 name="refresh"
@@ -140,9 +140,9 @@
 
                 <!-- Retry button -->
                 <button
-                  @click="handleUpdate"
                   :disabled="updating"
                   class="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  @click="handleUpdate"
                 >
                   {{ '重试' }}
                 </button>
@@ -178,9 +178,9 @@
 
                 <!-- Restart button with countdown -->
                 <button
-                  @click="handleRestart"
                   :disabled="restarting"
                   class="flex w-full items-center justify-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  @click="handleRestart"
                 >
                   <svg
                     v-if="restarting"
@@ -314,9 +314,9 @@
 
                 <!-- Update button -->
                 <button
-                  @click="handleUpdate"
                   :disabled="updating"
                   class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  @click="handleUpdate"
                 >
                   <svg v-if="updating" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle

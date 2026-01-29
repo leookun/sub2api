@@ -41,7 +41,7 @@
                     :disabled="sendingCode || codeCooldown > 0"
                     @click="handleSendCode"
                   >
-                    {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? t('common.sending') : '发送验证码') }}
+                    {{ codeCooldown > 0 ? `${codeCooldown}s` : (sendingCode ? 'common.sending' : '发送验证码') }}
                   </button>
                 </div>
               </div>

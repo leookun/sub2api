@@ -85,8 +85,8 @@ const platformRows = computed((): SummaryRow[] => {
   const platforms = new Set([...Object.keys(concStats), ...Object.keys(availStats)])
 
   return Array.from(platforms).map(platform => {
-    const conc = concStats[platform] || {}
-    const avail = availStats[platform] || {}
+    const conc = concStats[platform]
+    const avail = availStats[platform]
 
     const totalAccounts = safeNumber(avail.total_accounts)
     const availableAccounts = safeNumber(avail.available_count)
@@ -118,8 +118,8 @@ const groupRows = computed((): SummaryRow[] => {
 
   const rows = Array.from(groupIds)
     .map(gid => {
-      const conc = concStats[gid] || {}
-      const avail = availStats[gid] || {}
+      const conc = concStats[gid]
+      const avail = availStats[gid]
 
       // 只显示匹配的平台
       if (props.platformFilter && conc.platform !== props.platformFilter && avail.platform !== props.platformFilter) {
@@ -160,8 +160,8 @@ const accountRows = computed((): AccountRow[] => {
 
   const rows = Array.from(accountIds)
     .map(aid => {
-      const conc = concStats[aid] || {}
-      const avail = availStats[aid] || {}
+      const conc = concStats[aid]
+      const avail = availStats[aid]
 
       // 只显示匹配的分组
       if (typeof props.groupIdFilter === 'number' && props.groupIdFilter > 0) {

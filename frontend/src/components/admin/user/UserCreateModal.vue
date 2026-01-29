@@ -5,7 +5,7 @@
     width="normal"
     @close="$emit('close')"
   >
-    <form id="create-user-form" @submit.prevent="submit" class="space-y-5">
+    <form id="create-user-form" class="space-y-5" @submit.prevent="submit">
       <div>
         <label class="input-label">{{ '邮箱' }}</label>
         <input v-model="form.email" type="email" required class="input" :placeholder="'请输入邮箱'" />
@@ -16,7 +16,7 @@
           <div class="relative flex-1">
             <input v-model="form.password" type="text" required class="input pr-10" :placeholder="'请输入密码'" />
           </div>
-          <button type="button" @click="generateRandomPassword" class="btn btn-secondary px-3">
+          <button type="button" class="btn btn-secondary px-3" @click="generateRandomPassword">
             <Icon name="refresh" size="md" />
           </button>
         </div>
@@ -38,7 +38,7 @@
     </form>
     <template #footer>
       <div class="flex justify-end gap-3">
-        <button @click="$emit('close')" type="button" class="btn btn-secondary">{{ '取消' }}</button>
+        <button type="button" class="btn btn-secondary" @click="$emit('close')">{{ '取消' }}</button>
         <button type="submit" form="create-user-form" :disabled="loading" class="btn btn-primary">
           {{ loading ? '创建中...' : '创建' }}
         </button>

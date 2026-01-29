@@ -12,14 +12,14 @@
         <p class="mb-3 text-sm text-gray-600">{{ '选择此用户可以使用的标准分组。订阅类型分组请在订阅管理中配置。' }}</p>
         <div class="max-h-64 space-y-2 overflow-y-auto">
           <label v-for="group in groups" :key="group.id" class="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 p-3 hover:bg-gray-50" :class="{'border-primary-300 bg-primary-50': selectedIds.includes(group.id)}">
-            <input type="checkbox" :value="group.id" v-model="selectedIds" class="h-4 w-4 rounded border-gray-300 text-primary-600" />
+            <input v-model="selectedIds" type="checkbox" :value="group.id" class="h-4 w-4 rounded border-gray-300 text-primary-600" />
             <div class="flex-1"><p class="font-medium text-gray-900">{{ group.name }}</p><p v-if="group.description" class="truncate text-sm text-gray-500">{{ group.description }}</p></div>
             <div class="flex items-center gap-2"><span class="badge badge-gray text-xs">{{ group.platform }}</span><span v-if="group.is_exclusive" class="badge badge-purple text-xs">{{ '专属' }}</span></div>
           </label>
         </div>
         <div class="mt-4 border-t border-gray-200 pt-4">
           <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 p-3 hover:bg-gray-50" :class="{'border-green-300 bg-green-50': selectedIds.length === 0}">
-            <input type="radio" :checked="selectedIds.length === 0" @change="selectedIds = []" class="h-4 w-4 border-gray-300 text-green-600" />
+            <input type="radio" :checked="selectedIds.length === 0" class="h-4 w-4 border-gray-300 text-green-600" @change="selectedIds = []" />
             <div class="flex-1"><p class="font-medium text-gray-900">{{ '允许全部分组' }}</p><p class="text-sm text-gray-500">{{ '用户可以使用任何非专属分组' }}</p></div>
           </label>
         </div>
@@ -27,8 +27,8 @@
     </div>
     <template #footer>
       <div class="flex justify-end gap-3">
-        <button @click="$emit('close')" class="btn btn-secondary">{{ '取消' }}</button>
-        <button @click="handleSave" :disabled="submitting" class="btn btn-primary">{{ submitting ? '保存中...' : '保存' }}</button>
+        <button class="btn btn-secondary" @click="$emit('close')">{{ '取消' }}</button>
+        <button :disabled="submitting" class="btn btn-primary" @click="handleSave">{{ submitting ? '保存中...' : '保存' }}</button>
       </div>
     </template>
   </BaseDialog>

@@ -22,7 +22,7 @@
       <!-- Redeem Form -->
       <div class="card">
         <div class="p-6">
-          <form @submit.prevent="handleRedeem" class="space-y-5">
+          <form class="space-y-5" @submit.prevent="handleRedeem">
             <div>
               <label for="code" class="input-label">
                 {{ '兑换码' }}

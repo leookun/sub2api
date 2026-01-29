@@ -3,9 +3,9 @@
  * Base client with interceptors for authentication and error handling
  */
 
-import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios'
+import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios'
 import type { ApiResponse } from '@/types'
-import { getLocale } from '@/i18n'
 
 // ==================== Axios Instance Configuration ====================
 
@@ -40,7 +40,7 @@ apiClient.interceptors.request.use(
 
     // Attach locale for backend translations
     if (config.headers) {
-      config.headers['Accept-Language'] = getLocale()
+      config.headers['Accept-Language'] = 'zh-CN'
     }
 
     // Attach timezone for all GET requests (backend may use it for default date ranges)

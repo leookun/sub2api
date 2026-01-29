@@ -4,14 +4,14 @@
       <template #actions>
         <div class="flex justify-end gap-3">
         <button
-          @click="loadApiKeys"
           :disabled="loading"
           class="btn btn-secondary"
           :title="'刷新'"
+          @click="loadApiKeys"
         >
           <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
         </button>
-        <button @click="showCreateModal = true" class="btn btn-primary" data-tour="keys-create-btn">
+        <button class="btn btn-primary" data-tour="keys-create-btn" @click="showCreateModal = true">
           <Icon name="plus" size="md" class="mr-2" />
           {{ '创建密钥' }}
         </button>
@@ -26,7 +26,6 @@
                 {{ maskKey(value) }}
               </code>
               <button
-                @click="copyToClipboard(value, row.id)"
                 class="rounded-lg p-1 transition-colors hover:bg-gray-100 dark:hover:bg-dark-700"
                 :class="
                   copiedKeyId === row.id
@@ -34,6 +33,7 @@
                     : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                 "
                 :title="copiedKeyId === row.id ? '已复制！' : '复制到剪贴板'"
+                @click="copyToClipboard(value, row.id)"
               >
                 <Icon
                   v-if="copiedKeyId === row.id"
@@ -63,9 +63,9 @@
             <div class="group/dropdown relative">
               <button
                 :ref="(el) => setGroupButtonRef(row.id, el)"
-                @click="openGroupSelector(row)"
                 class="-mx-2 -my-1 flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-dark-700"
                 :title="'点击更换分组'"
+                @click="openGroupSelector(row)"
               >
                 <GroupBadge
                   v-if="row.group"
@@ -113,7 +113,7 @@
 
           <template #cell-status="{ value }">
             <span :class="['badge', value === 'active' ? 'badge-success' : 'badge-gray']">
-              {{ t('admin.accounts.status.' + value) }}
+              {{ value === 'active' ? '正常' : '停用' }}
             </span>
           </template>
 
@@ -125,8 +125,8 @@
             <div class="flex items-center gap-1">
               <!-- Use Key Button -->
               <button
-                @click="openUseKeyModal(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400"
+                @click="openUseKeyModal(row)"
               >
                 <Icon name="terminal" size="sm" />
                 <span class="text-xs">{{ '使用密钥' }}</span>
@@ -134,21 +134,21 @@
               <!-- Import to CC Switch Button -->
               <button
                 v-if="!publicSettings?.hide_ccs_import_button"
-                @click="importToCcswitch(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400"
+                @click="importToCcswitch(row)"
               >
                 <Icon name="upload" size="sm" />
                 <span class="text-xs">{{ '导入到 CCS' }}</span>
               </button>
               <!-- Toggle Status Button -->
               <button
-                @click="toggleKeyStatus(row)"
                 :class="[
                   'flex flex-col items-center gap-0.5 rounded-lg p-1.5 transition-colors',
                   row.status === 'active'
                     ? 'text-gray-500 hover:bg-yellow-50 hover:text-yellow-600 dark:hover:bg-yellow-900/20 dark:hover:text-yellow-400'
                     : 'text-gray-500 hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400'
                 ]"
+                @click="toggleKeyStatus(row)"
               >
                 <Icon v-if="row.status === 'active'" name="ban" size="sm" />
                 <Icon v-else name="checkCircle" size="sm" />
@@ -156,16 +156,16 @@
               </button>
               <!-- Edit Button -->
               <button
-                @click="editKey(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
+                @click="editKey(row)"
               >
                 <Icon name="edit" size="sm" />
                 <span class="text-xs">{{ '编辑' }}</span>
               </button>
               <!-- Delete Button -->
               <button
-                @click="confirmDelete(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                @click="confirmDelete(row)"
               >
                 <Icon name="trash" size="sm" />
                 <span class="text-xs">{{ '删除' }}</span>
@@ -203,7 +203,7 @@
       width="normal"
       @close="closeModals"
     >
-      <form id="key-form" @submit.prevent="handleSubmit" class="space-y-5">
+      <form id="key-form" class="space-y-5" @submit.prevent="handleSubmit">
         <div>
           <label class="input-label">{{ '名称' }}</label>
           <input
@@ -253,11 +253,11 @@
             <label class="input-label mb-0">{{ '自定义密钥' }}</label>
             <button
               type="button"
-              @click="formData.use_custom_key = !formData.use_custom_key"
               :class="[
                 'relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
                 formData.use_custom_key ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="formData.use_custom_key = !formData.use_custom_key"
             >
               <span
                 :class="[
@@ -295,11 +295,11 @@
             <label class="input-label mb-0">{{ 'IP 限制' }}</label>
             <button
               type="button"
-              @click="formData.enable_ip_restriction = !formData.enable_ip_restriction"
               :class="[
                 'relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
                 formData.enable_ip_restriction ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="formData.enable_ip_restriction = !formData.enable_ip_restriction"
             >
               <span
                 :class="[
@@ -317,8 +317,7 @@
                 v-model="formData.ip_whitelist"
                 rows="3"
                 class="input font-mono text-sm"
-                :placeholder="'192.168.1.100
-10.0.0.0/8'"
+                placeholder="192.168.1.100&#10;10.0.0.0/8"
               />
               <p class="input-hint">{{ '每行一个 IP 或 CIDR，设置后仅允许这些 IP 使用此密钥' }}</p>
             </div>
@@ -329,8 +328,7 @@
                 v-model="formData.ip_blacklist"
                 rows="3"
                 class="input font-mono text-sm"
-                :placeholder="'1.2.3.4
-5.6.0.0/16'"
+                placeholder="1.2.3.4&#10;5.6.0.0/16"
               />
               <p class="input-hint">{{ '每行一个 IP 或 CIDR，这些 IP 将被禁止使用此密钥' }}</p>
             </div>
@@ -339,7 +337,7 @@
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button @click="closeModals" type="button" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="closeModals">
             {{ '取消' }}
           </button>
           <button
@@ -415,8 +413,8 @@
 	        </p>
 	        <div class="grid grid-cols-2 gap-3">
 	          <button
-	            @click="handleCcsClientSelect('claude')"
 	            class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-gray-200 dark:border-dark-600 hover:border-primary-500 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all"
+	            @click="handleCcsClientSelect('claude')"
 	          >
 	            <Icon name="terminal" size="xl" class="text-gray-600 dark:text-gray-400" />
 	            <span class="font-medium text-gray-900 dark:text-white">{{
@@ -427,8 +425,8 @@
 	            }}</span>
 	          </button>
 	          <button
-	            @click="handleCcsClientSelect('gemini')"
 	            class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-gray-200 dark:border-dark-600 hover:border-primary-500 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all"
+	            @click="handleCcsClientSelect('gemini')"
 	          >
 	            <Icon name="sparkles" size="xl" class="text-gray-600 dark:text-gray-400" />
 	            <span class="font-medium text-gray-900 dark:text-white">{{
@@ -442,7 +440,7 @@
 	      </div>
       <template #footer>
         <div class="flex justify-end">
-          <button @click="closeCcsClientSelect" class="btn btn-secondary">
+          <button class="btn btn-secondary" @click="closeCcsClientSelect">
             {{ '取消' }}
           </button>
         </div>
@@ -462,7 +460,6 @@
           <button
             v-for="option in groupOptions"
             :key="option.value ?? 'null'"
-            @click="changeGroup(selectedKeyForGroup!, option.value)"
             :class="[
               'flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors',
               selectedKeyForGroup?.group_id === option.value ||
@@ -471,6 +468,7 @@
                 : 'hover:bg-gray-100 dark:hover:bg-dark-700'
             ]"
             :title="option.description || undefined"
+            @click="changeGroup(selectedKeyForGroup!, option.value)"
           >
             <GroupOptionItem
               :name="option.label"

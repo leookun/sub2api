@@ -133,8 +133,7 @@
         @generate-url="handleGenerateUrl"
         @cookie-auth="handleCookieAuth"
       />
-
-    </div>
+</div>
 
     <template #footer>
       <div v-if="account" class="flex justify-between gap-3">

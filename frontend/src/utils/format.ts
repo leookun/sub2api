@@ -3,32 +3,30 @@
  * 参考 CRS 项目的 format.js 实现
  */
 
-import { i18n, getLocale } from '@/i18n'
-
 /**
  * 格式化相对时间
  * @param date 日期字符串或 Date 对象
  * @returns 相对时间字符串，如 "5m ago", "2h ago", "3d ago"
  */
 export function formatRelativeTime(date: string | Date | null | undefined): string {
-  if (!date) return i18n.global.'从未'
+  if (!date) return '从未'
 
   const now = new Date()
   const past = new Date(date)
   const diffMs = now.getTime() - past.getTime()
 
   // 处理未来时间或无效日期
-  if (diffMs < 0 || isNaN(diffMs)) return i18n.global.'从未'
+  if (diffMs < 0 || isNaN(diffMs)) return '从未'
 
   const diffSecs = Math.floor(diffMs / 1000)
   const diffMins = Math.floor(diffSecs / 60)
   const diffHours = Math.floor(diffMins / 60)
   const diffDays = Math.floor(diffHours / 24)
 
-  if (diffDays > 0) return i18n.global.`${diffDays}天前`
-  if (diffHours > 0) return i18n.global.`${diffHours}小时前`
-  if (diffMins > 0) return i18n.global.`${diffMins}分钟前`
-  return i18n.global.'刚刚'
+  if (diffDays > 0) return `${diffDays}天前`
+  if (diffHours > 0) return `${diffHours}小时前`
+  if (diffMins > 0) return `${diffMins}分钟前`
+  return '刚刚'
 }
 
 /**
@@ -39,12 +37,11 @@ export function formatRelativeTime(date: string | Date | null | undefined): stri
 export function formatNumber(num: number | null | undefined): string {
   if (num === null || num === undefined) return '0'
 
-  const locale = getLocale()
   const absNum = Math.abs(num)
 
   // Use Intl.NumberFormat for compact notation if supported and needed
   // Note: Compact notation in 'zh' uses '万/亿', which is appropriate for Chinese
-  const formatter = new Intl.NumberFormat(locale, {
+  const formatter = new Intl.NumberFormat('zh-CN', {
     notation: absNum >= 10000 ? 'compact' : 'standard',
     maximumFractionDigits: 1
   })
@@ -61,12 +58,10 @@ export function formatNumber(num: number | null | undefined): string {
 export function formatCurrency(amount: number | null | undefined, currency: string = 'USD'): string {
   if (amount === null || amount === undefined) return '$0.00'
 
-  const locale = getLocale()
-
   // For very small amounts, show more decimals
   const fractionDigits = amount > 0 && amount < 0.01 ? 6 : 2
 
-  return new Intl.NumberFormat(locale, {
+  return new Intl.NumberFormat('zh-CN', {
     style: 'currency',
     currency: currency,
     minimumFractionDigits: fractionDigits,
@@ -117,7 +112,7 @@ export function formatDate(
   const d = new Date(date)
   if (isNaN(d.getTime())) return ''
 
-  const locale = localeOverride ?? getLocale()
+  const locale = localeOverride ?? 'zh-CN'
   return new Intl.DateTimeFormat(locale, options).format(d)
 }
 
@@ -241,14 +236,14 @@ export function formatCountdown(targetDate: string | Date | null | undefined): s
 
   if (diffDays > 0) {
     // 超过1天：显示 "Xd Yh"
-    return i18n.global.`${diffDays}d ${remainingHours}h`
+    return `${diffDays}d ${remainingHours}h`
   }
   if (diffHours > 0) {
     // 小于1天：显示 "Xh Ym"
-    return i18n.global.`${diffHours}h ${remainingMins}m`
+    return `${diffHours}h ${remainingMins}m`
   }
   // 小于1小时：显示 "Ym"
-  return i18n.global.`${diffMins}m`
+  return `${diffMins}m`
 }
 
 /**
@@ -259,5 +254,5 @@ export function formatCountdown(targetDate: string | Date | null | undefined): s
 export function formatCountdownWithSuffix(targetDate: string | Date | null | undefined): string | null {
   const countdown = formatCountdown(targetDate)
   if (!countdown) return null
-  return i18n.global.`${countdown} 后解除`
+  return `${countdown} 后解除`
 }

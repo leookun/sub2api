@@ -4,9 +4,9 @@
       <!-- Left: Mobile Menu Toggle + Page Title -->
       <div class="flex items-center gap-4">
         <button
-          @click="toggleMobileSidebar"
           class="btn-ghost btn-icon lg:hidden"
           aria-label="Toggle Menu"
+          @click="toggleMobileSidebar"
         >
           <Icon name="menu" size="md" />
         </button>
@@ -35,9 +35,6 @@
           <span class="hidden sm:inline">{{ '文档' }}</span>
         </a>
 
-        <!-- Language Switcher -->
-        <LocaleSwitcher />
-
         <!-- Subscription Progress (for users with active subscriptions) -->
         <SubscriptionProgressMini v-if="user" />
 
@@ -65,11 +62,11 @@
         </div>
 
         <!-- User Dropdown -->
-        <div v-if="user" class="relative" ref="dropdownRef">
+        <div v-if="user" ref="dropdownRef" class="relative">
           <button
-            @click="toggleDropdown"
             class="flex items-center gap-2 rounded-xl p-1.5 transition-colors hover:bg-gray-100 dark:hover:bg-dark-800"
             aria-label="User Menu"
+            @click="toggleDropdown"
           >
             <div
               class="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-sm font-medium text-white shadow-sm"
@@ -109,12 +106,12 @@
               </div>
 
               <div class="py-1">
-                <router-link to="/profile" @click="closeDropdown" class="dropdown-item">
+                <router-link to="/profile" class="dropdown-item" @click="closeDropdown">
                   <Icon name="user" size="sm" />
                   {{ '个人资料' }}
                 </router-link>
 
-                <router-link to="/keys" @click="closeDropdown" class="dropdown-item">
+                <router-link to="/keys" class="dropdown-item" @click="closeDropdown">
                   <Icon name="key" size="sm" />
                   {{ 'API 密钥' }}
                 </router-link>
@@ -123,8 +120,8 @@
                   href="https://github.com/Wei-Shaw/sub2api"
                   target="_blank"
                   rel="noopener noreferrer"
-                  @click="closeDropdown"
                   class="dropdown-item"
+                  @click="closeDropdown"
                 >
                   <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -164,20 +161,20 @@
               </div>
 
               <div v-if="showOnboardingButton" class="border-t border-gray-100 py-1 dark:border-dark-700">
-                <button @click="handleReplayGuide" class="dropdown-item w-full">
+                <button class="dropdown-item w-full" @click="handleReplayGuide">
                   <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                     <path
                       d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 14a1 1 0 110 2 1 1 0 010-2zm1.07-7.75c0-.6-.49-1.25-1.32-1.25-.7 0-1.22.4-1.43 1.02a1 1 0 11-1.9-.62A3.41 3.41 0 0111.8 5c2.02 0 3.25 1.4 3.25 2.9 0 2-1.83 2.55-2.43 3.12-.43.4-.47.75-.47 1.23a1 1 0 01-2 0c0-1 .16-1.82 1.1-2.7.69-.64 1.82-1.05 1.82-2.06z"
                     />
                   </svg>
-                  {{ $'重新查看新手引导' }}
+                  重新查看新手引导
                 </button>
               </div>
 
               <div class="border-t border-gray-100 py-1 dark:border-dark-700">
                 <button
-                  @click="handleLogout"
                   class="dropdown-item w-full text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
+                  @click="handleLogout"
                 >
                   <svg
                     class="h-4 w-4"
@@ -207,7 +204,6 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAppStore, useAuthStore, useOnboardingStore } from '@/stores'
-import LocaleSwitcher from '@/components/common/LocaleSwitcher.vue'
 import SubscriptionProgressMini from '@/components/common/SubscriptionProgressMini.vue'
 import Icon from '@/components/icons/Icon.vue'
 
@@ -248,19 +244,11 @@ const displayName = computed(() => {
 })
 
 const pageTitle = computed(() => {
-  const titleKey = route.meta.titleKey as string
-  if (titleKey) {
-    return t(titleKey)
-  }
-  return (route.meta.title as string) || ''
+  return (route.meta.title as string) || (route.meta.titleKey as string) || ''
 })
 
 const pageDescription = computed(() => {
-  const descKey = route.meta.descriptionKey as string
-  if (descKey) {
-    return t(descKey)
-  }
-  return (route.meta.description as string) || ''
+  return (route.meta.description as string) || (route.meta.descriptionKey as string) || ''
 })
 
 function toggleMobileSidebar() {

@@ -69,7 +69,7 @@
       </div>
 
       <!-- Form State -->
-      <form v-else @submit.prevent="handleSubmit" class="space-y-5">
+      <form v-else class="space-y-5" @submit.prevent="handleSubmit">
         <!-- Email (readonly) -->
         <div>
           <label for="email" class="input-label">
@@ -112,8 +112,8 @@
             />
             <button
               type="button"
-              @click="showPassword = !showPassword"
               class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-dark-300"
+              @click="showPassword = !showPassword"
             >
               <Icon v-if="showPassword" name="eyeOff" size="md" />
               <Icon v-else name="eye" size="md" />
@@ -146,8 +146,8 @@
             />
             <button
               type="button"
-              @click="showConfirmPassword = !showConfirmPassword"
               class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-dark-300"
+              @click="showConfirmPassword = !showConfirmPassword"
             >
               <Icon v-if="showConfirmPassword" name="eyeOff" size="md" />
               <Icon v-else name="eye" size="md" />

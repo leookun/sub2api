@@ -59,7 +59,7 @@
                     : 'badge-danger'
               ]"
             >
-              {{ t(`userSubscriptions.status.${subscription.status}`) }}
+              {{ subscription.status === 'active' ? '生效中' : subscription.status === 'expired' ? '已过期' : '已撤销' }}
             </span>
           </div>
 
@@ -116,9 +116,7 @@
                 v-if="subscription.daily_window_start"
                 class="text-xs text-gray-500 dark:text-dark-400"
               >
-                {{
-                  `${formatResetTime(subscription.daily_window_start} 后重置`
-                }}
+                {{ `${formatResetTime(subscription.daily_window_start, 24)} 后重置` }}
               </p>
             </div>
 
@@ -155,9 +153,7 @@
                 v-if="subscription.weekly_window_start"
                 class="text-xs text-gray-500 dark:text-dark-400"
               >
-                {{
-                  `${formatResetTime(subscription.weekly_window_start} 后重置`
-                }}
+                {{ `${formatResetTime(subscription.weekly_window_start, 168)} 后重置` }}
               </p>
             </div>
 
@@ -194,9 +190,7 @@
                 v-if="subscription.monthly_window_start"
                 class="text-xs text-gray-500 dark:text-dark-400"
               >
-                {{
-                  `${formatResetTime(subscription.monthly_window_start} 后重置`
-                }}
+                {{ `${formatResetTime(subscription.monthly_window_start, 720)} 后重置` }}
               </p>
             </div>
 

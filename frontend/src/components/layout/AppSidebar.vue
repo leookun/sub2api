@@ -31,11 +31,6 @@
         <div class="sidebar-section">
           <router-link
             v-for="item in adminNavItems"
-            :key="item.path"
-            :to="item.path"
-            class="sidebar-link mb-1"
-            :class="{ 'sidebar-link-active': isActive(item.path) }"
-            :title="sidebarCollapsed ? item.label : undefined"
             :id="
               item.path === '/admin/accounts'
                 ? 'sidebar-channel-manage'
@@ -45,6 +40,11 @@
                     ? 'sidebar-wallet'
                     : undefined
             "
+            :key="item.path"
+            :to="item.path"
+            class="sidebar-link mb-1"
+            :class="{ 'sidebar-link-active': isActive(item.path) }"
+            :title="sidebarCollapsed ? item.label : undefined"
             @click="handleMenuItemClick(item.path)"
           >
             <component :is="item.icon" class="h-5 w-5 flex-shrink-0" />
@@ -105,9 +105,9 @@
     <div class="mt-auto border-t border-gray-100 p-3 dark:border-dark-800">
       <!-- Theme Toggle -->
       <button
-        @click="toggleTheme"
         class="sidebar-link mb-2 w-full"
         :title="sidebarCollapsed ? (isDark ? '浅色模式' : '深色模式') : undefined"
+        @click="toggleTheme"
       >
         <SunIcon v-if="isDark" class="h-5 w-5 flex-shrink-0 text-amber-500" />
         <MoonIcon v-else class="h-5 w-5 flex-shrink-0" />
@@ -120,9 +120,9 @@
 
       <!-- Collapse Button -->
       <button
-        @click="toggleSidebar"
         class="sidebar-link w-full"
         :title="sidebarCollapsed ? '展开' : '收起'"
+        @click="toggleSidebar"
       >
         <ChevronDoubleLeftIcon v-if="!sidebarCollapsed" class="h-5 w-5 flex-shrink-0" />
         <ChevronDoubleRightIcon v-else class="h-5 w-5 flex-shrink-0" />

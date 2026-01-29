@@ -58,20 +58,20 @@
                 <input
                   v-if="['text', 'textarea', 'email', 'url', 'date'].includes(getAttributeDefinition(Number(attrId))?.type || 'text')"
                   :value="value"
-                  @input="(e) => updateAttributeFilter(Number(attrId), (e.target as HTMLInputElement).value)"
-                  @keyup.enter="applyFilter"
                   :placeholder="getAttributeDefinitionName(Number(attrId))"
                   class="input w-full"
+                  @input="(e) => updateAttributeFilter(Number(attrId), (e.target as HTMLInputElement).value)"
+                  @keyup.enter="applyFilter"
                 />
                 <!-- Number type: number input -->
                 <input
                   v-else-if="getAttributeDefinition(Number(attrId))?.type === 'number'"
                   :value="value"
                   type="number"
-                  @input="(e) => updateAttributeFilter(Number(attrId), (e.target as HTMLInputElement).value)"
-                  @keyup.enter="applyFilter"
                   :placeholder="getAttributeDefinitionName(Number(attrId))"
                   class="input w-full"
+                  @input="(e) => updateAttributeFilter(Number(attrId), (e.target as HTMLInputElement).value)"
+                  @keyup.enter="applyFilter"
                 />
                 <!-- Select/Multi-select type -->
                 <template v-else-if="['select', 'multi_select'].includes(getAttributeDefinition(Number(attrId))?.type || '')">
@@ -90,10 +90,10 @@
                 <input
                   v-else
                   :value="value"
-                  @input="(e) => updateAttributeFilter(Number(attrId), (e.target as HTMLInputElement).value)"
-                  @keyup.enter="applyFilter"
                   :placeholder="getAttributeDefinitionName(Number(attrId))"
                   class="input w-full"
+                  @input="(e) => updateAttributeFilter(Number(attrId), (e.target as HTMLInputElement).value)"
+                  @keyup.enter="applyFilter"
                 />
               </div>
             </template>
@@ -105,19 +105,19 @@
             <div class="flex items-center gap-2 md:contents">
               <!-- Refresh Button -->
               <button
-                @click="loadUsers"
                 :disabled="loading"
                 class="btn btn-secondary px-2 md:px-3"
                 :title="'刷新'"
+                @click="loadUsers"
               >
                 <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
               </button>
               <!-- Filter Settings Dropdown -->
-              <div class="relative" ref="filterDropdownRef">
+              <div ref="filterDropdownRef" class="relative">
                 <button
-                  @click="showFilterDropdown = !showFilterDropdown"
                   class="btn btn-secondary px-2 md:px-3"
                   :title="'筛选设置'"
+                  @click="showFilterDropdown = !showFilterDropdown"
                 >
                   <Icon name="filter" size="sm" class="md:mr-1.5" />
                   <span class="hidden md:inline">{{ '筛选设置' }}</span>
@@ -131,8 +131,8 @@
                   <button
                     v-for="filter in builtInFilters"
                     :key="filter.key"
-                    @click="toggleBuiltInFilter(filter.key)"
                     class="flex w-full items-center justify-between px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
+                    @click="toggleBuiltInFilter(filter.key)"
                   >
                     <span>{{ filter.name }}</span>
                     <Icon
@@ -152,8 +152,8 @@
                   <button
                     v-for="attr in filterableAttributes"
                     :key="attr.id"
-                    @click="toggleAttributeFilter(attr)"
                     class="flex w-full items-center justify-between px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
+                    @click="toggleAttributeFilter(attr)"
                   >
                     <span>{{ attr.name }}</span>
                     <Icon
@@ -167,11 +167,11 @@
                 </div>
               </div>
               <!-- Column Settings Dropdown -->
-              <div class="relative" ref="columnDropdownRef">
+              <div ref="columnDropdownRef" class="relative">
                 <button
-                  @click="showColumnDropdown = !showColumnDropdown"
                   class="btn btn-secondary px-2 md:px-3"
                   :title="'列设置'"
+                  @click="showColumnDropdown = !showColumnDropdown"
                 >
                   <svg class="h-4 w-4 md:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
@@ -186,8 +186,8 @@
                   <button
                     v-for="col in toggleableColumns"
                     :key="col.key"
-                    @click="toggleColumn(col.key)"
                     class="flex w-full items-center justify-between px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
+                    @click="toggleColumn(col.key)"
                   >
                     <span>{{ col.label }}</span>
                     <Icon
@@ -202,9 +202,9 @@
               </div>
               <!-- Attributes Config Button -->
               <button
-                @click="showAttributesModal = true"
                 class="btn btn-secondary px-2 md:px-3"
                 :title="'属性配置'"
+                @click="showAttributesModal = true"
               >
                 <Icon name="cog" size="sm" class="md:mr-1.5" />
                 <span class="hidden md:inline">{{ '属性配置' }}</span>
@@ -212,7 +212,7 @@
             </div>
 
             <!-- Create User Button (full width on mobile, auto width on desktop) -->
-            <button @click="showCreateModal = true" class="btn btn-primary flex-1 md:flex-initial">
+            <button class="btn btn-primary flex-1 md:flex-initial" @click="showCreateModal = true">
               <Icon name="plus" size="md" class="mr-2" />
               {{ '创建用户' }}
             </button>
@@ -271,7 +271,7 @@
 
           <template #cell-role="{ value }">
             <span :class="['badge', value === 'admin' ? 'badge-purple' : 'badge-gray']">
-              {{ t('admin.users.roles.' + value) }}
+              {{ value === 'admin' ? '管理员' : '普通用户' }}
             </span>
           </template>
 
@@ -347,8 +347,8 @@
             <div class="flex items-center gap-1">
               <!-- Edit Button -->
               <button
-                @click="handleEdit(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
+                @click="handleEdit(row)"
               >
                 <Icon name="edit" size="sm" />
                 <span class="text-xs">{{ '编辑' }}</span>
@@ -357,13 +357,13 @@
               <!-- Toggle Status Button (not for admin) -->
               <button
                 v-if="row.role !== 'admin'"
-                @click="handleToggleStatus(row)"
                 :class="[
                   'flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors',
                   row.status === 'active'
                     ? 'hover:bg-orange-50 hover:text-orange-600 dark:hover:bg-orange-900/20 dark:hover:text-orange-400'
                     : 'hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400'
                 ]"
+                @click="handleToggleStatus(row)"
               >
                 <Icon v-if="row.status === 'active'" name="ban" size="sm" />
                 <Icon v-else name="checkCircle" size="sm" />
@@ -372,9 +372,9 @@
 
               <!-- More Actions Menu Trigger -->
               <button
-                @click="openActionMenu(row, $event)"
                 class="action-menu-trigger flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-dark-700 dark:hover:text-white"
                 :class="{ 'bg-gray-100 text-gray-900 dark:bg-dark-700 dark:text-white': activeMenuId === row.id }"
+                @click="openActionMenu(row, $event)"
               >
                 <Icon name="more" size="sm" />
                 <span class="text-xs">{{ '更多' }}</span>
@@ -418,8 +418,8 @@
             <template v-if="user.id === activeMenuId">
               <!-- View API Keys -->
               <button
-                @click="handleViewApiKeys(user); closeActionMenu()"
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
+                @click="handleViewApiKeys(user); closeActionMenu()"
               >
                 <Icon name="key" size="sm" class="text-gray-400" :stroke-width="2" />
                 {{ 'API密钥' }}
@@ -427,8 +427,8 @@
 
               <!-- Allowed Groups -->
               <button
-                @click="handleAllowedGroups(user); closeActionMenu()"
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
+                @click="handleAllowedGroups(user); closeActionMenu()"
               >
                 <Icon name="users" size="sm" class="text-gray-400" :stroke-width="2" />
                 {{ '分组' }}
@@ -438,8 +438,8 @@
 
               <!-- Deposit -->
               <button
-                @click="handleDeposit(user); closeActionMenu()"
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
+                @click="handleDeposit(user); closeActionMenu()"
               >
                 <Icon name="plus" size="sm" class="text-emerald-500" :stroke-width="2" />
                 {{ '充值' }}
@@ -447,8 +447,8 @@
 
               <!-- Withdraw -->
               <button
-                @click="handleWithdraw(user); closeActionMenu()"
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
+                @click="handleWithdraw(user); closeActionMenu()"
               >
                 <svg class="h-4 w-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
@@ -461,8 +461,8 @@
               <!-- Delete (not for admin) -->
               <button
                 v-if="user.role !== 'admin'"
-                @click="handleDelete(user); closeActionMenu()"
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
+                @click="handleDelete(user); closeActionMenu()"
               >
                 <Icon name="trash" size="sm" :stroke-width="2" />
                 {{ '删除' }}

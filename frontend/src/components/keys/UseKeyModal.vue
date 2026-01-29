@@ -34,13 +34,13 @@
             <button
               v-for="tab in clientTabs"
               :key="tab.id"
-              @click="activeClientTab = tab.id"
               :class="[
                 'whitespace-nowrap py-2.5 px-1 border-b-2 font-medium text-sm transition-colors',
                 activeClientTab === tab.id
                   ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               ]"
+              @click="activeClientTab = tab.id"
             >
               <span class="flex items-center gap-2">
                 <component :is="tab.icon" class="w-4 h-4" />
@@ -56,13 +56,13 @@
             <button
               v-for="tab in currentTabs"
               :key="tab.id"
-              @click="activeTab = tab.id"
               :class="[
                 'whitespace-nowrap py-2.5 px-1 border-b-2 font-medium text-sm transition-colors',
                 activeTab === tab.id
                   ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               ]"
+              @click="activeTab = tab.id"
             >
               <span class="flex items-center gap-2">
                 <component :is="tab.icon" class="w-4 h-4" />
@@ -89,11 +89,11 @@
               <div class="flex items-center justify-between px-4 py-2 bg-gray-800 dark:bg-dark-800 border-b border-gray-700 dark:border-dark-700">
                 <span class="text-xs text-gray-400 font-mono">{{ file.path }}</span>
                 <button
-                  @click="copyContent(file.content, index)"
                   class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg transition-colors"
                   :class="copiedIndex === index
                     ? 'bg-green-500/20 text-green-400'
                     : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'"
+                  @click="copyContent(file.content, index)"
                 >
                   <svg v-if="copiedIndex === index" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -123,8 +123,8 @@
     <template #footer>
       <div class="flex justify-end">
         <button
-          @click="emit('close')"
           class="btn btn-secondary"
+          @click="emit('close')"
         >
           {{ '关闭' }}
         </button>

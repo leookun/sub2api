@@ -42,8 +42,8 @@
     <form
       v-if="step === 1"
       id="create-account-form"
-      @submit.prevent="handleSubmit"
       class="space-y-5"
+      @submit.prevent="handleSubmit"
     >
       <div>
         <label class="input-label">{{ '账号名称' }}</label>
@@ -73,26 +73,26 @@
         <div class="mt-2 flex rounded-lg bg-gray-100 p-1 dark:bg-dark-700" data-tour="account-form-platform">
           <button
             type="button"
-            @click="form.platform = 'anthropic'"
             :class="[
               'flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-all',
               form.platform === 'anthropic'
                 ? 'bg-white text-orange-600 shadow-sm dark:bg-dark-600 dark:text-orange-400'
                 : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
             ]"
+            @click="form.platform = 'anthropic'"
           >
             <Icon name="sparkles" size="sm" />
             Anthropic
           </button>
           <button
             type="button"
-            @click="form.platform = 'openai'"
             :class="[
               'flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-all',
               form.platform === 'openai'
                 ? 'bg-white text-green-600 shadow-sm dark:bg-dark-600 dark:text-green-400'
                 : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
             ]"
+            @click="form.platform = 'openai'"
           >
             <svg
               class="h-4 w-4"
@@ -111,13 +111,13 @@
           </button>
           <button
             type="button"
-            @click="form.platform = 'gemini'"
             :class="[
               'flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-all',
               form.platform === 'gemini'
                 ? 'bg-white text-blue-600 shadow-sm dark:bg-dark-600 dark:text-blue-400'
                 : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
             ]"
+            @click="form.platform = 'gemini'"
           >
             <svg
               class="h-4 w-4"
@@ -136,13 +136,13 @@
           </button>
           <button
             type="button"
-            @click="form.platform = 'antigravity'"
             :class="[
               'flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-all',
               form.platform === 'antigravity'
                 ? 'bg-white text-purple-600 shadow-sm dark:bg-dark-600 dark:text-purple-400'
                 : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
             ]"
+            @click="form.platform = 'antigravity'"
           >
             <Icon name="cloud" size="sm" />
             Antigravity
@@ -156,13 +156,13 @@
         <div class="mt-2 grid grid-cols-2 gap-3" data-tour="account-form-type">
           <button
             type="button"
-            @click="accountCategory = 'oauth-based'"
             :class="[
               'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
               accountCategory === 'oauth-based'
                 ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20'
                 : 'border-gray-200 hover:border-orange-300 dark:border-dark-600 dark:hover:border-orange-700'
             ]"
+            @click="accountCategory = 'oauth-based'"
           >
             <div
               :class="[
@@ -186,13 +186,13 @@
 
           <button
             type="button"
-            @click="accountCategory = 'apikey'"
             :class="[
               'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
               accountCategory === 'apikey'
                 ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
                 : 'border-gray-200 hover:border-purple-300 dark:border-dark-600 dark:hover:border-purple-700'
             ]"
+            @click="accountCategory = 'apikey'"
           >
             <div
               :class="[
@@ -222,13 +222,13 @@
         <div class="mt-2 grid grid-cols-2 gap-3" data-tour="account-form-type">
           <button
             type="button"
-            @click="accountCategory = 'oauth-based'"
             :class="[
               'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
               accountCategory === 'oauth-based'
                 ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
                 : 'border-gray-200 hover:border-green-300 dark:border-dark-600 dark:hover:border-green-700'
             ]"
+            @click="accountCategory = 'oauth-based'"
           >
             <div
               :class="[
@@ -248,13 +248,13 @@
 
           <button
             type="button"
-            @click="accountCategory = 'apikey'"
             :class="[
               'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
               accountCategory === 'apikey'
                 ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
                 : 'border-gray-200 hover:border-purple-300 dark:border-dark-600 dark:hover:border-purple-700'
             ]"
+            @click="accountCategory = 'apikey'"
           >
             <div
               :class="[
@@ -280,8 +280,8 @@
           <label class="input-label">{{ '账号类型' }}</label>
           <button
             type="button"
-            @click="showGeminiHelpDialog = true"
             class="flex items-center gap-1 rounded px-2 py-1 text-xs text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20"
+            @click="showGeminiHelpDialog = true"
           >
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
@@ -292,13 +292,13 @@
         <div class="mt-2 grid grid-cols-2 gap-3" data-tour="account-form-type">
           <button
             type="button"
-            @click="accountCategory = 'oauth-based'"
             :class="[
               'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
               accountCategory === 'oauth-based'
                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                 : 'border-gray-200 hover:border-blue-300 dark:border-dark-600 dark:hover:border-blue-700'
             ]"
+            @click="accountCategory = 'oauth-based'"
           >
             <div
               :class="[
@@ -322,13 +322,13 @@
 
           <button
             type="button"
-            @click="accountCategory = 'apikey'"
             :class="[
               'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
               accountCategory === 'apikey'
                 ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
                 : 'border-gray-200 hover:border-purple-300 dark:border-dark-600 dark:hover:border-purple-700'
             ]"
+            @click="accountCategory = 'apikey'"
           >
             <div
               :class="[
@@ -387,13 +387,13 @@
             <!-- Google One OAuth -->
             <button
               type="button"
-              @click="handleSelectGeminiOAuthType('google_one')"
               :class="[
                 'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
                 geminiOAuthType === 'google_one'
                   ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
                   : 'border-gray-200 hover:border-purple-300 dark:border-dark-600 dark:hover:border-purple-700'
               ]"
+              @click="handleSelectGeminiOAuthType('google_one')"
             >
               <div
                 :class="[
@@ -430,13 +430,13 @@
             <!-- GCP Code Assist OAuth -->
             <button
               type="button"
-              @click="handleSelectGeminiOAuthType('code_assist')"
               :class="[
                 'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
                 geminiOAuthType === 'code_assist'
                   ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                   : 'border-gray-200 hover:border-blue-300 dark:border-dark-600 dark:hover:border-blue-700'
               ]"
+              @click="handleSelectGeminiOAuthType('code_assist')"
             >
               <div
                 :class="[
@@ -486,8 +486,8 @@
           <div class="mt-3">
             <button
               type="button"
-              @click="showAdvancedOAuth = !showAdvancedOAuth"
               class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+              @click="showAdvancedOAuth = !showAdvancedOAuth"
             >
               <svg
                 :class="['h-4 w-4 transition-transform', showAdvancedOAuth ? 'rotate-90' : '']"
@@ -507,7 +507,6 @@
             <button
               type="button"
               :disabled="!geminiAIStudioOAuthEnabled"
-              @click="handleSelectGeminiOAuthType('ai_studio')"
               :class="[
                 'flex w-full items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
                 !geminiAIStudioOAuthEnabled ? 'cursor-not-allowed opacity-60' : '',
@@ -515,6 +514,7 @@
                   ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20'
                   : 'border-gray-200 hover:border-amber-300 dark:border-dark-600 dark:hover:border-amber-700'
               ]"
+              @click="handleSelectGeminiOAuthType('ai_studio')"
             >
               <div
                 :class="[
@@ -713,13 +713,13 @@
           <div class="mb-4 flex gap-2">
             <button
               type="button"
-              @click="modelRestrictionMode = 'whitelist'"
               :class="[
                 'flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all',
                 modelRestrictionMode === 'whitelist'
                   ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-400 dark:hover:bg-dark-500'
               ]"
+              @click="modelRestrictionMode = 'whitelist'"
             >
               <svg
                 class="mr-1.5 inline h-4 w-4"
@@ -738,13 +738,13 @@
             </button>
             <button
               type="button"
-              @click="modelRestrictionMode = 'mapping'"
               :class="[
                 'flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all',
                 modelRestrictionMode === 'mapping'
                   ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-400 dark:hover:bg-dark-500'
               ]"
+              @click="modelRestrictionMode = 'mapping'"
             >
               <svg
                 class="mr-1.5 inline h-4 w-4"
@@ -829,8 +829,8 @@
                 />
                 <button
                   type="button"
-                  @click="removeModelMapping(index)"
                   class="rounded-lg p-2 text-red-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
+                  @click="removeModelMapping(index)"
                 >
                   <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path
@@ -846,8 +846,8 @@
 
             <button
               type="button"
-              @click="addModelMapping"
               class="mb-3 w-full rounded-lg border-2 border-dashed border-gray-300 px-4 py-2 text-gray-600 transition-colors hover:border-gray-400 hover:text-gray-700 dark:border-dark-500 dark:text-gray-400 dark:hover:border-dark-400 dark:hover:text-gray-300"
+              @click="addModelMapping"
             >
               <svg
                 class="mr-1 inline h-4 w-4"
@@ -871,8 +871,8 @@
                 v-for="preset in presetMappings"
                 :key="preset.label"
                 type="button"
-                @click="addPresetMapping(preset.from, preset.to)"
                 :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
+                @click="addPresetMapping(preset.from, preset.to)"
               >
                 + {{ preset.label }}
               </button>
@@ -894,11 +894,11 @@
             </div>
             <button
               type="button"
-              @click="customErrorCodesEnabled = !customErrorCodesEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 customErrorCodesEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="customErrorCodesEnabled = !customErrorCodesEnabled"
             >
               <span
                 :class="[
@@ -923,13 +923,13 @@
                 v-for="code in commonErrorCodes"
                 :key="code.value"
                 type="button"
-                @click="toggleErrorCode(code.value)"
                 :class="[
                   'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
                   selectedErrorCodes.includes(code.value)
                     ? 'bg-red-100 text-red-700 ring-1 ring-red-500 dark:bg-red-900/30 dark:text-red-400'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-400 dark:hover:bg-dark-500'
                 ]"
+                @click="toggleErrorCode(code.value)"
               >
                 {{ code.value }} {{ code.label }}
               </button>
@@ -946,7 +946,7 @@
                 :placeholder="'输入错误码 (100-599)'"
                 @keyup.enter="addCustomErrorCode"
               />
-              <button type="button" @click="addCustomErrorCode" class="btn btn-secondary px-3">
+              <button type="button" class="btn btn-secondary px-3" @click="addCustomErrorCode">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
                     stroke-linecap="round"
@@ -968,8 +968,8 @@
                 {{ code }}
                 <button
                   type="button"
-                  @click="removeErrorCode(code)"
                   class="hover:text-red-900 dark:hover:text-red-300"
+                  @click="removeErrorCode(code)"
                 >
                   <Icon name="x" size="sm" :stroke-width="2" />
                 </button>
@@ -1022,11 +1022,11 @@
           </div>
           <button
             type="button"
-            @click="tempUnschedEnabled = !tempUnschedEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
               tempUnschedEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
             ]"
+            @click="tempUnschedEnabled = !tempUnschedEnabled"
           >
             <span
               :class="[
@@ -1050,8 +1050,8 @@
               v-for="preset in tempUnschedPresets"
               :key="preset.label"
               type="button"
-              @click="addTempUnschedRule(preset.rule)"
               class="rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-300 dark:hover:bg-dark-500"
+              @click="addTempUnschedRule(preset.rule)"
             >
               + {{ preset.label }}
             </button>
@@ -1071,16 +1071,16 @@
                   <button
                     type="button"
                     :disabled="index === 0"
-                    @click="moveTempUnschedRule(index, -1)"
                     class="rounded p-1 text-gray-400 transition-colors hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-gray-200"
+                    @click="moveTempUnschedRule(index, -1)"
                   >
                     <Icon name="chevronUp" size="sm" :stroke-width="2" />
                   </button>
                   <button
                     type="button"
                     :disabled="index === tempUnschedRules.length - 1"
-                    @click="moveTempUnschedRule(index, 1)"
                     class="rounded p-1 text-gray-400 transition-colors hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-gray-200"
+                    @click="moveTempUnschedRule(index, 1)"
                   >
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -1088,8 +1088,8 @@
                   </button>
                   <button
                     type="button"
-                    @click="removeTempUnschedRule(index)"
                     class="rounded p-1 text-red-500 transition-colors hover:text-red-600"
+                    @click="removeTempUnschedRule(index)"
                   >
                     <Icon name="x" size="sm" :stroke-width="2" />
                   </button>
@@ -1143,8 +1143,8 @@
 
           <button
             type="button"
-            @click="addTempUnschedRule()"
             class="w-full rounded-lg border-2 border-dashed border-gray-300 px-4 py-2 text-sm text-gray-600 transition-colors hover:border-gray-400 hover:text-gray-700 dark:border-dark-500 dark:text-gray-400 dark:hover:border-dark-400 dark:hover:text-gray-300"
+            @click="addTempUnschedRule()"
           >
             <svg
               class="mr-1 inline h-4 w-4"
@@ -1175,11 +1175,11 @@
           </div>
           <button
             type="button"
-            @click="interceptWarmupRequests = !interceptWarmupRequests"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
               interceptWarmupRequests ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
             ]"
+            @click="interceptWarmupRequests = !interceptWarmupRequests"
           >
             <span
               :class="[
@@ -1214,11 +1214,11 @@
             </div>
             <button
               type="button"
-              @click="windowCostEnabled = !windowCostEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 windowCostEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="windowCostEnabled = !windowCostEnabled"
             >
               <span
                 :class="[
@@ -1274,11 +1274,11 @@
             </div>
             <button
               type="button"
-              @click="sessionLimitEnabled = !sessionLimitEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 sessionLimitEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="sessionLimitEnabled = !sessionLimitEnabled"
             >
               <span
                 :class="[
@@ -1331,11 +1331,11 @@
             </div>
             <button
               type="button"
-              @click="tlsFingerprintEnabled = !tlsFingerprintEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 tlsFingerprintEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="tlsFingerprintEnabled = !tlsFingerprintEnabled"
             >
               <span
                 :class="[
@@ -1358,11 +1358,11 @@
             </div>
             <button
               type="button"
-              @click="sessionIdMaskingEnabled = !sessionIdMaskingEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                 sessionIdMaskingEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
               ]"
+              @click="sessionIdMaskingEnabled = !sessionIdMaskingEnabled"
             >
               <span
                 :class="[
@@ -1420,11 +1420,11 @@
           </div>
           <button
             type="button"
-            @click="autoPauseOnExpired = !autoPauseOnExpired"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
               autoPauseOnExpired ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
             ]"
+            @click="autoPauseOnExpired = !autoPauseOnExpired"
           >
             <span
               :class="[
@@ -1441,8 +1441,8 @@
         <div v-if="form.platform === 'antigravity'" class="flex items-center gap-2">
           <label class="flex cursor-pointer items-center gap-2">
             <input
-              type="checkbox"
               v-model="mixedScheduling"
+              type="checkbox"
               class="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-dark-500"
             />
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -1477,8 +1477,7 @@
           data-tour="account-form-groups"
         />
       </div>
-
-    </form>
+</form>
 
     <!-- Step 2: OAuth Authorization -->
     <div v-else class="space-y-5">
@@ -1498,12 +1497,11 @@
         @generate-url="handleGenerateUrl"
         @cookie-auth="handleCookieAuth"
       />
-
-    </div>
+</div>
 
     <template #footer>
       <div v-if="step === 1" class="flex justify-end gap-3">
-        <button @click="handleClose" type="button" class="btn btn-secondary">
+        <button type="button" class="btn btn-secondary" @click="handleClose">
           {{ '取消' }}
         </button>
         <button
@@ -1587,8 +1585,8 @@
   <BaseDialog
     :show="showGeminiHelpDialog"
     :title="'Gemini 使用指南'"
-    @close="showGeminiHelpDialog = false"
     max-width="max-w-3xl"
+    @close="showGeminiHelpDialog = false"
   >
     <div class="space-y-6">
       <!-- Setup Guide Section -->
@@ -1793,7 +1791,7 @@
 
     <template #footer>
       <div class="flex justify-end">
-        <button @click="showGeminiHelpDialog = false" type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" @click="showGeminiHelpDialog = false">
           {{ '关闭' }}
         </button>
       </div>

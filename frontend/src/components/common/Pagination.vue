@@ -5,9 +5,9 @@
     <div class="flex flex-1 items-center justify-between sm:hidden">
       <!-- Mobile pagination -->
       <button
-        @click="goToPage(page - 1)"
         :disabled="page === 1"
         class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-200 dark:hover:bg-dark-600"
+        @click="goToPage(page - 1)"
       >
         {{ '上一页' }}
       </button>
@@ -15,9 +15,9 @@
         {{ `第 {page} / ${totalPages} 页` }}
       </span>
       <button
-        @click="goToPage(page + 1)"
         :disabled="page === totalPages"
         class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-200 dark:hover:bg-dark-600"
+        @click="goToPage(page + 1)"
       >
         {{ '下一页' }}
       </button>
@@ -74,10 +74,10 @@
       >
         <!-- Previous button -->
         <button
-          @click="goToPage(page - 1)"
           :disabled="page === 1"
           class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-400 dark:hover:bg-dark-600"
           :aria-label="'上一页'"
+          @click="goToPage(page - 1)"
         >
           <Icon name="chevronLeft" size="md" />
         </button>
@@ -86,7 +86,6 @@
         <button
           v-for="pageNum in visiblePages"
           :key="pageNum"
-          @click="typeof pageNum === 'number' && goToPage(pageNum)"
           :disabled="typeof pageNum !== 'number'"
           :class="[
             'relative inline-flex items-center border px-4 py-2 text-sm font-medium',
@@ -99,16 +98,17 @@
             typeof pageNum === 'number' ? `跳转到第 ${pageNum} 页` : undefined
           "
           :aria-current="pageNum === page ? 'page' : undefined"
+          @click="typeof pageNum === 'number' && goToPage(pageNum)"
         >
           {{ pageNum }}
         </button>
 
         <!-- Next button -->
         <button
-          @click="goToPage(page + 1)"
           :disabled="page === totalPages"
           class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-400 dark:hover:bg-dark-600"
           :aria-label="'下一页'"
+          @click="goToPage(page + 1)"
         >
           <Icon name="chevronRight" size="md" />
         </button>

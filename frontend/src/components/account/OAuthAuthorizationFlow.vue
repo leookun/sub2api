@@ -89,9 +89,7 @@
                 class="input w-full resize-y font-mono text-sm"
                 :placeholder="
                   allowMultiple
-                    ? '每行一个 sessionKey，例如：
-sk-ant-sid01-xxxxx...
-sk-ant-sid01-yyyyy...'
+                    ? '每行一个 sessionKey，例如：\nsk-ant-sid01-xxxxx...\nsk-ant-sid01-yyyyy...'
                     : 'sk-ant-sid01-xxxxx...'
                 "
               ></textarea>
@@ -387,8 +385,8 @@ sk-ant-sid01-yyyyy...'
                         :stroke-width="2"
                       />
                       <div class="text-sm text-amber-800 dark:text-amber-300">
-                        <p class="font-semibold">{{ $'提示' }}</p>
-                        <p class="mt-1">{{ $'建议粘贴完整回调链接（包含 code 和 state）。' }}</p>
+                        <p class="font-semibold">提示</p>
+                        <p class="mt-1">建议粘贴完整回调链接（包含 code 和 state）。</p>
                       </div>
                     </div>
                   </div>
@@ -456,26 +454,66 @@ const emit = defineEmits<{
 
 const isOpenAI = computed(() => props.platform === 'openai')
 
-// Get translation key based on platform
-const getOAuthKey = (key: string) => {
-  if (props.platform === 'openai') return `admin.accounts.oauth.openai.${key}`
-  if (props.platform === 'gemini') return `admin.accounts.oauth.gemini.${key}`
-  if (props.platform === 'antigravity') return `admin.accounts.oauth.antigravity.${key}`
-  return `admin.accounts.oauth.${key}`
+// Translation maps for different platforms
+const translations: Record<string, Record<string, string>> = {
+  openai: {
+    title: 'OpenAI OAuth 授权',
+    followSteps: '请按照以下步骤完成授权：',
+    step1GenerateUrl: '1. 生成授权 URL',
+    generateAuthUrl: '生成授权链接',
+    step2OpenUrl: '2. 打开授权链接',
+    openUrlDesc: '点击上方按钮打开 OpenAI 授权页面',
+    step3EnterCode: '3. 输入授权码',
+    authCodeDesc: '在授权页面完成授权后，复制授权码并粘贴到下方',
+    authCode: '授权码',
+    authCodePlaceholder: '请输入授权码',
+    authCodeHint: '从授权页面复制授权码粘贴到此处'
+  },
+  gemini: {
+    title: 'Gemini OAuth 授权',
+    followSteps: '请按照以下步骤完成授权：',
+    step1GenerateUrl: '1. 生成授权 URL',
+    generateAuthUrl: '生成授权链接',
+    step2OpenUrl: '2. 打开授权链接',
+    openUrlDesc: '点击上方按钮打开 Gemini 授权页面',
+    step3EnterCode: '3. 输入授权码',
+    authCodeDesc: '在授权页面完成授权后，复制授权码并粘贴到下方',
+    authCode: '授权码',
+    authCodePlaceholder: '请输入授权码',
+    authCodeHint: '从授权页面复制授权码粘贴到此处'
+  },
+  antigravity: {
+    title: 'Antigravity OAuth 授权',
+    followSteps: '请按照以下步骤完成授权：',
+    step1GenerateUrl: '1. 生成授权 URL',
+    generateAuthUrl: '生成授权链接',
+    step2OpenUrl: '2. 打开授权链接',
+    openUrlDesc: '点击上方按钮打开 Antigravity 授权页面',
+    step3EnterCode: '3. 输入授权码',
+    authCodeDesc: '在授权页面完成授权后，复制授权码并粘贴到下方',
+    authCode: '授权码',
+    authCodePlaceholder: '请输入授权码',
+    authCodeHint: '从授权页面复制授权码粘贴到此处'
+  }
 }
 
+// Get current platform translations
+const currentTranslations = computed(() => {
+  return translations[props.platform] || translations.openai
+})
+
 // Computed translations for current platform
-const oauthTitle = computed(() => t(getOAuthKey('title')))
-const oauthFollowSteps = computed(() => t(getOAuthKey('followSteps')))
-const oauthStep1GenerateUrl = computed(() => t(getOAuthKey('step1GenerateUrl')))
-const oauthGenerateAuthUrl = computed(() => t(getOAuthKey('generateAuthUrl')))
-const oauthStep2OpenUrl = computed(() => t(getOAuthKey('step2OpenUrl')))
-const oauthOpenUrlDesc = computed(() => t(getOAuthKey('openUrlDesc')))
-const oauthStep3EnterCode = computed(() => t(getOAuthKey('step3EnterCode')))
-const oauthAuthCodeDesc = computed(() => t(getOAuthKey('authCodeDesc')))
-const oauthAuthCode = computed(() => t(getOAuthKey('authCode')))
-const oauthAuthCodePlaceholder = computed(() => t(getOAuthKey('authCodePlaceholder')))
-const oauthAuthCodeHint = computed(() => t(getOAuthKey('authCodeHint')))
+const oauthTitle = computed(() => currentTranslations.value.title)
+const oauthFollowSteps = computed(() => currentTranslations.value.followSteps)
+const oauthStep1GenerateUrl = computed(() => currentTranslations.value.step1GenerateUrl)
+const oauthGenerateAuthUrl = computed(() => currentTranslations.value.generateAuthUrl)
+const oauthStep2OpenUrl = computed(() => currentTranslations.value.step2OpenUrl)
+const oauthOpenUrlDesc = computed(() => currentTranslations.value.openUrlDesc)
+const oauthStep3EnterCode = computed(() => currentTranslations.value.step3EnterCode)
+const oauthAuthCodeDesc = computed(() => currentTranslations.value.authCodeDesc)
+const oauthAuthCode = computed(() => currentTranslations.value.authCode)
+const oauthAuthCodePlaceholder = computed(() => currentTranslations.value.authCodePlaceholder)
+const oauthAuthCodeHint = computed(() => currentTranslations.value.authCodeHint)
 const oauthImportantNotice = computed(() => {
   if (props.platform === 'openai') return '重要提示：授权后页面可能会加载较长时间，请耐心等待。当浏览器地址栏变为 http://localhost... 开头时，表示授权已完成。'
   if (props.platform === 'antigravity') return '重要提示：授权后页面可能会加载较长时间，请耐心等待。当浏览器地址栏变为 http://localhost... 开头时，表示授权已完成。'

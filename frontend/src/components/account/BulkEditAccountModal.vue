@@ -32,16 +32,16 @@
             {{ 'Base URL' }}
           </label>
           <input
-            v-model="enableBaseUrl"
             id="bulk-edit-base-url-enabled"
+            v-model="enableBaseUrl"
             type="checkbox"
             aria-controls="bulk-edit-base-url"
             class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
           />
         </div>
         <input
-          v-model="baseUrl"
           id="bulk-edit-base-url"
+          v-model="baseUrl"
           type="text"
           :disabled="!enableBaseUrl"
           class="input"
@@ -65,8 +65,8 @@
             {{ '模型限制（可选）' }}
           </label>
           <input
-            v-model="enableModelRestriction"
             id="bulk-edit-model-restriction-enabled"
+            v-model="enableModelRestriction"
             type="checkbox"
             aria-controls="bulk-edit-model-restriction-body"
             class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
@@ -307,8 +307,8 @@
             </p>
           </div>
           <input
-            v-model="enableCustomErrorCodes"
             id="bulk-edit-custom-error-codes-enabled"
+            v-model="enableCustomErrorCodes"
             type="checkbox"
             aria-controls="bulk-edit-custom-error-codes-body"
             class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
@@ -344,8 +344,8 @@
           <!-- Manual input -->
           <div class="flex items-center gap-2">
             <input
-              v-model="customErrorCodeInput"
               id="bulk-edit-custom-error-code-input"
+              v-model="customErrorCodeInput"
               type="number"
               min="100"
               max="599"
@@ -405,8 +405,8 @@
             </p>
           </div>
           <input
-            v-model="enableInterceptWarmup"
             id="bulk-edit-intercept-warmup-enabled"
+            v-model="enableInterceptWarmup"
             type="checkbox"
             aria-controls="bulk-edit-intercept-warmup-body"
             class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
@@ -442,8 +442,8 @@
             {{ '代理' }}
           </label>
           <input
-            v-model="enableProxy"
             id="bulk-edit-proxy-enabled"
+            v-model="enableProxy"
             type="checkbox"
             aria-controls="bulk-edit-proxy-body"
             class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
@@ -470,16 +470,16 @@
               {{ '并发数' }}
             </label>
             <input
-              v-model="enableConcurrency"
               id="bulk-edit-concurrency-enabled"
+              v-model="enableConcurrency"
               type="checkbox"
               aria-controls="bulk-edit-concurrency"
               class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
             />
           </div>
           <input
-            v-model.number="concurrency"
             id="bulk-edit-concurrency"
+            v-model.number="concurrency"
             type="number"
             min="1"
             :disabled="!enableConcurrency"
@@ -498,16 +498,16 @@
               {{ '优先级' }}
             </label>
             <input
-              v-model="enablePriority"
               id="bulk-edit-priority-enabled"
+              v-model="enablePriority"
               type="checkbox"
               aria-controls="bulk-edit-priority"
               class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
             />
           </div>
           <input
-            v-model.number="priority"
             id="bulk-edit-priority"
+            v-model.number="priority"
             type="number"
             min="1"
             :disabled="!enablePriority"
@@ -526,16 +526,16 @@
               {{ '账号计费倍率' }}
             </label>
             <input
-              v-model="enableRateMultiplier"
               id="bulk-edit-rate-multiplier-enabled"
+              v-model="enableRateMultiplier"
               type="checkbox"
               aria-controls="bulk-edit-rate-multiplier"
               class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
             />
           </div>
           <input
-            v-model.number="rateMultiplier"
             id="bulk-edit-rate-multiplier"
+            v-model.number="rateMultiplier"
             type="number"
             min="0"
             step="0.01"
@@ -559,8 +559,8 @@
             {{ '状态' }}
           </label>
           <input
-            v-model="enableStatus"
             id="bulk-edit-status-enabled"
+            v-model="enableStatus"
             type="checkbox"
             aria-controls="bulk-edit-status"
             class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
@@ -586,8 +586,8 @@
             {{ '分组管理' }}
           </label>
           <input
-            v-model="enableGroups"
             id="bulk-edit-groups-enabled"
+            v-model="enableGroups"
             type="checkbox"
             aria-controls="bulk-edit-groups"
             class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"

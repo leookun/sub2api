@@ -253,7 +253,7 @@
             :color="bar.color"
           />
           <p class="mt-1 text-[9px] leading-tight text-gray-400 dark:text-gray-500 italic">
-            * {{ '本地模拟配额，仅供参考' || 'Simulated quota' }}
+            * 本地模拟配额，仅供参考
           </p>
         </div>
         <!-- AI Studio Client OAuth: show unlimited flow (no usage tracking) -->

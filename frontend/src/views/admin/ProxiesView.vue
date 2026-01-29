@@ -44,32 +44,32 @@
           <!-- Right: Actions -->
           <div class="ml-auto flex flex-wrap items-center justify-end gap-3">
             <button
-              @click="loadProxies"
               :disabled="loading"
               class="btn btn-secondary"
               :title="'刷新'"
+              @click="loadProxies"
             >
               <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
             </button>
             <button
-              @click="handleBatchTest"
               :disabled="batchTesting || loading"
               class="btn btn-secondary"
               :title="'测试连接'"
+              @click="handleBatchTest"
             >
               <Icon name="play" size="md" class="mr-2" />
               {{ '测试连接' }}
             </button>
             <button
-              @click="openBatchDelete"
               :disabled="selectedCount === 0"
               class="btn btn-danger"
               :title="'删除'"
+              @click="openBatchDelete"
             >
               <Icon name="trash" size="md" class="mr-2" />
               {{ '删除' }}
             </button>
-            <button @click="showCreateModal = true" class="btn btn-primary">
+            <button class="btn btn-primary" @click="showCreateModal = true">
               <Icon name="plus" size="md" class="mr-2" />
               {{ '添加代理' }}
             </button>
@@ -168,16 +168,16 @@
 
           <template #cell-status="{ value }">
             <span :class="['badge', value === 'active' ? 'badge-success' : 'badge-danger']">
-              {{ t('admin.accounts.status.' + value) }}
+              {{ value === 'active' ? '正常' : '停用' }}
             </span>
           </template>
 
           <template #cell-actions="{ row }">
             <div class="flex items-center gap-1">
               <button
-                @click="handleTestConnection(row)"
                 :disabled="testingProxyIds.has(row.id)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-emerald-50 hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-emerald-900/20 dark:hover:text-emerald-400"
+                @click="handleTestConnection(row)"
               >
                 <svg
                   v-if="testingProxyIds.has(row.id)"
@@ -203,15 +203,15 @@
                 <span class="text-xs">{{ '测试连接' }}</span>
               </button>
               <button
-                @click="handleEdit(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
+                @click="handleEdit(row)"
               >
                 <Icon name="edit" size="sm" />
                 <span class="text-xs">{{ '编辑' }}</span>
               </button>
               <button
-                @click="handleDelete(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                @click="handleDelete(row)"
               >
                 <Icon name="trash" size="sm" />
                 <span class="text-xs">{{ '删除' }}</span>
@@ -253,26 +253,26 @@
       <div class="mb-6 flex border-b border-gray-200 dark:border-dark-600">
         <button
           type="button"
-          @click="createMode = 'standard'"
           :class="[
             '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors',
             createMode === 'standard'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
               : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
           ]"
+          @click="createMode = 'standard'"
         >
           <Icon name="plus" size="sm" class="mr-1.5 inline" />
           {{ '标准添加' }}
         </button>
         <button
           type="button"
-          @click="createMode = 'batch'"
           :class="[
             '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors',
             createMode === 'batch'
               ? 'border-primary-500 text-primary-600 dark:text-primary-400'
               : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
           ]"
+          @click="createMode = 'batch'"
         >
           <svg
             class="mr-1.5 inline h-4 w-4"
@@ -295,8 +295,8 @@
       <form
         v-if="createMode === 'standard'"
         id="create-proxy-form"
-        @submit.prevent="handleCreateProxy"
         class="space-y-5"
+        @submit.prevent="handleCreateProxy"
       >
         <div>
           <label class="input-label">{{ '名称' }}</label>
@@ -354,8 +354,7 @@
             :placeholder="'可选认证信息'"
           />
         </div>
-
-      </form>
+</form>
 
       <!-- Batch Add Form -->
       <div v-else class="space-y-5">
@@ -365,14 +364,11 @@
             v-model="batchInput"
             rows="10"
             class="input font-mono text-sm"
-            :placeholder=""每行输入一个代理，支持以下格式：
-socks5://user:pass{'@'}192.168.1.1:1080
-http://192.168.1.1:8080
-https://user:pass{'@'}proxy.example.com:443""
+            placeholder="每行输入一个代理，支持以下格式：&#10;socks5://user:pass@192.168.1.1:1080&#10;http://192.168.1.1:8080&#10;https://user:pass@proxy.example.com:443"
             @input="parseBatchInput"
           ></textarea>
           <p class="input-hint mt-2">
-            {{ "支持 http、https、socks5 协议，格式：协议://[用户名:密码{'@'}]主机:端口" }}
+            支持 http、https、socks5 协议，格式：协议://[用户名:密码@]主机:端口
           </p>
         </div>
 
@@ -416,12 +412,11 @@ https://user:pass{'@'}proxy.example.com:443""
             </div>
           </div>
         </div>
-
-      </div>
+</div>
 
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button @click="closeCreateModal" type="button" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="closeCreateModal">
             {{ '取消' }}
           </button>
           <button
@@ -455,10 +450,10 @@ https://user:pass{'@'}proxy.example.com:443""
           </button>
           <button
             v-else
-            @click="handleBatchCreate"
             type="button"
             :disabled="submitting || batchParseResult.valid === 0"
             class="btn btn-primary"
+            @click="handleBatchCreate"
           >
             <svg
               v-if="submitting"
@@ -500,8 +495,8 @@ https://user:pass{'@'}proxy.example.com:443""
       <form
         v-if="editingProxy"
         id="edit-proxy-form"
-        @submit.prevent="handleUpdateProxy"
         class="space-y-5"
+        @submit.prevent="handleUpdateProxy"
       >
         <div>
           <label class="input-label">{{ '名称' }}</label>
@@ -545,12 +540,11 @@ https://user:pass{'@'}proxy.example.com:443""
           <label class="input-label">{{ '状态' }}</label>
           <Select v-model="editForm.status" :options="editStatusOptions" />
         </div>
-
-      </form>
+</form>
 
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button @click="closeEditModal" type="button" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="closeEditModal">
             {{ '取消' }}
           </button>
           <button
@@ -648,7 +642,7 @@ https://user:pass{'@'}proxy.example.com:443""
       </div>
       <template #footer>
         <div class="flex justify-end">
-          <button @click="closeAccountsModal" class="btn btn-secondary">
+          <button class="btn btn-secondary" @click="closeAccountsModal">
             {{ '关闭' }}
           </button>
         </div>
@@ -705,10 +699,10 @@ const statusOptions = computed(() => [
 
 // Form options
 const protocolSelectOptions = computed(() => [
-  { value: 'http', label: t('admin.proxies.protocols.http') },
-  { value: 'https', label: t('admin.proxies.protocols.https') },
-  { value: 'socks5', label: t('admin.proxies.protocols.socks5') },
-  { value: 'socks5h', label: t('admin.proxies.protocols.socks5h') }
+  { value: 'http', label: 'admin.proxies.protocols.http' },
+  { value: 'https', label: 'admin.proxies.protocols.https' },
+  { value: 'socks5', label: 'admin.proxies.protocols.socks5' },
+  { value: 'socks5h', label: 'admin.proxies.protocols.socks5h' }
 ])
 
 const editStatusOptions = computed(() => [

@@ -1,10 +1,10 @@
 <template>
-  <div v-if="hasActiveSubscriptions" class="relative" ref="containerRef">
+  <div v-if="hasActiveSubscriptions" ref="containerRef" class="relative">
     <!-- Mini Progress Display -->
     <button
-      @click="toggleTooltip"
       class="flex cursor-pointer items-center gap-2 rounded-xl bg-purple-50 px-3 py-1.5 transition-colors hover:bg-purple-100 dark:bg-purple-900/20 dark:hover:bg-purple-900/30"
       :title="'查看订阅详情'"
+      @click="toggleTooltip"
     >
       <Icon name="creditCard" size="sm" class="text-purple-600 dark:text-purple-400" />
       <div class="flex items-center gap-1.5">
@@ -166,8 +166,8 @@
         <div class="border-t border-gray-100 p-2 dark:border-dark-700">
           <router-link
             to="/subscriptions"
-            @click="closeTooltip"
             class="block w-full py-1 text-center text-xs text-primary-600 hover:underline dark:text-primary-400"
+            @click="closeTooltip"
           >
             {{ '查看全部订阅' }}
           </router-link>

@@ -1,9 +1,8 @@
 <template>
-  <div class="relative" ref="containerRef">
+  <div ref="containerRef" class="relative">
     <button
       ref="triggerRef"
       type="button"
-      @click="toggle"
       :disabled="disabled"
       :aria-expanded="isOpen"
       :aria-haspopup="true"
@@ -14,6 +13,7 @@
         error && 'select-trigger-error',
         disabled && 'select-trigger-disabled'
       ]"
+      @click="toggle"
       @keydown.down.prevent="onTriggerKeyDown"
       @keydown.up.prevent="onTriggerKeyDown"
     >
@@ -59,15 +59,13 @@
           </div>
 
           <!-- Options list -->
-          <div class="select-options" ref="optionsListRef">
+          <div ref="optionsListRef" class="select-options">
             <div
               v-for="(option, index) in filteredOptions"
               :key="`${typeof getOptionValue(option)}:${String(getOptionValue(option) ?? '')}`"
               role="option"
               :aria-selected="isSelected(option)"
               :aria-disabled="isOptionDisabled(option)"
-              @click.stop="!isOptionDisabled(option) && selectOption(option)"
-              @mouseenter="handleOptionMouseEnter(option, index)"
               :class="[
                 'select-option',
                 isGroupHeaderOption(option) && 'select-option-group',
@@ -75,6 +73,8 @@
                 isOptionDisabled(option) && !isGroupHeaderOption(option) && 'select-option-disabled',
                 focusedIndex === index && !isGroupHeaderOption(option) && 'select-option-focused'
               ]"
+              @click.stop="!isOptionDisabled(option) && selectOption(option)"
+              @mouseenter="handleOptionMouseEnter(option, index)"
             >
               <slot name="option" :option="option" :selected="isSelected(option)">
                 <span class="select-option-label">{{ getOptionLabel(option) }}</span>

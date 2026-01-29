@@ -6,7 +6,7 @@
       </h2>
     </div>
     <div class="px-6 py-6">
-      <form @submit.prevent="handleUpdateProfile" class="space-y-4">
+      <form class="space-y-4" @submit.prevent="handleUpdateProfile">
         <div>
           <label for="username" class="input-label">
             {{ '用户名' }}

@@ -1,14 +1,14 @@
 <template>
-  <div class="relative" ref="containerRef">
+  <div ref="containerRef" class="relative">
     <button
       type="button"
-      @click="toggle"
       :disabled="disabled"
       :class="[
         'select-trigger',
         isOpen && 'select-trigger-open',
         disabled && 'select-trigger-disabled'
       ]"
+      @click="toggle"
     >
       <span class="select-value">
         {{ selectedLabel }}
@@ -40,10 +40,10 @@
           <button
             v-if="proxies.length > 0"
             type="button"
-            @click.stop="handleBatchTest"
             :disabled="batchTesting"
             class="batch-test-btn"
             :title="'批量测试'"
+            @click.stop="handleBatchTest"
           >
             <svg v-if="batchTesting" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle
@@ -68,8 +68,8 @@
         <div class="select-options">
           <!-- No Proxy option -->
           <div
-            @click="selectOption(null)"
             :class="['select-option', modelValue === null && 'select-option-selected']"
+            @click="selectOption(null)"
           >
             <span class="select-option-label">{{ '无代理' }}</span>
             <Icon v-if="modelValue === null" name="check" size="sm" class="text-primary-500" />
@@ -79,8 +79,8 @@
           <div
             v-for="proxy in filteredProxies"
             :key="proxy.id"
-            @click="selectOption(proxy.id)"
             :class="['select-option', modelValue === proxy.id && 'select-option-selected']"
+            @click="selectOption(proxy.id)"
           >
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-2">
@@ -121,10 +121,10 @@
             <!-- Individual test button -->
             <button
               type="button"
-              @click.stop="handleTestProxy(proxy)"
               :disabled="testingProxyIds.has(proxy.id)"
               class="test-btn"
               :title="'测试连接'"
+              @click.stop="handleTestProxy(proxy)"
             >
               <svg
                 v-if="testingProxyIds.has(proxy.id)"

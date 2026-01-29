@@ -8,6 +8,9 @@ docs/claude-relay-service/
 *.exe~
 *.dll
 *.so
+frontend/dist/
+frontend/auto-import-components.d.ts
+frontend/auto-import-libs.d.ts
 *.dylib
 backend/bin/
 backend/server

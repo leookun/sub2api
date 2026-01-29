@@ -93,7 +93,7 @@ export function useOnboardingTour(options: OnboardingOptions) {
     // 动态获取当前用户角色和步骤
     const isAdmin = userStore.user?.role === 'admin'
     const isSimpleMode = userStore.isSimpleMode
-    const steps = isAdmin ? getAdminSteps(t, isSimpleMode) : getUserSteps(t)
+    const steps = isAdmin ? getAdminSteps(isSimpleMode) : getUserSteps()
 
     // 确保 DOM 就绪
     await nextTick()
@@ -190,7 +190,7 @@ export function useOnboardingTour(options: OnboardingOptions) {
               iconSpan.className = 'i-mdi-keyboard-return mr-1'
 
               const textNode = document.createTextNode(
-                t('onboarding.interactiveHint', 'Press Enter or Click to continue'),
+                '按 Enter 或点击继续',
               )
 
               hint.appendChild(iconSpan)

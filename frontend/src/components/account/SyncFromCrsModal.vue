@@ -67,7 +67,7 @@
           {{ '同步结果' }}
         </div>
         <div class="text-sm text-gray-700 dark:text-dark-300">
-          {{ t('admin.accounts.syncResultSummary', result) }}
+          {{ syncResultSummary }}
         </div>
 
         <div v-if="errorItems.length" class="mt-2">
@@ -139,6 +139,13 @@ const errorItems = computed(() => {
   return result.value.items.filter((i) => i.action === 'failed' || i.action === 'skipped')
 })
 
+// Computed: sync result summary
+const syncResultSummary = computed(() => {
+  if (!result.value) return ''
+  const { created, updated, skipped, failed } = result.value
+  return `创建 ${created} 个，更新 ${updated} 个，跳过 ${skipped} 个，失败 ${failed} 个`
+})
+
 watch(
   () => props.show,
   (open) => {
@@ -173,9 +180,9 @@ const handleSync = async () => {
     result.value = res
 
     if (res.failed > 0) {
-      appStore.showError(t('admin.accounts.syncCompletedWithErrors', res))
+      appStore.showError(`同步完成，但有 ${res.failed} 个失败`)
     } else {
-      appStore.showSuccess(t('admin.accounts.syncCompleted', res))
+      appStore.showSuccess(`同步完成：创建 ${res.created} 个，更新 ${res.updated} 个`)
       emit('synced')
     }
   } catch (error: any) {

@@ -1,6 +1,6 @@
 <template>
   <BaseDialog :show="show" :title="operation === 'add' ? '充值' : '退款'" width="narrow" @close="$emit('close')">
-    <form v-if="user" id="balance-form" @submit.prevent="handleBalanceSubmit" class="space-y-5">
+    <form v-if="user" id="balance-form" class="space-y-5" @submit.prevent="handleBalanceSubmit">
       <div class="flex items-center gap-3 rounded-xl bg-gray-50 p-4 dark:bg-dark-700">
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-100"><span class="text-lg font-medium text-primary-700">{{ user.email.charAt(0).toUpperCase() }}</span></div>
         <div class="flex-1"><p class="font-medium text-gray-900">{{ user.email }}</p><p class="text-sm text-gray-500">{{ '当前余额' }}: ${{ formatBalance(user.balance) }}</p></div>
@@ -9,7 +9,7 @@
         <label class="input-label">{{ operation === 'add' ? '充值金额' : '退款金额' }}</label>
         <div class="relative flex gap-2">
           <div class="relative flex-1"><div class="absolute left-3 top-1/2 -translate-y-1/2 font-medium text-gray-500">$</div><input v-model.number="form.amount" type="number" step="any" min="0" required class="input pl-8" /></div>
-          <button v-if="operation === 'subtract'" type="button" @click="fillAllBalance" class="btn btn-secondary whitespace-nowrap">{{ '全部' }}</button>
+          <button v-if="operation === 'subtract'" type="button" class="btn btn-secondary whitespace-nowrap" @click="fillAllBalance">{{ '全部' }}</button>
         </div>
       </div>
       <div><label class="input-label">{{ '备注' }}</label><textarea v-model="form.notes" rows="3" class="input"></textarea></div>
@@ -17,7 +17,7 @@
     </form>
     <template #footer>
       <div class="flex justify-end gap-3">
-        <button @click="$emit('close')" class="btn btn-secondary">{{ '取消' }}</button>
+        <button class="btn btn-secondary" @click="$emit('close')">{{ '取消' }}</button>
         <button type="submit" form="balance-form" :disabled="submitting || !form.amount" class="btn" :class="operation === 'add' ? 'bg-emerald-600 text-white' : 'btn-danger'">{{ submitting ? '保存中...' : '确认' }}</button>
       </div>
     </template>

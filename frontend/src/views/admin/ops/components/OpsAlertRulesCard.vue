@@ -244,7 +244,7 @@ const metricOptions = computed(() => {
     return [
       {
         value: headerValue,
-        label: t(`admin.ops.alertRules.metricGroups.${group}`),
+        label: group === 'system' ? '系统指标' : group === 'group' ? '分组指标' : '账号指标',
         disabled: true,
         kind: 'group'
       },
@@ -576,8 +576,8 @@ function cancelDelete() {
       :show="showDeleteConfirm"
       :title="'确认删除该规则？'"
       :message="'将删除该规则及其关联的告警事件，是否继续？'"
-      :confirmText="'删除'"
-      :cancelText="'取消'"
+      :confirm-text="'删除'"
+      :cancel-text="'取消'"
       @confirm="confirmDelete"
       @cancel="cancelDelete"
     />

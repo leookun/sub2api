@@ -1,8 +1,5 @@
 import { ref } from 'vue'
 import { useAppStore } from '@/stores/app'
-import { i18n } from '@/i18n'
-
-const { t } = i18n.global
 
 /**
  * 检测是否支持 Clipboard API（需要安全上下文：HTTPS/localhost）

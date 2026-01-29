@@ -26,10 +26,10 @@
               />
               <button
                 v-if="selectedFilterUser"
-                @click="clearFilterUser"
                 type="button"
                 class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                :title="t('common.clear')"
+                :title="'common.clear'"
+                @click="clearFilterUser"
               >
                 <Icon name="x" size="sm" :stroke-width="2" />
               </button>
@@ -55,8 +55,8 @@
                   v-for="user in filterUserResults"
                   :key="user.id"
                   type="button"
-                  @click="selectFilterUser(user)"
                   class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                  @click="selectFilterUser(user)"
                 >
                   <span class="font-medium text-gray-900 dark:text-white">{{ user.email }}</span>
                   <span class="ml-2 text-gray-500 dark:text-gray-400">#{{ user.id }}</span>
@@ -86,19 +86,19 @@
           <!-- Right: Actions -->
           <div class="ml-auto flex flex-wrap items-center justify-end gap-3">
             <button
-              @click="loadSubscriptions"
               :disabled="loading"
               class="btn btn-secondary"
               :title="'刷新'"
+              @click="loadSubscriptions"
             >
               <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
             </button>
             <!-- Column Settings Dropdown -->
-            <div class="relative" ref="columnDropdownRef">
+            <div ref="columnDropdownRef" class="relative">
               <button
-                @click="showColumnDropdown = !showColumnDropdown"
                 class="btn btn-secondary px-2 md:px-3"
                 :title="'列设置'"
+                @click="showColumnDropdown = !showColumnDropdown"
               >
                 <svg class="h-4 w-4 md:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
@@ -117,15 +117,15 @@
                       {{ '用户' }}
                     </div>
                     <button
-                      @click="setUserColumnMode('email')"
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                      @click="setUserColumnMode('email')"
                     >
                       <span>{{ '邮箱' }}</span>
                       <Icon v-if="userColumnMode === 'email'" name="check" size="sm" class="text-primary-500" />
                     </button>
                     <button
-                      @click="setUserColumnMode('username')"
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                      @click="setUserColumnMode('username')"
                     >
                       <span>{{ '用户名' }}</span>
                       <Icon v-if="userColumnMode === 'username'" name="check" size="sm" class="text-primary-500" />
@@ -135,8 +135,8 @@
                   <button
                     v-for="col in toggleableColumns"
                     :key="col.key"
-                    @click="toggleColumn(col.key)"
                     class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                    @click="toggleColumn(col.key)"
                   >
                     <span>{{ col.label }}</span>
                     <Icon v-if="isColumnVisible(col.key)" name="check" size="sm" class="text-primary-500" />
@@ -144,7 +144,7 @@
                 </div>
               </div>
             </div>
-            <button @click="showAssignModal = true" class="btn btn-primary">
+            <button class="btn btn-primary" @click="showAssignModal = true">
               <Icon name="plus" size="md" class="mr-2" />
               {{ '分配订阅' }}
             </button>
@@ -215,7 +215,7 @@
                     ${{ row.group?.daily_limit_usd?.toFixed(2) }}
                   </span>
                 </div>
-                <div class="reset-info" v-if="row.daily_window_start">
+                <div v-if="row.daily_window_start" class="reset-info">
                   <svg
                     class="h-3 w-3"
                     fill="none"
@@ -252,7 +252,7 @@
                     ${{ row.group?.weekly_limit_usd?.toFixed(2) }}
                   </span>
                 </div>
-                <div class="reset-info" v-if="row.weekly_window_start">
+                <div v-if="row.weekly_window_start" class="reset-info">
                   <svg
                     class="h-3 w-3"
                     fill="none"
@@ -289,7 +289,7 @@
                     ${{ row.group?.monthly_limit_usd?.toFixed(2) }}
                   </span>
                 </div>
-                <div class="reset-info" v-if="row.monthly_window_start">
+                <div v-if="row.monthly_window_start" class="reset-info">
                   <svg
                     class="h-3 w-3"
                     fill="none"
@@ -356,7 +356,7 @@
                     : 'badge-danger'
               ]"
             >
-              {{ t(`admin.subscriptions.status.${value}`) }}
+              {{ value === 'active' ? '生效中' : value === 'expired' ? '已过期' : '已撤销' }}
             </span>
           </template>
 
@@ -364,16 +364,16 @@
             <div class="flex items-center gap-1">
               <button
                 v-if="row.status === 'active' || row.status === 'expired'"
-                @click="handleExtend(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400"
+                @click="handleExtend(row)"
               >
                 <Icon name="calendar" size="sm" />
                 <span class="text-xs">{{ '调整' }}</span>
               </button>
               <button
                 v-if="row.status === 'active'"
-                @click="handleRevoke(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                @click="handleRevoke(row)"
               >
                 <Icon name="ban" size="sm" />
                 <span class="text-xs">{{ '撤销' }}</span>
@@ -414,8 +414,8 @@
     >
       <form
         id="assign-subscription-form"
-        @submit.prevent="handleAssignSubscription"
         class="space-y-5"
+        @submit.prevent="handleAssignSubscription"
       >
         <div>
           <label class="input-label">{{ '用户' }}</label>
@@ -430,9 +430,9 @@
             />
             <button
               v-if="selectedUser"
-              @click="clearUserSelection"
               type="button"
               class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              @click="clearUserSelection"
             >
               <Icon name="x" size="sm" :stroke-width="2" />
             </button>
@@ -457,8 +457,8 @@
                 v-for="user in userSearchResults"
                 :key="user.id"
                 type="button"
-                @click="selectUser(user)"
                 class="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                @click="selectUser(user)"
               >
                 <span class="font-medium text-gray-900 dark:text-white">{{ user.email }}</span>
                 <span class="ml-2 text-gray-500 dark:text-gray-400">#{{ user.id }}</span>
@@ -504,7 +504,7 @@
       </form>
       <template #footer>
         <div class="flex justify-end gap-3">
-          <button @click="closeAssignModal" type="button" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="closeAssignModal">
             {{ '取消' }}
           </button>
           <button
@@ -549,8 +549,8 @@
       <form
         v-if="extendingSubscription"
         id="extend-subscription-form"
-        @submit.prevent="handleExtendSubscription"
         class="space-y-5"
+        @submit.prevent="handleExtendSubscription"
       >
         <div class="rounded-lg bg-gray-50 p-4 dark:bg-dark-700">
           <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -592,7 +592,7 @@
       </form>
       <template #footer>
         <div v-if="extendingSubscription" class="flex justify-end gap-3">
-          <button @click="closeExtendModal" type="button" class="btn btn-secondary">
+          <button type="button" class="btn btn-secondary" @click="closeExtendModal">
             {{ '取消' }}
           </button>
           <button

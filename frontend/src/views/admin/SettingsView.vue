@@ -7,7 +7,7 @@
       </div>
 
       <!-- Settings Form -->
-      <form v-else @submit.prevent="saveSettings" class="space-y-6">
+      <form v-else class="space-y-6" @submit.prevent="saveSettings">
         <!-- Admin API Key Settings -->
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
@@ -48,9 +48,9 @@
               </span>
               <button
                 type="button"
-                @click="createAdminApiKey"
                 :disabled="adminApiKeyOperating"
                 class="btn btn-primary btn-sm"
+                @click="createAdminApiKey"
               >
                 <svg
                   v-if="adminApiKeyOperating"
@@ -96,9 +96,9 @@
                 <div class="flex gap-2">
                   <button
                     type="button"
-                    @click="regenerateAdminApiKey"
                     :disabled="adminApiKeyOperating"
                     class="btn btn-secondary btn-sm"
+                    @click="regenerateAdminApiKey"
                   >
                     {{
                       adminApiKeyOperating
@@ -108,9 +108,9 @@
                   </button>
                   <button
                     type="button"
-                    @click="deleteAdminApiKey"
                     :disabled="adminApiKeyOperating"
                     class="btn btn-secondary btn-sm text-red-600 hover:text-red-700 dark:text-red-400"
+                    @click="deleteAdminApiKey"
                   >
                     {{ '删除' }}
                   </button>
@@ -133,8 +133,8 @@
                   </code>
                   <button
                     type="button"
-                    @click="copyNewKey"
                     class="btn btn-primary btn-sm flex-shrink-0"
+                    @click="copyNewKey"
                   >
                     {{ '复制密钥' }}
                   </button>
@@ -254,9 +254,9 @@
               <div class="flex justify-end border-t border-gray-100 pt-4 dark:border-dark-700">
                 <button
                   type="button"
-                  @click="saveStreamTimeoutSettings"
                   :disabled="streamTimeoutSaving"
                   class="btn btn-primary btn-sm"
+                  @click="saveStreamTimeoutSettings"
                 >
                   <svg
                     v-if="streamTimeoutSaving"
@@ -742,8 +742,8 @@
                     <button
                       v-if="form.site_logo"
                       type="button"
-                      @click="form.site_logo = ''"
                       class="btn btn-secondary btn-sm text-red-600 hover:text-red-700 dark:text-red-400"
+                      @click="form.site_logo = ''"
                     >
                       <Icon name="trash" size="sm" class="mr-1.5" :stroke-width="2" />
                       {{ '移除' }}
@@ -809,9 +809,9 @@
             </div>
             <button
               type="button"
-              @click="testSmtpConnection"
               :disabled="testingSmtp"
               class="btn btn-secondary btn-sm"
+              @click="testSmtpConnection"
             >
               <svg v-if="testingSmtp" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
                 <circle
@@ -869,7 +869,7 @@
                   v-model="form.smtp_username"
                   type="text"
                   class="input"
-                  :placeholder=""your-email{'@'}gmail.com""
+                  placeholder="your-email@gmail.com"
                 />
               </div>
               <div>
@@ -902,7 +902,7 @@
                   v-model="form.smtp_from_email"
                   type="email"
                   class="input"
-                  :placeholder=""noreply{'@'}example.com""
+                  placeholder="noreply@example.com"
                 />
               </div>
               <div>
@@ -1000,14 +1000,14 @@
                   v-model="testEmailAddress"
                   type="email"
                   class="input"
-                  :placeholder=""test{'@'}example.com""
+                  placeholder="test@example.com"
                 />
               </div>
               <button
                 type="button"
-                @click="sendTestEmail"
                 :disabled="sendingTestEmail || !testEmailAddress"
                 class="btn btn-secondary"
+                @click="sendTestEmail"
               >
                 <svg
                   v-if="sendingTestEmail"

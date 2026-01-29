@@ -426,8 +426,8 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
               v-for="row in events"
               :key="row.id"
               class="cursor-pointer hover:bg-gray-50 dark:hover:bg-dark-700/50"
-              @click="openDetail(row)"
               :title="row.title || ''"
+              @click="openDetail(row)"
             >
               <td class="whitespace-nowrap px-4 py-3 text-xs text-gray-600 dark:text-gray-300">
                 {{ formatDateTime(row.fired_at || row.created_at) }}
@@ -544,7 +544,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
                 />
                 <button type="button" class="btn btn-secondary btn-sm" :disabled="detailActionLoading" @click="silenceAlert">
                   <Icon name="ban" size="sm" />
-                  {{ t('common.apply') }}
+                  {{ 'common.apply' }}
                 </button>
               </div>
 

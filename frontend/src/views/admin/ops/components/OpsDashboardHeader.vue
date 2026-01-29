@@ -1082,7 +1082,7 @@ function handleToolbarRefresh() {
               </div>
             </div>
 
-            <div class="mt-4 text-center" v-if="!props.fullscreen">
+            <div v-if="!props.fullscreen" class="mt-4 text-center">
               <div class="flex items-center justify-center gap-1 text-xs font-medium text-gray-500">
                 {{ '健康状况' }}
                 <HelpTooltip :content="'基于 SLA、错误率和资源使用情况的系统整体健康评分'" />
@@ -1501,7 +1501,7 @@ function handleToolbarRefresh() {
         <div class="rounded-xl bg-gray-50 p-3 dark:bg-dark-900">
           <div class="flex items-center gap-1">
             <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">{{ '协程' }}</div>
-            <HelpTooltip v-if="!props.fullscreen" :content="'Go 运行时的协程数量（轻量级线程）。没有绝对"安全值"，建议以历史基线为准。经验参考：<2000 常见；2000-8000 需关注；>8000 且伴随队列上升时，优先排查阻塞/泄漏。'" />
+            <HelpTooltip v-if="!props.fullscreen" :content="'Go 运行时的协程数量（轻量级线程）。没有绝对安全值，建议以历史基线为准。经验参考：<2000 常见；2000-8000 需关注；>8000 且伴随队列上升时，优先排查阻塞/泄漏。'" />
           </div>
           <div class="mt-1 text-lg font-black" :class="goroutineStatusClass">
             {{ goroutineStatusLabel }}

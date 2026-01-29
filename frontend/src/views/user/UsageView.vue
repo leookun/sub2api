@@ -113,10 +113,10 @@
 
             <!-- Actions -->
             <div class="ml-auto flex items-center gap-3">
-              <button @click="resetFilters" class="btn btn-secondary">
+              <button class="btn btn-secondary" @click="resetFilters">
                 {{ '重置' }}
               </button>
-              <button @click="exportToCSV" :disabled="exporting" class="btn btn-primary">
+              <button :disabled="exporting" class="btn btn-primary" @click="exportToCSV">
                 <svg
                   v-if="exporting"
                   class="-ml-1 mr-2 h-4 w-4 animate-spin"
@@ -186,7 +186,7 @@
                   d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <span class="font-medium text-gray-900 dark:text-white">{{ row.image_count }}{{ $'张' }}</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{ row.image_count }}张</span>
               <span class="text-gray-400">({{ row.image_size || '2K' }})</span>
             </div>
             <!-- Token 请求 -->

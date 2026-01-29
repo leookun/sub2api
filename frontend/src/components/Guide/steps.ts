@@ -1,12 +1,11 @@
-import { DriveStep } from 'driver.js'
+import type { DriveStep } from 'driver.js'
 
 /**
  * 管理员完整引导流程
  * 交互式引导：指引用户实际操作
- * @param t 国际化函数
  * @param isSimpleMode 是否为简易模式（简易模式下会过滤分组相关步骤）
  */
-export const getAdminSteps = (t: (key: string) => string, isSimpleMode = false): DriveStep[] => {
+export const getAdminSteps = (isSimpleMode = false): DriveStep[] => {
   const allSteps: DriveStep[] = [
   // ========== 欢迎介绍 ==========
   {
@@ -246,7 +245,7 @@ export const getAdminSteps = (t: (key: string) => string, isSimpleMode = false):
 /**
  * 普通用户引导流程
  */
-export const getUserSteps = (t: (key: string) => string): DriveStep[] => [
+export const getUserSteps = (): DriveStep[] => [
   {
     popover: {
       title: '👋 欢迎使用 Sub2API',

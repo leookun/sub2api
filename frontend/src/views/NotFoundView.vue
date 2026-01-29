@@ -53,7 +53,7 @@
 
       <!-- Action Buttons -->
       <div class="flex flex-col justify-center gap-3 sm:flex-row">
-        <button @click="goBack" class="btn btn-secondary">
+        <button class="btn btn-secondary" @click="goBack">
           <Icon name="arrowLeft" size="md" class="mr-2" />
           Go Back
         </button>

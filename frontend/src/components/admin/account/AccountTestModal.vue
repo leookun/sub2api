@@ -101,9 +101,9 @@
         <!-- Copy Button -->
         <button
           v-if="outputLines.length > 0"
-          @click="copyOutput"
           class="absolute right-2 top-2 rounded-lg bg-gray-800/80 p-1.5 text-gray-400 opacity-0 transition-all hover:bg-gray-700 hover:text-white group-hover:opacity-100"
           :title="'复制输出'"
+          @click="copyOutput"
         >
           <Icon name="link" size="sm" :stroke-width="2" />
         </button>
@@ -127,14 +127,13 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button
-          @click="handleClose"
           class="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-300 dark:hover:bg-dark-500"
           :disabled="status === 'connecting'"
+          @click="handleClose"
         >
           {{ '关闭' }}
         </button>
         <button
-          @click="startTest"
           :disabled="status === 'connecting' || !selectedModelId"
           :class="[
             'flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all',
@@ -146,6 +145,7 @@
                   ? 'bg-orange-500 text-white hover:bg-orange-600'
                   : 'bg-primary-500 text-white hover:bg-primary-600'
           ]"
+          @click="startTest"
         >
           <Icon
             v-if="status === 'connecting'"

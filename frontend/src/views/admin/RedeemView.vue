@@ -4,14 +4,14 @@
       <template #actions>
         <div class="flex justify-end gap-3">
           <button
-          @click="loadCodes"
           :disabled="loading"
           class="btn btn-secondary"
           :title="'刷新'"
+          @click="loadCodes"
         >
           <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
         </button>
-        <button @click="showGenerateDialog = true" class="btn btn-primary">
+        <button class="btn btn-primary" @click="showGenerateDialog = true">
           {{ '生成兑换码' }}
         </button>
         </div>
@@ -41,7 +41,7 @@
             class="w-36"
             @change="loadCodes"
           />
-          <button @click="handleExportCodes" class="btn btn-secondary">
+          <button class="btn btn-secondary" @click="handleExportCodes">
             {{ '导出 CSV' }}
           </button>
           </div>
@@ -54,7 +54,6 @@
             <div class="flex items-center space-x-2">
               <code class="font-mono text-sm text-gray-900 dark:text-gray-100">{{ value }}</code>
               <button
-                @click="copyToClipboard(value)"
                 :class="[
                   'flex items-center transition-colors',
                   copiedCode === value
@@ -62,6 +61,7 @@
                     : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                 ]"
                 :title="copiedCode === value ? '已复制！' : '复制到剪贴板'"
+                @click="copyToClipboard(value)"
               >
                 <Icon v-if="copiedCode !== value" name="copy" size="sm" :stroke-width="2" />
                 <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@
                     : 'badge-primary'
               ]"
             >
-              {{ t('admin.redeem.types.' + value) }}
+              {{ value === 'balance' ? '余额' : value === 'subscription' ? '订阅' : value }}
             </span>
           </template>
 
@@ -115,7 +115,7 @@
                     : 'badge-danger'
               ]"
             >
-              {{ t('admin.redeem.status.' + value) }}
+              {{ value === 'unused' ? '未使用' : value === 'used' ? '已使用' : '已过期' }}
             </span>
           </template>
 
@@ -135,8 +135,8 @@
             <div class="flex items-center space-x-2">
               <button
                 v-if="row.status === 'unused'"
-                @click="handleDelete(row)"
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                @click="handleDelete(row)"
               >
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -166,7 +166,7 @@
 
         <!-- Batch Actions -->
         <div v-if="filters.status === 'unused'" class="flex justify-end">
-          <button @click="showDeleteUnusedDialog = true" class="btn btn-danger">
+          <button class="btn btn-danger" @click="showDeleteUnusedDialog = true">
             {{ '删除全部未使用' }}
           </button>
         </div>
@@ -207,7 +207,7 @@
           <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
             {{ '生成兑换码' }}
           </h2>
-          <form @submit.prevent="handleGenerateCodes" class="space-y-4">
+          <form class="space-y-4" @submit.prevent="handleGenerateCodes">
             <div>
               <label class="input-label">{{ '类型' }}</label>
               <Select v-model="generateForm.type" :options="typeOptions" />
@@ -287,7 +287,7 @@
               />
             </div>
             <div class="flex justify-end gap-3 pt-2">
-              <button type="button" @click="showGenerateDialog = false" class="btn btn-secondary">
+              <button type="button" class="btn btn-secondary" @click="showGenerateDialog = false">
                 {{ '取消' }}
               </button>
               <button type="submit" :disabled="generating" class="btn btn-primary">
@@ -336,8 +336,8 @@
               </div>
             </div>
             <button
-              @click="closeResultDialog"
               class="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-dark-700 dark:hover:text-gray-300"
+              @click="closeResultDialog"
             >
               <Icon name="x" size="md" :stroke-width="2" />
             </button>
@@ -358,11 +358,11 @@
             class="flex justify-end gap-2 rounded-b-xl border-t border-gray-200 bg-gray-50 px-5 py-4 dark:border-dark-600 dark:bg-dark-700/50"
           >
             <button
-              @click="copyGeneratedCodes"
               :class="[
                 'btn flex items-center gap-2 transition-all',
                 copiedAll ? 'btn-success' : 'btn-secondary'
               ]"
+              @click="copyGeneratedCodes"
             >
               <Icon v-if="!copiedAll" name="copy" size="sm" :stroke-width="2" />
               <svg v-else class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -375,7 +375,7 @@
               </svg>
               {{ copiedAll ? '已复制！' : '全部复制' }}
             </button>
-            <button @click="downloadGeneratedCodes" class="btn btn-primary flex items-center gap-2">
+            <button class="btn btn-primary flex items-center gap-2" @click="downloadGeneratedCodes">
               <Icon name="download" size="sm" :stroke-width="2" />
               {{ '下载' }}
             </button>

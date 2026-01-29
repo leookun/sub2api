@@ -30,13 +30,13 @@
         <p class="text-xl font-bold text-green-600">
           ${{ ((stats?.total_account_cost ?? stats?.total_actual_cost) || 0).toFixed(4) }}
         </p>
-        <p class="text-xs text-gray-400" v-if="stats?.total_account_cost != null">
+        <p v-if="stats?.total_account_cost != null" class="text-xs text-gray-400">
           {{ '用户扣费' }}:
           <span class="text-gray-300">${{ (stats?.total_actual_cost || 0).toFixed(4) }}</span>
           · {{ '标准' }}:
           <span class="text-gray-300">${{ (stats?.total_cost || 0).toFixed(4) }}</span>
         </p>
-        <p class="text-xs text-gray-400" v-else>
+        <p v-else class="text-xs text-gray-400">
           {{ '标准' }}:
           <span class="line-through">${{ (stats?.total_cost || 0).toFixed(4) }}</span>
         </p>

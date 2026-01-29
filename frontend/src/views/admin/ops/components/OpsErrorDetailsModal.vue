@@ -41,24 +41,24 @@ const statusCodeSelectOptions = computed(() => {
   return [
     { value: null, label: '全部' },
     ...codes.map((c) => ({ value: c, label: String(c) })),
-    { value: 'other', label: '其他' || 'Other' }
+    { value: 'other', label: '其他' }
   ]
 })
 
 const ownerSelectOptions = computed(() => {
   return [
     { value: '', label: '全部' },
-    { value: 'provider', label: '服务商' || 'provider' },
-    { value: 'client', label: '客户端' || 'client' },
-    { value: 'platform', label: '平台' || 'platform' }
+    { value: 'provider', label: '服务商' },
+    { value: 'client', label: '客户端' },
+    { value: 'platform', label: '平台' }
   ]
 })
 
 
 const viewModeSelectOptions = computed(() => {
   return [
-    { value: 'errors', label: '错误' || 'errors' },
-    { value: 'excluded', label: '排除项' || 'excluded' },
+    { value: 'errors', label: '错误' },
+    { value: 'excluded', label: '排除项' },
     { value: 'all', label: '全部' }
   ]
 })
@@ -66,12 +66,12 @@ const viewModeSelectOptions = computed(() => {
 const phaseSelectOptions = computed(() => {
   const options = [
     { value: '', label: '全部' },
-    { value: 'request', label: '请求' || 'request' },
-    { value: 'auth', label: '认证' || 'auth' },
-    { value: 'routing', label: '路由' || 'routing' },
-    { value: 'upstream', label: '上游' || 'upstream' },
-    { value: 'network', label: '网络' || 'network' },
-    { value: 'internal', label: '内部' || 'internal' }
+    { value: 'request', label: '请求' },
+    { value: 'auth', label: '认证' },
+    { value: 'routing', label: '路由' },
+    { value: 'upstream', label: '上游' },
+    { value: 'network', label: '网络' },
+    { value: 'internal', label: '内部' }
   ]
   return options
 })
@@ -253,8 +253,7 @@ watch(
             @update:page="page = $event"
             @update:pageSize="pageSize = $event"
           />
-
-      </div>
+</div>
     </div>
   </BaseDialog>
 </template>

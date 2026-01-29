@@ -6,7 +6,7 @@
       </h2>
     </div>
     <div class="px-6 py-6">
-      <form @submit.prevent="handleChangePassword" class="space-y-4">
+      <form class="space-y-4" @submit.prevent="handleChangePassword">
         <div>
           <label for="old_password" class="input-label">
             {{ '当前密码' }}

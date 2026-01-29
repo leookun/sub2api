@@ -139,7 +139,16 @@ const statusText = computed(() => {
   if (!props.account.schedulable) {
     return '暂停'
   }
-  return t(`admin.accounts.status.${props.account.status}`)
+  // Status 文本映射
+  const statusMap: Record<string, string> = {
+    active: '活动',
+    inactive: '未激活',
+    pending: '等待中',
+    disabled: '已禁用',
+    expired: '已过期',
+    error: '错误'
+  }
+  return statusMap[props.account.status] || props.account.status
 })
 
 const handleTempUnschedClick = () => {

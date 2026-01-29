@@ -6,7 +6,7 @@
         <p class="text-sm text-gray-500 dark:text-dark-400">
           {{ '配置用户的自定义属性字段' }}
         </p>
-        <button @click="openCreateModal" class="btn btn-primary btn-sm">
+        <button class="btn btn-primary btn-sm" @click="openCreateModal">
           <Icon name="plus" size="sm" class="mr-1.5" :stroke-width="2" />
           {{ '添加属性' }}
         </button>
@@ -61,7 +61,7 @@
               </span>
             </div>
             <div class="mt-0.5 flex items-center gap-2 text-xs text-gray-500 dark:text-dark-400">
-              <span class="badge badge-gray">{{ t(`admin.users.attributes.types.${attr.type}`) }}</span>
+              <span class="badge badge-gray">{{ getAttributeTypeLabel(attr.type) }}</span>
               <span v-if="attr.description" class="truncate">{{ attr.description }}</span>
             </div>
           </div>
@@ -69,16 +69,16 @@
           <!-- Actions -->
           <div class="flex items-center gap-1">
             <button
-              @click="openEditModal(attr)"
               class="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
               :title="'编辑'"
+              @click="openEditModal(attr)"
             >
               <Icon name="edit" size="sm" />
             </button>
             <button
-              @click="confirmDelete(attr)"
               class="rounded-lg p-1.5 text-gray-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
               :title="'删除'"
+              @click="confirmDelete(attr)"
             >
               <Icon name="trash" size="sm" />
             </button>
@@ -89,7 +89,7 @@
 
     <template #footer>
       <div class="flex justify-end">
-        <button @click="emit('close')" class="btn btn-secondary">
+        <button class="btn btn-secondary" @click="emit('close')">
           {{ '关闭' }}
         </button>
       </div>
@@ -103,7 +103,7 @@
     width="normal"
     @close="closeEditModal"
   >
-    <form id="attribute-form" @submit.prevent="handleSave" class="space-y-4">
+    <form id="attribute-form" class="space-y-4" @submit.prevent="handleSave">
       <!-- Key -->
       <div>
         <label class="input-label">{{ '属性键' }}</label>
@@ -136,7 +136,7 @@
         <label class="input-label">{{ '属性类型' }}</label>
         <Select
           v-model="form.type"
-          :options="attributeTypes.map(type => ({ value: type, label: t(`admin.users.attributes.types.${type}`) }))"
+          :options="attributeTypes.map(type => ({ value: type, label: getAttributeTypeLabel(type) }))"
         />
       </div>
 
@@ -160,13 +160,13 @@
           />
           <button
             type="button"
-            @click="removeOption(index)"
             class="rounded-lg p-1.5 text-gray-500 hover:bg-red-50 hover:text-red-600"
+            @click="removeOption(index)"
           >
             <Icon name="x" size="sm" :stroke-width="2" />
           </button>
         </div>
-        <button type="button" @click="addOption" class="btn btn-secondary btn-sm">
+        <button type="button" class="btn btn-secondary btn-sm" @click="addOption">
           <Icon name="plus" size="sm" class="mr-1" :stroke-width="2" />
           {{ '添加选项' }}
         </button>
@@ -209,7 +209,7 @@
 
     <template #footer>
       <div class="flex justify-end gap-3">
-        <button @click="closeEditModal" type="button" class="btn btn-secondary">
+        <button type="button" class="btn btn-secondary" @click="closeEditModal">
           {{ '取消' }}
         </button>
         <button type="submit" form="attribute-form" :disabled="saving" class="btn btn-primary">
@@ -260,6 +260,21 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const attributeTypes: UserAttributeType[] = ['text', 'textarea', 'number', 'email', 'url', 'date', 'select', 'multi_select']
+
+const attributeTypeLabels: Record<UserAttributeType, string> = {
+  text: '文本',
+  textarea: '多行文本',
+  number: '数字',
+  email: '邮箱',
+  url: '链接',
+  date: '日期',
+  select: '单选',
+  multi_select: '多选'
+}
+
+const getAttributeTypeLabel = (type: UserAttributeType): string => {
+  return attributeTypeLabels[type] || type
+}
 
 const loading = ref(false)
 const saving = ref(false)

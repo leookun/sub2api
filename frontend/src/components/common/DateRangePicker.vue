@@ -1,9 +1,9 @@
 <template>
-  <div class="relative" ref="containerRef">
+  <div ref="containerRef" class="relative">
     <button
       type="button"
-      @click="toggle"
       :class="['date-picker-trigger', isOpen && 'date-picker-trigger-open']"
+      @click="toggle"
     >
       <span class="date-picker-icon">
         <Icon name="calendar" size="sm" />
@@ -27,10 +27,10 @@
           <button
             v-for="preset in presets"
             :key="preset.value"
-            @click="selectPreset(preset)"
             :class="['date-picker-preset', isPresetActive(preset) && 'date-picker-preset-active']"
+            @click="selectPreset(preset)"
           >
-            {{ t(preset.labelKey) }}
+            {{ getLabel(preset.labelKey) }}
           </button>
         </div>
 
@@ -41,8 +41,8 @@
           <div class="date-picker-field">
             <label class="date-picker-label">{{ '开始日期' }}</label>
             <input
-              type="date"
               v-model="localStartDate"
+              type="date"
               :max="localEndDate || tomorrow"
               class="date-picker-input"
               @change="onDateChange"
@@ -54,8 +54,8 @@
           <div class="date-picker-field">
             <label class="date-picker-label">{{ '结束日期' }}</label>
             <input
-              type="date"
               v-model="localEndDate"
+              type="date"
               :min="localStartDate"
               :max="tomorrow"
               class="date-picker-input"
@@ -66,7 +66,7 @@
 
         <!-- Apply button -->
         <div class="date-picker-actions">
-          <button @click="apply" class="date-picker-apply">
+          <button class="date-picker-apply" @click="apply">
             {{ '应用' }}
           </button>
         </div>
@@ -203,10 +203,25 @@ const presets: DatePreset[] = [
   }
 ]
 
+// Label key 到中文的映射
+const labelKeyMap: Record<string, string> = {
+  'dates.today': '今天',
+  'dates.yesterday': '昨天',
+  'dates.last7Days': '最近 7 天',
+  'dates.last14Days': '最近 14 天',
+  'dates.last30Days': '最近 30 天',
+  'dates.thisMonth': '本月',
+  'dates.lastMonth': '上月'
+}
+
+const getLabel = (key: string): string => {
+  return labelKeyMap[key] || key
+}
+
 const displayValue = computed(() => {
   if (activePreset.value) {
     const preset = presets.find((p) => p.value === activePreset.value)
-    if (preset) return t(preset.labelKey)
+    if (preset) return getLabel(preset.labelKey)
   }
 
   if (localStartDate.value && localEndDate.value) {
@@ -221,8 +236,7 @@ const displayValue = computed(() => {
 
 const formatDate = (dateStr: string): string => {
   const date = new Date(dateStr + 'T00:00:00')
-  const dateLocale = locale.value === 'zh' ? 'zh-CN' : 'en-US'
-  return date.toLocaleDateString(dateLocale, { month: 'short', day: 'numeric' })
+  return date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })
 }
 
 const isPresetActive = (preset: DatePreset): boolean => {

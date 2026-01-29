@@ -3,8 +3,8 @@
     <!-- Multi-select Dropdown -->
     <div class="relative mb-3">
       <div
-        @click="toggleDropdown"
         class="cursor-pointer rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-dark-500 dark:bg-dark-700"
+        @click="toggleDropdown"
       >
         <div class="grid grid-cols-2 gap-1.5">
           <span
@@ -18,8 +18,8 @@
             </span>
             <button
               type="button"
-              @click.stop="removeModel(model)"
               class="shrink-0 rounded-full hover:bg-gray-200 dark:hover:bg-dark-500"
+              @click.stop="removeModel(model)"
             >
               <Icon name="x" size="xs" class="h-3.5 w-3.5" :stroke-width="2" />
             </button>
@@ -51,8 +51,8 @@
             v-for="model in filteredModels"
             :key="model.value"
             type="button"
-            @click="toggleModel(model.value)"
             class="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-dark-600"
+            @click="toggleModel(model.value)"
           >
             <span
               :class="[
@@ -80,15 +80,15 @@
     <div class="mb-4 flex flex-wrap gap-2">
       <button
         type="button"
-        @click="fillRelated"
         class="rounded-lg border border-blue-200 px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/30"
+        @click="fillRelated"
       >
         {{ '填入相关模型' }}
       </button>
       <button
         type="button"
-        @click="clearAll"
         class="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30"
+        @click="clearAll"
       >
         {{ '清除所有模型' }}
       </button>
@@ -109,8 +109,8 @@
         />
         <button
           type="button"
-          @click="addCustom"
           class="rounded-lg bg-primary-50 px-4 py-2 text-sm font-medium text-primary-600 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50"
+          @click="addCustom"
         >
           {{ '填入' }}
         </button>

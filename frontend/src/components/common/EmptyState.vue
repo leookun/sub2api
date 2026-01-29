@@ -5,7 +5,7 @@
       class="mb-5 flex h-20 w-20 items-center justify-center rounded-2xl bg-gray-100 dark:bg-dark-800"
     >
       <slot name="icon">
-        <component v-if="icon" :is="icon" class="empty-state-icon h-10 w-10" aria-hidden="true" />
+        <component :is="icon" v-if="icon" class="empty-state-icon h-10 w-10" aria-hidden="true" />
         <svg
           v-else
           class="empty-state-icon h-10 w-10"
@@ -40,8 +40,8 @@
           :is="actionTo ? 'RouterLink' : 'button'"
           v-if="actionText"
           :to="actionTo"
-          @click="!actionTo && $emit('action')"
           class="btn btn-primary"
+          @click="!actionTo && $emit('action')"
         >
           <Icon v-if="actionIcon" name="plus" size="md" class="mr-2" />
           {{ actionText }}

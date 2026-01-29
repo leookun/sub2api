@@ -3,8 +3,8 @@
     <div class="space-y-4">
       <UsageFilters
         v-model="localFilters"
-        v-model:startDate="localStartDate"
-        v-model:endDate="localEndDate"
+        v-model:start-date="localStartDate"
+        v-model:end-date="localEndDate"
         :exporting="false"
         :show-actions="false"
         @change="noop"

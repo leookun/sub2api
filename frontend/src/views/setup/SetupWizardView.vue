@@ -137,9 +137,9 @@
           </div>
 
           <button
-            @click="testDatabaseConnection"
             :disabled="testingDb"
             class="btn btn-secondary w-full"
+            @click="testDatabaseConnection"
           >
             <svg
               v-if="testingDb"
@@ -226,9 +226,9 @@
           </div>
 
           <button
-            @click="testRedisConnection"
             :disabled="testingRedis"
             class="btn btn-secondary w-full"
+            @click="testRedisConnection"
           >
             <svg
               v-if="testingRedis"
@@ -413,8 +413,8 @@
         <div class="mt-8 flex justify-between">
           <button
             v-if="currentStep > 0 && !installSuccess"
-            @click="currentStep--"
             class="btn btn-secondary"
+            @click="currentStep--"
           >
             <Icon name="chevronLeft" size="sm" class="mr-2" :stroke-width="2" />
             {{ '返回' }}
@@ -423,9 +423,9 @@
 
           <button
             v-if="currentStep < 3"
-            @click="nextStep"
             :disabled="!canProceed"
             class="btn btn-primary"
+            @click="nextStep"
           >
             {{ '下一步' }}
             <Icon name="chevronRight" size="sm" class="ml-2" :stroke-width="2" />
@@ -433,9 +433,9 @@
 
           <button
             v-else-if="!installSuccess"
-            @click="performInstall"
             :disabled="installing"
             class="btn btn-primary"
+            @click="performInstall"
           >
             <svg
               v-if="installing"
