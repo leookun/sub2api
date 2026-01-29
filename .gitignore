@@ -11,6 +11,7 @@ docs/claude-relay-service/
 frontend/dist/
 frontend/auto-import-components.d.ts
 frontend/auto-import-libs.d.ts
+frontend/auto-import-utils.d.ts
 *.dylib
 backend/bin/
 backend/server
