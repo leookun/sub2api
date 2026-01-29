@@ -97,30 +97,10 @@ onMounted(async () => {
     await authStore.setToken(token);
     appStore.showSuccess("登录成功！欢迎回来。");
     await router.replace(redirect);
-  } catch (e: unknown) {
-    const err = e as {
-      message?: string;
-      response?: { data?: { detail?: string } };
-    };
-    errorMessage.value =
-      err.response?.data?.detail ||
-      err.message ||
-      "登录失败，请检查您的凭据后重试。";
-    appStore.showError(errorMessage.value);
+  } catch (error) {
     isProcessing.value = false;
+    errorMessage.value = "登录失败，请重试。";
+    appStore.showError(errorMessage.value);
   }
 });
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
-}
-</style>

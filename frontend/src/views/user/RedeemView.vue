@@ -506,26 +506,18 @@ const handleRedeem = async () => {
   }
 };
 
-onMounted(async () => {
+const formatDateTime = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleString("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+onMounted(() => {
   fetchHistory();
-  try {
-    const settings = await authAPI.getPublicSettings();
-    contactInfo.value = settings.contact_info || "";
-  } catch (error) {
-    console.error("Failed to load contact info:", error);
-  }
 });
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
-}
-</style>

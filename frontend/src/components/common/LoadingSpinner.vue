@@ -3,7 +3,7 @@
     :class="[
       'inline-block h-8 w-8 animate-spin rounded-full border-2 border-current border-r-transparent',
       sizeClasses,
-      colorClass
+      colorClass,
     ]"
     role="status"
     :aria-label="'加载中...'"

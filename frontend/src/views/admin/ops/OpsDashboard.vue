@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="isFullscreen ? 'div' : AppLayout"
+    :is="isFullscreen ? 'div' : AppLayoutComponent"
     :class="
       isFullscreen
         ? 'flex min-h-screen flex-col justify-center bg-gray-50 dark:bg-dark-950'
@@ -163,7 +163,6 @@ import {
 } from "@/api/admin/ops";
 import { useAdminSettingsStore, useAppStore } from "@/stores";
 import { type OpsRequestDetailsPreset } from "./components/OpsRequestDetailsModal.vue";
-
 const route = useRoute();
 const router = useRouter();
 const appStore = useAppStore();

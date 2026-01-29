@@ -1,47 +1,44 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from "vite";
-import viteAppPlugin from "vite-vue-app-plugin";
-import AutoImport from "unplugin-auto-import/vite";
+import viteAppPlugin from "./src/plugins/vite-app-plugin";
 import { resolve } from "path";
+
 export default defineConfig(() => {
   return {
     plugins: [
       viteAppPlugin({
         editor: "cursor",
         componentResolvers: () => [],
-        disableLegacy: false, // 是否禁用传统浏览器支持
         disableLodash: false, // 是否禁用 Lodash 自动导入
         disableVueQuery: true, // 是否禁用 TanStack Vue Query 自动导入
-      }),
-      // 自动导入项目工具函数
-      AutoImport({
-        dts: "auto-import-utils.d.ts",
-        vueTemplate: true,
-        imports: [
-          {
-            "@/utils/format": [
-              "formatRelativeTime",
-              "formatNumber",
-              "formatCurrency",
-              "formatBytes",
-              "formatDate",
-              "formatDateOnly",
-              "formatDateTime",
-              "formatDateTimeLocalInput",
-              "parseDateTimeLocalInput",
-              "formatTime",
-              "formatNumberLocaleString",
-              "formatCostFixed",
-              "formatCost",
-              "formatTokensK",
-              "formatCountdown",
-              "formatCountdownWithSuffix",
-            ],
-            "@/utils/url": ["sanitizeUrl"],
-            "@/composables/useModelWhitelist": ["commonErrorCodes"],
-            "@/views/admin/ops/utils/opsFormatters": ["getSeverityClass"],
-          },
-        ],
+        // 自定义 AutoImport 配置
+        autoImport: {
+          imports: [
+            {
+              "@/utils/format": [
+                "formatRelativeTime",
+                "formatNumber",
+                "formatCurrency",
+                "formatBytes",
+                "formatDate",
+                "formatDateOnly",
+                "formatDateTime",
+                "formatDateTimeLocalInput",
+                "parseDateTimeLocalInput",
+                "formatTime",
+                "formatNumberLocaleString",
+                "formatCostFixed",
+                "formatCost",
+                "formatTokensK",
+                "formatCountdown",
+                "formatCountdownWithSuffix",
+              ],
+              "@/utils/url": ["sanitizeUrl"],
+              "@/composables/useModelWhitelist": ["commonErrorCodes"],
+              "@/views/admin/ops/utils/opsFormatters": ["getSeverityClass"],
+            },
+          ],
+        },
       }),
     ],
     resolve: {

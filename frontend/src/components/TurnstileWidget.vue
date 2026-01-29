@@ -1,6 +1,6 @@
 <template>
-  <div v-if="siteKey" class="turnstile-wrapper">
-    <div ref="containerRef" class="turnstile-container"></div>
+  <div v-if="siteKey" class="w-full">
+    <div ref="containerRef" class="w-full" style="min-height: 65px;"></div>
   </div>
 </template>
 
@@ -165,19 +165,3 @@ watch(
   },
 );
 </script>
-
-<style scoped>
-.turnstile-wrapper {
-  width: 100%;
-}
-
-.turnstile-container {
-  width: 100%;
-  min-height: 65px;
-}
-
-/* Make the Turnstile iframe fill the container width */
-.turnstile-container :deep(iframe) {
-  width: 100% !important;
-}
-</style>

@@ -5,7 +5,7 @@
     :height="size"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
-    class="model-icon"
+    class="flex-shrink-0"
     fill="currentColor"
     fill-rule="evenodd"
   >
@@ -18,7 +18,7 @@
   </svg>
   <span
     v-else
-    class="model-icon-fallback"
+    class="inline-flex items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-semibold flex-shrink-0"
     :style="{ width: size, height: size, fontSize: `calc(${size} * 0.5)` }"
   >
     {{ fallbackText }}
@@ -353,19 +353,3 @@ const iconInfo = computed(() =>
   iconKey.value ? iconData[iconKey.value] : null,
 );
 </script>
-
-<style scoped>
-.model-icon {
-  flex-shrink: 0;
-}
-.model-icon-fallback {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-</style>

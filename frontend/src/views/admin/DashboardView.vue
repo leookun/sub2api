@@ -619,5 +619,3 @@ onMounted(() => {
   loadChartData();
 });
 </script>
-
-

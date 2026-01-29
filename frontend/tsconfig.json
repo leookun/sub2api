@@ -31,7 +31,6 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "./auto-import-libs.d.ts",
-    "./auto-import-utils.d.ts",
     "./auto-import-components.d.ts",
     "env.d.ts"
   ]

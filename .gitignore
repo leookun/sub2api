@@ -8,6 +8,7 @@ docs/claude-relay-service/
 *.exe~
 *.dll
 *.so
+size.html
 frontend/dist/
 frontend/auto-import-components.d.ts
 frontend/auto-import-libs.d.ts

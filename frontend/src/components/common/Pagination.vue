@@ -39,7 +39,9 @@
         <!-- Page size selector -->
         <div v-if="showPageSizeSelector" class="flex items-center space-x-2">
           <span class="text-sm text-gray-700 dark:text-gray-300">每页:</span>
-          <div class="w-20 [&_.select-trigger]:px-3 [&_.select-trigger]:py-1.5 [&_.select-trigger]:text-sm">
+          <div
+            class="w-20 [&_.select-trigger]:px-3 [&_.select-trigger]:py-1.5 [&_.select-trigger]:text-sm"
+          >
             <Select
               :model-value="pageSize"
               :options="pageSizeSelectOptions"
