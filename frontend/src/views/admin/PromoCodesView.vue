@@ -17,7 +17,7 @@
           </button>
           <button class="btn btn-primary" @click="showCreateDialog = true">
             <Icon name="plus" size="md" class="mr-1" />
-            {{ "创建优惠码" }}
+            创建优惠码
           </button>
         </div>
       </template>
@@ -180,9 +180,9 @@
       >
         <div>
           <label class="input-label">
-            {{ "优惠码" }}
+            优惠码
             <span class="ml-1 text-xs font-normal text-gray-400"
-              >({{ "留空自动生成" }})</span
+              >(留空自动生成)</span
             >
           </label>
           <input
@@ -193,7 +193,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "赠送金额 ($)" }}</label>
+          <label class="input-label">赠送金额 ($)</label>
           <input
             v-model.number="createForm.bonus_amount"
             type="number"
@@ -205,9 +205,9 @@
         </div>
         <div>
           <label class="input-label">
-            {{ "最大使用次数" }}
+            最大使用次数
             <span class="ml-1 text-xs font-normal text-gray-400"
-              >({{ "0 = 无限制" }})</span
+              >(0 = 无限制)</span
             >
           </label>
           <input
@@ -219,10 +219,8 @@
         </div>
         <div>
           <label class="input-label">
-            {{ "过期时间" }}
-            <span class="ml-1 text-xs font-normal text-gray-400"
-              >({{ "可选" }})</span
-            >
+            过期时间
+            <span class="ml-1 text-xs font-normal text-gray-400">(可选)</span>
           </label>
           <input
             v-model="createForm.expires_at_str"
@@ -232,10 +230,8 @@
         </div>
         <div>
           <label class="input-label">
-            {{ "备注" }}
-            <span class="ml-1 text-xs font-normal text-gray-400"
-              >({{ "可选" }})</span
-            >
+            备注
+            <span class="ml-1 text-xs font-normal text-gray-400">(可选)</span>
           </label>
           <textarea
             v-model="createForm.notes"
@@ -252,7 +248,7 @@
             class="btn btn-secondary"
             @click="showCreateDialog = false"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             type="submit"
@@ -279,7 +275,7 @@
         @submit.prevent="handleUpdate"
       >
         <div>
-          <label class="input-label">{{ "优惠码" }}</label>
+          <label class="input-label">优惠码</label>
           <input
             v-model="editForm.code"
             type="text"
@@ -287,7 +283,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "赠送金额 ($)" }}</label>
+          <label class="input-label">赠送金额 ($)</label>
           <input
             v-model.number="editForm.bonus_amount"
             type="number"
@@ -299,9 +295,9 @@
         </div>
         <div>
           <label class="input-label">
-            {{ "最大使用次数" }}
+            最大使用次数
             <span class="ml-1 text-xs font-normal text-gray-400"
-              >({{ "0 = 无限制" }})</span
+              >(0 = 无限制)</span
             >
           </label>
           <input
@@ -312,15 +308,13 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "状态" }}</label>
+          <label class="input-label">状态</label>
           <Select v-model="editForm.status" :options="statusOptions" />
         </div>
         <div>
           <label class="input-label">
-            {{ "过期时间" }}
-            <span class="ml-1 text-xs font-normal text-gray-400"
-              >({{ "可选" }})</span
-            >
+            过期时间
+            <span class="ml-1 text-xs font-normal text-gray-400">(可选)</span>
           </label>
           <input
             v-model="editForm.expires_at_str"
@@ -330,10 +324,8 @@
         </div>
         <div>
           <label class="input-label">
-            {{ "备注" }}
-            <span class="ml-1 text-xs font-normal text-gray-400"
-              >({{ "可选" }})</span
-            >
+            备注
+            <span class="ml-1 text-xs font-normal text-gray-400">(可选)</span>
           </label>
           <textarea v-model="editForm.notes" rows="2" class="input"></textarea>
         </div>
@@ -345,7 +337,7 @@
             class="btn btn-secondary"
             @click="closeEditDialog"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             type="submit"
@@ -373,7 +365,7 @@
         v-else-if="usages.length === 0"
         class="py-8 text-center text-gray-500 dark:text-gray-400"
       >
-        {{ "暂无使用记录" }}
+        暂无使用记录
       </div>
       <div v-else class="space-y-3">
         <div
@@ -433,7 +425,7 @@
             class="btn btn-secondary"
             @click="showUsagesDialog = false"
           >
-            {{ "关闭" }}
+            关闭
           </button>
         </div>
       </template>

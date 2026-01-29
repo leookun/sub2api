@@ -7,7 +7,7 @@
         <div class="card p-4">
           <div class="flex items-center gap-4">
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300"
-              >{{ "粒度" }}:</span
+              >粒度:</span
             >
             <div class="w-28">
               <Select

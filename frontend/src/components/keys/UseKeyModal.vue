@@ -26,7 +26,7 @@
         </svg>
         <div>
           <p class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-            {{ "请先分配分组" }}
+            请先分配分组
           </p>
           <p class="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
             {{
@@ -185,9 +185,7 @@
 
     <template #footer>
       <div class="flex justify-end">
-        <button class="btn btn-secondary" @click="emit('close')">
-          {{ "关闭" }}
-        </button>
+        <button class="btn btn-secondary" @click="emit('close')">关闭</button>
       </div>
     </template>
   </BaseDialog>

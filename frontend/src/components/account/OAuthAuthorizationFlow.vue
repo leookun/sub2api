@@ -63,7 +63,7 @@
                 class="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300"
               >
                 <Icon name="key" size="sm" class="text-blue-500" />
-                {{ "sessionKey" }}
+                sessionKey
                 <span
                   v-if="parsedKeyCount > 1 && allowMultiple"
                   class="rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white"
@@ -115,17 +115,17 @@
               class="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-700 dark:bg-amber-900/30"
             >
               <h5 class="mb-2 font-semibold text-amber-800 dark:text-amber-200">
-                {{ "如何获取 sessionKey" }}
+                如何获取 sessionKey
               </h5>
               <ol
                 class="list-inside list-decimal space-y-1 text-xs text-amber-700 dark:text-amber-300"
               >
-                <li>{{ "在浏览器中登录 claude.ai" }}</li>
-                <li>{{ "按 F12 打开开发者工具" }}</li>
-                <li>{{ "切换到 Application 标签" }}</li>
-                <li>{{ "找到 Cookies → https://claude.ai" }}</li>
-                <li>{{ "找到 sessionKey 所在行" }}</li>
-                <li>{{ "复制 Value 列的值" }}</li>
+                <li>在浏览器中登录 claude.ai</li>
+                <li>按 F12 打开开发者工具</li>
+                <li>切换到 Application 标签</li>
+                <li>找到 Cookies → https://claude.ai</li>
+                <li>找到 sessionKey 所在行</li>
+                <li>复制 Value 列的值</li>
               </ol>
               <p
                 class="mt-2 text-xs text-amber-600 dark:text-amber-400"
@@ -200,7 +200,7 @@
                 </p>
                 <div v-if="showProjectId && platform === 'gemini'" class="mb-3">
                   <label class="input-label flex items-center gap-2">
-                    {{ "Project ID（可选）" }}
+                    Project ID（可选）
                     <a
                       href="https://console.cloud.google.com/"
                       target="_blank"
@@ -220,7 +220,7 @@
                           d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
                         />
                       </svg>
-                      {{ "如何获取" }}
+                      如何获取
                     </a>
                   </label>
                   <input
@@ -308,7 +308,7 @@
                     @click="handleRegenerate"
                   >
                     <Icon name="refresh" size="xs" class="mr-1 inline" />
-                    {{ "重新生成" }}
+                    重新生成
                   </button>
                 </div>
               </div>

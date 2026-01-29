@@ -203,10 +203,10 @@ onMounted(() => {
     <div class="mb-4 flex items-start justify-between gap-4">
       <div>
         <h3 class="text-sm font-bold text-gray-900 dark:text-white">
-          {{ "邮件通知配置" }}
+          邮件通知配置
         </h3>
         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-          {{ "配置告警/报告邮件通知（存储在数据库中）。" }}
+          配置告警/报告邮件通知（存储在数据库中）。
         </p>
       </div>
       <div class="flex items-center gap-2">
@@ -229,49 +229,49 @@ onMounted(() => {
               d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
             />
           </svg>
-          {{ "刷新" }}
+          刷新
         </button>
         <button
           class="btn btn-sm btn-secondary"
           :disabled="!config"
           @click="openEditor"
         >
-          {{ "编辑" }}
+          编辑
         </button>
       </div>
     </div>
 
     <div v-if="!config" class="text-sm text-gray-500 dark:text-gray-400">
-      <span v-if="loading">{{ "加载中..." }}</span>
-      <span v-else>{{ "暂无邮件通知配置" }}</span>
+      <span v-if="loading">加载中...</span>
+      <span v-else>暂无邮件通知配置</span>
     </div>
 
     <div v-else class="space-y-6">
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <h4 class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "告警邮件" }}
+          告警邮件
         </h4>
         <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ "已启用" }}:
+            已启用:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">
               {{ config.alert.enabled ? "已启用" : "已禁用" }}
             </span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ "收件人" }}:
+            收件人:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">{{
               config.alert.recipients.length
             }}</span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ "最低级别" }}:
+            最低级别:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">{{
               config.alert.min_severity || "全部级别"
             }}</span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ "每小时限额" }}:
+            每小时限额:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">{{
               config.alert.rate_limit_per_hour
             }}</span>
@@ -281,17 +281,17 @@ onMounted(() => {
 
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <h4 class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "报告邮件" }}
+          报告邮件
         </h4>
         <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ "已启用" }}:
+            已启用:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">
               {{ config.report.enabled ? "已启用" : "已禁用" }}
             </span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ "收件人" }}:
+            收件人:
             <span class="ml-1 font-medium text-gray-900 dark:text-white">{{
               config.report.recipients.length
             }}</span>
@@ -312,21 +312,21 @@ onMounted(() => {
         v-if="!editorValidation.valid"
         class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 dark:border-amber-900/50 dark:bg-amber-900/20 dark:text-amber-200"
       >
-        <div class="font-bold">{{ "请先修正以下问题" }}</div>
+        <div class="font-bold">请先修正以下问题</div>
         <ul class="mt-1 list-disc space-y-1 pl-4">
           <li v-for="msg in editorValidation.errors" :key="msg">{{ msg }}</li>
         </ul>
       </div>
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "告警邮件" }}
+          告警邮件
         </h4>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "已启用" }}
+              已启用
             </div>
             <label
               class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
@@ -344,7 +344,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "最低级别" }}
+              最低级别
             </div>
             <Select
               v-model="draft.alert.min_severity"
@@ -356,7 +356,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "收件人" }}
+              收件人
             </div>
             <div class="flex gap-2">
               <input
@@ -371,7 +371,7 @@ onMounted(() => {
                 type="button"
                 @click="addRecipient('alert')"
               >
-                {{ "添加" }}
+                添加
               </button>
             </div>
             <p
@@ -397,7 +397,7 @@ onMounted(() => {
               </span>
             </div>
             <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "若为空，系统可能会回退使用第一个管理员邮箱。" }}
+              若为空，系统可能会回退使用第一个管理员邮箱。
             </div>
           </div>
 
@@ -405,7 +405,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "每小时限额" }}
+              每小时限额
             </div>
             <input
               v-model.number="draft.alert.rate_limit_per_hour"
@@ -420,7 +420,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "合并窗口（秒）" }}
+              合并窗口（秒）
             </div>
             <input
               v-model.number="draft.alert.batching_window_seconds"
@@ -435,7 +435,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "包含恢复通知" }}
+              包含恢复通知
             </div>
             <label
               class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
@@ -455,14 +455,14 @@ onMounted(() => {
 
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "报告邮件" }}
+          报告邮件
         </h4>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "已启用" }}
+              已启用
             </div>
             <label
               class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
@@ -480,7 +480,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "收件人" }}
+              收件人
             </div>
             <div class="flex gap-2">
               <input
@@ -495,7 +495,7 @@ onMounted(() => {
                 type="button"
                 @click="addRecipient('report')"
               >
-                {{ "添加" }}
+                添加
               </button>
             </div>
             <p
@@ -528,7 +528,7 @@ onMounted(() => {
                 <div
                   class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                 >
-                  {{ "每日摘要" }}
+                  每日摘要
                 </div>
                 <div class="flex items-center gap-2">
                   <label
@@ -552,7 +552,7 @@ onMounted(() => {
                 <div
                   class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                 >
-                  {{ "每周摘要" }}
+                  每周摘要
                 </div>
                 <div class="flex items-center gap-2">
                   <label
@@ -576,7 +576,7 @@ onMounted(() => {
                 <div
                   class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                 >
-                  {{ "错误摘要" }}
+                  错误摘要
                 </div>
                 <div class="flex items-center gap-2">
                   <label
@@ -600,7 +600,7 @@ onMounted(() => {
                 <div
                   class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                 >
-                  {{ "错误摘要最小数量" }}
+                  错误摘要最小数量
                 </div>
                 <input
                   v-model.number="draft.report.error_digest_min_count"
@@ -614,7 +614,7 @@ onMounted(() => {
                 <div
                   class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                 >
-                  {{ "账号健康报告" }}
+                  账号健康报告
                 </div>
                 <div class="flex items-center gap-2">
                   <label
@@ -638,7 +638,7 @@ onMounted(() => {
                 <div
                   class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                 >
-                  {{ "错误率阈值（%）" }}
+                  错误率阈值（%）
                 </div>
                 <input
                   v-model.number="
@@ -653,7 +653,7 @@ onMounted(() => {
               </div>
             </div>
             <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-              {{ "发送时间使用 Cron 语法；留空将使用默认值。" }}
+              发送时间使用 Cron 语法；留空将使用默认值。
             </div>
           </div>
         </div>
@@ -662,7 +662,7 @@ onMounted(() => {
     <template #footer>
       <div class="flex justify-end gap-2">
         <button class="btn btn-secondary" @click="showEditor = false">
-          {{ "取消" }}
+          取消
         </button>
         <button
           class="btn btn-primary"

@@ -3,7 +3,7 @@
     <div class="space-y-6">
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ "正在完成登录" }}
+          正在完成登录
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
           {{
@@ -28,7 +28,7 @@
                 {{ errorMessage }}
               </p>
               <router-link to="/login" class="btn btn-primary">
-                {{ "返回登录" }}
+                返回登录
               </router-link>
             </div>
           </div>

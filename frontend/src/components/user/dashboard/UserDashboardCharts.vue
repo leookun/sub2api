@@ -5,7 +5,7 @@
       <div class="flex flex-wrap items-center gap-4">
         <div class="flex items-center gap-2">
           <span class="text-sm font-medium text-gray-700 dark:text-gray-300"
-            >{{ "时间范围" }}:</span
+            >时间范围:</span
           >
           <DateRangePicker
             :start-date="startDate"
@@ -17,7 +17,7 @@
         </div>
         <div class="ml-auto flex items-center gap-2">
           <span class="text-sm font-medium text-gray-700 dark:text-gray-300"
-            >{{ "粒度" }}:</span
+            >粒度:</span
           >
           <div class="w-28">
             <Select
@@ -45,7 +45,7 @@
           <LoadingSpinner size="md" />
         </div>
         <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "模型分布" }}
+          模型分布
         </h3>
         <div class="flex items-center gap-6">
           <div class="h-48 w-48">
@@ -58,18 +58,18 @@
               v-else
               class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400"
             >
-              {{ "暂无数据" }}
+              暂无数据
             </div>
           </div>
           <div class="max-h-48 flex-1 overflow-y-auto">
             <table class="w-full text-xs">
               <thead>
                 <tr class="text-gray-500 dark:text-gray-400">
-                  <th class="pb-2 text-left">{{ "模型" }}</th>
-                  <th class="pb-2 text-right">{{ "请求" }}</th>
-                  <th class="pb-2 text-right">{{ "Token" }}</th>
-                  <th class="pb-2 text-right">{{ "实际" }}</th>
-                  <th class="pb-2 text-right">{{ "标准" }}</th>
+                  <th class="pb-2 text-left">模型</th>
+                  <th class="pb-2 text-right">请求</th>
+                  <th class="pb-2 text-right">Token</th>
+                  <th class="pb-2 text-right">实际</th>
+                  <th class="pb-2 text-right">标准</th>
                 </tr>
               </thead>
               <tbody>
@@ -120,7 +120,7 @@
           <LoadingSpinner size="md" />
         </div>
         <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "Token 使用趋势" }}
+          Token 使用趋势
         </h3>
         <div class="h-48">
           <Line v-if="trendData" :data="trendData" :options="lineOptions" />
@@ -128,7 +128,7 @@
             v-else
             class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400"
           >
-            {{ "暂无数据" }}
+            暂无数据
           </div>
         </div>
       </div>

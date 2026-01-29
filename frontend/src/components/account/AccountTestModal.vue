@@ -34,7 +34,7 @@
               >
                 {{ account.type }}
               </span>
-              <span>{{ "账号" }}</span>
+              <span>账号</span>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
 
       <div class="space-y-1.5">
         <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {{ "选择测试模型" }}
+          选择测试模型
         </label>
         <Select
           v-model="selectedModelId"
@@ -97,7 +97,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            <span>{{ "连接 API 中..." }}</span>
+            <span>连接 API 中...</span>
           </div>
 
           <!-- Output Lines -->
@@ -132,7 +132,7 @@
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span>{{ "测试完成！" }}</span>
+            <span>测试完成！</span>
           </div>
           <div
             v-else-if="status === 'error'"
@@ -161,7 +161,7 @@
         <div class="flex items-center gap-3">
           <span class="flex items-center gap-1">
             <Icon name="cpu" size="sm" :stroke-width="2" />
-            {{ "测试模型" }}
+            测试模型
           </span>
         </div>
         <span class="flex items-center gap-1">
@@ -178,7 +178,7 @@
           :disabled="status === 'connecting'"
           @click="handleClose"
         >
-          {{ "关闭" }}
+          关闭
         </button>
         <button
           :disabled="status === 'connecting' || !selectedModelId"

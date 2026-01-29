@@ -9,7 +9,7 @@
           ref="userSearchRef"
           class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[240px]"
         >
-          <label class="input-label">{{ "用户" }}</label>
+          <label class="input-label">用户</label>
           <input
             v-model="userKeyword"
             type="text"
@@ -49,7 +49,7 @@
           ref="apiKeySearchRef"
           class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[240px]"
         >
-          <label class="input-label">{{ "API 密钥" }}</label>
+          <label class="input-label">API 密钥</label>
           <input
             v-model="apiKeyKeyword"
             type="text"
@@ -86,7 +86,7 @@
 
         <!-- Model Filter -->
         <div class="w-full sm:w-auto sm:min-w-[220px]">
-          <label class="input-label">{{ "模型" }}</label>
+          <label class="input-label">模型</label>
           <Select
             v-model="filters.model"
             :options="modelOptions"
@@ -100,7 +100,7 @@
           ref="accountSearchRef"
           class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[220px]"
         >
-          <label class="input-label">{{ "账户" }}</label>
+          <label class="input-label">账户</label>
           <input
             v-model="accountKeyword"
             type="text"
@@ -140,7 +140,7 @@
 
         <!-- Stream Type Filter -->
         <div class="w-full sm:w-auto sm:min-w-[180px]">
-          <label class="input-label">{{ "类型" }}</label>
+          <label class="input-label">类型</label>
           <Select
             v-model="filters.stream"
             :options="streamTypeOptions"
@@ -150,7 +150,7 @@
 
         <!-- Billing Type Filter -->
         <div class="w-full sm:w-auto sm:min-w-[200px]">
-          <label class="input-label">{{ "计费类型" }}</label>
+          <label class="input-label">计费类型</label>
           <Select
             v-model="filters.billing_type"
             :options="billingTypeOptions"
@@ -160,7 +160,7 @@
 
         <!-- Group Filter -->
         <div class="w-full sm:w-auto sm:min-w-[200px]">
-          <label class="input-label">{{ "分组" }}</label>
+          <label class="input-label">分组</label>
           <Select
             v-model="filters.group_id"
             :options="groupOptions"
@@ -171,7 +171,7 @@
 
         <!-- Date Range Filter -->
         <div class="w-full sm:w-auto [&_.date-picker-trigger]:w-full">
-          <label class="input-label">{{ "时间范围" }}</label>
+          <label class="input-label">时间范围</label>
           <DateRangePicker
             :start-date="startDate"
             :end-date="endDate"
@@ -188,10 +188,10 @@
         class="flex w-full flex-wrap items-center justify-end gap-3 sm:w-auto"
       >
         <button type="button" class="btn btn-secondary" @click="$emit('reset')">
-          {{ "重置" }}
+          重置
         </button>
         <button type="button" class="btn btn-danger" @click="$emit('cleanup')">
-          {{ "清理" }}
+          清理
         </button>
         <button
           type="button"
@@ -199,7 +199,7 @@
           class="btn btn-primary"
           @click="$emit('export')"
         >
-          {{ "导出 Excel" }}
+          导出 Excel
         </button>
       </div>
     </div>

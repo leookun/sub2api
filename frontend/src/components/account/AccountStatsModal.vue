@@ -27,7 +27,7 @@
               {{ account.name }}
             </div>
             <div class="text-xs text-gray-500 dark:text-gray-400">
-              {{ "近30天使用统计（日均基于实际使用天数）" }}
+              近30天使用统计（日均基于实际使用天数）
             </div>
           </div>
         </div>
@@ -56,9 +56,8 @@
             class="card border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-4 dark:border-emerald-800/30 dark:from-emerald-900/10 dark:to-dark-700"
           >
             <div class="mb-2 flex items-center justify-between">
-              <span
-                class="text-xs font-medium text-gray-500 dark:text-gray-400"
-                >{{ "30天总费用" }}</span
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >30天总费用</span
               >
               <div
                 class="rounded-lg bg-emerald-100 p-1.5 dark:bg-emerald-900/30"
@@ -82,14 +81,10 @@
               ${{ formatCost(stats.summary.total_cost) }}
             </p>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "累计成本" }}
+              累计成本
               <span class="text-gray-400 dark:text-gray-500">
-                ({{ "用户扣费" }}: ${{
-                  formatCost(stats.summary.total_user_cost)
-                }}
-                · {{ "标准计费" }}: ${{
-                  formatCost(stats.summary.total_standard_cost)
-                }})
+                (用户扣费: ${{ formatCost(stats.summary.total_user_cost) }} ·
+                标准计费: ${{ formatCost(stats.summary.total_standard_cost) }})
               </span>
             </p>
           </div>
@@ -99,9 +94,8 @@
             class="card border-blue-200 bg-gradient-to-br from-blue-50 to-white p-4 dark:border-blue-800/30 dark:from-blue-900/10 dark:to-dark-700"
           >
             <div class="mb-2 flex items-center justify-between">
-              <span
-                class="text-xs font-medium text-gray-500 dark:text-gray-400"
-                >{{ "30天总请求" }}</span
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >30天总请求</span
               >
               <div class="rounded-lg bg-blue-100 p-1.5 dark:bg-blue-900/30">
                 <Icon
@@ -116,7 +110,7 @@
               {{ formatNumber(stats.summary.total_requests) }}
             </p>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "累计调用次数" }}
+              累计调用次数
             </p>
           </div>
 
@@ -125,9 +119,8 @@
             class="card border-amber-200 bg-gradient-to-br from-amber-50 to-white p-4 dark:border-amber-800/30 dark:from-amber-900/10 dark:to-dark-700"
           >
             <div class="mb-2 flex items-center justify-between">
-              <span
-                class="text-xs font-medium text-gray-500 dark:text-gray-400"
-                >{{ "日均费用" }}</span
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >日均费用</span
               >
               <div class="rounded-lg bg-amber-100 p-1.5 dark:bg-amber-900/30">
                 <Icon
@@ -144,9 +137,7 @@
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
               {{ `基于 ${stats.summary.actual_days_used} 天实际使用` }}
               <span class="text-gray-400 dark:text-gray-500">
-                ({{ "用户扣费" }}: ${{
-                  formatCost(stats.summary.avg_daily_user_cost)
-                }})
+                (用户扣费: ${{ formatCost(stats.summary.avg_daily_user_cost) }})
               </span>
             </p>
           </div>
@@ -156,9 +147,8 @@
             class="card border-purple-200 bg-gradient-to-br from-purple-50 to-white p-4 dark:border-purple-800/30 dark:from-purple-900/10 dark:to-dark-700"
           >
             <div class="mb-2 flex items-center justify-between">
-              <span
-                class="text-xs font-medium text-gray-500 dark:text-gray-400"
-                >{{ "日均请求" }}</span
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >日均请求</span
               >
               <div class="rounded-lg bg-purple-100 p-1.5 dark:bg-purple-900/30">
                 <svg
@@ -180,7 +170,7 @@
               {{ formatNumber(Math.round(stats.summary.avg_daily_requests)) }}
             </p>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "平均每日调用" }}
+              平均每日调用
             </p>
           </div>
         </div>
@@ -205,9 +195,8 @@
                   />
                 </svg>
               </div>
-              <span
-                class="text-sm font-semibold text-gray-900 dark:text-white"
-                >{{ "今日概览" }}</span
+              <span class="text-sm font-semibold text-gray-900 dark:text-white"
+                >今日概览</span
               >
             </div>
             <div class="space-y-2">
@@ -261,9 +250,8 @@
                   :stroke-width="2"
                 />
               </div>
-              <span
-                class="text-sm font-semibold text-gray-900 dark:text-white"
-                >{{ "最高费用日" }}</span
+              <span class="text-sm font-semibold text-gray-900 dark:text-white"
+                >最高费用日</span
               >
             </div>
             <div class="space-y-2">
@@ -323,9 +311,8 @@
                   :stroke-width="2"
                 />
               </div>
-              <span
-                class="text-sm font-semibold text-gray-900 dark:text-white"
-                >{{ "最高请求日" }}</span
+              <span class="text-sm font-semibold text-gray-900 dark:text-white"
+                >最高请求日</span
               >
             </div>
             <div class="space-y-2">
@@ -392,9 +379,8 @@
                   :stroke-width="2"
                 />
               </div>
-              <span
-                class="text-sm font-semibold text-gray-900 dark:text-white"
-                >{{ "累计 Token" }}</span
+              <span class="text-sm font-semibold text-gray-900 dark:text-white"
+                >累计 Token</span
               >
             </div>
             <div class="space-y-2">
@@ -432,9 +418,8 @@
                   :stroke-width="2"
                 />
               </div>
-              <span
-                class="text-sm font-semibold text-gray-900 dark:text-white"
-                >{{ "性能" }}</span
+              <span class="text-sm font-semibold text-gray-900 dark:text-white"
+                >性能</span
               >
             </div>
             <div class="space-y-2">
@@ -471,9 +456,8 @@
                   :stroke-width="2"
                 />
               </div>
-              <span
-                class="text-sm font-semibold text-gray-900 dark:text-white"
-                >{{ "最近统计" }}</span
+              <span class="text-sm font-semibold text-gray-900 dark:text-white"
+                >最近统计</span
               >
             </div>
             <div class="space-y-2">
@@ -520,7 +504,7 @@
         <!-- Usage Trend Chart -->
         <div class="card p-4">
           <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
-            {{ "30天费用与请求趋势" }}
+            30天费用与请求趋势
           </h3>
           <div class="h-64">
             <Line
@@ -532,7 +516,7 @@
               v-else
               class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400"
             >
-              {{ "暂无数据" }}
+              暂无数据
             </div>
           </div>
         </div>
@@ -552,7 +536,7 @@
           class="mb-4 h-12 w-12"
           :stroke-width="1.5"
         />
-        <p class="text-sm">{{ "该账号暂无使用数据" }}</p>
+        <p class="text-sm">该账号暂无使用数据</p>
       </div>
     </div>
 
@@ -562,7 +546,7 @@
           class="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-600 dark:text-gray-300 dark:hover:bg-dark-500"
           @click="handleClose"
         >
-          {{ "关闭" }}
+          关闭
         </button>
       </div>
     </template>

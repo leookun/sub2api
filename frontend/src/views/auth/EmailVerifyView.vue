@@ -4,7 +4,7 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ "验证您的邮箱" }}
+          验证您的邮箱
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
           We'll send a verification code to
@@ -24,8 +24,8 @@
             <Icon name="exclamationCircle" size="md" class="text-amber-500" />
           </div>
           <div class="text-sm text-amber-700 dark:text-amber-400">
-            <p class="font-medium">{{ "会话已过期" }}</p>
-            <p class="mt-1">{{ "请返回注册页面重新开始。" }}</p>
+            <p class="font-medium">会话已过期</p>
+            <p class="mt-1">请返回注册页面重新开始。</p>
           </div>
         </div>
       </div>
@@ -34,9 +34,7 @@
       <form v-else class="space-y-5" @submit.prevent="handleVerify">
         <!-- Verification Code Input -->
         <div>
-          <label for="code" class="input-label text-center">
-            {{ "验证码" }}
-          </label>
+          <label for="code" class="input-label text-center"> 验证码 </label>
           <input
             id="code"
             v-model="verifyCode"
@@ -54,7 +52,7 @@
             {{ errors.code }}
           </p>
           <p v-else class="input-hint text-center">
-            {{ "请输入发送到您邮箱的6位验证码" }}
+            请输入发送到您邮箱的6位验证码
           </p>
         </div>
 
@@ -154,11 +152,11 @@
             class="text-sm text-primary-600 transition-colors hover:text-primary-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-primary-400 dark:hover:text-primary-300"
             @click="handleResendCode"
           >
-            <span v-if="isSendingCode">{{ "发送中..." }}</span>
+            <span v-if="isSendingCode">发送中...</span>
             <span v-else-if="turnstileEnabled && !showResendTurnstile">
-              {{ "点击重新发送验证码" }}
+              点击重新发送验证码
             </span>
-            <span v-else>{{ "重新发送验证码" }}</span>
+            <span v-else>重新发送验证码</span>
           </button>
         </div>
       </form>

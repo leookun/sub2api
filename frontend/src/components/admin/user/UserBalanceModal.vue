@@ -24,7 +24,7 @@
         <div class="flex-1">
           <p class="font-medium text-gray-900">{{ user.email }}</p>
           <p class="text-sm text-gray-500">
-            {{ "当前余额" }}: ${{ formatBalance(user.balance) }}
+            当前余额: ${{ formatBalance(user.balance) }}
           </p>
         </div>
       </div>
@@ -54,12 +54,12 @@
             class="btn btn-secondary whitespace-nowrap"
             @click="fillAllBalance"
           >
-            {{ "全部" }}
+            全部
           </button>
         </div>
       </div>
       <div>
-        <label class="input-label">{{ "备注" }}</label
+        <label class="input-label">备注</label
         ><textarea v-model="form.notes" rows="3" class="input"></textarea>
       </div>
       <div
@@ -67,7 +67,7 @@
         class="rounded-xl border border-blue-200 bg-blue-50 p-4"
       >
         <div class="flex items-center justify-between text-sm">
-          <span>{{ "操作后余额" }}:</span
+          <span>操作后余额:</span
           ><span class="font-bold"
             >${{ formatBalance(calculateNewBalance()) }}</span
           >
@@ -76,9 +76,7 @@
     </form>
     <template #footer>
       <div class="flex justify-end gap-3">
-        <button class="btn btn-secondary" @click="$emit('close')">
-          {{ "取消" }}
-        </button>
+        <button class="btn btn-secondary" @click="$emit('close')">取消</button>
         <button
           type="submit"
           form="balance-form"

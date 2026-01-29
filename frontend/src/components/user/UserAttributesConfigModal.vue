@@ -9,11 +9,11 @@
       <!-- Header with Add Button -->
       <div class="flex items-center justify-between">
         <p class="text-sm text-gray-500 dark:text-dark-400">
-          {{ "配置用户的自定义属性字段" }}
+          配置用户的自定义属性字段
         </p>
         <button class="btn btn-primary btn-sm" @click="openCreateModal">
           <Icon name="plus" size="sm" class="mr-1.5" :stroke-width="2" />
-          {{ "添加属性" }}
+          添加属性
         </button>
       </div>
 
@@ -61,10 +61,10 @@
           />
         </svg>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ "暂无自定义属性" }}
+          暂无自定义属性
         </p>
         <p class="text-xs text-gray-400 dark:text-dark-500">
-          {{ "点击上方按钮添加自定义属性" }}
+          点击上方按钮添加自定义属性
         </p>
       </div>
 
@@ -95,10 +95,10 @@
                 {{ attr.key }}
               </span>
               <span v-if="attr.required" class="badge badge-danger text-xs">
-                {{ "必填" }}
+                必填
               </span>
               <span v-if="!attr.enabled" class="badge badge-gray text-xs">
-                {{ "已禁用" }}
+                已禁用
               </span>
             </div>
             <div
@@ -136,9 +136,7 @@
 
     <template #footer>
       <div class="flex justify-end">
-        <button class="btn btn-secondary" @click="emit('close')">
-          {{ "关闭" }}
-        </button>
+        <button class="btn btn-secondary" @click="emit('close')">关闭</button>
       </div>
     </template>
   </BaseDialog>
@@ -153,7 +151,7 @@
     <form id="attribute-form" class="space-y-4" @submit.prevent="handleSave">
       <!-- Key -->
       <div>
-        <label class="input-label">{{ "属性键" }}</label>
+        <label class="input-label">属性键</label>
         <input
           v-model="form.key"
           type="text"
@@ -163,14 +161,12 @@
           :placeholder="'用于程序引用，只能包含字母、数字和下划线'"
           :disabled="!!editingAttribute"
         />
-        <p class="input-hint">
-          {{ "用于程序引用，只能包含字母、数字和下划线" }}
-        </p>
+        <p class="input-hint">用于程序引用，只能包含字母、数字和下划线</p>
       </div>
 
       <!-- Name -->
       <div>
-        <label class="input-label">{{ "显示名称" }}</label>
+        <label class="input-label">显示名称</label>
         <input
           v-model="form.name"
           type="text"
@@ -182,7 +178,7 @@
 
       <!-- Type -->
       <div>
-        <label class="input-label">{{ "属性类型" }}</label>
+        <label class="input-label">属性类型</label>
         <Select
           v-model="form.type"
           :options="
@@ -199,7 +195,7 @@
         v-if="form.type === 'select' || form.type === 'multi_select'"
         class="space-y-2"
       >
-        <label class="input-label">{{ "选项配置" }}</label>
+        <label class="input-label">选项配置</label>
         <div
           v-for="(option, index) in form.options"
           :key="index"
@@ -233,13 +229,13 @@
           @click="addOption"
         >
           <Icon name="plus" size="sm" class="mr-1" :stroke-width="2" />
-          {{ "添加选项" }}
+          添加选项
         </button>
       </div>
 
       <!-- Description -->
       <div>
-        <label class="input-label">{{ "描述" }}</label>
+        <label class="input-label">描述</label>
         <input
           v-model="form.description"
           type="text"
@@ -250,7 +246,7 @@
 
       <!-- Placeholder -->
       <div>
-        <label class="input-label">{{ "占位符" }}</label>
+        <label class="input-label">占位符</label>
         <input
           v-model="form.placeholder"
           type="text"
@@ -287,7 +283,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="closeEditModal">
-          {{ "取消" }}
+          取消
         </button>
         <button
           type="submit"

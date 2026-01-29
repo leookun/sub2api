@@ -5,11 +5,11 @@
         <Icon name="document" size="md" />
       </div>
       <div>
-        <p class="text-xs font-medium text-gray-500">{{ "总请求数" }}</p>
+        <p class="text-xs font-medium text-gray-500">总请求数</p>
         <p class="text-xl font-bold">
           {{ stats?.total_requests?.toLocaleString() || "0" }}
         </p>
-        <p class="text-xs text-gray-400">{{ "所选范围内" }}</p>
+        <p class="text-xs text-gray-400">所选范围内</p>
       </div>
     </div>
     <div class="card p-4 flex items-center gap-3">
@@ -31,13 +31,13 @@
         </svg>
       </div>
       <div>
-        <p class="text-xs font-medium text-gray-500">{{ "总 Token" }}</p>
+        <p class="text-xs font-medium text-gray-500">总 Token</p>
         <p class="text-xl font-bold">
           {{ formatTokens(stats?.total_tokens || 0) }}
         </p>
         <p class="text-xs text-gray-500">
-          {{ "输入" }}: {{ formatTokens(stats?.total_input_tokens || 0) }} /
-          {{ "输出" }}: {{ formatTokens(stats?.total_output_tokens || 0) }}
+          输入: {{ formatTokens(stats?.total_input_tokens || 0) }} / 输出:
+          {{ formatTokens(stats?.total_output_tokens || 0) }}
         </p>
       </div>
     </div>
@@ -48,7 +48,7 @@
         <Icon name="dollar" size="md" />
       </div>
       <div class="min-w-0 flex-1">
-        <p class="text-xs font-medium text-gray-500">{{ "总消费" }}</p>
+        <p class="text-xs font-medium text-gray-500">总消费</p>
         <p class="text-xl font-bold text-green-600">
           ${{
             (
@@ -61,17 +61,17 @@
           v-if="stats?.total_account_cost != null"
           class="text-xs text-gray-400"
         >
-          {{ "用户扣费" }}:
+          用户扣费:
           <span class="text-gray-300"
             >${{ (stats?.total_actual_cost || 0).toFixed(4) }}</span
           >
-          · {{ "标准" }}:
+          · 标准:
           <span class="text-gray-300"
             >${{ (stats?.total_cost || 0).toFixed(4) }}</span
           >
         </p>
         <p v-else class="text-xs text-gray-400">
-          {{ "标准" }}:
+          标准:
           <span class="line-through"
             >${{ (stats?.total_cost || 0).toFixed(4) }}</span
           >
@@ -85,7 +85,7 @@
         <Icon name="clock" size="md" />
       </div>
       <div>
-        <p class="text-xs font-medium text-gray-500">{{ "平均耗时" }}</p>
+        <p class="text-xs font-medium text-gray-500">平均耗时</p>
         <p class="text-xl font-bold">
           {{ formatDuration(stats?.average_duration_ms || 0) }}
         </p>

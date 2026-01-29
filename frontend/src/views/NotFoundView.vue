@@ -45,7 +45,7 @@
       <!-- Text Content -->
       <div class="mb-8">
         <h1 class="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-          {{ "页面未找到" }}
+          页面未找到
         </h1>
         <p class="text-gray-500 dark:text-dark-400">
           The page you are looking for doesn't exist or has been moved.

@@ -79,7 +79,7 @@
             ]"
             @click="selectOption(null)"
           >
-            <span class="select-option-label">{{ "无代理" }}</span>
+            <span class="select-option-label">无代理</span>
             <Icon
               v-if="modelValue === null"
               name="check"
@@ -125,7 +125,7 @@
                     v-else
                     class="inline-flex flex-shrink-0 items-center rounded bg-red-100 px-1.5 py-0.5 text-xs text-red-700 dark:bg-red-900/30 dark:text-red-400"
                   >
-                    {{ "失败" }}
+                    失败
                   </span>
                 </template>
               </div>
@@ -178,7 +178,7 @@
             v-if="filteredProxies.length === 0 && searchQuery"
             class="select-empty"
           >
-            {{ "无匹配选项" }}
+            无匹配选项
           </div>
         </div>
       </div>

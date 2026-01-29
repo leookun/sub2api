@@ -2,15 +2,13 @@
   <div class="card">
     <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
       <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-        {{ "编辑个人资料" }}
+        编辑个人资料
       </h2>
     </div>
     <div class="px-6 py-6">
       <form class="space-y-4" @submit.prevent="handleUpdateProfile">
         <div>
-          <label for="username" class="input-label">
-            {{ "用户名" }}
-          </label>
+          <label for="username" class="input-label"> 用户名 </label>
           <input
             id="username"
             v-model="username"

@@ -37,7 +37,7 @@
           </div>
           <div>
             <h3 class="font-semibold text-primary-800 dark:text-primary-200">
-              {{ "联系客服" }}
+              联系客服
             </h3>
             <p class="text-sm font-medium">{{ contactInfo }}</p>
           </div>

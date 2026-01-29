@@ -12,11 +12,11 @@
       @submit.prevent="handleUpdateUser"
     >
       <div>
-        <label class="input-label">{{ "邮箱" }}</label>
+        <label class="input-label">邮箱</label>
         <input v-model="form.email" type="email" class="input" />
       </div>
       <div>
-        <label class="input-label">{{ "密码" }}</label>
+        <label class="input-label">密码</label>
         <div class="flex gap-2">
           <div class="relative flex-1">
             <input
@@ -72,15 +72,15 @@
         </div>
       </div>
       <div>
-        <label class="input-label">{{ "用户名" }}</label>
+        <label class="input-label">用户名</label>
         <input v-model="form.username" type="text" class="input" />
       </div>
       <div>
-        <label class="input-label">{{ "备注" }}</label>
+        <label class="input-label">备注</label>
         <textarea v-model="form.notes" rows="3" class="input"></textarea>
       </div>
       <div>
-        <label class="input-label">{{ "并发数" }}</label>
+        <label class="input-label">并发数</label>
         <input v-model.number="form.concurrency" type="number" class="input" />
       </div>
       <UserAttributeForm v-model="form.customAttributes" :user-id="user?.id" />
@@ -88,7 +88,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="$emit('close')">
-          {{ "取消" }}
+          取消
         </button>
         <button
           type="submit"

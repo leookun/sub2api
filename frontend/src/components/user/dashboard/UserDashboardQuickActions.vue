@@ -2,7 +2,7 @@
   <div class="card">
     <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
       <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-        {{ "快捷操作" }}
+        快捷操作
       </h2>
     </div>
     <div class="space-y-3 p-4">
@@ -21,10 +21,10 @@
         </div>
         <div class="min-w-0 flex-1">
           <p class="text-sm font-medium text-gray-900 dark:text-white">
-            {{ "创建 API 密钥" }}
+            创建 API 密钥
           </p>
           <p class="text-xs text-gray-500 dark:text-dark-400">
-            {{ "生成新的 API 密钥" }}
+            生成新的 API 密钥
           </p>
         </div>
         <Icon
@@ -49,10 +49,10 @@
         </div>
         <div class="min-w-0 flex-1">
           <p class="text-sm font-medium text-gray-900 dark:text-white">
-            {{ "查看使用记录" }}
+            查看使用记录
           </p>
           <p class="text-xs text-gray-500 dark:text-dark-400">
-            {{ "查看详细的使用日志" }}
+            查看详细的使用日志
           </p>
         </div>
         <Icon
@@ -77,11 +77,9 @@
         </div>
         <div class="min-w-0 flex-1">
           <p class="text-sm font-medium text-gray-900 dark:text-white">
-            {{ "兑换码" }}
+            兑换码
           </p>
-          <p class="text-xs text-gray-500 dark:text-dark-400">
-            {{ "使用兑换码充值" }}
-          </p>
+          <p class="text-xs text-gray-500 dark:text-dark-400">使用兑换码充值</p>
         </div>
         <Icon
           name="chevronRight"

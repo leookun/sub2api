@@ -4,10 +4,10 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ "欢迎回来" }}
+          欢迎回来
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ "登录您的账户以继续" }}
+          登录您的账户以继续
         </p>
       </div>
 
@@ -18,9 +18,7 @@
       <form class="space-y-5" @submit.prevent="handleLogin">
         <!-- Email Input -->
         <div>
-          <label for="email" class="input-label">
-            {{ "邮箱" }}
-          </label>
+          <label for="email" class="input-label"> 邮箱 </label>
           <div class="relative">
             <div
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
@@ -51,9 +49,7 @@
 
         <!-- Password Input -->
         <div>
-          <label for="password" class="input-label">
-            {{ "密码" }}
-          </label>
+          <label for="password" class="input-label"> 密码 </label>
           <div class="relative">
             <div
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
@@ -94,7 +90,7 @@
               to="/forgot-password"
               class="text-sm font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
             >
-              {{ "忘记密码？" }}
+              忘记密码？
             </router-link>
           </div>
         </div>
@@ -165,12 +161,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ "还没有账户？" }}
+        还没有账户？
         <router-link
           to="/register"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ "注册" }}
+          注册
         </router-link>
       </p>
     </template>

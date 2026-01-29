@@ -229,7 +229,7 @@ function downloadChart() {
             d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
           />
         </svg>
-        {{ "吞吐趋势" }}
+        吞吐趋势
         <HelpTooltip
           v-if="!props.fullscreen"
           :content="'当前窗口内的请求/QPS 与 token/TPS 趋势。'"
@@ -243,7 +243,7 @@ function downloadChart() {
         >
         <span class="flex items-center gap-1"
           ><span class="h-2 w-2 rounded-full bg-green-500"></span
-          >{{ "TPS（千）" }}</span
+          >TPS（千）</span
         >
         <template v-if="!props.fullscreen">
           <button
@@ -253,7 +253,7 @@ function downloadChart() {
             :title="'请求明细'"
             @click="emit('openDetails')"
           >
-            {{ "明细" }}
+            明细
           </button>
           <button
             type="button"
@@ -262,7 +262,7 @@ function downloadChart() {
             :title="'重置缩放（若启用）'"
             @click="resetZoom"
           >
-            {{ "重置" }}
+            重置
           </button>
           <button
             type="button"
@@ -271,7 +271,7 @@ function downloadChart() {
             :title="'下载图表图片'"
             @click="downloadChart"
           >
-            {{ "下载" }}
+            下载
           </button>
         </template>
       </div>
@@ -328,7 +328,7 @@ function downloadChart() {
           v-if="state === 'loading'"
           class="animate-pulse text-sm text-gray-400"
         >
-          {{ "加载中..." }}
+          加载中...
         </div>
         <EmptyState
           v-else

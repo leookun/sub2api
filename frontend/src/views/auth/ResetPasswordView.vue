@@ -4,10 +4,10 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ "设置新密码" }}
+          设置新密码
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ "请在下方输入您的新密码。" }}
+          请在下方输入您的新密码。
         </p>
       </div>
 
@@ -28,10 +28,10 @@
             </div>
             <div>
               <h3 class="text-lg font-semibold text-red-800 dark:text-red-200">
-                {{ "无效的重置链接" }}
+                无效的重置链接
               </h3>
               <p class="mt-2 text-sm text-red-700 dark:text-red-300">
-                {{ "此密码重置链接无效或已过期。请重新请求一个新链接。" }}
+                此密码重置链接无效或已过期。请重新请求一个新链接。
               </p>
             </div>
           </div>
@@ -42,7 +42,7 @@
             to="/forgot-password"
             class="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
-            {{ "请求新的重置链接" }}
+            请求新的重置链接
           </router-link>
         </div>
       </div>
@@ -66,10 +66,10 @@
               <h3
                 class="text-lg font-semibold text-green-800 dark:text-green-200"
               >
-                {{ "密码重置成功" }}
+                密码重置成功
               </h3>
               <p class="mt-2 text-sm text-green-700 dark:text-green-300">
-                {{ "您的密码已重置。现在可以使用新密码登录。" }}
+                您的密码已重置。现在可以使用新密码登录。
               </p>
             </div>
           </div>
@@ -81,7 +81,7 @@
             class="btn btn-primary inline-flex items-center gap-2"
           >
             <Icon name="login" size="md" />
-            {{ "登录" }}
+            登录
           </router-link>
         </div>
       </div>
@@ -90,9 +90,7 @@
       <form v-else class="space-y-5" @submit.prevent="handleSubmit">
         <!-- Email (readonly) -->
         <div>
-          <label for="email" class="input-label">
-            {{ "邮箱" }}
-          </label>
+          <label for="email" class="input-label"> 邮箱 </label>
           <div class="relative">
             <div
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
@@ -116,9 +114,7 @@
 
         <!-- New Password Input -->
         <div>
-          <label for="password" class="input-label">
-            {{ "新密码" }}
-          </label>
+          <label for="password" class="input-label"> 新密码 </label>
           <div class="relative">
             <div
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
@@ -156,9 +152,7 @@
 
         <!-- Confirm Password Input -->
         <div>
-          <label for="confirmPassword" class="input-label">
-            {{ "确认密码" }}
-          </label>
+          <label for="confirmPassword" class="input-label"> 确认密码 </label>
           <div class="relative">
             <div
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
@@ -246,12 +240,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ "想起密码了？" }}
+        想起密码了？
         <router-link
           to="/login"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ "登录" }}
+          登录
         </router-link>
       </p>
     </template>

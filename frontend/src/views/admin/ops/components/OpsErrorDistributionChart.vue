@@ -127,7 +127,7 @@ const options = computed(() => ({
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
           />
         </svg>
-        {{ "错误分布" }}
+        错误分布
         <HelpTooltip :content="'按状态码统计的错误分布。'" />
       </h3>
       <button
@@ -137,7 +137,7 @@ const options = computed(() => ({
         :title="'错误趋势'"
         @click="emit('openDetails')"
       >
-        {{ "明细" }}
+        明细
       </button>
     </div>
 
@@ -154,7 +154,7 @@ const options = computed(() => ({
             v-if="topReason"
             class="text-xs font-bold text-gray-900 dark:text-white"
           >
-            {{ "最高：" }}:
+            最高：:
             <span :style="{ color: topReason.color }">{{
               topReason.label
             }}</span>
@@ -182,7 +182,7 @@ const options = computed(() => ({
           v-if="state === 'loading'"
           class="animate-pulse text-sm text-gray-400"
         >
-          {{ "加载中..." }}
+          加载中...
         </div>
         <EmptyState
           v-else

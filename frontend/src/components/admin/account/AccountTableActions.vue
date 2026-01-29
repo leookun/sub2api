@@ -10,11 +10,9 @@
     </button>
     <slot name="after"></slot>
     <button class="btn btn-secondary" @click="$emit('sync')">
-      {{ "从 CRS 同步" }}
+      从 CRS 同步
     </button>
-    <button class="btn btn-primary" @click="$emit('create')">
-      {{ "添加账号" }}
-    </button>
+    <button class="btn btn-primary" @click="$emit('create')">添加账号</button>
   </div>
 </template>
 

@@ -21,7 +21,7 @@
             @click="showCreateModal = true"
           >
             <Icon name="plus" size="md" class="mr-2" />
-            {{ "创建密钥" }}
+            创建密钥
           </button>
         </div>
       </template>
@@ -109,17 +109,13 @@
           <template #cell-usage="{ row }">
             <div class="text-sm">
               <div class="flex items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400"
-                  >{{ "今日" }}:</span
-                >
+                <span class="text-gray-500 dark:text-gray-400">今日:</span>
                 <span class="font-medium text-gray-900 dark:text-white">
                   ${{ (usageStats[row.id]?.today_actual_cost ?? 0).toFixed(4) }}
                 </span>
               </div>
               <div class="mt-0.5 flex items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400"
-                  >{{ "累计" }}:</span
-                >
+                <span class="text-gray-500 dark:text-gray-400">累计:</span>
                 <span class="font-medium text-gray-900 dark:text-white">
                   ${{ (usageStats[row.id]?.total_actual_cost ?? 0).toFixed(4) }}
                 </span>
@@ -152,7 +148,7 @@
                 @click="openUseKeyModal(row)"
               >
                 <Icon name="terminal" size="sm" />
-                <span class="text-xs">{{ "使用密钥" }}</span>
+                <span class="text-xs">使用密钥</span>
               </button>
               <!-- Import to CC Switch Button -->
               <button
@@ -161,7 +157,7 @@
                 @click="importToCcswitch(row)"
               >
                 <Icon name="upload" size="sm" />
-                <span class="text-xs">{{ "导入到 CCS" }}</span>
+                <span class="text-xs">导入到 CCS</span>
               </button>
               <!-- Toggle Status Button -->
               <button
@@ -185,7 +181,7 @@
                 @click="editKey(row)"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ "编辑" }}</span>
+                <span class="text-xs">编辑</span>
               </button>
               <!-- Delete Button -->
               <button
@@ -193,7 +189,7 @@
                 @click="confirmDelete(row)"
               >
                 <Icon name="trash" size="sm" />
-                <span class="text-xs">{{ "删除" }}</span>
+                <span class="text-xs">删除</span>
               </button>
             </div>
           </template>
@@ -230,7 +226,7 @@
     >
       <form id="key-form" class="space-y-5" @submit.prevent="handleSubmit">
         <div>
-          <label class="input-label">{{ "名称" }}</label>
+          <label class="input-label">名称</label>
           <input
             v-model="formData.name"
             type="text"
@@ -242,7 +238,7 @@
         </div>
 
         <div>
-          <label class="input-label">{{ "分组" }}</label>
+          <label class="input-label">分组</label>
           <Select
             v-model="formData.group_id"
             :options="groupOptions"
@@ -259,7 +255,7 @@
                 "
                 :rate-multiplier="(option as unknown as GroupOption).rate"
               />
-              <span v-else class="text-gray-400">{{ "选择分组" }}</span>
+              <span v-else class="text-gray-400">选择分组</span>
             </template>
             <template #option="{ option, selected }">
               <GroupOptionItem
@@ -279,7 +275,7 @@
         <!-- Custom Key Section (only for create) -->
         <div v-if="!showEditModal" class="space-y-3">
           <div class="flex items-center justify-between">
-            <label class="input-label mb-0">{{ "自定义密钥" }}</label>
+            <label class="input-label mb-0">自定义密钥</label>
             <button
               type="button"
               :class="[
@@ -310,13 +306,13 @@
               {{ customKeyError }}
             </p>
             <p v-else class="input-hint">
-              {{ "仅允许字母、数字、下划线和连字符，最少16个字符。" }}
+              仅允许字母、数字、下划线和连字符，最少16个字符。
             </p>
           </div>
         </div>
 
         <div v-if="showEditModal">
-          <label class="input-label">{{ "状态" }}</label>
+          <label class="input-label">状态</label>
           <Select
             v-model="formData.status"
             :options="statusOptions"
@@ -327,7 +323,7 @@
         <!-- IP Restriction Section -->
         <div class="space-y-3">
           <div class="flex items-center justify-between">
-            <label class="input-label mb-0">{{ "IP 限制" }}</label>
+            <label class="input-label mb-0">IP 限制</label>
             <button
               type="button"
               :class="[
@@ -353,7 +349,7 @@
 
           <div v-if="formData.enable_ip_restriction" class="space-y-4 pt-2">
             <div>
-              <label class="input-label">{{ "IP 白名单" }}</label>
+              <label class="input-label">IP 白名单</label>
               <textarea
                 v-model="formData.ip_whitelist"
                 rows="3"
@@ -361,12 +357,12 @@
                 placeholder="192.168.1.100&#10;10.0.0.0/8"
               />
               <p class="input-hint">
-                {{ "每行一个 IP 或 CIDR，设置后仅允许这些 IP 使用此密钥" }}
+                每行一个 IP 或 CIDR，设置后仅允许这些 IP 使用此密钥
               </p>
             </div>
 
             <div>
-              <label class="input-label">{{ "IP 黑名单" }}</label>
+              <label class="input-label">IP 黑名单</label>
               <textarea
                 v-model="formData.ip_blacklist"
                 rows="3"
@@ -374,7 +370,7 @@
                 placeholder="1.2.3.4&#10;5.6.0.0/16"
               />
               <p class="input-hint">
-                {{ "每行一个 IP 或 CIDR，这些 IP 将被禁止使用此密钥" }}
+                每行一个 IP 或 CIDR，这些 IP 将被禁止使用此密钥
               </p>
             </div>
           </div>
@@ -383,7 +379,7 @@
       <template #footer>
         <div class="flex justify-end gap-3">
           <button type="button" class="btn btn-secondary" @click="closeModals">
-            {{ "取消" }}
+            取消
           </button>
           <button
             form="key-form"
@@ -448,7 +444,7 @@
     >
       <div class="space-y-4">
         <p class="text-sm text-gray-600 dark:text-gray-400">
-          {{ "请选择您要导入到 CC-Switch 的客户端类型：" }}
+          请选择您要导入到 CC-Switch 的客户端类型：
         </p>
         <div class="grid grid-cols-2 gap-3">
           <button
@@ -488,7 +484,7 @@
       <template #footer>
         <div class="flex justify-end">
           <button class="btn btn-secondary" @click="closeCcsClientSelect">
-            {{ "取消" }}
+            取消
           </button>
         </div>
       </template>

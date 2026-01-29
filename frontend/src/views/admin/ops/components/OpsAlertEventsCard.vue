@@ -379,10 +379,10 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
     <div class="mb-4 flex items-start justify-between gap-4">
       <div>
         <h3 class="text-sm font-bold text-gray-900 dark:text-white">
-          {{ "告警事件" }}
+          告警事件
         </h3>
         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-          {{ "最近的告警触发/恢复记录（仅邮件通知）" }}
+          最近的告警触发/恢复记录（仅邮件通知）
         </p>
       </div>
 
@@ -430,7 +430,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
               d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
             />
           </svg>
-          {{ "刷新" }}
+          刷新
         </button>
       </div>
     </div>
@@ -454,14 +454,14 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
         ></path>
       </svg>
-      {{ "加载中..." }}
+      加载中...
     </div>
 
     <div
       v-else-if="empty"
       class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-sm text-gray-500 dark:border-dark-700 dark:text-gray-400"
     >
-      {{ "暂无告警事件" }}
+      暂无告警事件
     </div>
 
     <div
@@ -475,42 +475,42 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "时间" }}
+                时间
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "级别" }}
+                级别
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "平台" }}
+                平台
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "规则ID" }}
+                规则ID
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "标题" }}
+                标题
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "持续时间" }}
+                持续时间
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "维度" }}
+                维度
               </th>
               <th
                 class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "邮件已发送" }}
+                邮件已发送
               </th>
             </tr>
           </thead>
@@ -624,7 +624,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          {{ "加载中..." }}
+          加载中...
         </div>
         <div
           v-else-if="!hasMore && events.length > 0"
@@ -646,14 +646,14 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
         v-if="detailLoading"
         class="flex items-center justify-center py-10 text-sm text-gray-500 dark:text-gray-400"
       >
-        {{ "加载详情中..." }}
+        加载详情中...
       </div>
 
       <div
         v-else-if="!selected"
         class="py-10 text-center text-sm text-gray-500 dark:text-gray-400"
       >
-        {{ "暂无详情" }}
+        暂无详情
       </div>
 
       <div v-else class="space-y-5">
@@ -695,7 +695,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
               >
                 <span
                   class="text-[11px] font-bold text-gray-600 dark:text-gray-300"
-                  >{{ "忽略此告警" }}</span
+                  >忽略此告警</span
                 >
                 <Select
                   :model-value="silenceDuration"
@@ -710,7 +710,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
                   @click="silenceAlert"
                 >
                   <Icon name="ban" size="sm" />
-                  {{ "common.apply" }}
+                  common.apply
                 </button>
               </div>
 
@@ -721,7 +721,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
                 @click="manualResolve"
               >
                 <Icon name="checkCircle" size="sm" />
-                {{ "标记为已解决" }}
+                标记为已解决
               </button>
             </div>
           </div>
@@ -732,7 +732,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
             <div
               class="text-xs font-bold uppercase tracking-wider text-gray-400"
             >
-              {{ "触发时间" }}
+              触发时间
             </div>
             <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
               {{ formatDateTime(selected.fired_at || selected.created_at) }}
@@ -742,7 +742,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
             <div
               class="text-xs font-bold uppercase tracking-wider text-gray-400"
             >
-              {{ "解决时间" }}
+              解决时间
             </div>
             <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
               {{
@@ -756,7 +756,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
             <div
               class="text-xs font-bold uppercase tracking-wider text-gray-400"
             >
-              {{ "规则 ID" }}
+              规则 ID
             </div>
             <div class="mt-1 flex flex-wrap items-center gap-2">
               <div
@@ -769,14 +769,14 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
                 :href="`/admin/ops?open_alert_rules=1&alert_rule_id=${selected.rule_id}`"
               >
                 <Icon name="externalLink" size="xs" />
-                {{ "查看规则" }}
+                查看规则
               </a>
               <a
                 class="inline-flex items-center gap-1 rounded-md bg-white px-2 py-1 text-[11px] font-bold text-gray-700 ring-1 ring-gray-200 hover:bg-gray-50 dark:bg-dark-800 dark:text-gray-200 dark:ring-dark-700 dark:hover:bg-dark-700"
                 :href="`/admin/ops?platform=${encodeURIComponent(getDimensionString(selected, 'platform') || '')}&group_id=${selected.dimensions?.group_id || ''}&error_type=request&open_error_details=1`"
               >
                 <Icon name="externalLink" size="xs" />
-                {{ "查看相关日志" }}
+                查看相关日志
               </a>
             </div>
           </div>
@@ -784,7 +784,7 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
             <div
               class="text-xs font-bold uppercase tracking-wider text-gray-400"
             >
-              {{ "维度信息" }}
+              维度信息
             </div>
             <div class="mt-1 text-sm text-gray-900 dark:text-white">
               <div v-if="getDimensionString(selected, 'platform')">
@@ -806,10 +806,10 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
           <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
             <div>
               <div class="text-sm font-bold text-gray-900 dark:text-white">
-                {{ "历史记录" }}
+                历史记录
               </div>
               <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ "同一规则 + 相同维度的最近事件" }}
+                同一规则 + 相同维度的最近事件
               </div>
             </div>
             <Select
@@ -824,13 +824,13 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
             v-if="historyLoading"
             class="py-6 text-center text-xs text-gray-500 dark:text-gray-400"
           >
-            {{ "加载历史中..." }}
+            加载历史中...
           </div>
           <div
             v-else-if="history.length === 0"
             class="py-6 text-center text-xs text-gray-500 dark:text-gray-400"
           >
-            {{ "暂无历史记录" }}
+            暂无历史记录
           </div>
           <div
             v-else
@@ -844,17 +844,17 @@ const empty = computed(() => events.value.length === 0 && !loading.value);
                   <th
                     class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                   >
-                    {{ "时间" }}
+                    时间
                   </th>
                   <th
                     class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                   >
-                    {{ "状态" }}
+                    状态
                   </th>
                   <th
                     class="px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                   >
-                    {{ "指标 / 阈值" }}
+                    指标 / 阈值
                   </th>
                 </tr>
               </thead>

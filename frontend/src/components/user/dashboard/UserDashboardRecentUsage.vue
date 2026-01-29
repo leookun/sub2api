@@ -4,9 +4,9 @@
       class="flex items-center justify-between border-b border-gray-100 px-6 py-4 dark:border-dark-700"
     >
       <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-        {{ "最近使用" }}
+        最近使用
       </h2>
-      <span class="badge badge-gray">{{ "近 7 天" }}</span>
+      <span class="badge badge-gray">近 7 天</span>
     </div>
     <div class="p-6">
       <div v-if="loading" class="flex items-center justify-center py-12">
@@ -66,7 +66,7 @@
           to="/usage"
           class="flex items-center justify-center gap-2 py-3 text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ "查看全部" }}
+          查看全部
           <Icon name="arrowRight" size="sm" />
         </router-link>
       </div>

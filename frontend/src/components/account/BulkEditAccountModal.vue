@@ -40,7 +40,7 @@
             class="input-label mb-0"
             for="bulk-edit-base-url-enabled"
           >
-            {{ "Base URL" }}
+            Base URL
           </label>
           <input
             id="bulk-edit-base-url-enabled"
@@ -60,9 +60,7 @@
           :placeholder="'https://api.anthropic.com 或 https://api.openai.com'"
           aria-labelledby="bulk-edit-base-url-label"
         />
-        <p class="input-hint">
-          {{ "仅适用于 API Key 账号，留空则不修改" }}
-        </p>
+        <p class="input-hint">仅适用于 API Key 账号，留空则不修改</p>
       </div>
 
       <!-- Model restriction -->
@@ -73,7 +71,7 @@
             class="input-label mb-0"
             for="bulk-edit-model-restriction-enabled"
           >
-            {{ "模型限制（可选）" }}
+            模型限制（可选）
           </label>
           <input
             id="bulk-edit-model-restriction-enabled"
@@ -115,7 +113,7 @@
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              {{ "模型白名单" }}
+              模型白名单
             </button>
             <button
               type="button"
@@ -140,7 +138,7 @@
                   d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
                 />
               </svg>
-              {{ "模型映射" }}
+              模型映射
             </button>
           </div>
 
@@ -161,7 +159,7 @@
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                {{ "选择允许的模型。留空则支持所有模型。" }}
+                选择允许的模型。留空则支持所有模型。
               </p>
             </div>
 
@@ -292,7 +290,7 @@
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              {{ "添加映射" }}
+              添加映射
             </button>
 
             <!-- Quick Add Buttons -->
@@ -323,10 +321,10 @@
               class="input-label mb-0"
               for="bulk-edit-custom-error-codes-enabled"
             >
-              {{ "自定义错误码" }}
+              自定义错误码
             </label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "仅对选中的错误码停止调度" }}
+              仅对选中的错误码停止调度
             </p>
           </div>
           <input
@@ -351,7 +349,7 @@
                 class="mr-1 inline"
                 :stroke-width="2"
               />
-              {{ "仅选中的错误码会停止调度，其他错误将返回 500。" }}
+              仅选中的错误码会停止调度，其他错误将返回 500。
             </p>
           </div>
 
@@ -432,7 +430,7 @@
               v-if="selectedErrorCodes.length === 0"
               class="text-xs text-gray-400"
             >
-              {{ "未选择（使用默认策略）" }}
+              未选择（使用默认策略）
             </span>
           </div>
         </div>
@@ -447,7 +445,7 @@
               class="input-label mb-0"
               for="bulk-edit-intercept-warmup-enabled"
             >
-              {{ "拦截预热请求" }}
+              拦截预热请求
             </label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
               {{
@@ -496,7 +494,7 @@
             class="input-label mb-0"
             for="bulk-edit-proxy-enabled"
           >
-            {{ "代理" }}
+            代理
           </label>
           <input
             id="bulk-edit-proxy-enabled"
@@ -529,7 +527,7 @@
               class="input-label mb-0"
               for="bulk-edit-concurrency-enabled"
             >
-              {{ "并发数" }}
+              并发数
             </label>
             <input
               id="bulk-edit-concurrency-enabled"
@@ -557,7 +555,7 @@
               class="input-label mb-0"
               for="bulk-edit-priority-enabled"
             >
-              {{ "优先级" }}
+              优先级
             </label>
             <input
               id="bulk-edit-priority-enabled"
@@ -585,7 +583,7 @@
               class="input-label mb-0"
               for="bulk-edit-rate-multiplier-enabled"
             >
-              {{ "账号计费倍率" }}
+              账号计费倍率
             </label>
             <input
               id="bulk-edit-rate-multiplier-enabled"
@@ -607,7 +605,7 @@
             aria-labelledby="bulk-edit-rate-multiplier-label"
           />
           <p class="input-hint">
-            {{ ">=0，0 表示该账号计费为 0；仅影响账号计费口径" }}
+            >=0，0 表示该账号计费为 0；仅影响账号计费口径
           </p>
         </div>
       </div>
@@ -620,7 +618,7 @@
             class="input-label mb-0"
             for="bulk-edit-status-enabled"
           >
-            {{ "状态" }}
+            状态
           </label>
           <input
             id="bulk-edit-status-enabled"
@@ -650,7 +648,7 @@
             class="input-label mb-0"
             for="bulk-edit-groups-enabled"
           >
-            {{ "分组管理" }}
+            分组管理
           </label>
           <input
             id="bulk-edit-groups-enabled"
@@ -676,7 +674,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ "取消" }}
+          取消
         </button>
         <button
           type="submit"

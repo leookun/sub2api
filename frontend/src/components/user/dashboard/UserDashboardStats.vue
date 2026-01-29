@@ -21,12 +21,12 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {{ "余额" }}
+            余额
           </p>
           <p class="text-xl font-bold text-emerald-600 dark:text-emerald-400">
             ${{ formatBalance(balance) }}
           </p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">{{ "可用" }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">可用</p>
         </div>
       </div>
     </div>
@@ -44,13 +44,13 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {{ "API 密钥" }}
+            API 密钥
           </p>
           <p class="text-xl font-bold text-gray-900 dark:text-white">
             {{ stats?.total_api_keys || 0 }}
           </p>
           <p class="text-xs text-green-600 dark:text-green-400">
-            {{ stats?.active_api_keys || 0 }} {{ "启用" }}
+            {{ stats?.active_api_keys || 0 }} 启用
           </p>
         </div>
       </div>
@@ -69,13 +69,13 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {{ "今日请求" }}
+            今日请求
           </p>
           <p class="text-xl font-bold text-gray-900 dark:text-white">
             {{ stats?.today_requests || 0 }}
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ "总计" }}: {{ formatNumber(stats?.total_requests || 0) }}
+            总计: {{ formatNumber(stats?.total_requests || 0) }}
           </p>
         </div>
       </div>
@@ -94,7 +94,7 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {{ "今日消费" }}
+            今日消费
           </p>
           <p class="text-xl font-bold text-gray-900 dark:text-white">
             <span class="text-purple-600 dark:text-purple-400" :title="'实际'"
@@ -108,7 +108,7 @@
             >
           </p>
           <p class="text-xs">
-            <span class="text-gray-500 dark:text-gray-400">{{ "总计" }}: </span>
+            <span class="text-gray-500 dark:text-gray-400">总计: </span>
             <span class="text-purple-600 dark:text-purple-400" :title="'实际'"
               >${{ formatCost(stats?.total_actual_cost || 0) }}</span
             >
@@ -136,14 +136,14 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {{ "今日 Token" }}
+            今日 Token
           </p>
           <p class="text-xl font-bold text-gray-900 dark:text-white">
             {{ formatTokens(stats?.today_tokens || 0) }}
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ "输入" }}: {{ formatTokens(stats?.today_input_tokens || 0) }} /
-            {{ "输出" }}: {{ formatTokens(stats?.today_output_tokens || 0) }}
+            输入: {{ formatTokens(stats?.today_input_tokens || 0) }} / 输出:
+            {{ formatTokens(stats?.today_output_tokens || 0) }}
           </p>
         </div>
       </div>
@@ -162,14 +162,14 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {{ "累计 Token" }}
+            累计 Token
           </p>
           <p class="text-xl font-bold text-gray-900 dark:text-white">
             {{ formatTokens(stats?.total_tokens || 0) }}
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ "输入" }}: {{ formatTokens(stats?.total_input_tokens || 0) }} /
-            {{ "输出" }}: {{ formatTokens(stats?.total_output_tokens || 0) }}
+            输入: {{ formatTokens(stats?.total_input_tokens || 0) }} / 输出:
+            {{ formatTokens(stats?.total_output_tokens || 0) }}
           </p>
         </div>
       </div>
@@ -188,7 +188,7 @@
         </div>
         <div class="flex-1">
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {{ "性能指标" }}
+            性能指标
           </p>
           <div class="flex items-baseline gap-2">
             <p class="text-xl font-bold text-gray-900 dark:text-white">
@@ -221,14 +221,12 @@
         </div>
         <div>
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-            {{ "平均响应" }}
+            平均响应
           </p>
           <p class="text-xl font-bold text-gray-900 dark:text-white">
             {{ formatDuration(stats?.average_duration_ms || 0) }}
           </p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ "平均时间" }}
-          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">平均时间</p>
         </div>
       </div>
     </div>

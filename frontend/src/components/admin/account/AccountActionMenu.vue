@@ -23,7 +23,7 @@
                 class="text-green-500"
                 :stroke-width="2"
               />
-              {{ "测试连接" }}
+              测试连接
             </button>
             <button
               class="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-dark-700"
@@ -33,7 +33,7 @@
               "
             >
               <Icon name="chart" size="sm" class="text-indigo-500" />
-              {{ "查看统计" }}
+              查看统计
             </button>
             <template
               v-if="account.type === 'oauth' || account.type === 'setup-token'"
@@ -46,7 +46,7 @@
                 "
               >
                 <Icon name="link" size="sm" />
-                {{ "重新授权" }}
+                重新授权
               </button>
               <button
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-purple-600 hover:bg-gray-100 dark:hover:bg-dark-700"
@@ -56,7 +56,7 @@
                 "
               >
                 <Icon name="refresh" size="sm" />
-                {{ "刷新令牌" }}
+                刷新令牌
               </button>
             </template>
             <div
@@ -72,7 +72,7 @@
               "
             >
               <Icon name="sync" size="sm" />
-              {{ "重置状态" }}
+              重置状态
             </button>
             <button
               v-if="isRateLimited || isOverloaded"
@@ -83,7 +83,7 @@
               "
             >
               <Icon name="clock" size="sm" />
-              {{ "清除速率限制" }}
+              清除速率限制
             </button>
           </template>
         </div>

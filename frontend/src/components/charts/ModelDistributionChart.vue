@@ -1,7 +1,7 @@
 <template>
   <div class="card p-4">
     <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
-      {{ "模型分布" }}
+      模型分布
     </h3>
     <div v-if="loading" class="flex h-48 items-center justify-center">
       <LoadingSpinner />
@@ -17,11 +17,11 @@
         <table class="w-full text-xs">
           <thead>
             <tr class="text-gray-500 dark:text-gray-400">
-              <th class="pb-2 text-left">{{ "模型" }}</th>
-              <th class="pb-2 text-right">{{ "请求" }}</th>
-              <th class="pb-2 text-right">{{ "Token" }}</th>
-              <th class="pb-2 text-right">{{ "实际" }}</th>
-              <th class="pb-2 text-right">{{ "标准" }}</th>
+              <th class="pb-2 text-left">模型</th>
+              <th class="pb-2 text-right">请求</th>
+              <th class="pb-2 text-right">Token</th>
+              <th class="pb-2 text-right">实际</th>
+              <th class="pb-2 text-right">标准</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +57,7 @@
       v-else
       class="flex h-48 items-center justify-center text-sm text-gray-500 dark:text-gray-400"
     >
-      {{ "暂无数据" }}
+      暂无数据
     </div>
   </div>
 </template>

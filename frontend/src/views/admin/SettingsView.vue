@@ -14,10 +14,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "管理员 API Key" }}
+              管理员 API Key
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ "用于外部系统集成的全局 API Key，拥有完整的管理员权限" }}
+              用于外部系统集成的全局 API Key，拥有完整的管理员权限
             </p>
           </div>
           <div class="space-y-4 p-6">
@@ -32,7 +32,7 @@
                   class="mt-0.5 flex-shrink-0 text-amber-500"
                 />
                 <p class="ml-3 text-sm text-amber-700 dark:text-amber-300">
-                  {{ "警告：此密钥拥有完整的管理员权限，请妥善保管。" }}
+                  警告：此密钥拥有完整的管理员权限，请妥善保管。
                 </p>
               </div>
             </div>
@@ -45,7 +45,7 @@
               <div
                 class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"
               ></div>
-              {{ "加载中..." }}
+              加载中...
             </div>
 
             <!-- No Key Configured -->
@@ -54,7 +54,7 @@
               class="flex items-center justify-between"
             >
               <span class="text-gray-500 dark:text-gray-400">
-                {{ "尚未配置管理员 API Key" }}
+                尚未配置管理员 API Key
               </span>
               <button
                 type="button"
@@ -93,7 +93,7 @@
                   <label
                     class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "当前密钥" }}
+                    当前密钥
                   </label>
                   <code
                     class="rounded bg-gray-100 px-2 py-1 font-mono text-sm text-gray-900 dark:bg-dark-700 dark:text-gray-100"
@@ -116,7 +116,7 @@
                     class="btn btn-secondary btn-sm text-red-600 hover:text-red-700 dark:text-red-400"
                     @click="deleteAdminApiKey"
                   >
-                    {{ "删除" }}
+                    删除
                   </button>
                 </div>
               </div>
@@ -129,7 +129,7 @@
                 <div
                   class="text-sm font-medium text-green-700 dark:text-green-300"
                 >
-                  {{ "此密钥仅显示一次，请立即复制保存。" }}
+                  此密钥仅显示一次，请立即复制保存。
                 </div>
                 <div class="flex items-center gap-2">
                   <code
@@ -142,7 +142,7 @@
                     class="btn btn-primary btn-sm flex-shrink-0"
                     @click="copyNewKey"
                   >
-                    {{ "复制密钥" }}
+                    复制密钥
                   </button>
                 </div>
                 <div class="text-xs text-green-600 dark:text-green-400">
@@ -159,10 +159,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "流超时处理" }}
+              流超时处理
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ "配置上游响应超时时的账户处理策略，避免问题账户持续被选中" }}
+              配置上游响应超时时的账户处理策略，避免问题账户持续被选中
             </p>
           </div>
           <div class="space-y-5 p-6">
@@ -174,7 +174,7 @@
               <div
                 class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"
               ></div>
-              {{ "加载中..." }}
+              加载中...
             </div>
 
             <template v-else>
@@ -185,7 +185,7 @@
                     "启用流超时处理"
                   }}</label>
                   <p class="text-sm text-gray-500 dark:text-gray-400">
-                    {{ "当上游响应超时时，自动处理问题账户" }}
+                    当上游响应超时时，自动处理问题账户
                   </p>
                 </div>
                 <Toggle v-model="streamTimeoutForm.enabled" />
@@ -201,15 +201,15 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "处理方式" }}
+                    处理方式
                   </label>
                   <select v-model="streamTimeoutForm.action" class="input w-64">
-                    <option value="temp_unsched">{{ "临时不可调度" }}</option>
-                    <option value="error">{{ "标记为错误状态" }}</option>
-                    <option value="none">{{ "不处理" }}</option>
+                    <option value="temp_unsched">临时不可调度</option>
+                    <option value="error">标记为错误状态</option>
+                    <option value="none">不处理</option>
                   </select>
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ "超时后对账户执行的操作" }}
+                    超时后对账户执行的操作
                   </p>
                 </div>
 
@@ -218,7 +218,7 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "暂停时长（分钟）" }}
+                    暂停时长（分钟）
                   </label>
                   <input
                     v-model.number="streamTimeoutForm.temp_unsched_minutes"
@@ -228,7 +228,7 @@
                     class="input w-32"
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ "临时不可调度的持续时间（1-60分钟）" }}
+                    临时不可调度的持续时间（1-60分钟）
                   </p>
                 </div>
 
@@ -237,7 +237,7 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "触发阈值（次数）" }}
+                    触发阈值（次数）
                   </label>
                   <input
                     v-model.number="streamTimeoutForm.threshold_count"
@@ -247,7 +247,7 @@
                     class="input w-32"
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ "累计超时多少次后触发处理（1-10次）" }}
+                    累计超时多少次后触发处理（1-10次）
                   </p>
                 </div>
 
@@ -256,7 +256,7 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "阈值窗口（分钟）" }}
+                    阈值窗口（分钟）
                   </label>
                   <input
                     v-model.number="streamTimeoutForm.threshold_window_minutes"
@@ -266,7 +266,7 @@
                     class="input w-32"
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ "超时计数的时间窗口（1-60分钟）" }}
+                    超时计数的时间窗口（1-60分钟）
                   </p>
                 </div>
               </div>
@@ -312,10 +312,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "注册设置" }}
+              注册设置
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ "控制用户注册和验证" }}
+              控制用户注册和验证
             </p>
           </div>
           <div class="space-y-5 p-6">
@@ -326,7 +326,7 @@
                   "开放注册"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "允许新用户注册" }}
+                  允许新用户注册
                 </p>
               </div>
               <Toggle v-model="form.registration_enabled" />
@@ -341,7 +341,7 @@
                   "邮箱验证"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "新用户注册时需要验证邮箱" }}
+                  新用户注册时需要验证邮箱
                 </p>
               </div>
               <Toggle v-model="form.email_verify_enabled" />
@@ -356,7 +356,7 @@
                   "优惠码"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "允许用户在注册时使用优惠码" }}
+                  允许用户在注册时使用优惠码
                 </p>
               </div>
               <Toggle v-model="form.promo_code_enabled" />
@@ -372,7 +372,7 @@
                   "忘记密码"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "允许用户通过邮箱重置密码" }}
+                  允许用户通过邮箱重置密码
                 </p>
               </div>
               <Toggle v-model="form.password_reset_enabled" />
@@ -387,7 +387,7 @@
                   "双因素认证 (2FA)"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "允许用户使用 Google Authenticator 等应用进行二次验证" }}
+                  允许用户使用 Google Authenticator 等应用进行二次验证
                 </p>
                 <!-- Warning when encryption key not configured -->
                 <p
@@ -411,10 +411,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "Cloudflare Turnstile" }}
+              Cloudflare Turnstile
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ "登录和注册的机器人防护" }}
+              登录和注册的机器人防护
             </p>
           </div>
           <div class="space-y-5 p-6">
@@ -425,7 +425,7 @@
                   "启用 Turnstile"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "需要 Cloudflare Turnstile 验证" }}
+                  需要 Cloudflare Turnstile 验证
                 </p>
               </div>
               <Toggle v-model="form.turnstile_enabled" />
@@ -441,7 +441,7 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "站点密钥" }}
+                    站点密钥
                   </label>
                   <input
                     v-model="form.turnstile_site_key"
@@ -450,12 +450,12 @@
                     placeholder="0x4AAAAAAA..."
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ "从 Cloudflare Dashboard 获取" }}
+                    从 Cloudflare Dashboard 获取
                     <a
                       href="https://dash.cloudflare.com/"
                       target="_blank"
                       class="text-primary-600 hover:text-primary-500"
-                      >{{ "Cloudflare Dashboard" }}</a
+                      >Cloudflare Dashboard</a
                     >
                   </p>
                 </div>
@@ -463,7 +463,7 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "私密密钥" }}
+                    私密密钥
                   </label>
                   <input
                     v-model="form.turnstile_secret_key"
@@ -488,10 +488,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "LinuxDo Connect 登录" }}
+              LinuxDo Connect 登录
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ "配置 LinuxDo Connect OAuth，用于 Sub2API 用户登录" }}
+              配置 LinuxDo Connect OAuth，用于 Sub2API 用户登录
             </p>
           </div>
           <div class="space-y-5 p-6">
@@ -501,7 +501,7 @@
                   "启用 LinuxDo 登录"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "在登录/注册页面显示 LinuxDo 登录入口" }}
+                  在登录/注册页面显示 LinuxDo 登录入口
                 </p>
               </div>
               <Toggle v-model="form.linuxdo_connect_enabled" />
@@ -516,7 +516,7 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "Client ID" }}
+                    Client ID
                   </label>
                   <input
                     v-model="form.linuxdo_connect_client_id"
@@ -525,7 +525,7 @@
                     :placeholder="'例如：hprJ5pC3...'"
                   />
                   <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                    {{ "从 Connect.Linux.Do 后台获取" }}
+                    从 Connect.Linux.Do 后台获取
                   </p>
                 </div>
 
@@ -533,7 +533,7 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "Client Secret" }}
+                    Client Secret
                   </label>
                   <input
                     v-model="form.linuxdo_connect_client_secret"
@@ -558,7 +558,7 @@
                   <label
                     class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                   >
-                    {{ "回调地址（Redirect URL）" }}
+                    回调地址（Redirect URL）
                   </label>
                   <input
                     v-model="form.linuxdo_connect_redirect_url"
@@ -574,7 +574,7 @@
                       class="btn btn-secondary btn-sm w-fit"
                       @click="setAndCopyLinuxdoRedirectUrl"
                     >
-                      {{ "使用当前站点生成并复制" }}
+                      使用当前站点生成并复制
                     </button>
                     <code
                       v-if="linuxdoRedirectUrlSuggestion"
@@ -598,10 +598,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "用户默认设置" }}
+              用户默认设置
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ "新用户的默认值" }}
+              新用户的默认值
             </p>
           </div>
           <div class="p-6">
@@ -610,7 +610,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "默认余额" }}
+                  默认余额
                 </label>
                 <input
                   v-model.number="form.default_balance"
@@ -621,14 +621,14 @@
                   placeholder="0.00"
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  {{ "新用户的初始余额" }}
+                  新用户的初始余额
                 </p>
               </div>
               <div>
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "默认并发数" }}
+                  默认并发数
                 </label>
                 <input
                   v-model.number="form.default_concurrency"
@@ -638,7 +638,7 @@
                   placeholder="1"
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  {{ "新用户的最大并发请求数" }}
+                  新用户的最大并发请求数
                 </p>
               </div>
             </div>
@@ -649,10 +649,10 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "站点设置" }}
+              站点设置
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ "自定义站点品牌" }}
+              自定义站点品牌
             </p>
           </div>
           <div class="space-y-6 p-6">
@@ -661,7 +661,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "站点名称" }}
+                  站点名称
                 </label>
                 <input
                   v-model="form.site_name"
@@ -670,14 +670,14 @@
                   :placeholder="'Sub2API'"
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  {{ "显示在邮件和页面标题中" }}
+                  显示在邮件和页面标题中
                 </p>
               </div>
               <div>
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "站点副标题" }}
+                  站点副标题
                 </label>
                 <input
                   v-model="form.site_subtitle"
@@ -686,7 +686,7 @@
                   :placeholder="'订阅转 API 转换平台'"
                 />
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                  {{ "显示在登录和注册页面" }}
+                  显示在登录和注册页面
                 </p>
               </div>
             </div>
@@ -696,7 +696,7 @@
               <label
                 class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {{ "API 端点地址" }}
+                API 端点地址
               </label>
               <input
                 v-model="form.api_base_url"
@@ -716,7 +716,7 @@
               <label
                 class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {{ "客服联系方式" }}
+                客服联系方式
               </label>
               <input
                 v-model="form.contact_info"
@@ -725,7 +725,7 @@
                 :placeholder="'例如：QQ: 123456789'"
               />
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ "填写客服联系方式，将展示在兑换页面、个人资料等位置" }}
+                填写客服联系方式，将展示在兑换页面、个人资料等位置
               </p>
             </div>
 
@@ -734,7 +734,7 @@
               <label
                 class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {{ "文档链接" }}
+                文档链接
               </label>
               <input
                 v-model="form.doc_url"
@@ -743,7 +743,7 @@
                 :placeholder="'https://docs.example.com'"
               />
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ "文档网站的链接。留空则隐藏文档链接。" }}
+                文档网站的链接。留空则隐藏文档链接。
               </p>
             </div>
 
@@ -752,7 +752,7 @@
               <label
                 class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {{ "站点Logo" }}
+                站点Logo
               </label>
               <div class="flex items-start gap-6">
                 <!-- Logo Preview -->
@@ -799,7 +799,7 @@
                         class="mr-1.5"
                         :stroke-width="2"
                       />
-                      {{ "上传图片" }}
+                      上传图片
                     </label>
                     <button
                       v-if="form.site_logo"
@@ -813,7 +813,7 @@
                         class="mr-1.5"
                         :stroke-width="2"
                       />
-                      {{ "移除" }}
+                      移除
                     </button>
                   </div>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
@@ -833,7 +833,7 @@
               <label
                 class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {{ "首页内容" }}
+                首页内容
               </label>
               <textarea
                 v-model="form.home_content"
@@ -878,10 +878,10 @@
           >
             <div>
               <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-                {{ "SMTP 设置" }}
+                SMTP 设置
               </h2>
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                {{ "配置用于发送验证码的邮件服务" }}
+                配置用于发送验证码的邮件服务
               </p>
             </div>
             <button
@@ -919,7 +919,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "SMTP 主机" }}
+                  SMTP 主机
                 </label>
                 <input
                   v-model="form.smtp_host"
@@ -932,7 +932,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "SMTP 端口" }}
+                  SMTP 端口
                 </label>
                 <input
                   v-model.number="form.smtp_port"
@@ -947,7 +947,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "SMTP 用户名" }}
+                  SMTP 用户名
                 </label>
                 <input
                   v-model="form.smtp_username"
@@ -960,7 +960,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "SMTP 密码" }}
+                  SMTP 密码
                 </label>
                 <input
                   v-model="form.smtp_password"
@@ -982,7 +982,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "发件人邮箱" }}
+                  发件人邮箱
                 </label>
                 <input
                   v-model="form.smtp_from_email"
@@ -995,7 +995,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "发件人名称" }}
+                  发件人名称
                 </label>
                 <input
                   v-model="form.smtp_from_name"
@@ -1015,7 +1015,7 @@
                   "使用 TLS"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "为 SMTP 连接启用 TLS 加密" }}
+                  为 SMTP 连接启用 TLS 加密
                 </p>
               </div>
               <Toggle v-model="form.smtp_use_tls" />
@@ -1027,7 +1027,7 @@
         <div class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "购买订阅页面" }}
+              购买订阅页面
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
               {{
@@ -1043,7 +1043,7 @@
                   "显示购买订阅入口"
                 }}</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ "仅在标准模式（非简单模式）下展示" }}
+                  仅在标准模式（非简单模式）下展示
                 </p>
               </div>
               <Toggle v-model="form.purchase_subscription_enabled" />
@@ -1054,7 +1054,7 @@
               <label
                 class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {{ "购买页面 URL" }}
+                购买页面 URL
               </label>
               <input
                 v-model="form.purchase_subscription_url"
@@ -1063,7 +1063,7 @@
                 :placeholder="'https://example.com/purchase'"
               />
               <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-                {{ "必须是完整的 http(s) 链接" }}
+                必须是完整的 http(s) 链接
               </p>
               <p class="mt-2 text-xs text-amber-600 dark:text-amber-400">
                 {{
@@ -1078,10 +1078,10 @@
         <div v-if="form.email_verify_enabled" class="card">
           <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              {{ "发送测试邮件" }}
+              发送测试邮件
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ "发送测试邮件以验证 SMTP 配置" }}
+              发送测试邮件以验证 SMTP 配置
             </p>
           </div>
           <div class="p-6">
@@ -1090,7 +1090,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "收件人邮箱" }}
+                  收件人邮箱
                 </label>
                 <input
                   v-model="testEmailAddress"

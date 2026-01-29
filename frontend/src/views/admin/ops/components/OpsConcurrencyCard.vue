@@ -344,7 +344,7 @@ watch(
             d="M13 10V3L4 14h7v7l9-11h-7z"
           />
         </svg>
-        {{ "并发 / 排队" }}
+        并发 / 排队
       </h3>
       <button
         class="flex items-center gap-1 rounded-lg bg-gray-100 px-2 py-1 text-[11px] font-semibold text-gray-700 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
@@ -382,7 +382,7 @@ watch(
       v-if="!realtimeEnabled"
       class="flex flex-1 items-center justify-center rounded-xl border border-dashed border-gray-200 text-sm text-gray-500 dark:border-dark-700 dark:text-gray-400"
     >
-      {{ "已在设置中关闭实时监控。" }}
+      已在设置中关闭实时监控。
     </div>
 
     <!-- 数据展示区域 -->
@@ -409,7 +409,7 @@ watch(
         v-if="displayRows.length === 0"
         class="flex flex-1 items-center justify-center text-sm text-gray-500 dark:text-gray-400"
       >
-        {{ "暂无数据" }}
+        暂无数据
       </div>
 
       <!-- 汇总视图（平台/分组） -->
@@ -567,7 +567,7 @@ watch(
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                {{ "可用" }}
+                可用
               </span>
               <span
                 v-else-if="row.is_rate_limited"
@@ -624,13 +624,13 @@ watch(
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-                {{ "异常" }}
+                异常
               </span>
               <span
                 v-else
                 class="inline-flex items-center gap-1 rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-400"
               >
-                {{ "不可用" }}
+                不可用
               </span>
             </div>
           </div>

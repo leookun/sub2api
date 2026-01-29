@@ -959,7 +959,7 @@ function handleToolbarRefresh() {
               d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
             />
           </svg>
-          {{ "运维监控" }}
+          运维监控
         </h1>
 
         <div
@@ -981,7 +981,7 @@ function handleToolbarRefresh() {
 
           <span>·</span>
           <span
-            >{{ "刷新" }}:
+            >刷新:
             {{
               props.lastUpdated
                 ? props.lastUpdated
@@ -1096,7 +1096,7 @@ function handleToolbarRefresh() {
               d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
             />
           </svg>
-          <span class="hidden sm:inline">{{ "预警规则" }}</span>
+          <span class="hidden sm:inline">预警规则</span>
         </button>
 
         <!-- Settings Button (hidden in fullscreen) -->
@@ -1126,7 +1126,7 @@ function handleToolbarRefresh() {
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-          <span class="hidden sm:inline">{{ "设置" }}</span>
+          <span class="hidden sm:inline">设置</span>
         </button>
 
         <!-- Enter Fullscreen Button (hidden in fullscreen mode) -->
@@ -1180,7 +1180,7 @@ function handleToolbarRefresh() {
                   class="mb-3 border-b border-gray-100 pb-2 text-sm font-bold text-gray-900 dark:border-gray-700 dark:text-white flex items-center gap-2"
                 >
                   <Icon name="brain" size="sm" class="text-blue-500" />
-                  {{ "智能诊断" }}
+                  智能诊断
                 </h4>
 
                 <div class="space-y-3">
@@ -1252,7 +1252,7 @@ function handleToolbarRefresh() {
                 <div
                   class="mt-3 border-t border-gray-100 pt-2 text-[10px] text-gray-400 dark:border-gray-700"
                 >
-                  {{ "基于当前指标的自动诊断建议" }}
+                  基于当前指标的自动诊断建议
                 </div>
               </div>
             </div>
@@ -1301,7 +1301,7 @@ function handleToolbarRefresh() {
                     props.fullscreen ? 'text-xs' : 'text-[10px]',
                     'font-bold uppercase tracking-wider text-gray-400',
                   ]"
-                  >{{ "健康" }}</span
+                  >健康</span
                 >
               </div>
             </div>
@@ -1310,7 +1310,7 @@ function handleToolbarRefresh() {
               <div
                 class="flex items-center justify-center gap-1 text-xs font-medium text-gray-500"
               >
-                {{ "健康状况" }}
+                健康状况
                 <HelpTooltip
                   :content="'基于 SLA、错误率和资源使用情况的系统整体健康评分'"
                 />
@@ -1343,7 +1343,7 @@ function handleToolbarRefresh() {
                 <h3
                   class="text-xs font-bold uppercase tracking-wider text-gray-400"
                 >
-                  {{ "实时信息" }}
+                  实时信息
                 </h3>
                 <HelpTooltip
                   v-if="!props.fullscreen"
@@ -1379,7 +1379,7 @@ function handleToolbarRefresh() {
                     'font-bold uppercase text-gray-400',
                   ]"
                 >
-                  {{ "当前" }}
+                  当前
                 </div>
                 <div class="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-2">
                   <div class="flex items-baseline gap-1.5">
@@ -1411,7 +1411,7 @@ function handleToolbarRefresh() {
                         props.fullscreen ? 'text-sm' : 'text-xs',
                         'font-bold text-gray-500',
                       ]"
-                      >{{ "TPS" }}</span
+                      >TPS</span
                     >
                   </div>
                 </div>
@@ -1427,7 +1427,7 @@ function handleToolbarRefresh() {
                       'font-bold uppercase text-gray-400',
                     ]"
                   >
-                    {{ "峰值" }}
+                    峰值
                   </div>
                   <div
                     :class="[
@@ -1445,7 +1445,7 @@ function handleToolbarRefresh() {
                       <span class="font-black text-gray-900 dark:text-white">{{
                         realtimeTpsPeakLabel
                       }}</span>
-                      <span class="text-xs">{{ "TPS" }}</span>
+                      <span class="text-xs">TPS</span>
                     </div>
                   </div>
                 </div>
@@ -1458,7 +1458,7 @@ function handleToolbarRefresh() {
                       'font-bold uppercase text-gray-400',
                     ]"
                   >
-                    {{ "平均" }}
+                    平均
                   </div>
                   <div
                     :class="[
@@ -1476,7 +1476,7 @@ function handleToolbarRefresh() {
                       <span class="font-black text-gray-900 dark:text-white">{{
                         realtimeTpsAvgLabel
                       }}</span>
-                      <span class="text-xs">{{ "TPS" }}</span>
+                      <span class="text-xs">TPS</span>
                     </div>
                   </div>
                 </div>
@@ -1538,30 +1538,30 @@ function handleToolbarRefresh() {
               type="button"
               @click="openDetails({ title: '请求明细' })"
             >
-              {{ "明细" }}
+              明细
             </button>
           </div>
           <div class="mt-2 space-y-2 text-xs">
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ "请求数" }}:</span>
+              <span class="text-gray-500">请求数:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{
                 totalRequestsLabel
               }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ "Token数" }}:</span>
+              <span class="text-gray-500">Token数:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{
                 totalTokensLabel
               }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ "平均 QPS" }}:</span>
+              <span class="text-gray-500">平均 QPS:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{
                 qpsAvgLabel
               }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ "平均 TPS" }}:</span>
+              <span class="text-gray-500">平均 TPS:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{
                 tpsAvgLabel
               }}</span>
@@ -1600,7 +1600,7 @@ function handleToolbarRefresh() {
               type="button"
               @click="openDetails({ title: '请求明细', kind: 'error' })"
             >
-              {{ "明细" }}
+              明细
             </button>
           </div>
           <div
@@ -1626,7 +1626,7 @@ function handleToolbarRefresh() {
           </div>
           <div class="mt-3 text-xs">
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ "异常数" }}:</span>
+              <span class="text-gray-500">异常数:</span>
               <span class="font-bold text-red-600 dark:text-red-400">{{
                 formatNumber(
                   (overview.request_count_sla ?? 0) -
@@ -1658,7 +1658,7 @@ function handleToolbarRefresh() {
               type="button"
               @click="openDetails({ title: '请求时长', sort: 'duration_desc' })"
             >
-              {{ "明细" }}
+              明细
             </button>
           </div>
           <div class="mt-2 flex items-baseline gap-2">
@@ -1734,7 +1734,7 @@ function handleToolbarRefresh() {
                 })
               "
             >
-              {{ "明细" }}
+              明细
             </button>
           </div>
           <div class="mt-2 flex items-baseline gap-2">
@@ -1828,7 +1828,7 @@ function handleToolbarRefresh() {
               type="button"
               @click="openErrorDetails('request')"
             >
-              {{ "明细" }}
+              明细
             </button>
           </div>
           <div
@@ -1845,13 +1845,13 @@ function handleToolbarRefresh() {
           </div>
           <div class="mt-3 space-y-1 text-xs">
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ "错误数" }}:</span>
+              <span class="text-gray-500">错误数:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{
                 formatNumber(overview.error_count_sla ?? 0)
               }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ "业务限制：" }}:</span>
+              <span class="text-gray-500">业务限制：:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{
                 formatNumber(overview.business_limited_count ?? 0)
               }}</span>
@@ -1880,7 +1880,7 @@ function handleToolbarRefresh() {
               type="button"
               @click="openErrorDetails('upstream')"
             >
-              {{ "明细" }}
+              明细
             </button>
           </div>
           <div
@@ -1899,7 +1899,7 @@ function handleToolbarRefresh() {
           </div>
           <div class="mt-3 space-y-1 text-xs">
             <div class="flex justify-between">
-              <span class="text-gray-500">{{ "错误数（排除429/529）" }}:</span>
+              <span class="text-gray-500">错误数（排除429/529）:</span>
               <span class="font-bold text-gray-900 dark:text-white">{{
                 formatNumber(overview.upstream_error_count_excl_429_529 ?? 0)
               }}</span>
@@ -1946,7 +1946,7 @@ function handleToolbarRefresh() {
             v-if="!props.fullscreen"
             class="mt-1 text-[10px] text-gray-500 dark:text-gray-400"
           >
-            {{ "警告" }} 80% · {{ "严重" }} 95%
+            警告 80% · 严重 95%
           </div>
         </div>
 
@@ -1956,7 +1956,7 @@ function handleToolbarRefresh() {
             <div
               class="text-[10px] font-bold uppercase tracking-wider text-gray-400"
             >
-              {{ "内存" }}
+              内存
             </div>
             <HelpTooltip
               v-if="!props.fullscreen"
@@ -1987,7 +1987,7 @@ function handleToolbarRefresh() {
             <div
               class="text-[10px] font-bold uppercase tracking-wider text-gray-400"
             >
-              {{ "数据库" }}
+              数据库
             </div>
             <HelpTooltip
               v-if="!props.fullscreen"
@@ -2001,12 +2001,12 @@ function handleToolbarRefresh() {
             v-if="!props.fullscreen"
             class="mt-1 text-[10px] text-gray-500 dark:text-gray-400"
           >
-            {{ "连接" }} {{ dbConnOpenValue ?? "-" }} /
-            {{ dbMaxOpenConnsValue ?? "-" }} · {{ "活跃" }}
-            {{ dbConnActiveValue ?? "-" }} · {{ "空闲" }}
+            连接 {{ dbConnOpenValue ?? "-" }} /
+            {{ dbMaxOpenConnsValue ?? "-" }} · 活跃
+            {{ dbConnActiveValue ?? "-" }} · 空闲
             {{ dbConnIdleValue ?? "-" }}
             <span v-if="dbConnWaitingValue != null">
-              · {{ "等待" }} {{ dbConnWaitingValue }}
+              · 等待 {{ dbConnWaitingValue }}
             </span>
           </div>
         </div>
@@ -2031,13 +2031,13 @@ function handleToolbarRefresh() {
             v-if="!props.fullscreen"
             class="mt-1 text-[10px] text-gray-500 dark:text-gray-400"
           >
-            {{ "连接" }} {{ redisConnTotalValue ?? "-" }} /
+            连接 {{ redisConnTotalValue ?? "-" }} /
             {{ redisPoolSizeValue ?? "-" }}
             <span v-if="redisConnActiveValue != null">
-              · {{ "活跃" }} {{ redisConnActiveValue }}
+              · 活跃 {{ redisConnActiveValue }}
             </span>
             <span v-if="redisConnIdleValue != null">
-              · {{ "空闲" }} {{ redisConnIdleValue }}
+              · 空闲 {{ redisConnIdleValue }}
             </span>
           </div>
         </div>
@@ -2048,7 +2048,7 @@ function handleToolbarRefresh() {
             <div
               class="text-[10px] font-bold uppercase tracking-wider text-gray-400"
             >
-              {{ "协程" }}
+              协程
             </div>
             <HelpTooltip
               v-if="!props.fullscreen"
@@ -2062,14 +2062,13 @@ function handleToolbarRefresh() {
             v-if="!props.fullscreen"
             class="mt-1 text-[10px] text-gray-500 dark:text-gray-400"
           >
-            {{ "当前" }}
+            当前
             <span class="font-mono">{{ goroutineCountValue ?? "-" }}</span> ·
-            {{ "警告" }}
-            <span class="font-mono">{{ goroutinesWarnThreshold }}</span> ·
-            {{ "严重" }}
+            警告 <span class="font-mono">{{ goroutinesWarnThreshold }}</span> ·
+            严重
             <span class="font-mono">{{ goroutinesCriticalThreshold }}</span>
             <span v-if="systemMetrics?.concurrency_queue_depth != null">
-              · {{ "队列" }}
+              · 队列
               <span class="font-mono">{{
                 systemMetrics.concurrency_queue_depth
               }}</span>
@@ -2084,7 +2083,7 @@ function handleToolbarRefresh() {
               <div
                 class="text-[10px] font-bold uppercase tracking-wider text-gray-400"
               >
-                {{ "后台任务" }}
+                后台任务
               </div>
               <HelpTooltip
                 v-if="!props.fullscreen"
@@ -2097,7 +2096,7 @@ function handleToolbarRefresh() {
               type="button"
               @click="openJobsDetails"
             >
-              {{ "明细" }}
+              明细
             </button>
           </div>
 
@@ -2109,9 +2108,9 @@ function handleToolbarRefresh() {
             v-if="!props.fullscreen"
             class="mt-1 text-[10px] text-gray-500 dark:text-gray-400"
           >
-            {{ "总计" }}
-            <span class="font-mono">{{ jobHeartbeats.length }}</span> ·
-            {{ "警告" }} <span class="font-mono">{{ jobsWarnCount }}</span>
+            总计
+            <span class="font-mono">{{ jobHeartbeats.length }}</span> · 警告
+            <span class="font-mono">{{ jobsWarnCount }}</span>
           </div>
         </div>
       </div>
@@ -2127,7 +2126,7 @@ function handleToolbarRefresh() {
         v-if="!jobHeartbeats.length"
         class="text-sm text-gray-500 dark:text-gray-400"
       >
-        {{ "暂无数据" }}
+        暂无数据
       </div>
       <div v-else class="space-y-3">
         <div
@@ -2155,19 +2154,19 @@ function handleToolbarRefresh() {
             class="mt-2 grid grid-cols-1 gap-2 text-xs text-gray-600 dark:text-gray-300 sm:grid-cols-2"
           >
             <div>
-              {{ "最近成功" }}
+              最近成功
               <span class="font-mono">{{
                 formatTimeShort(hb.last_success_at)
               }}</span>
             </div>
             <div>
-              {{ "最近错误" }}
+              最近错误
               <span class="font-mono">{{
                 formatTimeShort(hb.last_error_at)
               }}</span>
             </div>
             <div>
-              {{ "结果" }}
+              结果
               <span class="font-mono">{{ hb.last_result || "-" }}</span>
             </div>
           </div>
@@ -2194,7 +2193,7 @@ function handleToolbarRefresh() {
           <label
             class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
           >
-            {{ "开始时间" }}
+            开始时间
           </label>
           <input
             v-model="customStartTimeInput"
@@ -2206,7 +2205,7 @@ function handleToolbarRefresh() {
           <label
             class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
           >
-            {{ "结束时间" }}
+            结束时间
           </label>
           <input
             v-model="customEndTimeInput"
@@ -2220,14 +2219,14 @@ function handleToolbarRefresh() {
             class="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
             @click="handleCustomTimeRangeCancel"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             type="button"
             class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
             @click="handleCustomTimeRangeConfirm"
           >
-            {{ "确认" }}
+            确认
           </button>
         </div>
       </div>

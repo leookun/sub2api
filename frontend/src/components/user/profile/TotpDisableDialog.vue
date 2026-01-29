@@ -31,10 +31,10 @@
           <h3
             class="mt-4 text-center text-xl font-semibold text-gray-900 dark:text-white"
           >
-            {{ "禁用双因素认证" }}
+            禁用双因素认证
           </h3>
           <p class="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
-            {{ "禁用后，登录时将不再需要验证码。这可能会降低您的账户安全性。" }}
+            禁用后，登录时将不再需要验证码。这可能会降低您的账户安全性。
           </p>
         </div>
 
@@ -48,7 +48,7 @@
         <form v-else class="space-y-4" @submit.prevent="handleDisable">
           <!-- Email verification -->
           <div v-if="verificationMethod === 'email'">
-            <label class="input-label">{{ "邮箱验证码" }}</label>
+            <label class="input-label">邮箱验证码</label>
             <div class="flex gap-2">
               <input
                 v-model="form.emailCode"
@@ -77,9 +77,7 @@
 
           <!-- Password verification -->
           <div v-else>
-            <label for="password" class="input-label">
-              {{ "当前密码" }}
-            </label>
+            <label for="password" class="input-label"> 当前密码 </label>
             <input
               id="password"
               v-model="form.password"
@@ -105,7 +103,7 @@
               class="btn btn-secondary"
               @click="$emit('close')"
             >
-              {{ "取消" }}
+              取消
             </button>
             <button
               type="submit"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <label class="input-label">
-      {{ "分组" }}
+      分组
       <span class="font-normal text-gray-400">{{
         `（已选 ${modelValue.length} 个）`
       }}</span>
@@ -38,7 +38,7 @@
         v-if="filteredGroups.length === 0"
         class="col-span-2 py-2 text-center text-sm text-gray-500 dark:text-gray-400"
       >
-        {{ "无可用分组" }}
+        无可用分组
       </div>
     </div>
   </div>

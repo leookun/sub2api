@@ -42,7 +42,7 @@
         <!-- Custom date range inputs -->
         <div class="date-picker-custom">
           <div class="date-picker-field">
-            <label class="date-picker-label">{{ "开始日期" }}</label>
+            <label class="date-picker-label">开始日期</label>
             <input
               v-model="localStartDate"
               type="date"
@@ -55,7 +55,7 @@
             <Icon name="arrowRight" size="sm" class="text-gray-400" />
           </div>
           <div class="date-picker-field">
-            <label class="date-picker-label">{{ "结束日期" }}</label>
+            <label class="date-picker-label">结束日期</label>
             <input
               v-model="localEndDate"
               type="date"
@@ -69,9 +69,7 @@
 
         <!-- Apply button -->
         <div class="date-picker-actions">
-          <button class="date-picker-apply" @click="apply">
-            {{ "应用" }}
-          </button>
+          <button class="date-picker-apply" @click="apply">应用</button>
         </div>
       </div>
     </Transition>

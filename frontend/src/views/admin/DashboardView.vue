@@ -22,13 +22,13 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "API 密钥" }}
+                  API 密钥
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ stats.total_api_keys }}
                 </p>
                 <p class="text-xs text-green-600 dark:text-green-400">
-                  {{ stats.active_api_keys }} {{ "启用" }}
+                  {{ stats.active_api_keys }} 启用
                 </p>
               </div>
             </div>
@@ -47,19 +47,19 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "账号" }}
+                  账号
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ stats.total_accounts }}
                 </p>
                 <p class="text-xs">
                   <span class="text-green-600 dark:text-green-400"
-                    >{{ stats.normal_accounts }} {{ "启用" }}</span
+                    >{{ stats.normal_accounts }} 启用</span
                   >
                   <span
                     v-if="stats.error_accounts > 0"
                     class="ml-1 text-red-500"
-                    >{{ stats.error_accounts }} {{ "错误" }}</span
+                    >{{ stats.error_accounts }} 错误</span
                   >
                 </p>
               </div>
@@ -79,13 +79,13 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "今日请求" }}
+                  今日请求
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ stats.today_requests }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ "总计" }}: {{ formatNumber(stats.total_requests) }}
+                  总计: {{ formatNumber(stats.total_requests) }}
                 </p>
               </div>
             </div>
@@ -104,7 +104,7 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "用户" }}
+                  用户
                 </p>
                 <p
                   class="text-xl font-bold text-emerald-600 dark:text-emerald-400"
@@ -112,7 +112,7 @@
                   +{{ stats.today_new_users }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ "总计" }}: {{ formatNumber(stats.total_users) }}
+                  总计: {{ formatNumber(stats.total_users) }}
                 </p>
               </div>
             </div>
@@ -134,7 +134,7 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "今日 Token" }}
+                  今日 Token
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ formatTokens(stats.today_tokens) }}
@@ -169,7 +169,7 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "总 Token" }}
+                  总 Token
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ formatTokens(stats.total_tokens) }}
@@ -204,7 +204,7 @@
               </div>
               <div class="flex-1">
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "性能指标" }}
+                  性能指标
                 </p>
                 <div class="flex items-baseline gap-2">
                   <p class="text-xl font-bold text-gray-900 dark:text-white">
@@ -241,13 +241,13 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "平均响应" }}
+                  平均响应
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ formatDuration(stats.average_duration_ms) }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ stats.active_users }} {{ "活跃用户" }}
+                  {{ stats.active_users }} 活跃用户
                 </p>
               </div>
             </div>
@@ -262,7 +262,7 @@
               <div class="flex items-center gap-2">
                 <span
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ "时间范围" }}:</span
+                  >时间范围:</span
                 >
                 <DateRangePicker
                   v-model:start-date="startDate"
@@ -273,7 +273,7 @@
               <div class="ml-auto flex items-center gap-2">
                 <span
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ "粒度" }}:</span
+                  >粒度:</span
                 >
                 <div class="w-28">
                   <Select
@@ -300,7 +300,7 @@
             <h3
               class="mb-4 text-sm font-semibold text-gray-900 dark:text-white"
             >
-              {{ "最近使用" }} (Top 12)
+              最近使用 (Top 12)
             </h3>
             <div class="h-64">
               <Line
@@ -312,7 +312,7 @@
                 v-else
                 class="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ "暂无数据" }}
+                暂无数据
               </div>
             </div>
           </div>

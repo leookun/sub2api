@@ -102,7 +102,7 @@
             v-if="filteredModels.length === 0"
             class="px-3 py-4 text-center text-sm text-gray-500"
           >
-            {{ "没有匹配的模型" }}
+            没有匹配的模型
           </div>
         </div>
       </div>
@@ -115,14 +115,14 @@
         class="rounded-lg border border-blue-200 px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/30"
         @click="fillRelated"
       >
-        {{ "填入相关模型" }}
+        填入相关模型
       </button>
       <button
         type="button"
         class="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30"
         @click="clearAll"
       >
-        {{ "清除所有模型" }}
+        清除所有模型
       </button>
     </div>
 
@@ -130,7 +130,7 @@
     <div class="mb-3">
       <label
         class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300"
-        >{{ "自定义模型名称" }}</label
+        >自定义模型名称</label
       >
       <div class="flex gap-2">
         <input
@@ -147,7 +147,7 @@
           class="rounded-lg bg-primary-50 px-4 py-2 text-sm font-medium text-primary-600 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50"
           @click="addCustom"
         >
-          {{ "填入" }}
+          填入
         </button>
       </div>
     </div>

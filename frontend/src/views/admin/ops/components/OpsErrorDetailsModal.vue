@@ -253,7 +253,7 @@ watch(
               class="rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
               @click="resetFilters"
             >
-              {{ "重置" }}
+              重置
             </button>
           </div>
         </div>
@@ -264,7 +264,7 @@ watch(
         <div
           class="mb-2 flex-shrink-0 text-xs text-gray-500 dark:text-gray-400"
         >
-          {{ "总计：" }} {{ total }}
+          总计： {{ total }}
         </div>
 
         <OpsErrorLogTable

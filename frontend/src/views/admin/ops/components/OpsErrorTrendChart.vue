@@ -203,7 +203,7 @@ const options = computed(() => {
             d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
           />
         </svg>
-        {{ "错误趋势" }}
+        错误趋势
         <HelpTooltip
           :content="'错误趋势（SLA 口径排除业务限制；上游错误率排除 429/529）。'"
         />
@@ -215,7 +215,7 @@ const options = computed(() => {
           :disabled="!hasRequestErrors"
           @click="emit('openRequestErrors')"
         >
-          {{ "请求错误" }}
+          请求错误
         </button>
         <button
           type="button"
@@ -223,7 +223,7 @@ const options = computed(() => {
           :disabled="!hasUpstreamErrors"
           @click="emit('openUpstreamErrors')"
         >
-          {{ "上游错误" }}
+          上游错误
         </button>
       </div>
     </div>
@@ -239,7 +239,7 @@ const options = computed(() => {
           v-if="state === 'loading'"
           class="animate-pulse text-sm text-gray-400"
         >
-          {{ "加载中..." }}
+          加载中...
         </div>
         <EmptyState
           v-else

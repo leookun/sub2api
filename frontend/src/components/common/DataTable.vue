@@ -43,7 +43,7 @@
               class="mb-4 h-12 w-12 text-gray-400 dark:text-dark-500"
             />
             <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-              {{ "暂无数据" }}
+              暂无数据
             </p>
           </div>
         </slot>
@@ -202,7 +202,7 @@
                   class="mb-4 h-12 w-12 text-gray-400 dark:text-dark-500"
                 />
                 <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                  {{ "暂无数据" }}
+                  暂无数据
                 </p>
               </div>
             </slot>

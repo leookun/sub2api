@@ -413,10 +413,10 @@ function cancelDelete() {
     <div class="mb-4 flex items-start justify-between gap-4">
       <div>
         <h3 class="text-sm font-bold text-gray-900 dark:text-white">
-          {{ "告警规则" }}
+          告警规则
         </h3>
         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-          {{ "创建与管理系统阈值告警（仅邮件通知）" }}
+          创建与管理系统阈值告警（仅邮件通知）
         </p>
       </div>
 
@@ -426,7 +426,7 @@ function cancelDelete() {
           :disabled="loading"
           @click="openCreate"
         >
-          {{ "新建规则" }}
+          新建规则
         </button>
         <button
           class="flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-bold text-gray-700 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
@@ -447,7 +447,7 @@ function cancelDelete() {
               d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
             />
           </svg>
-          {{ "刷新" }}
+          刷新
         </button>
       </div>
     </div>
@@ -456,14 +456,14 @@ function cancelDelete() {
       v-if="loading"
       class="py-10 text-center text-sm text-gray-500 dark:text-gray-400"
     >
-      {{ "加载中..." }}
+      加载中...
     </div>
 
     <div
       v-else-if="sortedRules.length === 0"
       class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-sm text-gray-500 dark:border-dark-700 dark:text-gray-400"
     >
-      {{ "暂无告警规则" }}
+      暂无告警规则
     </div>
 
     <div
@@ -477,27 +477,27 @@ function cancelDelete() {
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "名称" }}
+                名称
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "指标" }}
+                指标
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "级别" }}
+                级别
               </th>
               <th
                 class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "启用" }}
+                启用
               </th>
               <th
                 class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
               >
-                {{ "操作" }}
+                操作
               </th>
             </tr>
           </thead>
@@ -545,13 +545,13 @@ function cancelDelete() {
               </td>
               <td class="whitespace-nowrap px-4 py-3 text-right text-xs">
                 <button class="btn btn-sm btn-secondary" @click="openEdit(row)">
-                  {{ "编辑" }}
+                  编辑
                 </button>
                 <button
                   class="ml-2 btn btn-sm btn-danger"
                   @click="requestDelete(row)"
                 >
-                  {{ "删除" }}
+                  删除
                 </button>
               </td>
             </tr>
@@ -571,7 +571,7 @@ function cancelDelete() {
           v-if="!editorValidation.valid"
           class="rounded-xl bg-red-50 p-4 text-xs text-red-700 dark:bg-red-900/30 dark:text-red-300"
         >
-          <div class="font-bold">{{ "请先修正以下问题" }}</div>
+          <div class="font-bold">请先修正以下问题</div>
           <ul class="mt-1 list-disc pl-5">
             <li v-for="e in editorValidation.errors" :key="e">{{ e }}</li>
           </ul>
@@ -579,17 +579,17 @@ function cancelDelete() {
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div class="md:col-span-2">
-            <label class="input-label">{{ "名称" }}</label>
+            <label class="input-label">名称</label>
             <input v-model="draft!.name" class="input" type="text" />
           </div>
 
           <div class="md:col-span-2">
-            <label class="input-label">{{ "描述" }}</label>
+            <label class="input-label">描述</label>
             <input v-model="draft!.description" class="input" type="text" />
           </div>
 
           <div>
-            <label class="input-label">{{ "指标" }}</label>
+            <label class="input-label">指标</label>
             <Select v-model="draft!.metric_type" :options="metricOptions" />
             <div
               v-if="selectedMetricDefinition"
@@ -605,13 +605,13 @@ function cancelDelete() {
           </div>
 
           <div>
-            <label class="input-label">{{ "运算符" }}</label>
+            <label class="input-label">运算符</label>
             <Select v-model="draft!.operator" :options="operatorOptions" />
           </div>
 
           <div class="md:col-span-2">
             <label class="input-label">
-              {{ "分组（group_id）" }}
+              分组（group_id）
               <span v-if="isGroupMetricSelected" class="ml-1 text-red-500"
                 >*</span
               >
@@ -633,7 +633,7 @@ function cancelDelete() {
           </div>
 
           <div>
-            <label class="input-label">{{ "阈值" }}</label>
+            <label class="input-label">阈值</label>
             <input
               v-model.number="draft!.threshold"
               class="input"
@@ -642,17 +642,17 @@ function cancelDelete() {
           </div>
 
           <div>
-            <label class="input-label">{{ "级别" }}</label>
+            <label class="input-label">级别</label>
             <Select v-model="draft!.severity" :options="severityOptions" />
           </div>
 
           <div>
-            <label class="input-label">{{ "统计窗口（分钟）" }}</label>
+            <label class="input-label">统计窗口（分钟）</label>
             <Select v-model="draft!.window_minutes" :options="windowOptions" />
           </div>
 
           <div>
-            <label class="input-label">{{ "连续样本数（每分钟）" }}</label>
+            <label class="input-label">连续样本数（每分钟）</label>
             <input
               v-model.number="draft!.sustained_minutes"
               class="input"
@@ -663,7 +663,7 @@ function cancelDelete() {
           </div>
 
           <div>
-            <label class="input-label">{{ "冷却期（分钟）" }}</label>
+            <label class="input-label">冷却期（分钟）</label>
             <input
               v-model.number="draft!.cooldown_minutes"
               class="input"
@@ -708,7 +708,7 @@ function cancelDelete() {
             :disabled="saving"
             @click="showEditor = false"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button class="btn btn-primary" :disabled="saving" @click="save">
             {{ saving ? "保存中..." : "保存" }}

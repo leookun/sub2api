@@ -18,16 +18,16 @@
       <div
         class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200"
       >
-        {{ "清理不可恢复，且会影响历史统计回看。" }}
+        清理不可恢复，且会影响历史统计回看。
       </div>
 
       <div class="rounded-xl border border-gray-200 p-4 dark:border-dark-700">
         <div class="flex items-center justify-between">
           <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-200">
-            {{ "最近清理任务" }}
+            最近清理任务
           </h4>
           <button type="button" class="btn btn-ghost btn-sm" @click="loadTasks">
-            {{ "刷新" }}
+            刷新
           </button>
         </div>
 
@@ -36,13 +36,13 @@
             v-if="tasksLoading"
             class="text-sm text-gray-500 dark:text-gray-400"
           >
-            {{ "正在加载任务..." }}
+            正在加载任务...
           </div>
           <div
             v-else-if="tasks.length === 0"
             class="text-sm text-gray-500 dark:text-gray-400"
           >
-            {{ "暂无清理任务" }}
+            暂无清理任务
           </div>
           <div v-else class="space-y-2">
             <div
@@ -65,7 +65,7 @@
                     class="btn btn-ghost btn-xs text-rose-600 hover:text-rose-700 dark:text-rose-300"
                     @click="openCancelConfirm(task)"
                   >
-                    {{ "取消任务" }}
+                    取消任务
                   </button>
                 </div>
                 <div class="text-xs text-gray-400">
@@ -75,11 +75,8 @@
               <div
                 class="flex flex-wrap items-center gap-4 text-xs text-gray-500 dark:text-gray-400"
               >
-                <span>{{ "时间范围" }}: {{ formatRange(task) }}</span>
-                <span
-                  >{{ "删除数量" }}:
-                  {{ task.deleted_rows.toLocaleString() }}</span
-                >
+                <span>时间范围: {{ formatRange(task) }}</span>
+                <span>删除数量: {{ task.deleted_rows.toLocaleString() }}</span>
               </div>
               <div v-if="task.error_message" class="text-xs text-rose-500">
                 {{ task.error_message }}
@@ -106,7 +103,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ "取消" }}
+          取消
         </button>
         <button
           type="button"

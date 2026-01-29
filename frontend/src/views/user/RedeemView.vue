@@ -11,12 +11,12 @@
           >
             <Icon name="creditCard" size="xl" class="text-white" />
           </div>
-          <p class="text-sm font-medium text-primary-100">{{ "当前余额" }}</p>
+          <p class="text-sm font-medium text-primary-100">当前余额</p>
           <p class="mt-2 text-4xl font-bold text-white">
             ${{ user?.balance?.toFixed(2) || "0.00" }}
           </p>
           <p class="mt-2 text-sm text-primary-100">
-            {{ "并发数" }}: {{ user?.concurrency || 0 }} {{ "请求" }}
+            并发数: {{ user?.concurrency || 0 }} 请求
           </p>
         </div>
       </div>
@@ -26,9 +26,7 @@
         <div class="p-6">
           <form class="space-y-5" @submit.prevent="handleRedeem">
             <div>
-              <label for="code" class="input-label">
-                {{ "兑换码" }}
-              </label>
+              <label for="code" class="input-label"> 兑换码 </label>
               <div class="relative mt-1">
                 <div
                   class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4"
@@ -49,9 +47,7 @@
                   class="input py-3 pl-12 text-lg"
                 />
               </div>
-              <p class="input-hint">
-                {{ "兑换码区分大小写" }}
-              </p>
+              <p class="input-hint">兑换码区分大小写</p>
             </div>
 
             <button
@@ -107,7 +103,7 @@
                 <h3
                   class="text-sm font-semibold text-emerald-800 dark:text-emerald-300"
                 >
-                  {{ "兑换成功！" }}
+                  兑换成功！
                 </h3>
                 <div
                   class="mt-2 text-sm text-emerald-700 dark:text-emerald-400"
@@ -118,20 +114,20 @@
                       v-if="redeemResult.type === 'balance'"
                       class="font-medium"
                     >
-                      {{ "已添加" }}: ${{ redeemResult.value.toFixed(2) }}
+                      已添加: ${{ redeemResult.value.toFixed(2) }}
                     </p>
                     <p
                       v-else-if="redeemResult.type === 'concurrency'"
                       class="font-medium"
                     >
-                      {{ "已添加" }}: {{ redeemResult.value }}
-                      {{ "并发请求" }}
+                      已添加: {{ redeemResult.value }}
+                      并发请求
                     </p>
                     <p
                       v-else-if="redeemResult.type === 'subscription'"
                       class="font-medium"
                     >
-                      {{ "订阅已分配" }}
+                      订阅已分配
                       <span v-if="redeemResult.group_name">
                         - {{ redeemResult.group_name }}</span
                       >
@@ -140,15 +136,15 @@
                       >
                     </p>
                     <p v-if="redeemResult.new_balance !== undefined">
-                      {{ "新余额" }}:
+                      新余额:
                       <span class="font-semibold"
                         >${{ redeemResult.new_balance.toFixed(2) }}</span
                       >
                     </p>
                     <p v-if="redeemResult.new_concurrency !== undefined">
-                      {{ "新并发数" }}:
+                      新并发数:
                       <span class="font-semibold"
-                        >{{ redeemResult.new_concurrency }} {{ "请求" }}</span
+                        >{{ redeemResult.new_concurrency }} 请求</span
                       >
                     </p>
                   </div>
@@ -180,7 +176,7 @@
                 <h3
                   class="text-sm font-semibold text-red-800 dark:text-red-300"
                 >
-                  {{ "兑换失败" }}
+                  兑换失败
                 </h3>
                 <p class="mt-2 text-sm text-red-700 dark:text-red-400">
                   {{ errorMessage }}
@@ -210,15 +206,15 @@
               <h3
                 class="text-sm font-semibold text-primary-800 dark:text-primary-300"
               >
-                {{ "关于兑换码" }}
+                关于兑换码
               </h3>
               <ul
                 class="mt-2 list-inside list-disc space-y-1 text-sm text-primary-700 dark:text-primary-400"
               >
-                <li>{{ "每个兑换码只能使用一次" }}</li>
-                <li>{{ "兑换码可以增加余额、并发数或试用权限" }}</li>
+                <li>每个兑换码只能使用一次</li>
+                <li>兑换码可以增加余额、并发数或试用权限</li>
                 <li>
-                  {{ "如有兑换问题，请联系客服" }}
+                  如有兑换问题，请联系客服
                   <span
                     v-if="contactInfo"
                     class="ml-1.5 inline-flex items-center rounded-md bg-primary-200/50 px-2 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-800/40 dark:text-primary-200"
@@ -226,7 +222,7 @@
                     {{ contactInfo }}
                   </span>
                 </li>
-                <li>{{ "余额和并发数即时更新" }}</li>
+                <li>余额和并发数即时更新</li>
               </ul>
             </div>
           </div>
@@ -237,7 +233,7 @@
       <div class="card">
         <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-            {{ "最近活动" }}
+            最近活动
           </h2>
         </div>
         <div class="p-6">
@@ -352,7 +348,7 @@
                   {{ item.code.slice(0, 8) }}...
                 </p>
                 <p v-else class="text-xs text-gray-400 dark:text-dark-500">
-                  {{ "管理员调整" }}
+                  管理员调整
                 </p>
               </div>
             </div>
@@ -370,7 +366,7 @@
               />
             </div>
             <p class="text-sm text-gray-500 dark:text-dark-400">
-              {{ "您的兑换历史将显示在这里" }}
+              您的兑换历史将显示在这里
             </p>
           </div>
         </div>

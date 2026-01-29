@@ -63,7 +63,7 @@
         <!-- Personal Section for Admin (hidden in simple mode) -->
         <div v-if="!authStore.isSimpleMode" class="sidebar-section">
           <div v-if="!sidebarCollapsed" class="sidebar-section-title">
-            {{ "我的账户" }}
+            我的账户
           </div>
           <div v-else class="mx-3 my-3 h-px bg-gray-200 dark:bg-dark-700"></div>
 
@@ -138,7 +138,7 @@
         />
         <ChevronDoubleRightIcon v-else class="h-5 w-5 flex-shrink-0" />
         <transition name="fade">
-          <span v-if="!sidebarCollapsed">{{ "收起" }}</span>
+          <span v-if="!sidebarCollapsed">收起</span>
         </transition>
       </button>
     </div>

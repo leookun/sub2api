@@ -7,7 +7,7 @@
   >
     <form id="create-user-form" class="space-y-5" @submit.prevent="submit">
       <div>
-        <label class="input-label">{{ "邮箱" }}</label>
+        <label class="input-label">邮箱</label>
         <input
           v-model="form.email"
           type="email"
@@ -17,7 +17,7 @@
         />
       </div>
       <div>
-        <label class="input-label">{{ "密码" }}</label>
+        <label class="input-label">密码</label>
         <div class="flex gap-2">
           <div class="relative flex-1">
             <input
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div>
-        <label class="input-label">{{ "用户名" }}</label>
+        <label class="input-label">用户名</label>
         <input
           v-model="form.username"
           type="text"
@@ -48,7 +48,7 @@
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label class="input-label">{{ "余额" }}</label>
+          <label class="input-label">余额</label>
           <input
             v-model.number="form.balance"
             type="number"
@@ -57,7 +57,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "并发数" }}</label>
+          <label class="input-label">并发数</label>
           <input
             v-model.number="form.concurrency"
             type="number"
@@ -69,7 +69,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="$emit('close')">
-          {{ "取消" }}
+          取消
         </button>
         <button
           type="submit"

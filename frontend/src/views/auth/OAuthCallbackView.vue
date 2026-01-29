@@ -12,7 +12,7 @@
 
         <div class="mt-6 space-y-4">
           <div>
-            <label class="input-label">{{ "授权码" }}</label>
+            <label class="input-label">授权码</label>
             <div class="flex gap-2">
               <input
                 class="input flex-1 font-mono text-sm"
@@ -31,7 +31,7 @@
           </div>
 
           <div>
-            <label class="input-label">{{ "状态" }}</label>
+            <label class="input-label">状态</label>
             <div class="flex gap-2">
               <input
                 class="input flex-1 font-mono text-sm"
@@ -50,7 +50,7 @@
           </div>
 
           <div>
-            <label class="input-label">{{ "完整URL" }}</label>
+            <label class="input-label">完整URL</label>
             <div class="flex gap-2">
               <input
                 class="input flex-1 font-mono text-xs"

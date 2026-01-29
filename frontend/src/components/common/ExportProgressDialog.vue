@@ -7,7 +7,7 @@
   >
     <div class="space-y-4">
       <div class="text-sm text-gray-600 dark:text-gray-400">
-        {{ "正在导出数据..." }}
+        正在导出数据...
       </div>
       <div
         class="flex items-center justify-between text-sm text-gray-700 dark:text-gray-300"
@@ -44,7 +44,7 @@
         class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-200 dark:hover:bg-dark-600 dark:focus:ring-offset-dark-800"
         @click="handleCancel"
       >
-        {{ "取消导出" }}
+        取消导出
       </button>
     </template>
   </BaseDialog>

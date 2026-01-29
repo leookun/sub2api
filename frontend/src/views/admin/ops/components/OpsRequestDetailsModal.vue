@@ -176,7 +176,7 @@ const kindBadgeClass = (kind: string) => {
             class="btn btn-secondary btn-sm"
             @click="fetchData"
           >
-            {{ "刷新" }}
+            刷新
           </button>
         </div>
 
@@ -205,9 +205,8 @@ const kindBadgeClass = (kind: string) => {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            <span
-              class="text-sm font-medium text-gray-500 dark:text-gray-400"
-              >{{ "加载中..." }}</span
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400"
+              >加载中...</span
             >
           </div>
         </div>
@@ -219,10 +218,10 @@ const kindBadgeClass = (kind: string) => {
             class="rounded-xl border border-dashed border-gray-200 p-10 text-center dark:border-dark-700"
           >
             <div class="text-sm font-medium text-gray-600 dark:text-gray-300">
-              {{ "该窗口内暂无请求。" }}
+              该窗口内暂无请求。
             </div>
             <div class="mt-1 text-xs text-gray-400">
-              {{ "可尝试调整时间范围或取消部分筛选。" }}
+              可尝试调整时间范围或取消部分筛选。
             </div>
           </div>
 
@@ -239,42 +238,42 @@ const kindBadgeClass = (kind: string) => {
                     <th
                       class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                      {{ "时间" }}
+                      时间
                     </th>
                     <th
                       class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                      {{ "类型" }}
+                      类型
                     </th>
                     <th
                       class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                      {{ "平台" }}
+                      平台
                     </th>
                     <th
                       class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                      {{ "模型" }}
+                      模型
                     </th>
                     <th
                       class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                      {{ "耗时" }}
+                      耗时
                     </th>
                     <th
                       class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                      {{ "状态码" }}
+                      状态码
                     </th>
                     <th
                       class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                      {{ "请求ID" }}
+                      请求ID
                     </th>
                     <th
                       class="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                      {{ "操作" }}
+                      操作
                     </th>
                   </tr>
                 </thead>
@@ -339,7 +338,7 @@ const kindBadgeClass = (kind: string) => {
                           class="rounded-md bg-gray-100 px-2 py-1 text-[10px] font-bold text-gray-600 hover:bg-gray-200 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
                           @click="handleCopyRequestId(row.request_id)"
                         >
-                          {{ "复制" }}
+                          复制
                         </button>
                       </div>
                       <span v-else class="text-xs text-gray-400">-</span>
@@ -350,7 +349,7 @@ const kindBadgeClass = (kind: string) => {
                         class="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 dark:hover:bg-red-900/30"
                         @click="openErrorDetail(row.error_id)"
                       >
-                        {{ "查看错误" }}
+                        查看错误
                       </button>
                       <span v-else class="text-xs text-gray-400">-</span>
                     </td>

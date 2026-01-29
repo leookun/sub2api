@@ -291,10 +291,10 @@ onMounted(() => {
     <div class="mb-4 flex items-start justify-between gap-4">
       <div>
         <h3 class="text-sm font-bold text-gray-900 dark:text-white">
-          {{ "运维监控运行设置" }}
+          运维监控运行设置
         </h3>
         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-          {{ "配置存储在数据库中，无需修改 config 文件即可生效。" }}
+          配置存储在数据库中，无需修改 config 文件即可生效。
         </p>
       </div>
       <button
@@ -316,28 +316,28 @@ onMounted(() => {
             d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
           />
         </svg>
-        {{ "刷新" }}
+        刷新
       </button>
     </div>
 
     <div v-if="!alertSettings" class="text-sm text-gray-500 dark:text-gray-400">
-      <span v-if="loading">{{ "加载中..." }}</span>
-      <span v-else>{{ "暂无运行设置" }}</span>
+      <span v-if="loading">加载中...</span>
+      <span v-else>暂无运行设置</span>
     </div>
 
     <div v-else class="space-y-6">
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <div class="mb-3 flex items-center justify-between">
           <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
-            {{ "告警评估器" }}
+            告警评估器
           </h4>
           <button class="btn btn-sm btn-secondary" @click="openAlertEditor">
-            {{ "编辑" }}
+            编辑
           </button>
         </div>
         <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
           <div class="text-xs text-gray-600 dark:text-gray-300">
-            {{ "评估间隔（秒）" }}:
+            评估间隔（秒）:
             <span class="ml-1 font-medium text-gray-900 dark:text-white"
               >{{ alertSettings.evaluation_interval_seconds }}s</span
             >
@@ -349,7 +349,7 @@ onMounted(() => {
             "
             class="text-xs text-gray-600 dark:text-gray-300 md:col-span-2"
           >
-            {{ "静默截止时间（RFC3339）" }}:
+            静默截止时间（RFC3339）:
             <span class="ml-1 font-mono text-gray-900 dark:text-white">{{
               alertSettings.silencing.global_until_rfc3339
             }}</span>
@@ -359,25 +359,25 @@ onMounted(() => {
             <summary
               class="cursor-pointer text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
             >
-              {{ "显示高级开发者设置 (Distributed Lock)" }}
+              显示高级开发者设置 (Distributed Lock)
             </summary>
             <div
               class="mt-2 grid grid-cols-1 gap-3 rounded-lg bg-gray-100 p-3 dark:bg-dark-800 md:grid-cols-2"
             >
               <div class="text-xs text-gray-500 dark:text-gray-400">
-                {{ "启用分布式锁" }}:
+                启用分布式锁:
                 <span class="ml-1 font-mono text-gray-700 dark:text-gray-300">{{
                   alertSettings.distributed_lock.enabled
                 }}</span>
               </div>
               <div class="text-xs text-gray-500 dark:text-gray-400">
-                {{ "分布式锁 Key" }}:
+                分布式锁 Key:
                 <span class="ml-1 font-mono text-gray-700 dark:text-gray-300">{{
                   alertSettings.distributed_lock.key
                 }}</span>
               </div>
               <div class="text-xs text-gray-500 dark:text-gray-400">
-                {{ "分布式锁 TTL（秒）" }}:
+                分布式锁 TTL（秒）:
                 <span class="ml-1 font-mono text-gray-700 dark:text-gray-300"
                   >{{ alertSettings.distributed_lock.ttl_seconds }}s</span
                 >
@@ -400,7 +400,7 @@ onMounted(() => {
         v-if="!alertValidation.valid"
         class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 dark:border-amber-900/50 dark:bg-amber-900/20 dark:text-amber-200"
       >
-        <div class="font-bold">{{ "请先修正以下问题" }}</div>
+        <div class="font-bold">请先修正以下问题</div>
         <ul class="mt-1 list-disc space-y-1 pl-4">
           <li v-for="msg in alertValidation.errors" :key="msg">{{ msg }}</li>
         </ul>
@@ -408,7 +408,7 @@ onMounted(() => {
 
       <div>
         <div class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300">
-          {{ "评估间隔（秒）" }}
+          评估间隔（秒）
         </div>
         <input
           v-model.number="draftAlert.evaluation_interval_seconds"
@@ -419,16 +419,16 @@ onMounted(() => {
           :aria-invalid="!alertValidation.valid"
         />
         <p class="mt-1 text-xs text-gray-500">
-          {{ "检测任务的执行频率，建议保持默认。" }}
+          检测任务的执行频率，建议保持默认。
         </p>
       </div>
 
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <div class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "admin.ops.runtime.metricThresholds" }}
+          admin.ops.runtime.metricThresholds
         </div>
         <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">
-          {{ "admin.ops.runtime.metricThresholdsHint" }}
+          admin.ops.runtime.metricThresholdsHint
         </p>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -436,7 +436,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "admin.ops.runtime.slaMinPercent" }}
+              admin.ops.runtime.slaMinPercent
             </div>
             <input
               v-model.number="draftAlert.thresholds.sla_percent_min"
@@ -448,7 +448,7 @@ onMounted(() => {
               placeholder="99.5"
             />
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "admin.ops.runtime.slaMinPercentHint" }}
+              admin.ops.runtime.slaMinPercentHint
             </p>
           </div>
 
@@ -456,7 +456,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "admin.ops.runtime.ttftP99MaxMs" }}
+              admin.ops.runtime.ttftP99MaxMs
             </div>
             <input
               v-model.number="draftAlert.thresholds.ttft_p99_ms_max"
@@ -467,7 +467,7 @@ onMounted(() => {
               placeholder="500"
             />
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "admin.ops.runtime.ttftP99MaxMsHint" }}
+              admin.ops.runtime.ttftP99MaxMsHint
             </p>
           </div>
 
@@ -475,7 +475,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "admin.ops.runtime.requestErrorRateMaxPercent" }}
+              admin.ops.runtime.requestErrorRateMaxPercent
             </div>
             <input
               v-model.number="
@@ -489,7 +489,7 @@ onMounted(() => {
               placeholder="5"
             />
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "admin.ops.runtime.requestErrorRateMaxPercentHint" }}
+              admin.ops.runtime.requestErrorRateMaxPercentHint
             </p>
           </div>
 
@@ -497,7 +497,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "admin.ops.runtime.upstreamErrorRateMaxPercent" }}
+              admin.ops.runtime.upstreamErrorRateMaxPercent
             </div>
             <input
               v-model.number="
@@ -511,7 +511,7 @@ onMounted(() => {
               placeholder="5"
             />
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "admin.ops.runtime.upstreamErrorRateMaxPercentHint" }}
+              admin.ops.runtime.upstreamErrorRateMaxPercentHint
             </p>
           </div>
         </div>
@@ -519,7 +519,7 @@ onMounted(() => {
 
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <div class="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "告警静默（维护模式）" }}
+          告警静默（维护模式）
         </div>
 
         <label
@@ -530,7 +530,7 @@ onMounted(() => {
             type="checkbox"
             class="h-4 w-4 rounded border-gray-300"
           />
-          <span>{{ "启用静默" }}</span>
+          <span>启用静默</span>
         </label>
 
         <div v-if="draftAlert.silencing.enabled" class="mt-4 space-y-4">
@@ -538,7 +538,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "静默截止时间（RFC3339）" }}
+              静默截止时间（RFC3339）
             </div>
             <input
               v-model="draftAlert.silencing.global_until_rfc3339"
@@ -547,7 +547,7 @@ onMounted(() => {
               placeholder="2026-01-05T00:00:00Z"
             />
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "建议填写截止时间，避免忘记关闭静默。" }}
+              建议填写截止时间，避免忘记关闭静默。
             </p>
           </div>
 
@@ -555,7 +555,7 @@ onMounted(() => {
             <div
               class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
             >
-              {{ "原因" }}
+              原因
             </div>
             <input
               v-model="draftAlert.silencing.global_reason"
@@ -571,10 +571,10 @@ onMounted(() => {
             <div class="flex items-start justify-between gap-4">
               <div>
                 <div class="text-xs font-bold text-gray-900 dark:text-white">
-                  {{ "高级：定向静默" }}
+                  高级：定向静默
                 </div>
                 <p class="text-[11px] text-gray-500 dark:text-gray-400">
-                  {{ "可选：仅静默特定规则或特定级别。字段留空表示匹配全部。" }}
+                  可选：仅静默特定规则或特定级别。字段留空表示匹配全部。
                 </p>
               </div>
               <button
@@ -582,7 +582,7 @@ onMounted(() => {
                 type="button"
                 @click="addSilenceEntry"
               >
-                {{ "新增条目" }}
+                新增条目
               </button>
             </div>
 
@@ -590,7 +590,7 @@ onMounted(() => {
               v-if="!draftAlert.silencing.entries?.length"
               class="mt-3 rounded-lg bg-gray-50 p-3 text-xs text-gray-500 dark:bg-dark-900 dark:text-gray-400"
             >
-              {{ "暂无定向静默条目" }}
+              暂无定向静默条目
             </div>
 
             <div v-else class="mt-4 space-y-4">
@@ -608,7 +608,7 @@ onMounted(() => {
                     type="button"
                     @click="removeSilenceEntry(idx)"
                   >
-                    {{ "删除" }}
+                    删除
                   </button>
                 </div>
 
@@ -617,7 +617,7 @@ onMounted(() => {
                     <div
                       class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                     >
-                      {{ "规则ID（可选）" }}
+                      规则ID（可选）
                     </div>
                     <input
                       :value="
@@ -641,7 +641,7 @@ onMounted(() => {
                     <div
                       class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                     >
-                      {{ "级别（可选）" }}
+                      级别（可选）
                     </div>
                     <input
                       :value="
@@ -665,7 +665,7 @@ onMounted(() => {
                     <div
                       class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                     >
-                      {{ "截止时间（RFC3339）" }}
+                      截止时间（RFC3339）
                     </div>
                     <input
                       v-model="(entry as any).until_rfc3339"
@@ -679,7 +679,7 @@ onMounted(() => {
                     <div
                       class="mb-1 text-xs font-medium text-gray-600 dark:text-gray-300"
                     >
-                      {{ "原因" }}
+                      原因
                     </div>
                     <input
                       v-model="(entry as any).reason"
@@ -701,7 +701,7 @@ onMounted(() => {
         <summary
           class="cursor-pointer text-xs font-medium text-gray-600 dark:text-gray-400"
         >
-          {{ "高级设置 (分布式锁)" }}
+          高级设置 (分布式锁)
         </summary>
         <div class="mt-3 grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
@@ -713,12 +713,12 @@ onMounted(() => {
                 type="checkbox"
                 class="h-4 w-4 rounded border-gray-300"
               />
-              <span>{{ "启用分布式锁" }}</span>
+              <span>启用分布式锁</span>
             </label>
           </div>
           <div class="md:col-span-2">
             <div class="mb-1 text-xs font-medium text-gray-500">
-              {{ "分布式锁 Key" }}
+              分布式锁 Key
             </div>
             <input
               v-model="draftAlert.distributed_lock.key"
@@ -734,7 +734,7 @@ onMounted(() => {
           </div>
           <div>
             <div class="mb-1 text-xs font-medium text-gray-500">
-              {{ "分布式锁 TTL（秒）" }}
+              分布式锁 TTL（秒）
             </div>
             <input
               v-model.number="draftAlert.distributed_lock.ttl_seconds"
@@ -751,7 +751,7 @@ onMounted(() => {
     <template #footer>
       <div class="flex justify-end gap-2">
         <button class="btn btn-secondary" @click="showAlertEditor = false">
-          {{ "取消" }}
+          取消
         </button>
         <button
           class="btn btn-primary"

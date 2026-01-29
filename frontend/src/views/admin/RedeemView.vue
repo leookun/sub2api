@@ -16,7 +16,7 @@
             />
           </button>
           <button class="btn btn-primary" @click="showGenerateDialog = true">
-            {{ "生成兑换码" }}
+            生成兑换码
           </button>
         </div>
       </template>
@@ -48,7 +48,7 @@
               @change="loadCodes"
             />
             <button class="btn btn-secondary" @click="handleExportCodes">
-              {{ "导出 CSV" }}
+              导出 CSV
             </button>
           </div>
         </div>
@@ -123,7 +123,7 @@
                 >${{ value.toFixed(2) }}</template
               >
               <template v-else-if="row.type === 'subscription'">
-                {{ row.validity_days || 30 }} {{ "天" }}
+                {{ row.validity_days || 30 }} 天
                 <span
                   v-if="row.group"
                   class="ml-1 text-xs text-gray-500 dark:text-gray-400"
@@ -187,7 +187,7 @@
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                   />
                 </svg>
-                <span class="text-xs">{{ "删除" }}</span>
+                <span class="text-xs">删除</span>
               </button>
               <span v-else class="text-gray-400 dark:text-dark-500">-</span>
             </div>
@@ -208,7 +208,7 @@
         <!-- Batch Actions -->
         <div v-if="filters.status === 'unused'" class="flex justify-end">
           <button class="btn btn-danger" @click="showDeleteUnusedDialog = true">
-            {{ "删除全部未使用" }}
+            删除全部未使用
           </button>
         </div>
       </template>
@@ -252,11 +252,11 @@
           class="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-dark-800"
         >
           <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-            {{ "生成兑换码" }}
+            生成兑换码
           </h2>
           <form class="space-y-4" @submit.prevent="handleGenerateCodes">
             <div>
-              <label class="input-label">{{ "类型" }}</label>
+              <label class="input-label">类型</label>
               <Select v-model="generateForm.type" :options="typeOptions" />
             </div>
             <!-- 余额/并发类型：显示数值输入 -->
@@ -276,7 +276,7 @@
             <!-- 订阅类型：显示分组选择和有效天数 -->
             <template v-if="generateForm.type === 'subscription'">
               <div>
-                <label class="input-label">{{ "选择分组" }}</label>
+                <label class="input-label">选择分组</label>
                 <Select
                   v-model="generateForm.group_id"
                   :options="subscriptionGroupOptions"
@@ -313,7 +313,7 @@
                 </Select>
               </div>
               <div>
-                <label class="input-label">{{ "有效天数" }}</label>
+                <label class="input-label">有效天数</label>
                 <input
                   v-model.number="generateForm.validity_days"
                   type="number"
@@ -325,7 +325,7 @@
               </div>
             </template>
             <div>
-              <label class="input-label">{{ "数量" }}</label>
+              <label class="input-label">数量</label>
               <input
                 v-model.number="generateForm.count"
                 type="number"
@@ -341,7 +341,7 @@
                 class="btn btn-secondary"
                 @click="showGenerateDialog = false"
               >
-                {{ "取消" }}
+                取消
               </button>
               <button
                 type="submit"
@@ -392,7 +392,7 @@
                 <h2
                   class="text-base font-semibold text-gray-900 dark:text-white"
                 >
-                  {{ "生成成功" }}
+                  生成成功
                 </h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
                   {{ `已创建 ${generatedCodes.length} 个兑换码` }}
@@ -450,7 +450,7 @@
               @click="downloadGeneratedCodes"
             >
               <Icon name="download" size="sm" :stroke-width="2" />
-              {{ "下载" }}
+              下载
             </button>
           </div>
         </div>

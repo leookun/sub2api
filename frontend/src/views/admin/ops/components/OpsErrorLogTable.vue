@@ -18,47 +18,47 @@
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "时间" }}
+                时间
               </th>
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "类型" }}
+                类型
               </th>
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "平台" }}
+                平台
               </th>
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "模型" }}
+                模型
               </th>
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "分组" }}
+                分组
               </th>
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "用户" }}
+                用户
               </th>
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "状态码" }}
+                状态码
               </th>
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "响应内容" }}
+                响应内容
               </th>
               <th
                 class="border-b border-gray-200 px-4 py-2.5 text-right text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:border-dark-700 dark:text-dark-400"
               >
-                {{ "操作" }}
+                操作
               </th>
             </tr>
           </thead>
@@ -68,7 +68,7 @@
                 colspan="9"
                 class="py-12 text-center text-sm text-gray-400 dark:text-dark-500"
               >
-                {{ "该窗口内暂无错误。" }}
+                该窗口内暂无错误。
               </td>
             </tr>
 
@@ -221,7 +221,7 @@
                     class="text-primary-600 hover:text-primary-700 dark:text-primary-400 text-xs font-bold"
                     @click="emit('openErrorDetail', log.id)"
                   >
-                    {{ "详情" }}
+                    详情
                   </button>
                 </div>
               </td>

@@ -31,13 +31,13 @@
           ></path>
         </g>
       </svg>
-      {{ "使用 Linux.do 登录" }}
+      使用 Linux.do 登录
     </button>
 
     <div class="flex items-center gap-3">
       <div class="h-px flex-1 bg-gray-200 dark:bg-dark-700"></div>
       <span class="text-xs text-gray-500 dark:text-dark-400">
-        {{ "或使用邮箱密码继续" }}
+        或使用邮箱密码继续
       </span>
       <div class="h-px flex-1 bg-gray-200 dark:bg-dark-700"></div>
     </div>

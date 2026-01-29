@@ -2,7 +2,7 @@
   <div class="flex items-center gap-2">
     <!-- Rate Limit Display (429) - Two-line layout -->
     <div v-if="isRateLimited" class="flex flex-col items-center gap-1">
-      <span class="badge text-xs badge-warning">{{ "限流中" }}</span>
+      <span class="badge text-xs badge-warning">限流中</span>
       <span class="text-[11px] text-gray-400 dark:text-gray-500">{{
         rateLimitCountdown
       }}</span>
@@ -10,7 +10,7 @@
 
     <!-- Overload Display (529) - Two-line layout -->
     <div v-else-if="isOverloaded" class="flex flex-col items-center gap-1">
-      <span class="badge text-xs badge-danger">{{ "过载中" }}</span>
+      <span class="badge text-xs badge-danger">过载中</span>
       <span class="text-[11px] text-gray-400 dark:text-gray-500">{{
         overloadCountdown
       }}</span>

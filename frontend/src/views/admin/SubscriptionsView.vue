@@ -43,7 +43,7 @@
                   v-if="filterUserLoading"
                   class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
                 >
-                  {{ "加载中..." }}
+                  加载中...
                 </div>
                 <div
                   v-else-if="
@@ -51,7 +51,7 @@
                   "
                   class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
                 >
-                  {{ "无匹配选项" }}
+                  无匹配选项
                 </div>
                 <button
                   v-for="user in filterUserResults"
@@ -123,7 +123,7 @@
                     d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z"
                   />
                 </svg>
-                <span class="hidden md:inline">{{ "列设置" }}</span>
+                <span class="hidden md:inline">列设置</span>
               </button>
               <!-- Dropdown menu -->
               <div
@@ -138,13 +138,13 @@
                     <div
                       class="px-3 py-1 text-xs font-medium text-gray-500 dark:text-gray-400"
                     >
-                      {{ "用户" }}
+                      用户
                     </div>
                     <button
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                       @click="setUserColumnMode('email')"
                     >
-                      <span>{{ "邮箱" }}</span>
+                      <span>邮箱</span>
                       <Icon
                         v-if="userColumnMode === 'email'"
                         name="check"
@@ -156,7 +156,7 @@
                       class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                       @click="setUserColumnMode('username')"
                     >
-                      <span>{{ "用户名" }}</span>
+                      <span>用户名</span>
                       <Icon
                         v-if="userColumnMode === 'username'"
                         name="check"
@@ -185,7 +185,7 @@
             </div>
             <button class="btn btn-primary" @click="showAssignModal = true">
               <Icon name="plus" size="md" class="mr-2" />
-              {{ "分配订阅" }}
+              分配订阅
             </button>
           </div>
         </div>
@@ -244,7 +244,7 @@
               <!-- Daily Usage -->
               <div v-if="row.group?.daily_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ "每日" }}</span>
+                  <span class="usage-label">每日</span>
                   <div
                     class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
                   >
@@ -293,7 +293,7 @@
               <!-- Weekly Usage -->
               <div v-if="row.group?.weekly_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ "每周" }}</span>
+                  <span class="usage-label">每周</span>
                   <div
                     class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
                   >
@@ -342,7 +342,7 @@
               <!-- Monthly Usage -->
               <div v-if="row.group?.monthly_limit_usd" class="usage-row">
                 <div class="flex items-center gap-2">
-                  <span class="usage-label">{{ "每月" }}</span>
+                  <span class="usage-label">每月</span>
                   <div
                     class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-dark-600"
                   >
@@ -403,7 +403,7 @@
                 <span
                   class="text-xs font-medium text-emerald-700 dark:text-emerald-300"
                 >
-                  {{ "无限制" }}
+                  无限制
                 </span>
               </div>
             </div>
@@ -425,10 +425,10 @@
                 v-if="getDaysRemaining(value) !== null"
                 class="text-xs text-gray-500"
               >
-                {{ getDaysRemaining(value) }} {{ "天剩余" }}
+                {{ getDaysRemaining(value) }} 天剩余
               </div>
             </div>
-            <span v-else class="text-sm text-gray-500">{{ "无过期时间" }}</span>
+            <span v-else class="text-sm text-gray-500">无过期时间</span>
           </template>
 
           <template #cell-status="{ value }">
@@ -460,7 +460,7 @@
                 @click="handleExtend(row)"
               >
                 <Icon name="calendar" size="sm" />
-                <span class="text-xs">{{ "调整" }}</span>
+                <span class="text-xs">调整</span>
               </button>
               <button
                 v-if="row.status === 'active'"
@@ -468,7 +468,7 @@
                 @click="handleRevoke(row)"
               >
                 <Icon name="ban" size="sm" />
-                <span class="text-xs">{{ "撤销" }}</span>
+                <span class="text-xs">撤销</span>
               </button>
             </div>
           </template>
@@ -510,7 +510,7 @@
         @submit.prevent="handleAssignSubscription"
       >
         <div>
-          <label class="input-label">{{ "用户" }}</label>
+          <label class="input-label">用户</label>
           <div class="relative" data-assign-user-search>
             <input
               v-model="userSearchKeyword"
@@ -540,13 +540,13 @@
                 v-if="userSearchLoading"
                 class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ "加载中..." }}
+                加载中...
               </div>
               <div
                 v-else-if="userSearchResults.length === 0 && userSearchKeyword"
                 class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ "无匹配选项" }}
+                无匹配选项
               </div>
               <button
                 v-for="user in userSearchResults"
@@ -566,7 +566,7 @@
           </div>
         </div>
         <div>
-          <label class="input-label">{{ "订阅分组" }}</label>
+          <label class="input-label">订阅分组</label>
           <Select
             v-model="assignForm.group_id"
             :options="subscriptionGroupOptions"
@@ -582,7 +582,7 @@
                 "
                 :rate-multiplier="(option as unknown as GroupOption).rate"
               />
-              <span v-else class="text-gray-400">{{ "选择订阅分组" }}</span>
+              <span v-else class="text-gray-400">选择订阅分组</span>
             </template>
             <template #option="{ option, selected }">
               <GroupOptionItem
@@ -597,17 +597,17 @@
               />
             </template>
           </Select>
-          <p class="input-hint">{{ "仅显示订阅计费类型的分组" }}</p>
+          <p class="input-hint">仅显示订阅计费类型的分组</p>
         </div>
         <div>
-          <label class="input-label">{{ "有效期（天）" }}</label>
+          <label class="input-label">有效期（天）</label>
           <input
             v-model.number="assignForm.validity_days"
             type="number"
             min="1"
             class="input"
           />
-          <p class="input-hint">{{ "订阅的有效天数" }}</p>
+          <p class="input-hint">订阅的有效天数</p>
         </div>
       </form>
       <template #footer>
@@ -617,7 +617,7 @@
             class="btn btn-secondary"
             @click="closeAssignModal"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             type="submit"
@@ -666,13 +666,13 @@
       >
         <div class="rounded-lg bg-gray-50 p-4 dark:bg-dark-700">
           <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ "为以下用户调整订阅" }}
+            为以下用户调整订阅
             <span class="font-medium text-gray-900 dark:text-white">{{
               extendingSubscription.user?.email
             }}</span>
           </p>
           <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ "当前到期时间" }}:
+            当前到期时间:
             <span class="font-medium text-gray-900 dark:text-white">
               {{
                 extendingSubscription.expires_at
@@ -685,14 +685,14 @@
             v-if="extendingSubscription.expires_at"
             class="mt-1 text-sm text-gray-600 dark:text-gray-400"
           >
-            {{ "剩余天数" }}:
+            剩余天数:
             <span class="font-medium text-gray-900 dark:text-white">
               {{ getDaysRemaining(extendingSubscription.expires_at) ?? 0 }}
             </span>
           </p>
         </div>
         <div>
-          <label class="input-label">{{ "调整天数" }}</label>
+          <label class="input-label">调整天数</label>
           <div class="flex items-center gap-2">
             <input
               v-model.number="extendForm.days"
@@ -703,7 +703,7 @@
             />
           </div>
           <p class="input-hint">
-            {{ "输入正数延长订阅，负数缩短订阅（缩短后剩余天数需大于0）" }}
+            输入正数延长订阅，负数缩短订阅（缩短后剩余天数需大于0）
           </p>
         </div>
       </form>
@@ -714,7 +714,7 @@
             class="btn btn-secondary"
             @click="closeExtendModal"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             type="submit"

@@ -97,7 +97,7 @@ const options = computed(() => {
             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        {{ "请求时长分布" }}
+        请求时长分布
         <HelpTooltip :content="'成功请求的请求时长分布（毫秒）。'" />
       </h3>
     </div>
@@ -113,7 +113,7 @@ const options = computed(() => {
           v-if="state === 'loading'"
           class="animate-pulse text-sm text-gray-400"
         >
-          {{ "加载中..." }}
+          加载中...
         </div>
         <EmptyState
           v-else

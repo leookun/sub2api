@@ -48,7 +48,7 @@
         </svg>
       </div>
       <div v-else-if="apiKeys.length === 0" class="py-8 text-center">
-        <p class="text-sm text-gray-500">{{ "此用户暂无 API 密钥" }}</p>
+        <p class="text-sm text-gray-500">此用户暂无 API 密钥</p>
       </div>
       <div v-else class="max-h-96 space-y-3 overflow-y-auto">
         <div
@@ -79,12 +79,10 @@
           </div>
           <div class="mt-3 flex flex-wrap gap-4 text-xs text-gray-500">
             <div class="flex items-center gap-1">
-              <span>{{ "分组" }}: {{ key.group?.name || "无" }}</span>
+              <span>分组: {{ key.group?.name || "无" }}</span>
             </div>
             <div class="flex items-center gap-1">
-              <span
-                >{{ "创建时间" }}: {{ formatDateTime(key.created_at) }}</span
-              >
+              <span>创建时间: {{ formatDateTime(key.created_at) }}</span>
             </div>
           </div>
         </div>

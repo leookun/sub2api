@@ -35,7 +35,7 @@
       >
         <div class="border-b border-gray-100 p-3 dark:border-dark-700">
           <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
-            {{ "我的订阅" }}
+            我的订阅
           </h3>
           <p class="mt-0.5 text-xs text-gray-500 dark:text-dark-400">
             {{ `${activeSubscriptions.length} 个有效订阅` }}
@@ -76,7 +76,7 @@
                 <span
                   class="text-xs font-medium text-emerald-700 dark:text-emerald-300"
                 >
-                  {{ "无限制" }}
+                  无限制
                 </span>
               </div>
 
@@ -206,7 +206,7 @@
             class="block w-full py-1 text-center text-xs text-primary-600 hover:underline dark:text-primary-400"
             @click="closeTooltip"
           >
-            {{ "查看全部订阅" }}
+            查看全部订阅
           </router-link>
         </div>
       </div>

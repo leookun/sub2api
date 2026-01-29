@@ -12,7 +12,7 @@
           class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary-600"
         ></div>
         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-          {{ "加载中…" }}
+          加载中…
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ "请求 ID" }}
+            请求 ID
           </div>
           <div
             class="mt-1 break-all font-mono text-sm font-medium text-gray-900 dark:text-white"
@@ -40,7 +40,7 @@
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ "时间" }}
+            时间
           </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{ formatDateTime(detail.created_at) }}
@@ -69,7 +69,7 @@
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ "平台" }}
+            平台
           </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{ detail.platform || "—" }}
@@ -78,7 +78,7 @@
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ "分组" }}
+            分组
           </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{
@@ -90,7 +90,7 @@
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ "模型" }}
+            模型
           </div>
           <div class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
             {{ detail.model || "—" }}
@@ -99,7 +99,7 @@
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ "状态码" }}
+            状态码
           </div>
           <div class="mt-1">
             <span
@@ -115,7 +115,7 @@
 
         <div class="rounded-xl bg-gray-50 p-4 dark:bg-dark-900">
           <div class="text-xs font-bold uppercase tracking-wider text-gray-400">
-            {{ "消息" }}
+            消息
           </div>
           <div
             class="mt-1 truncate text-sm font-medium text-gray-900 dark:text-white"
@@ -131,7 +131,7 @@
         <h3
           class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white"
         >
-          {{ "响应详情" }}
+          响应详情
         </h3>
         <pre
           class="mt-4 max-h-[520px] overflow-auto rounded-xl border border-gray-200 bg-white p-4 text-xs text-gray-800 dark:border-dark-700 dark:bg-dark-800 dark:text-gray-100"
@@ -147,13 +147,13 @@
           <h3
             class="text-sm font-black uppercase tracking-wider text-gray-900 dark:text-white"
           >
-            {{ "上游错误" }}
+            上游错误
           </h3>
           <div
             v-if="correlatedUpstreamLoading"
             class="text-xs text-gray-500 dark:text-gray-400"
           >
-            {{ "加载中..." }}
+            加载中...
           </div>
         </div>
 
@@ -161,7 +161,7 @@
           v-if="!correlatedUpstreamLoading && !correlatedUpstreamErrors.length"
           class="mt-3 text-sm text-gray-500 dark:text-gray-400"
         >
-          {{ "暂无数据" }}
+          暂无数据
         </div>
 
         <div v-else class="mt-4 space-y-3">
@@ -214,11 +214,11 @@
               class="mt-3 grid grid-cols-1 gap-2 text-xs text-gray-600 dark:text-gray-300 sm:grid-cols-2"
             >
               <div>
-                <span class="text-gray-400">{{ "状态码" }}:</span>
+                <span class="text-gray-400">状态码:</span>
                 <span class="ml-1 font-mono">{{ ev.status_code ?? "—" }}</span>
               </div>
               <div>
-                <span class="text-gray-400">{{ "请求ID" }}:</span>
+                <span class="text-gray-400">请求ID:</span>
                 <span class="ml-1 font-mono">{{
                   ev.request_id || ev.client_request_id || "—"
                 }}</span>

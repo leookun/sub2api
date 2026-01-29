@@ -239,9 +239,7 @@
           <span
             class="pointer-events-none absolute left-0 top-full z-50 mt-1 w-80 whitespace-normal break-words rounded bg-gray-900 px-3 py-2 text-xs leading-relaxed text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-gray-700"
           >
-            <div class="font-semibold mb-1">
-              {{ "Gemini 配额与限流政策（参考）" }}
-            </div>
+            <div class="font-semibold mb-1">Gemini 配额与限流政策（参考）</div>
             <div class="mb-2 text-gray-300">
               {{
                 "注意：Gemini 官方未提供用量查询接口。此处显示的“每日配额”是由系统根据账号等级模拟计算的估算值，仅供调度参考，请以 Google 官方实际报错为准。"
@@ -259,7 +257,7 @@
                   rel="noopener noreferrer"
                   class="text-blue-400 hover:text-blue-300 underline"
                 >
-                  {{ "官方文档" }} →
+                  官方文档 →
                 </a>
               </div>
             </div>
@@ -303,9 +301,7 @@
           </p>
         </div>
         <!-- AI Studio Client OAuth: show unlimited flow (no usage tracking) -->
-        <div v-else class="text-xs text-gray-400">
-          {{ "无限流" }}
-        </div>
+        <div v-else class="text-xs text-gray-400">无限流</div>
       </div>
     </template>
 

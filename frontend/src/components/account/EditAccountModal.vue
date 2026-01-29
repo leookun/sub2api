@@ -12,7 +12,7 @@
       @submit.prevent="handleSubmit"
     >
       <div>
-        <label class="input-label">{{ "名称" }}</label>
+        <label class="input-label">名称</label>
         <input
           v-model="form.name"
           type="text"
@@ -22,20 +22,20 @@
         />
       </div>
       <div>
-        <label class="input-label">{{ "备注" }}</label>
+        <label class="input-label">备注</label>
         <textarea
           v-model="form.notes"
           rows="3"
           class="input"
           :placeholder="'请输入备注'"
         ></textarea>
-        <p class="input-hint">{{ "备注可选" }}</p>
+        <p class="input-hint">备注可选</p>
       </div>
 
       <!-- API Key fields (only for apikey type) -->
       <div v-if="account.type === 'apikey'" class="space-y-4">
         <div>
-          <label class="input-label">{{ "Base URL" }}</label>
+          <label class="input-label">Base URL</label>
           <input
             v-model="editBaseUrl"
             type="text"
@@ -51,7 +51,7 @@
           <p class="input-hint">{{ baseUrlHint }}</p>
         </div>
         <div>
-          <label class="input-label">{{ "API Key" }}</label>
+          <label class="input-label">API Key</label>
           <input
             v-model="editApiKey"
             type="password"
@@ -64,7 +64,7 @@
                   : 'sk-ant-...'
             "
           />
-          <p class="input-hint">{{ "留空以保持当前密钥" }}</p>
+          <p class="input-hint">留空以保持当前密钥</p>
         </div>
 
         <!-- Model Restriction Section (不适用于 Gemini) -->
@@ -72,7 +72,7 @@
           v-if="account.platform !== 'gemini'"
           class="border-t border-gray-200 pt-4 dark:border-dark-600"
         >
-          <label class="input-label">{{ "模型限制（可选）" }}</label>
+          <label class="input-label">模型限制（可选）</label>
 
           <!-- Mode Toggle -->
           <div class="mb-4 flex gap-2">
@@ -99,7 +99,7 @@
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              {{ "模型白名单" }}
+              模型白名单
             </button>
             <button
               type="button"
@@ -124,7 +124,7 @@
                   d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
                 />
               </svg>
-              {{ "模型映射" }}
+              模型映射
             </button>
           </div>
 
@@ -237,7 +237,7 @@
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              {{ "添加映射" }}
+              添加映射
             </button>
 
             <!-- Quick Add Buttons -->
@@ -262,9 +262,9 @@
         <div class="border-t border-gray-200 pt-4 dark:border-dark-600">
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ "自定义错误码" }}</label>
+              <label class="input-label mb-0">自定义错误码</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ "仅对选中的错误码停止调度" }}
+                仅对选中的错误码停止调度
               </p>
             </div>
             <button
@@ -295,7 +295,7 @@
                   class="mr-1 inline"
                   :stroke-width="2"
                 />
-                {{ "仅选中的错误码会停止调度，其他错误将返回 500。" }}
+                仅选中的错误码会停止调度，其他错误将返回 500。
               </p>
             </div>
 
@@ -369,7 +369,7 @@
                 v-if="selectedErrorCodes.length === 0"
                 class="text-xs text-gray-400"
               >
-                {{ "未选择（使用默认策略）" }}
+                未选择（使用默认策略）
               </span>
             </div>
           </div>
@@ -397,7 +397,7 @@
               </svg>
               <div>
                 <p class="text-sm font-medium text-blue-800 dark:text-blue-300">
-                  {{ "Gemini 直接转发模型" }}
+                  Gemini 直接转发模型
                 </p>
                 <p class="mt-1 text-xs text-blue-700 dark:text-blue-400">
                   {{
@@ -414,9 +414,9 @@
       <div class="border-t border-gray-200 pt-4 dark:border-dark-600 space-y-4">
         <div class="mb-3 flex items-center justify-between">
           <div>
-            <label class="input-label mb-0">{{ "临时不可调度" }}</label>
+            <label class="input-label mb-0">临时不可调度</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "当错误码与关键词同时匹配时，账号会在指定时间内被临时禁用。" }}
+              当错误码与关键词同时匹配时，账号会在指定时间内被临时禁用。
             </p>
           </div>
           <button
@@ -447,7 +447,7 @@
                 class="mr-1 inline"
                 :stroke-width="2"
               />
-              {{ "规则按顺序匹配，需同时满足错误码与关键词。" }}
+              规则按顺序匹配，需同时满足错误码与关键词。
             </p>
           </div>
 
@@ -516,7 +516,7 @@
 
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
-                  <label class="input-label">{{ "错误码" }}</label>
+                  <label class="input-label">错误码</label>
                   <input
                     v-model.number="rule.error_code"
                     type="number"
@@ -527,7 +527,7 @@
                   />
                 </div>
                 <div>
-                  <label class="input-label">{{ "持续时间（分钟）" }}</label>
+                  <label class="input-label">持续时间（分钟）</label>
                   <input
                     v-model.number="rule.duration_minutes"
                     type="number"
@@ -537,7 +537,7 @@
                   />
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="input-label">{{ "关键词" }}</label>
+                  <label class="input-label">关键词</label>
                   <input
                     v-model="rule.keywords"
                     type="text"
@@ -545,11 +545,11 @@
                     :placeholder="'例如 overloaded, too many requests'"
                   />
                   <p class="input-hint">
-                    {{ "多个关键词用逗号分隔，匹配时必须命中其中之一。" }}
+                    多个关键词用逗号分隔，匹配时必须命中其中之一。
                   </p>
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="input-label">{{ "描述" }}</label>
+                  <label class="input-label">描述</label>
                   <input
                     v-model="rule.description"
                     type="text"
@@ -579,7 +579,7 @@
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            {{ "添加规则" }}
+            添加规则
           </button>
         </div>
       </div>
@@ -591,7 +591,7 @@
       >
         <div class="flex items-center justify-between">
           <div>
-            <label class="input-label mb-0">{{ "拦截预热请求" }}</label>
+            <label class="input-label mb-0">拦截预热请求</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
               {{
                 "启用后，标题生成等预热请求将返回 mock 响应，不消耗上游 token"
@@ -619,13 +619,13 @@
       </div>
 
       <div>
-        <label class="input-label">{{ "代理" }}</label>
+        <label class="input-label">代理</label>
         <ProxySelector v-model="form.proxy_id" :proxies="proxies" />
       </div>
 
       <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
         <div>
-          <label class="input-label">{{ "并发数" }}</label>
+          <label class="input-label">并发数</label>
           <input
             v-model.number="form.concurrency"
             type="number"
@@ -634,7 +634,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "优先级" }}</label>
+          <label class="input-label">优先级</label>
           <input
             v-model.number="form.priority"
             type="number"
@@ -644,7 +644,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "账号计费倍率" }}</label>
+          <label class="input-label">账号计费倍率</label>
           <input
             v-model.number="form.rate_multiplier"
             type="number"
@@ -653,22 +653,22 @@
             class="input"
           />
           <p class="input-hint">
-            {{ ">=0，0 表示该账号计费为 0；仅影响账号计费口径" }}
+            >=0，0 表示该账号计费为 0；仅影响账号计费口径
           </p>
         </div>
       </div>
       <div class="border-t border-gray-200 pt-4 dark:border-dark-600">
-        <label class="input-label">{{ "过期时间" }}</label>
+        <label class="input-label">过期时间</label>
         <input v-model="expiresAtInput" type="datetime-local" class="input" />
-        <p class="input-hint">{{ "留空表示不过期" }}</p>
+        <p class="input-hint">留空表示不过期</p>
       </div>
 
       <div>
         <div class="flex items-center justify-between">
           <div>
-            <label class="input-label mb-0">{{ "过期自动暂停调度" }}</label>
+            <label class="input-label mb-0">过期自动暂停调度</label>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              {{ "启用后，账号过期将自动暂停调度" }}
+              启用后，账号过期将自动暂停调度
             </p>
           </div>
           <button
@@ -700,11 +700,9 @@
         class="border-t border-gray-200 pt-4 dark:border-dark-600 space-y-4"
       >
         <div class="mb-3">
-          <h3 class="input-label mb-0 text-base font-semibold">
-            {{ "配额控制" }}
-          </h3>
+          <h3 class="input-label mb-0 text-base font-semibold">配额控制</h3>
           <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            {{ "仅适用于 Anthropic OAuth/Setup Token 账号" }}
+            仅适用于 Anthropic OAuth/Setup Token 账号
           </p>
         </div>
 
@@ -712,9 +710,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ "5h窗口费用控制" }}</label>
+              <label class="input-label mb-0">5h窗口费用控制</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ "限制账号在5小时窗口内的费用使用" }}
+                限制账号在5小时窗口内的费用使用
               </p>
             </div>
             <button
@@ -738,7 +736,7 @@
 
           <div v-if="windowCostEnabled" class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ "费用阈值" }}</label>
+              <label class="input-label">费用阈值</label>
               <div class="relative">
                 <span
                   class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400"
@@ -753,10 +751,10 @@
                   :placeholder="'50'"
                 />
               </div>
-              <p class="input-hint">{{ "达到阈值后不参与新请求调度" }}</p>
+              <p class="input-hint">达到阈值后不参与新请求调度</p>
             </div>
             <div>
-              <label class="input-label">{{ "粘性预留额度" }}</label>
+              <label class="input-label">粘性预留额度</label>
               <div class="relative">
                 <span
                   class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400"
@@ -771,7 +769,7 @@
                   :placeholder="'10'"
                 />
               </div>
-              <p class="input-hint">{{ "为粘性会话预留的额外额度" }}</p>
+              <p class="input-hint">为粘性会话预留的额外额度</p>
             </div>
           </div>
         </div>
@@ -780,9 +778,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="mb-3 flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ "会话数量控制" }}</label>
+              <label class="input-label mb-0">会话数量控制</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ "限制同时活跃的会话数量" }}
+                限制同时活跃的会话数量
               </p>
             </div>
             <button
@@ -806,7 +804,7 @@
 
           <div v-if="sessionLimitEnabled" class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ "最大会话数" }}</label>
+              <label class="input-label">最大会话数</label>
               <input
                 v-model.number="maxSessions"
                 type="number"
@@ -815,10 +813,10 @@
                 class="input"
                 :placeholder="'3'"
               />
-              <p class="input-hint">{{ "同时活跃的最大会话数量" }}</p>
+              <p class="input-hint">同时活跃的最大会话数量</p>
             </div>
             <div>
-              <label class="input-label">{{ "空闲超时" }}</label>
+              <label class="input-label">空闲超时</label>
               <div class="relative">
                 <input
                   v-model.number="sessionIdleTimeout"
@@ -830,10 +828,10 @@
                 />
                 <span
                   class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400"
-                  >{{ "分钟" }}</span
+                  >分钟</span
                 >
               </div>
-              <p class="input-hint">{{ "会话空闲超时后自动释放" }}</p>
+              <p class="input-hint">会话空闲超时后自动释放</p>
             </div>
           </div>
         </div>
@@ -842,9 +840,9 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ "TLS 指纹模拟" }}</label>
+              <label class="input-label mb-0">TLS 指纹模拟</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ "模拟 Node.js/Claude Code 客户端的 TLS 指纹" }}
+                模拟 Node.js/Claude Code 客户端的 TLS 指纹
               </p>
             </div>
             <button
@@ -871,7 +869,7 @@
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
           <div class="flex items-center justify-between">
             <div>
-              <label class="input-label mb-0">{{ "会话 ID 伪装" }}</label>
+              <label class="input-label mb-0">会话 ID 伪装</label>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                 {{
                   "启用后将在 15 分钟内固定 metadata.user_id 中的 session ID，使上游认为请求来自同一会话"
@@ -901,7 +899,7 @@
 
       <div class="border-t border-gray-200 pt-4 dark:border-dark-600">
         <div>
-          <label class="input-label">{{ "状态" }}</label>
+          <label class="input-label">状态</label>
           <Select v-model="form.status" :options="statusOptions" />
         </div>
 
@@ -918,7 +916,7 @@
               class="h-4 w-4 cursor-not-allowed rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-dark-500"
             />
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ "在 /v1/messages 中使用" }}
+              在 /v1/messages 中使用
             </span>
           </label>
           <div class="group relative">
@@ -956,7 +954,7 @@
     <template #footer>
       <div v-if="account" class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ "取消" }}
+          取消
         </button>
         <button
           type="submit"

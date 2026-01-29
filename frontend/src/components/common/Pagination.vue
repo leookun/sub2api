@@ -9,7 +9,7 @@
         class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-200 dark:hover:bg-dark-600"
         @click="goToPage(page - 1)"
       >
-        {{ "上一页" }}
+        上一页
       </button>
       <span class="text-sm text-gray-700 dark:text-gray-300">
         {{ `第 {page} / ${totalPages} 页` }}
@@ -19,7 +19,7 @@
         class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-dark-600 dark:bg-dark-700 dark:text-gray-200 dark:hover:bg-dark-600"
         @click="goToPage(page + 1)"
       >
-        {{ "下一页" }}
+        下一页
       </button>
     </div>
 
@@ -27,20 +27,18 @@
       <!-- Desktop pagination info -->
       <div class="flex items-center space-x-4">
         <p class="text-sm text-gray-700 dark:text-gray-300">
-          {{ "显示" }}
+          显示
           <span class="font-medium">{{ fromItem }}</span>
-          {{ "至" }}
+          至
           <span class="font-medium">{{ toItem }}</span>
-          {{ "共" }}
+          共
           <span class="font-medium">{{ total }}</span>
-          {{ "条结果" }}
+          条结果
         </p>
 
         <!-- Page size selector -->
         <div v-if="showPageSizeSelector" class="flex items-center space-x-2">
-          <span class="text-sm text-gray-700 dark:text-gray-300"
-            >{{ "每页" }}:</span
-          >
+          <span class="text-sm text-gray-700 dark:text-gray-300">每页:</span>
           <div class="page-size-select w-20">
             <Select
               :model-value="pageSize"
@@ -68,7 +66,7 @@
             class="btn btn-ghost btn-sm"
             @click="submitJump"
           >
-            {{ "跳转" }}
+            跳转
           </button>
         </div>
       </div>

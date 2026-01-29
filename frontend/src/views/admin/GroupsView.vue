@@ -66,7 +66,7 @@
               @click="showCreateModal = true"
             >
               <Icon name="plus" size="md" class="mr-2" />
-              {{ "创建分组" }}
+              创建分组
             </button>
           </div>
         </div>
@@ -136,7 +136,7 @@
                   "
                 >
                   <span v-if="row.daily_limit_usd"
-                    >${{ row.daily_limit_usd }}/{{ "日" }}</span
+                    >${{ row.daily_limit_usd }}/日</span
                   >
                   <span
                     v-if="
@@ -147,7 +147,7 @@
                     >·</span
                   >
                   <span v-if="row.weekly_limit_usd"
-                    >${{ row.weekly_limit_usd }}/{{ "周" }}</span
+                    >${{ row.weekly_limit_usd }}/周</span
                   >
                   <span
                     v-if="row.weekly_limit_usd && row.monthly_limit_usd"
@@ -155,7 +155,7 @@
                     >·</span
                   >
                   <span v-if="row.monthly_limit_usd"
-                    >${{ row.monthly_limit_usd }}/{{ "月" }}</span
+                    >${{ row.monthly_limit_usd }}/月</span
                   >
                 </template>
                 <span v-else class="text-gray-400 dark:text-gray-500">{{
@@ -203,14 +203,14 @@
                 @click="handleEdit(row)"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ "编辑" }}</span>
+                <span class="text-xs">编辑</span>
               </button>
               <button
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
                 @click="handleDelete(row)"
               >
                 <Icon name="trash" size="sm" />
-                <span class="text-xs">{{ "删除" }}</span>
+                <span class="text-xs">删除</span>
               </button>
             </div>
           </template>
@@ -251,7 +251,7 @@
         @submit.prevent="handleCreateGroup"
       >
         <div>
-          <label class="input-label">{{ "名称" }}</label>
+          <label class="input-label">名称</label>
           <input
             v-model="createForm.name"
             type="text"
@@ -262,7 +262,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "描述" }}</label>
+          <label class="input-label">描述</label>
           <textarea
             v-model="createForm.description"
             rows="3"
@@ -271,16 +271,16 @@
           ></textarea>
         </div>
         <div>
-          <label class="input-label">{{ "平台" }}</label>
+          <label class="input-label">平台</label>
           <Select
             v-model="createForm.platform"
             :options="platformOptions"
             data-tour="group-form-platform"
           />
-          <p class="input-hint">{{ "选择此分组关联的平台" }}</p>
+          <p class="input-hint">选择此分组关联的平台</p>
         </div>
         <div>
-          <label class="input-label">{{ "费率倍数" }}</label>
+          <label class="input-label">费率倍数</label>
           <input
             v-model.number="createForm.rate_multiplier"
             type="number"
@@ -290,9 +290,7 @@
             class="input"
             data-tour="group-form-multiplier"
           />
-          <p class="input-hint">
-            {{ "1.0 = 标准费率，0.5 = 半价，2.0 = 双倍" }}
-          </p>
+          <p class="input-hint">1.0 = 标准费率，0.5 = 半价，2.0 = 双倍</p>
         </div>
         <div
           v-if="createForm.subscription_type !== 'subscription'"
@@ -300,7 +298,7 @@
         >
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ "专属分组" }}
+              专属分组
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -317,9 +315,7 @@
                 <div
                   class="rounded-lg bg-gray-900 p-3 text-white shadow-lg dark:bg-gray-800"
                 >
-                  <p class="mb-2 text-xs font-medium">
-                    {{ "什么是专属分组？" }}
-                  </p>
+                  <p class="mb-2 text-xs font-medium">什么是专属分组？</p>
                   <p class="mb-2 text-xs leading-relaxed text-gray-300">
                     {{
                       "开启后，用户在创建 API Key 时将无法看到此分组。只有管理员手动将用户分配到此分组后，用户才能使用。"
@@ -329,8 +325,7 @@
                     <p class="text-xs leading-relaxed text-gray-300">
                       <span
                         class="inline-flex items-center gap-1 text-primary-400"
-                        ><Icon name="lightbulb" size="xs" />
-                        {{ "使用场景：" }}</span
+                        ><Icon name="lightbulb" size="xs" /> 使用场景：</span
                       >
                       {{
                         "公开分组费率 0.8，您可以创建一个费率 0.7 的专属分组，手动分配给 VIP 用户，让他们享受更优惠的价格。"
@@ -372,13 +367,13 @@
         <!-- Subscription Configuration -->
         <div class="mt-4 border-t pt-4">
           <div>
-            <label class="input-label">{{ "计费类型" }}</label>
+            <label class="input-label">计费类型</label>
             <Select
               v-model="createForm.subscription_type"
               :options="subscriptionTypeOptions"
             />
             <p class="input-hint">
-              {{ "标准计费从用户余额扣除。订阅模式使用配额限制。" }}
+              标准计费从用户余额扣除。订阅模式使用配额限制。
             </p>
           </div>
 
@@ -388,7 +383,7 @@
             class="space-y-4 border-l-2 border-primary-200 pl-4 dark:border-primary-800"
           >
             <div>
-              <label class="input-label">{{ "每日限额（USD）" }}</label>
+              <label class="input-label">每日限额（USD）</label>
               <input
                 v-model.number="createForm.daily_limit_usd"
                 type="number"
@@ -399,7 +394,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "每周限额（USD）" }}</label>
+              <label class="input-label">每周限额（USD）</label>
               <input
                 v-model.number="createForm.weekly_limit_usd"
                 type="number"
@@ -410,7 +405,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "每月限额（USD）" }}</label>
+              <label class="input-label">每月限额（USD）</label>
               <input
                 v-model.number="createForm.monthly_limit_usd"
                 type="number"
@@ -434,7 +429,7 @@
           <label
             class="block mb-2 font-medium text-gray-700 dark:text-gray-300"
           >
-            {{ "图片生成计费" }}
+            图片生成计费
           </label>
           <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">
             {{
@@ -482,7 +477,7 @@
         <div v-if="createForm.platform === 'anthropic'" class="border-t pt-4">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ "Claude Code 客户端限制" }}
+              Claude Code 客户端限制
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -542,14 +537,14 @@
           </div>
           <!-- 降级分组选择（仅当启用 claude_code_only 时显示） -->
           <div v-if="createForm.claude_code_only" class="mt-3">
-            <label class="input-label">{{ "降级分组" }}</label>
+            <label class="input-label">降级分组</label>
             <Select
               v-model="createForm.fallback_group_id"
               :options="fallbackGroupOptions"
               :placeholder="'不降级（直接拒绝）'"
             />
             <p class="input-hint">
-              {{ "非 Claude Code 请求将使用此分组，留空则直接拒绝" }}
+              非 Claude Code 请求将使用此分组，留空则直接拒绝
             </p>
           </div>
         </div>
@@ -558,7 +553,7 @@
         <div v-if="createForm.platform === 'anthropic'" class="border-t pt-4">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ "模型路由配置" }}
+              模型路由配置
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -618,10 +613,10 @@
             v-if="!createForm.model_routing_enabled"
             class="text-xs text-gray-500 dark:text-gray-400 mb-3"
           >
-            {{ "启用后，配置的路由规则才会生效" }}
+            启用后，配置的路由规则才会生效
           </p>
           <p v-else class="text-xs text-gray-500 dark:text-gray-400 mb-3">
-            {{ "添加路由规则以将特定模型请求优先路由到指定账号" }}
+            添加路由规则以将特定模型请求优先路由到指定账号
           </p>
           <!-- 路由规则列表（仅在启用时显示） -->
           <div v-if="createForm.model_routing_enabled" class="space-y-3">
@@ -633,7 +628,7 @@
               <div class="flex items-start gap-3">
                 <div class="flex-1 space-y-2">
                   <div>
-                    <label class="input-label text-xs">{{ "模型模式" }}</label>
+                    <label class="input-label text-xs">模型模式</label>
                     <input
                       v-model="rule.pattern"
                       type="text"
@@ -642,7 +637,7 @@
                     />
                   </div>
                   <div>
-                    <label class="input-label text-xs">{{ "优先账号" }}</label>
+                    <label class="input-label text-xs">优先账号</label>
                     <!-- 已选账号标签 -->
                     <div
                       v-if="rule.accounts.length > 0"
@@ -708,7 +703,7 @@
                       </div>
                     </div>
                     <p class="text-xs text-gray-400 mt-1">
-                      {{ "选择此模型模式优先使用的账号" }}
+                      选择此模型模式优先使用的账号
                     </p>
                   </div>
                 </div>
@@ -731,7 +726,7 @@
             @click="addCreateRoutingRule"
           >
             <Icon name="plus" size="sm" />
-            {{ "添加路由规则" }}
+            添加路由规则
           </button>
         </div>
       </form>
@@ -743,7 +738,7 @@
             class="btn btn-secondary"
             @click="closeCreateModal"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             type="submit"
@@ -792,7 +787,7 @@
         @submit.prevent="handleUpdateGroup"
       >
         <div>
-          <label class="input-label">{{ "名称" }}</label>
+          <label class="input-label">名称</label>
           <input
             v-model="editForm.name"
             type="text"
@@ -802,7 +797,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "描述" }}</label>
+          <label class="input-label">描述</label>
           <textarea
             v-model="editForm.description"
             rows="3"
@@ -810,17 +805,17 @@
           ></textarea>
         </div>
         <div>
-          <label class="input-label">{{ "平台" }}</label>
+          <label class="input-label">平台</label>
           <Select
             v-model="editForm.platform"
             :options="platformOptions"
             :disabled="true"
             data-tour="group-form-platform"
           />
-          <p class="input-hint">{{ "创建后不可更改平台" }}</p>
+          <p class="input-hint">创建后不可更改平台</p>
         </div>
         <div>
-          <label class="input-label">{{ "费率倍数" }}</label>
+          <label class="input-label">费率倍数</label>
           <input
             v-model.number="editForm.rate_multiplier"
             type="number"
@@ -834,7 +829,7 @@
         <div v-if="editForm.subscription_type !== 'subscription'">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ "专属分组" }}
+              专属分组
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -851,9 +846,7 @@
                 <div
                   class="rounded-lg bg-gray-900 p-3 text-white shadow-lg dark:bg-gray-800"
                 >
-                  <p class="mb-2 text-xs font-medium">
-                    {{ "什么是专属分组？" }}
-                  </p>
+                  <p class="mb-2 text-xs font-medium">什么是专属分组？</p>
                   <p class="mb-2 text-xs leading-relaxed text-gray-300">
                     {{
                       "开启后，用户在创建 API Key 时将无法看到此分组。只有管理员手动将用户分配到此分组后，用户才能使用。"
@@ -863,8 +856,7 @@
                     <p class="text-xs leading-relaxed text-gray-300">
                       <span
                         class="inline-flex items-center gap-1 text-primary-400"
-                        ><Icon name="lightbulb" size="xs" />
-                        {{ "使用场景：" }}</span
+                        ><Icon name="lightbulb" size="xs" /> 使用场景：</span
                       >
                       {{
                         "公开分组费率 0.8，您可以创建一个费率 0.7 的专属分组，手动分配给 VIP 用户，让他们享受更优惠的价格。"
@@ -903,20 +895,20 @@
           </div>
         </div>
         <div>
-          <label class="input-label">{{ "状态" }}</label>
+          <label class="input-label">状态</label>
           <Select v-model="editForm.status" :options="editStatusOptions" />
         </div>
 
         <!-- Subscription Configuration -->
         <div class="mt-4 border-t pt-4">
           <div>
-            <label class="input-label">{{ "计费类型" }}</label>
+            <label class="input-label">计费类型</label>
             <Select
               v-model="editForm.subscription_type"
               :options="subscriptionTypeOptions"
               :disabled="true"
             />
-            <p class="input-hint">{{ "分组创建后无法修改计费类型。" }}</p>
+            <p class="input-hint">分组创建后无法修改计费类型。</p>
           </div>
 
           <!-- Subscription limits (only show when subscription type is selected) -->
@@ -925,7 +917,7 @@
             class="space-y-4 border-l-2 border-primary-200 pl-4 dark:border-primary-800"
           >
             <div>
-              <label class="input-label">{{ "每日限额（USD）" }}</label>
+              <label class="input-label">每日限额（USD）</label>
               <input
                 v-model.number="editForm.daily_limit_usd"
                 type="number"
@@ -936,7 +928,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "每周限额（USD）" }}</label>
+              <label class="input-label">每周限额（USD）</label>
               <input
                 v-model.number="editForm.weekly_limit_usd"
                 type="number"
@@ -947,7 +939,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "每月限额（USD）" }}</label>
+              <label class="input-label">每月限额（USD）</label>
               <input
                 v-model.number="editForm.monthly_limit_usd"
                 type="number"
@@ -971,7 +963,7 @@
           <label
             class="block mb-2 font-medium text-gray-700 dark:text-gray-300"
           >
-            {{ "图片生成计费" }}
+            图片生成计费
           </label>
           <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">
             {{
@@ -1019,7 +1011,7 @@
         <div v-if="editForm.platform === 'anthropic'" class="border-t pt-4">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ "Claude Code 客户端限制" }}
+              Claude Code 客户端限制
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -1075,14 +1067,14 @@
           </div>
           <!-- 降级分组选择（仅当启用 claude_code_only 时显示） -->
           <div v-if="editForm.claude_code_only" class="mt-3">
-            <label class="input-label">{{ "降级分组" }}</label>
+            <label class="input-label">降级分组</label>
             <Select
               v-model="editForm.fallback_group_id"
               :options="fallbackGroupOptionsForEdit"
               :placeholder="'不降级（直接拒绝）'"
             />
             <p class="input-hint">
-              {{ "非 Claude Code 请求将使用此分组，留空则直接拒绝" }}
+              非 Claude Code 请求将使用此分组，留空则直接拒绝
             </p>
           </div>
         </div>
@@ -1091,7 +1083,7 @@
         <div v-if="editForm.platform === 'anthropic'" class="border-t pt-4">
           <div class="mb-1.5 flex items-center gap-1">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ "模型路由配置" }}
+              模型路由配置
             </label>
             <!-- Help Tooltip -->
             <div class="group relative inline-flex">
@@ -1150,10 +1142,10 @@
             v-if="!editForm.model_routing_enabled"
             class="text-xs text-gray-500 dark:text-gray-400 mb-3"
           >
-            {{ "启用后，配置的路由规则才会生效" }}
+            启用后，配置的路由规则才会生效
           </p>
           <p v-else class="text-xs text-gray-500 dark:text-gray-400 mb-3">
-            {{ "添加路由规则以将特定模型请求优先路由到指定账号" }}
+            添加路由规则以将特定模型请求优先路由到指定账号
           </p>
           <!-- 路由规则列表（仅在启用时显示） -->
           <div v-if="editForm.model_routing_enabled" class="space-y-3">
@@ -1165,7 +1157,7 @@
               <div class="flex items-start gap-3">
                 <div class="flex-1 space-y-2">
                   <div>
-                    <label class="input-label text-xs">{{ "模型模式" }}</label>
+                    <label class="input-label text-xs">模型模式</label>
                     <input
                       v-model="rule.pattern"
                       type="text"
@@ -1174,7 +1166,7 @@
                     />
                   </div>
                   <div>
-                    <label class="input-label text-xs">{{ "优先账号" }}</label>
+                    <label class="input-label text-xs">优先账号</label>
                     <!-- 已选账号标签 -->
                     <div
                       v-if="rule.accounts.length > 0"
@@ -1240,7 +1232,7 @@
                       </div>
                     </div>
                     <p class="text-xs text-gray-400 mt-1">
-                      {{ "选择此模型模式优先使用的账号" }}
+                      选择此模型模式优先使用的账号
                     </p>
                   </div>
                 </div>
@@ -1263,7 +1255,7 @@
             @click="addEditRoutingRule"
           >
             <Icon name="plus" size="sm" />
-            {{ "添加路由规则" }}
+            添加路由规则
           </button>
         </div>
       </form>
@@ -1275,7 +1267,7 @@
             class="btn btn-secondary"
             @click="closeEditModal"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             type="submit"

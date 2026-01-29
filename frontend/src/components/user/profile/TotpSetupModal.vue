@@ -12,7 +12,7 @@
         <!-- Header -->
         <div class="mb-6 text-center">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            {{ "设置双因素认证" }}
+            设置双因素认证
           </h3>
           <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
             {{ stepDescription }}
@@ -35,7 +35,7 @@
             <!-- Email verification -->
             <div v-if="verificationMethod === 'email'" class="space-y-4">
               <div>
-                <label class="input-label">{{ "邮箱验证码" }}</label>
+                <label class="input-label">邮箱验证码</label>
                 <div class="flex gap-2">
                   <input
                     v-model="verifyForm.emailCode"
@@ -66,7 +66,7 @@
             <!-- Password verification -->
             <div v-else class="space-y-4">
               <div>
-                <label class="input-label">{{ "当前密码" }}</label>
+                <label class="input-label">当前密码</label>
                 <input
                   v-model="verifyForm.password"
                   type="password"
@@ -90,7 +90,7 @@
                 class="btn btn-secondary"
                 @click="$emit('close')"
               >
-                {{ "取消" }}
+                取消
               </button>
               <button
                 type="button"
@@ -118,7 +118,7 @@
 
             <div class="text-center">
               <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                {{ "无法扫码？手动输入密钥：" }}
+                无法扫码？手动输入密钥：
               </p>
               <div class="flex items-center justify-center gap-2">
                 <code
@@ -155,7 +155,7 @@
               class="btn btn-secondary"
               @click="$emit('close')"
             >
-              {{ "取消" }}
+              取消
             </button>
             <button
               type="button"
@@ -163,7 +163,7 @@
               :disabled="!setupData"
               @click="step = 2"
             >
-              {{ "下一步" }}
+              下一步
             </button>
           </div>
         </div>
@@ -173,7 +173,7 @@
           <form @submit.prevent="handleVerify">
             <div class="mb-6">
               <label class="input-label text-center block mb-3">
-                {{ "输入 6 位验证码" }}
+                输入 6 位验证码
               </label>
               <div class="flex justify-center gap-2">
                 <input
@@ -201,7 +201,7 @@
 
             <div class="flex justify-end gap-3">
               <button type="button" class="btn btn-secondary" @click="step = 1">
-                {{ "返回" }}
+                返回
               </button>
               <button
                 type="submit"

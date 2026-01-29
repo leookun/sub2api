@@ -266,7 +266,7 @@ async function saveAllSettings() {
     @close="emit('close')"
   >
     <div v-if="loading" class="py-10 text-center text-sm text-gray-500">
-      {{ "加载中..." }}
+      加载中...
     </div>
 
     <div
@@ -278,7 +278,7 @@ async function saveAllSettings() {
         v-if="!validation.valid"
         class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 dark:border-amber-900/50 dark:bg-amber-900/20 dark:text-amber-200"
       >
-        <div class="font-bold">{{ "请先修正以下问题" }}</div>
+        <div class="font-bold">请先修正以下问题</div>
         <ul class="mt-1 list-disc space-y-1 pl-4">
           <li v-for="msg in validation.errors" :key="msg">{{ msg }}</li>
         </ul>
@@ -287,10 +287,10 @@ async function saveAllSettings() {
       <!-- 数据采集频率 -->
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "数据采集" }}
+          数据采集
         </h4>
         <div>
-          <label class="input-label">{{ "评估间隔（秒）" }}</label>
+          <label class="input-label">评估间隔（秒）</label>
           <input
             v-model.number="runtimeSettings.evaluation_interval_seconds"
             type="number"
@@ -299,7 +299,7 @@ async function saveAllSettings() {
             class="input"
           />
           <p class="mt-1 text-xs text-gray-500">
-            {{ "检测任务的执行频率，建议保持默认" }}
+            检测任务的执行频率，建议保持默认
           </p>
         </div>
       </div>
@@ -307,7 +307,7 @@ async function saveAllSettings() {
       <!-- 预警配置 -->
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "预警配置" }}
+          预警配置
         </h4>
 
         <div class="space-y-4">
@@ -321,7 +321,7 @@ async function saveAllSettings() {
           </div>
 
           <div v-if="emailConfig.alert.enabled">
-            <label class="input-label">{{ "预警接收邮箱" }}</label>
+            <label class="input-label">预警接收邮箱</label>
             <div class="flex gap-2">
               <input
                 v-model="alertRecipientInput"
@@ -335,7 +335,7 @@ async function saveAllSettings() {
                 type="button"
                 @click="addRecipient('alert')"
               >
-                {{ "添加" }}
+                添加
               </button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
@@ -355,12 +355,12 @@ async function saveAllSettings() {
               </span>
             </div>
             <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-              {{ "若为空，系统将使用第一个管理员邮箱作为默认收件人" }}
+              若为空，系统将使用第一个管理员邮箱作为默认收件人
             </p>
           </div>
 
           <div v-if="emailConfig.alert.enabled">
-            <label class="input-label">{{ "最低级别" }}</label>
+            <label class="input-label">最低级别</label>
             <Select
               v-model="emailConfig.alert.min_severity"
               :options="severityOptions"
@@ -372,7 +372,7 @@ async function saveAllSettings() {
       <!-- 评估报告配置 -->
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "评估报告配置" }}
+          评估报告配置
         </h4>
 
         <div class="space-y-4">
@@ -386,7 +386,7 @@ async function saveAllSettings() {
           </div>
 
           <div v-if="emailConfig.report.enabled">
-            <label class="input-label">{{ "评估报告接收邮箱" }}</label>
+            <label class="input-label">评估报告接收邮箱</label>
             <div class="flex gap-2">
               <input
                 v-model="reportRecipientInput"
@@ -400,7 +400,7 @@ async function saveAllSettings() {
                 type="button"
                 @click="addRecipient('report')"
               >
-                {{ "添加" }}
+                添加
               </button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
@@ -420,7 +420,7 @@ async function saveAllSettings() {
               </span>
             </div>
             <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-              {{ "若为空，系统将使用第一个管理员邮箱作为默认收件人" }}
+              若为空，系统将使用第一个管理员邮箱作为默认收件人
             </p>
           </div>
 
@@ -431,7 +431,7 @@ async function saveAllSettings() {
             <div class="flex items-center justify-between">
               <label
                 class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >{{ "每日摘要" }}</label
+                >每日摘要</label
               >
               <Toggle v-model="emailConfig.report.daily_summary_enabled" />
             </div>
@@ -446,7 +446,7 @@ async function saveAllSettings() {
             <div class="flex items-center justify-between">
               <label
                 class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >{{ "每周摘要" }}</label
+                >每周摘要</label
               >
               <Toggle v-model="emailConfig.report.weekly_summary_enabled" />
             </div>
@@ -465,15 +465,15 @@ async function saveAllSettings() {
       <!-- 指标阈值配置 -->
       <div class="rounded-2xl bg-gray-50 p-4 dark:bg-dark-700/50">
         <h4 class="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-          {{ "指标阈值配置" }}
+          指标阈值配置
         </h4>
         <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">
-          {{ "配置各项指标的告警阈值，超出阈值时将以红色显示" }}
+          配置各项指标的告警阈值，超出阈值时将以红色显示
         </p>
 
         <div class="space-y-4">
           <div>
-            <label class="input-label">{{ "SLA最低百分比" }}</label>
+            <label class="input-label">SLA最低百分比</label>
             <input
               v-model.number="metricThresholds.sla_percent_min"
               type="number"
@@ -483,12 +483,12 @@ async function saveAllSettings() {
               class="input"
             />
             <p class="mt-1 text-xs text-gray-500">
-              {{ "SLA低于此值时显示为红色（默认：99.5%）" }}
+              SLA低于此值时显示为红色（默认：99.5%）
             </p>
           </div>
 
           <div>
-            <label class="input-label">{{ "TTFT P99最大值（毫秒）" }}</label>
+            <label class="input-label">TTFT P99最大值（毫秒）</label>
             <input
               v-model.number="metricThresholds.ttft_p99_ms_max"
               type="number"
@@ -497,12 +497,12 @@ async function saveAllSettings() {
               class="input"
             />
             <p class="mt-1 text-xs text-gray-500">
-              {{ "TTFT P99高于此值时显示为红色（默认：500ms）" }}
+              TTFT P99高于此值时显示为红色（默认：500ms）
             </p>
           </div>
 
           <div>
-            <label class="input-label">{{ "请求错误率最大值（%）" }}</label>
+            <label class="input-label">请求错误率最大值（%）</label>
             <input
               v-model.number="metricThresholds.request_error_rate_percent_max"
               type="number"
@@ -512,12 +512,12 @@ async function saveAllSettings() {
               class="input"
             />
             <p class="mt-1 text-xs text-gray-500">
-              {{ "请求错误率高于此值时显示为红色（默认：5%）" }}
+              请求错误率高于此值时显示为红色（默认：5%）
             </p>
           </div>
 
           <div>
-            <label class="input-label">{{ "上游错误率最大值（%）" }}</label>
+            <label class="input-label">上游错误率最大值（%）</label>
             <input
               v-model.number="metricThresholds.upstream_error_rate_percent_max"
               type="number"
@@ -527,7 +527,7 @@ async function saveAllSettings() {
               class="input"
             />
             <p class="mt-1 text-xs text-gray-500">
-              {{ "上游错误率高于此值时显示为红色（默认：5%）" }}
+              上游错误率高于此值时显示为红色（默认：5%）
             </p>
           </div>
         </div>
@@ -538,19 +538,19 @@ async function saveAllSettings() {
         <summary
           class="cursor-pointer p-4 text-sm font-semibold text-gray-900 dark:text-white"
         >
-          {{ "高级设置" }}
+          高级设置
         </summary>
         <div class="space-y-4 px-4 pb-4">
           <!-- 数据保留策略 -->
           <div class="space-y-3">
             <h5 class="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              {{ "数据保留策略" }}
+              数据保留策略
             </h5>
 
             <div class="flex items-center justify-between">
               <label
                 class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                >{{ "启用数据清理" }}</label
+                >启用数据清理</label
               >
               <Toggle
                 v-model="advancedSettings.data_retention.cleanup_enabled"
@@ -558,7 +558,7 @@ async function saveAllSettings() {
             </div>
 
             <div v-if="advancedSettings.data_retention.cleanup_enabled">
-              <label class="input-label">{{ "清理计划（Cron）" }}</label>
+              <label class="input-label">清理计划（Cron）</label>
               <input
                 v-model="advancedSettings.data_retention.cleanup_schedule"
                 type="text"
@@ -566,13 +566,13 @@ async function saveAllSettings() {
                 placeholder="0 2 * * *"
               />
               <p class="mt-1 text-xs text-gray-500">
-                {{ "例如：0 2 * * * 表示每天凌晨2点" }}
+                例如：0 2 * * * 表示每天凌晨2点
               </p>
             </div>
 
             <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div>
-                <label class="input-label">{{ "错误日志保留天数" }}</label>
+                <label class="input-label">错误日志保留天数</label>
                 <input
                   v-model.number="
                     advancedSettings.data_retention.error_log_retention_days
@@ -584,7 +584,7 @@ async function saveAllSettings() {
                 />
               </div>
               <div>
-                <label class="input-label">{{ "分钟指标保留天数" }}</label>
+                <label class="input-label">分钟指标保留天数</label>
                 <input
                   v-model.number="
                     advancedSettings.data_retention
@@ -597,7 +597,7 @@ async function saveAllSettings() {
                 />
               </div>
               <div>
-                <label class="input-label">{{ "小时指标保留天数" }}</label>
+                <label class="input-label">小时指标保留天数</label>
                 <input
                   v-model.number="
                     advancedSettings.data_retention
@@ -611,24 +611,24 @@ async function saveAllSettings() {
               </div>
             </div>
             <p class="text-xs text-gray-500">
-              {{ "建议保留7-90天，过长会占用存储空间" }}
+              建议保留7-90天，过长会占用存储空间
             </p>
           </div>
 
           <!-- 预聚合任务 -->
           <div class="space-y-3">
             <h5 class="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              {{ "预聚合任务" }}
+              预聚合任务
             </h5>
 
             <div class="flex items-center justify-between">
               <div>
                 <label
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ "启用预聚合任务" }}</label
+                  >启用预聚合任务</label
                 >
                 <p class="mt-1 text-xs text-gray-500">
-                  {{ "预聚合可提升长时间窗口查询性能" }}
+                  预聚合可提升长时间窗口查询性能
                 </p>
               </div>
               <Toggle
@@ -640,17 +640,17 @@ async function saveAllSettings() {
           <!-- Error Filtering -->
           <div class="space-y-3">
             <h5 class="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              {{ "错误过滤" }}
+              错误过滤
             </h5>
 
             <div class="flex items-center justify-between">
               <div>
                 <label
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ "忽略 count_tokens 错误" }}</label
+                  >忽略 count_tokens 错误</label
                 >
                 <p class="mt-1 text-xs text-gray-500">
-                  {{ "启用后，count_tokens 请求的错误将不会写入错误日志。" }}
+                  启用后，count_tokens 请求的错误将不会写入错误日志。
                 </p>
               </div>
               <Toggle v-model="advancedSettings.ignore_count_tokens_errors" />
@@ -660,7 +660,7 @@ async function saveAllSettings() {
               <div>
                 <label
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ "忽略客户端断连错误" }}</label
+                  >忽略客户端断连错误</label
                 >
                 <p class="mt-1 text-xs text-gray-500">
                   {{
@@ -675,7 +675,7 @@ async function saveAllSettings() {
               <div>
                 <label
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ "忽略无可用账号错误" }}</label
+                  >忽略无可用账号错误</label
                 >
                 <p class="mt-1 text-xs text-gray-500">
                   {{
@@ -690,24 +690,24 @@ async function saveAllSettings() {
           <!-- Auto Refresh -->
           <div class="space-y-3">
             <h5 class="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              {{ "自动刷新" }}
+              自动刷新
             </h5>
 
             <div class="flex items-center justify-between">
               <div>
                 <label
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                  >{{ "启用自动刷新" }}</label
+                  >启用自动刷新</label
                 >
                 <p class="mt-1 text-xs text-gray-500">
-                  {{ "自动刷新仪表板数据，启用后会定期拉取最新数据。" }}
+                  自动刷新仪表板数据，启用后会定期拉取最新数据。
                 </p>
               </div>
               <Toggle v-model="advancedSettings.auto_refresh_enabled" />
             </div>
 
             <div v-if="advancedSettings.auto_refresh_enabled">
-              <label class="input-label">{{ "刷新间隔" }}</label>
+              <label class="input-label">刷新间隔</label>
               <Select
                 v-model="advancedSettings.auto_refresh_interval_seconds"
                 :options="[
@@ -724,9 +724,7 @@ async function saveAllSettings() {
 
     <template #footer>
       <div class="flex justify-end gap-2">
-        <button class="btn btn-secondary" @click="emit('close')">
-          {{ "取消" }}
-        </button>
+        <button class="btn btn-secondary" @click="emit('close')">取消</button>
         <button
           class="btn btn-primary"
           :disabled="saving || !validation.valid"

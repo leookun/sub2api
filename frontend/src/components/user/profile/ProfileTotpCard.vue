@@ -2,10 +2,10 @@
   <div class="card">
     <div class="border-b border-gray-100 px-6 py-4 dark:border-dark-700">
       <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-        {{ "双因素认证 (2FA)" }}
+        双因素认证 (2FA)
       </h2>
       <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-        {{ "使用 Google Authenticator 等应用增强账户安全" }}
+        使用 Google Authenticator 等应用增强账户安全
       </p>
     </div>
     <div class="px-6 py-6">
@@ -39,11 +39,9 @@
           </svg>
         </div>
         <div>
-          <p class="font-medium text-gray-700 dark:text-gray-300">
-            {{ "功能未开放" }}
-          </p>
+          <p class="font-medium text-gray-700 dark:text-gray-300">功能未开放</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">
-            {{ "管理员尚未开放双因素认证功能" }}
+            管理员尚未开放双因素认证功能
           </p>
         </div>
       </div>
@@ -72,14 +70,12 @@
             </svg>
           </div>
           <div>
-            <p class="font-medium text-gray-900 dark:text-white">
-              {{ "已启用" }}
-            </p>
+            <p class="font-medium text-gray-900 dark:text-white">已启用</p>
             <p
               v-if="status.enabled_at"
               class="text-sm text-gray-500 dark:text-gray-400"
             >
-              {{ "启用时间" }}: {{ formatDate(status.enabled_at) }}
+              启用时间: {{ formatDate(status.enabled_at) }}
             </p>
           </div>
         </div>
@@ -88,7 +84,7 @@
           class="btn btn-outline-danger"
           @click="showDisableDialog = true"
         >
-          {{ "禁用" }}
+          禁用
         </button>
       </div>
 
@@ -113,11 +109,9 @@
             </svg>
           </div>
           <div>
-            <p class="font-medium text-gray-700 dark:text-gray-300">
-              {{ "未启用" }}
-            </p>
+            <p class="font-medium text-gray-700 dark:text-gray-300">未启用</p>
             <p class="text-sm text-gray-500 dark:text-gray-400">
-              {{ "启用双因素认证可以增强账户安全性" }}
+              启用双因素认证可以增强账户安全性
             </p>
           </div>
         </div>
@@ -126,7 +120,7 @@
           class="btn btn-primary"
           @click="showSetupModal = true"
         >
-          {{ "启用" }}
+          启用
         </button>
       </div>
     </div>

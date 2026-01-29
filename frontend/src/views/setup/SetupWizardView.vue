@@ -11,10 +11,10 @@
           <Icon name="cog" size="xl" class="text-white" />
         </div>
         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-          {{ "Sub2API 安装向导" }}
+          Sub2API 安装向导
         </h1>
         <p class="mt-2 text-gray-500 dark:text-dark-400">
-          {{ "配置您的 Sub2API 实例" }}
+          配置您的 Sub2API 实例
         </p>
       </div>
 
@@ -71,16 +71,16 @@
         <div v-if="currentStep === 0" class="space-y-6">
           <div class="mb-6 text-center">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ "数据库配置" }}
+              数据库配置
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-              {{ "连接到您的 PostgreSQL 数据库" }}
+              连接到您的 PostgreSQL 数据库
             </p>
           </div>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ "主机" }}</label>
+              <label class="input-label">主机</label>
               <input
                 v-model="formData.database.host"
                 type="text"
@@ -89,7 +89,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "端口" }}</label>
+              <label class="input-label">端口</label>
               <input
                 v-model.number="formData.database.port"
                 type="number"
@@ -101,7 +101,7 @@
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ "用户名" }}</label>
+              <label class="input-label">用户名</label>
               <input
                 v-model="formData.database.user"
                 type="text"
@@ -110,7 +110,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "密码" }}</label>
+              <label class="input-label">密码</label>
               <input
                 v-model="formData.database.password"
                 type="password"
@@ -122,7 +122,7 @@
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ "数据库名称" }}</label>
+              <label class="input-label">数据库名称</label>
               <input
                 v-model="formData.database.dbname"
                 type="text"
@@ -131,7 +131,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "SSL 模式" }}</label>
+              <label class="input-label">SSL 模式</label>
               <Select
                 v-model="formData.database.sslmode"
                 :options="[
@@ -186,16 +186,16 @@
         <div v-if="currentStep === 1" class="space-y-6">
           <div class="mb-6 text-center">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ "Redis 配置" }}
+              Redis 配置
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-              {{ "连接到您的 Redis 服务器" }}
+              连接到您的 Redis 服务器
             </p>
           </div>
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ "主机" }}</label>
+              <label class="input-label">主机</label>
               <input
                 v-model="formData.redis.host"
                 type="text"
@@ -204,7 +204,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "端口" }}</label>
+              <label class="input-label">端口</label>
               <input
                 v-model.number="formData.redis.port"
                 type="number"
@@ -216,7 +216,7 @@
 
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="input-label">{{ "密码（可选）" }}</label>
+              <label class="input-label">密码（可选）</label>
               <input
                 v-model="formData.redis.password"
                 type="password"
@@ -225,7 +225,7 @@
               />
             </div>
             <div>
-              <label class="input-label">{{ "数据库" }}</label>
+              <label class="input-label">数据库</label>
               <input
                 v-model.number="formData.redis.db"
                 type="number"
@@ -281,15 +281,15 @@
         <div v-if="currentStep === 2" class="space-y-6">
           <div class="mb-6 text-center">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ "管理员账户" }}
+              管理员账户
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-              {{ "创建您的管理员账户" }}
+              创建您的管理员账户
             </p>
           </div>
 
           <div>
-            <label class="input-label">{{ "邮箱" }}</label>
+            <label class="input-label">邮箱</label>
             <input
               v-model="formData.admin.email"
               type="email"
@@ -299,7 +299,7 @@
           </div>
 
           <div>
-            <label class="input-label">{{ "密码" }}</label>
+            <label class="input-label">密码</label>
             <input
               v-model="formData.admin.password"
               type="password"
@@ -309,7 +309,7 @@
           </div>
 
           <div>
-            <label class="input-label">{{ "确认密码" }}</label>
+            <label class="input-label">确认密码</label>
             <input
               v-model="confirmPassword"
               type="password"
@@ -322,7 +322,7 @@
               "
               class="input-error-text"
             >
-              {{ "密码不匹配" }}
+              密码不匹配
             </p>
           </div>
         </div>
@@ -331,10 +331,10 @@
         <div v-if="currentStep === 3" class="space-y-6">
           <div class="mb-6 text-center">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ "准备安装" }}
+              准备安装
             </h2>
             <p class="mt-1 text-sm text-gray-500 dark:text-dark-400">
-              {{ "检查您的配置并完成安装" }}
+              检查您的配置并完成安装
             </p>
           </div>
 
@@ -343,7 +343,7 @@
               <h3
                 class="mb-2 text-sm font-medium text-gray-500 dark:text-dark-400"
               >
-                {{ "数据库" }}
+                数据库
               </h3>
               <p class="text-gray-900 dark:text-white">
                 {{ formData.database.user }}@{{ formData.database.host }}:{{
@@ -356,7 +356,7 @@
               <h3
                 class="mb-2 text-sm font-medium text-gray-500 dark:text-dark-400"
               >
-                {{ "Redis" }}
+                Redis
               </h3>
               <p class="text-gray-900 dark:text-white">
                 {{ formData.redis.host }}:{{ formData.redis.port }}
@@ -367,7 +367,7 @@
               <h3
                 class="mb-2 text-sm font-medium text-gray-500 dark:text-dark-400"
               >
-                {{ "管理员邮箱" }}
+                管理员邮箱
               </h3>
               <p class="text-gray-900 dark:text-white">
                 {{ formData.admin.email }}
@@ -427,7 +427,7 @@
             />
             <div>
               <p class="text-sm font-medium text-green-700 dark:text-green-400">
-                {{ "安装完成！" }}
+                安装完成！
               </p>
               <p class="mt-1 text-sm text-green-600 dark:text-green-500">
                 {{
@@ -448,7 +448,7 @@
             @click="currentStep--"
           >
             <Icon name="chevronLeft" size="sm" class="mr-2" :stroke-width="2" />
-            {{ "返回" }}
+            返回
           </button>
           <div v-else></div>
 
@@ -458,7 +458,7 @@
             class="btn btn-primary"
             @click="nextStep"
           >
-            {{ "下一步" }}
+            下一步
             <Icon
               name="chevronRight"
               size="sm"

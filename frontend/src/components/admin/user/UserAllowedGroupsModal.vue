@@ -43,7 +43,7 @@
       </div>
       <div v-else>
         <p class="mb-3 text-sm text-gray-600">
-          {{ "选择此用户可以使用的标准分组。订阅类型分组请在订阅管理中配置。" }}
+          选择此用户可以使用的标准分组。订阅类型分组请在订阅管理中配置。
         </p>
         <div class="max-h-64 space-y-2 overflow-y-auto">
           <label
@@ -76,7 +76,7 @@
               ><span
                 v-if="group.is_exclusive"
                 class="badge badge-purple text-xs"
-                >{{ "专属" }}</span
+                >专属</span
               >
             </div>
           </label>
@@ -95,10 +95,8 @@
               @change="selectedIds = []"
             />
             <div class="flex-1">
-              <p class="font-medium text-gray-900">{{ "允许全部分组" }}</p>
-              <p class="text-sm text-gray-500">
-                {{ "用户可以使用任何非专属分组" }}
-              </p>
+              <p class="font-medium text-gray-900">允许全部分组</p>
+              <p class="text-sm text-gray-500">用户可以使用任何非专属分组</p>
             </div>
           </label>
         </div>
@@ -106,9 +104,7 @@
     </div>
     <template #footer>
       <div class="flex justify-end gap-3">
-        <button class="btn btn-secondary" @click="$emit('close')">
-          {{ "取消" }}
-        </button>
+        <button class="btn btn-secondary" @click="$emit('close')">取消</button>
         <button
           :disabled="submitting"
           class="btn btn-primary"

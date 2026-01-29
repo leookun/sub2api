@@ -14,9 +14,7 @@
 
     <!-- Usage status: unlimited flow or rate limit -->
     <div class="text-xs text-gray-400 dark:text-gray-500">
-      <span v-if="!isRateLimited">
-        {{ "无限流" }}
-      </span>
+      <span v-if="!isRateLimited"> 无限流 </span>
       <span
         v-else
         :class="[

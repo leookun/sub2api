@@ -25,12 +25,12 @@
       <div
         class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-600 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400"
       >
-        {{ "⚠️ 注意：CRS 版本必须 ≥ v1.1.240 才支持此功能" }}
+        ⚠️ 注意：CRS 版本必须 ≥ v1.1.240 才支持此功能
       </div>
 
       <div class="grid grid-cols-1 gap-4">
         <div>
-          <label class="input-label">{{ "CRS 服务地址" }}</label>
+          <label class="input-label">CRS 服务地址</label>
           <input
             v-model="form.base_url"
             type="text"
@@ -41,7 +41,7 @@
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label class="input-label">{{ "用户名" }}</label>
+            <label class="input-label">用户名</label>
             <input
               v-model="form.username"
               type="text"
@@ -50,7 +50,7 @@
             />
           </div>
           <div>
-            <label class="input-label">{{ "密码" }}</label>
+            <label class="input-label">密码</label>
             <input
               v-model="form.password"
               type="password"
@@ -68,7 +68,7 @@
             type="checkbox"
             class="rounded border-gray-300 dark:border-dark-600"
           />
-          {{ "同时同步代理（按 host/port/账号匹配或自动创建）" }}
+          同时同步代理（按 host/port/账号匹配或自动创建）
         </label>
       </div>
 
@@ -77,7 +77,7 @@
         class="space-y-2 rounded-xl border border-gray-200 p-4 dark:border-dark-700"
       >
         <div class="text-sm font-medium text-gray-900 dark:text-white">
-          {{ "同步结果" }}
+          同步结果
         </div>
         <div class="text-sm text-gray-700 dark:text-dark-300">
           {{ syncResultSummary }}
@@ -85,7 +85,7 @@
 
         <div v-if="errorItems.length" class="mt-2">
           <div class="text-sm font-medium text-red-600 dark:text-red-400">
-            {{ "错误/跳过详情" }}
+            错误/跳过详情
           </div>
           <div
             class="mt-2 max-h-48 overflow-auto rounded-lg bg-gray-50 p-3 font-mono text-xs dark:bg-dark-800"
@@ -111,7 +111,7 @@
           :disabled="syncing"
           @click="handleClose"
         >
-          {{ "取消" }}
+          取消
         </button>
         <button
           class="btn btn-primary"

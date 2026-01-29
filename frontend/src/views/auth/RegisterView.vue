@@ -4,7 +4,7 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ "创建账户" }}
+          创建账户
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
           {{ `注册以开始使用 {siteName}` }}
@@ -24,7 +24,7 @@
             <Icon name="exclamationCircle" size="md" class="text-amber-500" />
           </div>
           <p class="text-sm text-amber-700 dark:text-amber-400">
-            {{ "注册功能暂时关闭，请联系管理员。" }}
+            注册功能暂时关闭，请联系管理员。
           </p>
         </div>
       </div>
@@ -33,9 +33,7 @@
       <form v-else class="space-y-5" @submit.prevent="handleRegister">
         <!-- Email Input -->
         <div>
-          <label for="email" class="input-label">
-            {{ "邮箱" }}
-          </label>
+          <label for="email" class="input-label"> 邮箱 </label>
           <div class="relative">
             <div
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
@@ -66,9 +64,7 @@
 
         <!-- Password Input -->
         <div>
-          <label for="password" class="input-label">
-            {{ "密码" }}
-          </label>
+          <label for="password" class="input-label"> 密码 </label>
           <div class="relative">
             <div
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
@@ -102,18 +98,16 @@
           <p v-if="errors.password" class="input-error-text">
             {{ errors.password }}
           </p>
-          <p v-else class="input-hint">
-            {{ "至少 6 个字符" }}
-          </p>
+          <p v-else class="input-hint">至少 6 个字符</p>
         </div>
 
         <!-- Promo Code Input (Optional) -->
         <div v-if="promoCodeEnabled">
           <label for="promo_code" class="input-label">
-            {{ "优惠码" }}
+            优惠码
             <span
               class="ml-1 text-xs font-normal text-gray-400 dark:text-dark-500"
-              >({{ "可选" }})</span
+              >(可选)</span
             >
           </label>
           <div class="relative">
@@ -274,12 +268,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ "已有账户？" }}
+        已有账户？
         <router-link
           to="/login"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ "登录" }}
+          登录
         </router-link>
       </p>
     </template>

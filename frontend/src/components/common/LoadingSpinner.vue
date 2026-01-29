@@ -4,7 +4,7 @@
     role="status"
     :aria-label="'加载中...'"
   >
-    <span class="sr-only">{{ "加载中..." }}</span>
+    <span class="sr-only">加载中...</span>
   </div>
 </template>
 

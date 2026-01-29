@@ -32,14 +32,12 @@
         v-else-if="!isActive"
         class="rounded-lg border border-gray-200 p-4 text-sm text-gray-500 dark:border-dark-600 dark:text-gray-400"
       >
-        {{ "当前账号未处于临时不可调度状态。" }}
+        当前账号未处于临时不可调度状态。
       </div>
 
       <div v-else class="space-y-4">
         <div class="rounded-lg border border-gray-200 p-4 dark:border-dark-600">
-          <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ "账号" }}
-          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">账号</p>
           <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">
             {{ account?.name || "-" }}
           </p>
@@ -49,9 +47,7 @@
           <div
             class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
           >
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ "触发时间" }}
-            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">触发时间</p>
             <p
               class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
             >
@@ -61,9 +57,7 @@
           <div
             class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
           >
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ "解除时间" }}
-            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">解除时间</p>
             <p
               class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
             >
@@ -73,9 +67,7 @@
           <div
             class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
           >
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ "剩余时间" }}
-            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">剩余时间</p>
             <p
               class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
             >
@@ -85,9 +77,7 @@
           <div
             class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
           >
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ "错误码" }}
-            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">错误码</p>
             <p
               class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
             >
@@ -97,9 +87,7 @@
           <div
             class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
           >
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ "匹配关键词" }}
-            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">匹配关键词</p>
             <p
               class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
             >
@@ -109,9 +97,7 @@
           <div
             class="rounded-lg border border-gray-200 p-3 dark:border-dark-600"
           >
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ "规则序号" }}
-            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">规则序号</p>
             <p
               class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100"
             >
@@ -121,9 +107,7 @@
         </div>
 
         <div class="rounded-lg border border-gray-200 p-3 dark:border-dark-600">
-          <p class="text-xs text-gray-500 dark:text-gray-400">
-            {{ "错误详情" }}
-          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">错误详情</p>
           <div
             class="mt-2 rounded bg-gray-50 p-2 text-xs text-gray-700 dark:bg-dark-700 dark:text-gray-300"
           >
@@ -136,7 +120,7 @@
     <template #footer>
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ "关闭" }}
+          关闭
         </button>
         <button
           type="button"
@@ -164,7 +148,7 @@
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          {{ "重置状态" }}
+          重置状态
         </button>
       </div>
     </template>

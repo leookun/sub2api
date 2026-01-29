@@ -62,7 +62,7 @@
               @click="handleBatchTest"
             >
               <Icon name="play" size="md" class="mr-2" />
-              {{ "测试连接" }}
+              测试连接
             </button>
             <button
               :disabled="selectedCount === 0"
@@ -71,11 +71,11 @@
               @click="openBatchDelete"
             >
               <Icon name="trash" size="md" class="mr-2" />
-              {{ "删除" }}
+              删除
             </button>
             <button class="btn btn-primary" @click="showCreateModal = true">
               <Icon name="plus" size="md" class="mr-2" />
-              {{ "添加代理" }}
+              添加代理
             </button>
           </div>
         </div>
@@ -167,7 +167,7 @@
               class="badge badge-danger"
               :title="row.latency_message || undefined"
             >
-              {{ "链接失败" }}
+              链接失败
             </span>
             <span
               v-else-if="typeof row.latency_ms === 'number'"
@@ -220,21 +220,21 @@
                   ></path>
                 </svg>
                 <Icon v-else name="checkCircle" size="sm" />
-                <span class="text-xs">{{ "测试连接" }}</span>
+                <span class="text-xs">测试连接</span>
               </button>
               <button
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
                 @click="handleEdit(row)"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ "编辑" }}</span>
+                <span class="text-xs">编辑</span>
               </button>
               <button
                 class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400"
                 @click="handleDelete(row)"
               >
                 <Icon name="trash" size="sm" />
-                <span class="text-xs">{{ "删除" }}</span>
+                <span class="text-xs">删除</span>
               </button>
             </div>
           </template>
@@ -282,7 +282,7 @@
           @click="createMode = 'standard'"
         >
           <Icon name="plus" size="sm" class="mr-1.5 inline" />
-          {{ "标准添加" }}
+          标准添加
         </button>
         <button
           type="button"
@@ -307,7 +307,7 @@
               d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"
             />
           </svg>
-          {{ "快捷添加" }}
+          快捷添加
         </button>
       </div>
 
@@ -319,7 +319,7 @@
         @submit.prevent="handleCreateProxy"
       >
         <div>
-          <label class="input-label">{{ "名称" }}</label>
+          <label class="input-label">名称</label>
           <input
             v-model="createForm.name"
             type="text"
@@ -329,7 +329,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "协议" }}</label>
+          <label class="input-label">协议</label>
           <Select
             v-model="createForm.protocol"
             :options="protocolSelectOptions"
@@ -337,7 +337,7 @@
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="input-label">{{ "主机" }}</label>
+            <label class="input-label">主机</label>
             <input
               v-model="createForm.host"
               type="text"
@@ -347,7 +347,7 @@
             />
           </div>
           <div>
-            <label class="input-label">{{ "端口" }}</label>
+            <label class="input-label">端口</label>
             <input
               v-model.number="createForm.port"
               type="number"
@@ -360,7 +360,7 @@
           </div>
         </div>
         <div>
-          <label class="input-label">{{ "用户名（可选）" }}</label>
+          <label class="input-label">用户名（可选）</label>
           <input
             v-model="createForm.username"
             type="text"
@@ -369,7 +369,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "密码（可选）" }}</label>
+          <label class="input-label">密码（可选）</label>
           <input
             v-model="createForm.password"
             type="password"
@@ -382,7 +382,7 @@
       <!-- Batch Add Form -->
       <div v-else class="space-y-5">
         <div>
-          <label class="input-label">{{ "代理列表" }}</label>
+          <label class="input-label">代理列表</label>
           <textarea
             v-model="batchInput"
             rows="10"
@@ -458,7 +458,7 @@
             class="btn btn-secondary"
             @click="closeCreateModal"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             v-if="createMode === 'standard'"
@@ -538,11 +538,11 @@
         @submit.prevent="handleUpdateProxy"
       >
         <div>
-          <label class="input-label">{{ "名称" }}</label>
+          <label class="input-label">名称</label>
           <input v-model="editForm.name" type="text" required class="input" />
         </div>
         <div>
-          <label class="input-label">{{ "协议" }}</label>
+          <label class="input-label">协议</label>
           <Select
             v-model="editForm.protocol"
             :options="protocolSelectOptions"
@@ -550,11 +550,11 @@
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="input-label">{{ "主机" }}</label>
+            <label class="input-label">主机</label>
             <input v-model="editForm.host" type="text" required class="input" />
           </div>
           <div>
-            <label class="input-label">{{ "端口" }}</label>
+            <label class="input-label">端口</label>
             <input
               v-model.number="editForm.port"
               type="number"
@@ -566,11 +566,11 @@
           </div>
         </div>
         <div>
-          <label class="input-label">{{ "用户名（可选）" }}</label>
+          <label class="input-label">用户名（可选）</label>
           <input v-model="editForm.username" type="text" class="input" />
         </div>
         <div>
-          <label class="input-label">{{ "密码（可选）" }}</label>
+          <label class="input-label">密码（可选）</label>
           <input
             v-model="editForm.password"
             type="password"
@@ -579,7 +579,7 @@
           />
         </div>
         <div>
-          <label class="input-label">{{ "状态" }}</label>
+          <label class="input-label">状态</label>
           <Select v-model="editForm.status" :options="editStatusOptions" />
         </div>
       </form>
@@ -591,7 +591,7 @@
             class="btn btn-secondary"
             @click="closeEditModal"
           >
-            {{ "取消" }}
+            取消
           </button>
           <button
             v-if="editingProxy"
@@ -662,13 +662,13 @@
         class="flex items-center justify-center py-8 text-sm text-gray-500"
       >
         <Icon name="refresh" size="md" class="mr-2 animate-spin" />
-        {{ "加载中..." }}
+        加载中...
       </div>
       <div
         v-else-if="proxyAccounts.length === 0"
         class="py-6 text-center text-sm text-gray-500"
       >
-        {{ "暂无账号使用此代理" }}
+        暂无账号使用此代理
       </div>
       <div v-else class="max-h-80 overflow-auto">
         <table
@@ -678,9 +678,9 @@
             class="bg-gray-50 text-xs uppercase text-gray-500 dark:bg-dark-800 dark:text-dark-400"
           >
             <tr>
-              <th class="px-4 py-2 text-left">{{ "账号名称" }}</th>
-              <th class="px-4 py-2 text-left">{{ "平台/类型" }}</th>
-              <th class="px-4 py-2 text-left">{{ "备注" }}</th>
+              <th class="px-4 py-2 text-left">账号名称</th>
+              <th class="px-4 py-2 text-left">平台/类型</th>
+              <th class="px-4 py-2 text-left">备注</th>
             </tr>
           </thead>
           <tbody
@@ -706,7 +706,7 @@
       <template #footer>
         <div class="flex justify-end">
           <button class="btn btn-secondary" @click="closeAccountsModal">
-            {{ "关闭" }}
+            关闭
           </button>
         </div>
       </template>

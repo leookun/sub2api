@@ -175,7 +175,7 @@
                   @click="showFilterDropdown = !showFilterDropdown"
                 >
                   <Icon name="filter" size="sm" class="md:mr-1.5" />
-                  <span class="hidden md:inline">{{ "筛选设置" }}</span>
+                  <span class="hidden md:inline">筛选设置</span>
                 </button>
                 <!-- Dropdown menu -->
                 <div
@@ -241,7 +241,7 @@
                       d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z"
                     />
                   </svg>
-                  <span class="hidden md:inline">{{ "列设置" }}</span>
+                  <span class="hidden md:inline">列设置</span>
                 </button>
                 <!-- Dropdown menu -->
                 <div
@@ -272,7 +272,7 @@
                 @click="showAttributesModal = true"
               >
                 <Icon name="cog" size="sm" class="md:mr-1.5" />
-                <span class="hidden md:inline">{{ "属性配置" }}</span>
+                <span class="hidden md:inline">属性配置</span>
               </button>
             </div>
 
@@ -282,7 +282,7 @@
               @click="showCreateModal = true"
             >
               <Icon name="plus" size="md" class="mr-2" />
-              {{ "创建用户" }}
+              创建用户
             </button>
           </div>
         </div>
@@ -382,7 +382,7 @@
               class="inline-flex items-center gap-1.5 rounded-md bg-gray-50 px-2 py-1 text-xs text-gray-400 dark:bg-dark-700/50 dark:text-dark-500"
             >
               <Icon name="ban" size="xs" class="h-3.5 w-3.5" />
-              <span>{{ "暂无订阅" }}</span>
+              <span>暂无订阅</span>
             </span>
           </template>
 
@@ -395,17 +395,13 @@
           <template #cell-usage="{ row }">
             <div class="text-sm">
               <div class="flex items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400"
-                  >{{ "今日" }}:</span
-                >
+                <span class="text-gray-500 dark:text-gray-400">今日:</span>
                 <span class="font-medium text-gray-900 dark:text-white">
                   ${{ (usageStats[row.id]?.today_actual_cost ?? 0).toFixed(4) }}
                 </span>
               </div>
               <div class="mt-0.5 flex items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400"
-                  >{{ "累计" }}:</span
-                >
+                <span class="text-gray-500 dark:text-gray-400">累计:</span>
                 <span class="font-medium text-gray-900 dark:text-white">
                   ${{ (usageStats[row.id]?.total_actual_cost ?? 0).toFixed(4) }}
                 </span>
@@ -447,7 +443,7 @@
                 @click="handleEdit(row)"
               >
                 <Icon name="edit" size="sm" />
-                <span class="text-xs">{{ "编辑" }}</span>
+                <span class="text-xs">编辑</span>
               </button>
 
               <!-- Toggle Status Button (not for admin) -->
@@ -478,7 +474,7 @@
                 @click="openActionMenu(row, $event)"
               >
                 <Icon name="more" size="sm" />
-                <span class="text-xs">{{ "更多" }}</span>
+                <span class="text-xs">更多</span>
               </button>
             </div>
           </template>
@@ -534,7 +530,7 @@
                   class="text-gray-400"
                   :stroke-width="2"
                 />
-                {{ "API密钥" }}
+                API密钥
               </button>
 
               <!-- Allowed Groups -->
@@ -551,7 +547,7 @@
                   class="text-gray-400"
                   :stroke-width="2"
                 />
-                {{ "分组" }}
+                分组
               </button>
 
               <div
@@ -572,7 +568,7 @@
                   class="text-emerald-500"
                   :stroke-width="2"
                 />
-                {{ "充值" }}
+                充值
               </button>
 
               <!-- Withdraw -->
@@ -596,7 +592,7 @@
                     d="M20 12H4"
                   />
                 </svg>
-                {{ "退款" }}
+                退款
               </button>
 
               <div
@@ -613,7 +609,7 @@
                 "
               >
                 <Icon name="trash" size="sm" :stroke-width="2" />
-                {{ "删除" }}
+                删除
               </button>
             </template>
           </template>

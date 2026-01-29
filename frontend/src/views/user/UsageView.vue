@@ -15,13 +15,13 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "总请求数" }}
+                  总请求数
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ usageStats?.total_requests?.toLocaleString() || "0" }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ "所选范围内" }}
+                  所选范围内
                 </p>
               </div>
             </div>
@@ -39,15 +39,15 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "总 Token" }}
+                  总 Token
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ formatTokens(usageStats?.total_tokens || 0) }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ "输入" }}:
+                  输入:
                   {{ formatTokens(usageStats?.total_input_tokens || 0) }} /
-                  {{ "输出" }}:
+                  输出:
                   {{ formatTokens(usageStats?.total_output_tokens || 0) }}
                 </p>
               </div>
@@ -66,17 +66,17 @@
               </div>
               <div class="min-w-0 flex-1">
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "总消费" }}
+                  总消费
                 </p>
                 <p class="text-xl font-bold text-green-600 dark:text-green-400">
                   ${{ (usageStats?.total_actual_cost || 0).toFixed(4) }}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ "实际" }} /
+                  实际 /
                   <span class="line-through"
                     >${{ (usageStats?.total_cost || 0).toFixed(4) }}</span
                   >
-                  {{ "标准" }}
+                  标准
                 </p>
               </div>
             </div>
@@ -94,14 +94,12 @@
               </div>
               <div>
                 <p class="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {{ "平均耗时" }}
+                  平均耗时
                 </p>
                 <p class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ formatDuration(usageStats?.average_duration_ms || 0) }}
                 </p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ "每次请求" }}
-                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">每次请求</p>
               </div>
             </div>
           </div>
@@ -114,7 +112,7 @@
             <div class="flex flex-wrap items-end gap-4">
               <!-- API Key Filter -->
               <div class="min-w-[180px]">
-                <label class="input-label">{{ "API 密钥" }}</label>
+                <label class="input-label">API 密钥</label>
                 <Select
                   v-model="filters.api_key_id"
                   :options="apiKeyOptions"
@@ -125,7 +123,7 @@
 
               <!-- Date Range Filter -->
               <div>
-                <label class="input-label">{{ "时间范围" }}</label>
+                <label class="input-label">时间范围</label>
                 <DateRangePicker
                   v-model:start-date="startDate"
                   v-model:end-date="endDate"
@@ -136,7 +134,7 @@
               <!-- Actions -->
               <div class="ml-auto flex items-center gap-3">
                 <button class="btn btn-secondary" @click="resetFilters">
-                  {{ "重置" }}
+                  重置
                 </button>
                 <button
                   :disabled="exporting"
@@ -384,13 +382,13 @@
           <!-- Token Breakdown -->
           <div>
             <div class="text-xs font-semibold text-gray-300 mb-1">
-              {{ "Token 明细" }}
+              Token 明细
             </div>
             <div
               v-if="tokenTooltipData && tokenTooltipData.input_tokens > 0"
               class="flex items-center justify-between gap-4"
             >
-              <span class="text-gray-400">{{ "输入 Token" }}</span>
+              <span class="text-gray-400">输入 Token</span>
               <span class="font-medium text-white">{{
                 tokenTooltipData.input_tokens.toLocaleString()
               }}</span>
@@ -399,7 +397,7 @@
               v-if="tokenTooltipData && tokenTooltipData.output_tokens > 0"
               class="flex items-center justify-between gap-4"
             >
-              <span class="text-gray-400">{{ "输出 Token" }}</span>
+              <span class="text-gray-400">输出 Token</span>
               <span class="font-medium text-white">{{
                 tokenTooltipData.output_tokens.toLocaleString()
               }}</span>
@@ -410,7 +408,7 @@
               "
               class="flex items-center justify-between gap-4"
             >
-              <span class="text-gray-400">{{ "缓存创建 Token" }}</span>
+              <span class="text-gray-400">缓存创建 Token</span>
               <span class="font-medium text-white">{{
                 tokenTooltipData.cache_creation_tokens.toLocaleString()
               }}</span>
@@ -419,7 +417,7 @@
               v-if="tokenTooltipData && tokenTooltipData.cache_read_tokens > 0"
               class="flex items-center justify-between gap-4"
             >
-              <span class="text-gray-400">{{ "缓存读取 Token" }}</span>
+              <span class="text-gray-400">缓存读取 Token</span>
               <span class="font-medium text-white">{{
                 tokenTooltipData.cache_read_tokens.toLocaleString()
               }}</span>
@@ -429,7 +427,7 @@
           <div
             class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5"
           >
-            <span class="text-gray-400">{{ "总 Token" }}</span>
+            <span class="text-gray-400">总 Token</span>
             <span class="font-semibold text-blue-400">{{
               (
                 (tokenTooltipData?.input_tokens || 0) +
@@ -464,14 +462,12 @@
         <div class="space-y-1.5">
           <!-- Cost Breakdown -->
           <div class="mb-2 border-b border-gray-700 pb-1.5">
-            <div class="text-xs font-semibold text-gray-300 mb-1">
-              {{ "成本明细" }}
-            </div>
+            <div class="text-xs font-semibold text-gray-300 mb-1">成本明细</div>
             <div
               v-if="tooltipData && tooltipData.input_cost > 0"
               class="flex items-center justify-between gap-4"
             >
-              <span class="text-gray-400">{{ "输入成本" }}</span>
+              <span class="text-gray-400">输入成本</span>
               <span class="font-medium text-white"
                 >${{ tooltipData.input_cost.toFixed(6) }}</span
               >
@@ -480,7 +476,7 @@
               v-if="tooltipData && tooltipData.output_cost > 0"
               class="flex items-center justify-between gap-4"
             >
-              <span class="text-gray-400">{{ "输出成本" }}</span>
+              <span class="text-gray-400">输出成本</span>
               <span class="font-medium text-white"
                 >${{ tooltipData.output_cost.toFixed(6) }}</span
               >
@@ -489,7 +485,7 @@
               v-if="tooltipData && tooltipData.cache_creation_cost > 0"
               class="flex items-center justify-between gap-4"
             >
-              <span class="text-gray-400">{{ "缓存创建成本" }}</span>
+              <span class="text-gray-400">缓存创建成本</span>
               <span class="font-medium text-white"
                 >${{ tooltipData.cache_creation_cost.toFixed(6) }}</span
               >
@@ -498,7 +494,7 @@
               v-if="tooltipData && tooltipData.cache_read_cost > 0"
               class="flex items-center justify-between gap-4"
             >
-              <span class="text-gray-400">{{ "缓存读取成本" }}</span>
+              <span class="text-gray-400">缓存读取成本</span>
               <span class="font-medium text-white"
                 >${{ tooltipData.cache_read_cost.toFixed(6) }}</span
               >
@@ -506,13 +502,13 @@
           </div>
           <!-- Rate and Summary -->
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ "倍率" }}</span>
+            <span class="text-gray-400">倍率</span>
             <span class="font-semibold text-blue-400"
               >{{ (tooltipData?.rate_multiplier || 1).toFixed(2) }}x</span
             >
           </div>
           <div class="flex items-center justify-between gap-6">
-            <span class="text-gray-400">{{ "原始" }}</span>
+            <span class="text-gray-400">原始</span>
             <span class="font-medium text-white"
               >${{ tooltipData?.total_cost.toFixed(6) }}</span
             >
@@ -520,7 +516,7 @@
           <div
             class="flex items-center justify-between gap-6 border-t border-gray-700 pt-1.5"
           >
-            <span class="text-gray-400">{{ "计费" }}</span>
+            <span class="text-gray-400">计费</span>
             <span class="font-semibold text-green-400"
               >${{ tooltipData?.actual_cost.toFixed(6) }}</span
             >

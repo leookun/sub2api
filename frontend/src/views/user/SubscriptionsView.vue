@@ -16,10 +16,10 @@
           <Icon name="creditCard" size="xl" class="text-gray-400" />
         </div>
         <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-          {{ "暂无有效订阅" }}
+          暂无有效订阅
         </h3>
         <p class="text-gray-500 dark:text-dark-400">
-          {{ "您没有任何有效订阅。请联系管理员获取订阅。" }}
+          您没有任何有效订阅。请联系管理员获取订阅。
         </p>
       </div>
 
@@ -105,7 +105,7 @@
                 <span
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "每日" }}
+                  每日
                 </span>
                 <span class="text-sm text-gray-500 dark:text-dark-400">
                   ${{ (subscription.daily_usage_usd || 0).toFixed(2) }} / ${{
@@ -148,7 +148,7 @@
                 <span
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "每周" }}
+                  每周
                 </span>
                 <span class="text-sm text-gray-500 dark:text-dark-400">
                   ${{ (subscription.weekly_usage_usd || 0).toFixed(2) }} / ${{
@@ -191,7 +191,7 @@
                 <span
                   class="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {{ "每月" }}
+                  每月
                 </span>
                 <span class="text-sm text-gray-500 dark:text-dark-400">
                   ${{ (subscription.monthly_usage_usd || 0).toFixed(2) }} / ${{
@@ -245,12 +245,12 @@
                   <p
                     class="text-sm font-medium text-emerald-700 dark:text-emerald-300"
                   >
-                    {{ "无限制" }}
+                    无限制
                   </p>
                   <p
                     class="text-xs text-emerald-600/70 dark:text-emerald-400/70"
                   >
-                    {{ "该订阅无用量限制" }}
+                    该订阅无用量限制
                   </p>
                 </div>
               </div>

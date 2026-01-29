@@ -4,10 +4,10 @@
       <!-- Title -->
       <div class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-          {{ "重置密码" }}
+          重置密码
         </h2>
         <p class="mt-2 text-sm text-gray-500 dark:text-dark-400">
-          {{ "输入您的邮箱地址，我们将向您发送密码重置链接。" }}
+          输入您的邮箱地址，我们将向您发送密码重置链接。
         </p>
       </div>
 
@@ -30,7 +30,7 @@
               <h3
                 class="text-lg font-semibold text-green-800 dark:text-green-200"
               >
-                {{ "重置链接已发送" }}
+                重置链接已发送
               </h3>
               <p class="mt-2 text-sm text-green-700 dark:text-green-300">
                 {{
@@ -47,7 +47,7 @@
             class="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
             <Icon name="arrowLeft" size="sm" />
-            {{ "返回登录" }}
+            返回登录
           </router-link>
         </div>
       </div>
@@ -56,9 +56,7 @@
       <form v-else class="space-y-5" @submit.prevent="handleSubmit">
         <!-- Email Input -->
         <div>
-          <label for="email" class="input-label">
-            {{ "邮箱" }}
-          </label>
+          <label for="email" class="input-label"> 邮箱 </label>
           <div class="relative">
             <div
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5"
@@ -153,12 +151,12 @@
     <!-- Footer -->
     <template #footer>
       <p class="text-gray-500 dark:text-dark-400">
-        {{ "想起密码了？" }}
+        想起密码了？
         <router-link
           to="/login"
           class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
-          {{ "登录" }}
+          登录
         </router-link>
       </p>
     </template>

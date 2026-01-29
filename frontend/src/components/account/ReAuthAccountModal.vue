@@ -46,7 +46,7 @@
 
       <!-- Add Method Selection (Claude only) -->
       <fieldset v-if="isAnthropic" class="border-0 p-0">
-        <legend class="input-label">{{ "授权方式" }}</legend>
+        <legend class="input-label">授权方式</legend>
         <div class="mt-2 flex gap-4">
           <label class="flex cursor-pointer items-center">
             <input
@@ -79,7 +79,7 @@
         class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-dark-600 dark:bg-dark-700"
       >
         <div class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-          {{ "OAuth 类型" }}
+          OAuth 类型
         </div>
         <div class="flex items-center gap-3">
           <div
@@ -159,7 +159,7 @@
     <template #footer>
       <div v-if="account" class="flex justify-between gap-3">
         <button type="button" class="btn btn-secondary" @click="handleClose">
-          {{ "取消" }}
+          取消
         </button>
         <button
           v-if="isManualInputMethod"

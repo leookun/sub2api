@@ -22,28 +22,28 @@
     <div v-else-if="stats" class="space-y-0.5 text-xs">
       <!-- Requests -->
       <div class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400">{{ "请求" }}:</span>
+        <span class="text-gray-500 dark:text-gray-400">请求:</span>
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatNumber(stats.requests)
         }}</span>
       </div>
       <!-- Tokens -->
       <div class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400">{{ "Token" }}:</span>
+        <span class="text-gray-500 dark:text-gray-400">Token:</span>
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatTokens(stats.tokens)
         }}</span>
       </div>
       <!-- Cost (Account) -->
       <div class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400">{{ "账号计费" }}:</span>
+        <span class="text-gray-500 dark:text-gray-400">账号计费:</span>
         <span class="font-medium text-emerald-600 dark:text-emerald-400">{{
           formatCurrency(stats.cost)
         }}</span>
       </div>
       <!-- Cost (User/API Key) -->
       <div v-if="stats.user_cost != null" class="flex items-center gap-1">
-        <span class="text-gray-500 dark:text-gray-400">{{ "用户扣费" }}:</span>
+        <span class="text-gray-500 dark:text-gray-400">用户扣费:</span>
         <span class="font-medium text-gray-700 dark:text-gray-300">{{
           formatCurrency(stats.user_cost)
         }}</span>
