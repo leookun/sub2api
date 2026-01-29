@@ -100,12 +100,8 @@ RUN mkdir -p /app/data && chown -R sub2api:sub2api /app
 # Switch to non-root user
 USER sub2api
 
-# Expose port (can be overridden by SERVER_PORT env var)
 EXPOSE 8080
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:${SERVER_PORT:-8080}/health || exit 1
 
 # Run the application
 ENTRYPOINT ["/app/sub2api"]

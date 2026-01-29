@@ -171,8 +171,7 @@ POSTGRES_PASSWORD=your_secure_password_here
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=your_admin_password
 
-# 可选：自定义端口
-SERVER_PORT=8080
+
 
 # 可选：安全配置
 # 启用 URL 白名单验证（false 则跳过白名单检查，仅做基本格式校验）
